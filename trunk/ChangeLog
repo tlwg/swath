@@ -1,3 +1,8 @@
+2004-03-30  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* AUTHORS:
+	Fix my e-mail address.
+
 2003-04-04  Theppitak Karoonboonyanan <thep@linux.thai.net>
 
 	* conv/tis620.cxx, conv/utf8.cxx:
