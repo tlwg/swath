@@ -1,3 +1,19 @@
+2003-04-03  Chanop Silpa-Anan <chanop@debian.org>
+	* conv/{conv.cxx conv.h convfact.cxx convfact.h tis620.cxx tis620.h
+	  utf8.cxx utf8.}:
+	Clean up for g++-3.2: compilation errors, compiler warnings
+	and namespace issues.
+
+	* trie/{trie.h trie.cxx}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers.
+
+	* vmem/{dataheap.cxx dataheap.h vmem.cxx vmem.h}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers. Also use namespace std in .h files, a quick hack.
+
 2003-01-14  Theppitak Karoonboonyanan <thep@linux.thai.net>
 
 	* swath.spec.in:
