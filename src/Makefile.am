@@ -17,7 +17,8 @@ EXTRA_DIST = \
 	longwordseg.h \
 	maxwordseg.h \
 	worddef.h \
-	wordstack.h
+	wordstack.h \
+	swath.1
 
 bin_PROGRAMS = swath
 
@@ -35,6 +36,8 @@ swath_SOURCES = \
 	worddef.cpp \
 	wordseg.cpp \
 	wordstack.cpp
+
+man_MANS = swath.1
 
 # ** to use midatrie **
 # swath_LDADD = @MIDATRIE_LIBS@

@@ -1,3 +1,10 @@
+swath (0.3.0.cvs20030404) unstable; urgency=low
+
+  * Snap-shot, fixes segfault bug.
+  * Update to g++-3.2.
+
+ -- Chanop Silpa-Anan <chanop@debian.org>  Thu,  3 Apr 2003 20:10:05 +1000
+
 swath (0.3.0.cvs20020221) unstable; urgency=low
 
   * Initial Release.
