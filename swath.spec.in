@@ -24,7 +24,7 @@ RTF and LaTeX. Algorithm for word segmentation can also be chosen.
 %setup
 
 %build
-./configure --prefix=/usr
+./configure --prefix=/usr --datadir=/usr/share/swath
 make
 
 %install

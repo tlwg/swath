@@ -4,8 +4,7 @@ EXTRA_DIST = \
 	swathdic.br \
 	swathdic.tl
 
-pkgdatadir = @datadir@/swath
-pkgdata_DATA = \
+data_DATA = \
 	swathdic.br \
 	swathdic.tl
 
