@@ -49,6 +49,10 @@ find . -type f \
 find . -type l \
         | sed 's,^\.,\%attr(-\,root\,root) ,' >> %{manifest}
 
+%clean
+rm -fr $RPM_BUILD_DIR/%{name}-%{version}
+rm -fr $RPM_BUILD_ROOT
+
 %files -f %{manifest}
 %defattr(-,root,root)
 %doc README AUTHORS COPYING
