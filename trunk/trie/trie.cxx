@@ -67,7 +67,7 @@ const SymbolSet& SymbolSet::operator-=(Char c)
 //////////////// Implementation of DoubleArray class ////////////////
 
 //////////////// Implementation of Branches class ////////////////
-Branches::Branches(const char* fileName, int nIndices, int openModes)
+Branches::Branches(const char* fileName, int nIndices, ios_base::openmode openModes)
 : da(fileName, openModes)
 {
     totalCells = (da.TotalPages() * da.PageSize()) / sizeof(DACell);
@@ -409,7 +409,7 @@ void TailBlock::SetData(Index aData)
 
 //////////////// Implementation of Tails class ////////////////
 // constructor
-Tails::Tails(const char* fileName, int openModes)
+Tails::Tails(const char* fileName, ios_base::openmode openModes)
 : dataHeap(fileName, openModes)
 {
     walkResult = INTERNAL;
