@@ -45,9 +45,8 @@ int writeUTF8(std::ostream& output, unsigned unicode)
 
 int readUTF8(std::istream& input, unsigned* pUnicode)
 {
-    char tmp;
-    if (!input.get(tmp)) { return -1; }
-    unsigned char c(tmp);
+    unsigned char c;
+    if (!input.get(reinterpret_cast<char&>(c))) { return -1; }
 
     if ((c & 0x80) == 0x00) {
         *pUnicode = c;
@@ -65,8 +64,7 @@ int readUTF8(std::istream& input, unsigned* pUnicode)
 
         // get rest bits
         while (nBytes-- > 0) {
-            if (!input.get(tmp)) { return -1; }
-	    c = tmp;
+            if (!input.get(reinterpret_cast<char&>(c))) { return -1; }
             c ^= 0x80;  // 10xx xxxx -> 00xx xxxx
             if (c & 0xC0) { return -1; }  // not 10xx xxxx form
             *pUnicode = (*pUnicode << 6) | c;
