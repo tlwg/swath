@@ -26,10 +26,10 @@ typedef uint32 DataPtr;
 
 class DataHeap : public VirtualHeap {
 public:
-    DataHeap(const char* swapFileName, int iosModes);
+    DataHeap(const char* swapFileName, ios_base::openmode iosModes);
 };
 
-inline DataHeap::DataHeap(const char* swapFileName, int iosModes)
+inline DataHeap::DataHeap(const char* swapFileName, ios_base::openmode iosModes)
 : VirtualHeap(swapFileName, iosModes) {}
 
 

@@ -7,7 +7,9 @@
 #include <string.h>
 #include "vmem/dataheap.h"
 
-#include <iostream.h>
+#include <iostream>
+
+using namespace std;
 
 //////////////// Implementation of DataHeap class ////////////////
 

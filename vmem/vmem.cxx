@@ -20,7 +20,7 @@ long FileLength(fstream& fs)
 }
 
 //////////////// implementation of PageMap class ////////////////
-PageMap::PageMap(const char* swapFileName, int iosModes)
+PageMap::PageMap(const char* swapFileName, ios_base::openmode iosModes)
 : swapStream(swapFileName, iosModes | ios::binary) // | ios::bin) // ios::binary)
 {
     this->swapFileName = new char[strlen(swapFileName)+1];
@@ -407,7 +407,7 @@ int VirtualMem::BlockWrite(Pointer p, const char buff[], int nBytes)
 
 //////////////// implementation of VirtualHeap class ////////////////
 
-VirtualHeap::VirtualHeap(const char* swapFileName, int iosModes)
+VirtualHeap::VirtualHeap(const char* swapFileName, ios_base::openmode iosModes)
 : VirtualMem(swapFileName, iosModes)
 {
     if (TotalPages() == 0) {
