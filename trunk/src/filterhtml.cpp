@@ -76,3 +76,4 @@ void FilterHtml::Print(char *token, bool thaiFlag)
 {
 	fprintf(fpout,"%s",token);
 }
+
