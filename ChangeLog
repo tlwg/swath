@@ -1,0 +1,7 @@
+2001-12-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* GNU autotools files:
+	Rearrange source tree and apply GNU autotools.
+
+	* Version 0.3.0.
+
