@@ -87,7 +87,7 @@ const int CheckOffset = BaseOffset + sizeof(State);
 //
 class DoubleArray : public VirtualMem {
 public:  // public functions
-    DoubleArray(const char* fileName, int openModes);
+    DoubleArray(const char* fileName, ios_base::openmode openModes);
 
     // BASE & CHECK referencings
     void SetBase(State s, State b);
@@ -98,7 +98,7 @@ public:  // public functions
     State Check(State s);
 };
 
-inline DoubleArray::DoubleArray(const char* fileName, int openModes)
+inline DoubleArray::DoubleArray(const char* fileName, ios_base::openmode openModes)
 : VirtualMem(fileName, openModes) {}
 
 inline void DoubleArray::SetBase(State s, State b)
@@ -140,7 +140,7 @@ inline State DoubleArray::Check(State s)
 //
 class Branches {
 public:
-    Branches(const char* fileName, int nIndices, int openModes);
+    Branches(const char* fileName, int nIndices, ios_base::openmode openModes);
 
     // File Status
     bool      IsSwapFileOpen();
@@ -285,10 +285,10 @@ inline Index       TailBlock::Data()   const { return data;   }
 class Tails {
 public:
     // Constructor
-    Tails(const char* fileName, int openModes);
+    Tails(const char* fileName, ios_base::openmode openModes);
 
     // Swap file status
-    bool        OpenSwapFile(const char* swapFileName, int iosModes);
+    bool        OpenSwapFile(const char* swapFileName, ios_base::openmode iosModes);
     bool        CloseSwapFile();
     const char* SwapFileName() const;
     bool        IsSwapFileOpen();
@@ -350,7 +350,7 @@ private:  // private data
     int         nWalked;    // set by Walk(State, const char*)
 };
 
-inline bool Tails::OpenSwapFile(const char* swapFileName, int iosModes)
+inline bool Tails::OpenSwapFile(const char* swapFileName, ios_base::openmode iosModes)
     { return dataHeap.OpenSwapFile(swapFileName, iosModes); }
 inline bool Tails::CloseSwapFile()        { return dataHeap.CloseSwapFile(); }
 inline const char* Tails::SwapFileName() const
@@ -448,7 +448,7 @@ public:
         const char* branchesFileName,
         const char* tailsFileName,
         int nIndices,
-        int openModes
+        ios_base::openmode openModes
     );
 
     // File Status
@@ -502,7 +502,7 @@ private:  // private data
 // constructor
 inline Trie::Trie(
     const char* branchesFileName, const char* tailsFileName,
-    int nIndices, int openModes
+    int nIndices, ios_base::openmode openModes
 ) :
     branches(branchesFileName, nIndices, openModes),
     tails(tailsFileName, openModes)
