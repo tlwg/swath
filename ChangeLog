@@ -1,3 +1,8 @@
+2003-01-14  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* swath.spec.in:
+	Fix "%install" mess in comment (rpmbuild oddity)
+
 2002-09-24  Theppitak Karoonboonyanan <thep@linux.thai.net>
 
 	* src/wordseg.cpp:
