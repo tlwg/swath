@@ -4,9 +4,9 @@
 // Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
 //
 
-#include <string.h>
-#include <iostream.h>
-#include <fstream.h>
+#include <string>
+#include <iostream>
+#include <fstream>
 #include "convfact.h"
 #include "utf8.h"
 #include "tis620.h"
@@ -27,8 +27,8 @@ int conv( char format, const char *inputFileName,const char *outputFileName)
 {
     ETextFormat inputFormat = TIS620;
     ETextFormat outputFormat = UTF8;
-    istream*    pInputFile = &cin;
-    ostream*    pOutputFile = &cout;
+    std::istream*    pInputFile = &std::cin;
+    std::ostream*    pOutputFile = &std::cout;
 
 	if (format=='t') {
 		inputFormat = UTF8;
@@ -39,10 +39,10 @@ int conv( char format, const char *inputFileName,const char *outputFileName)
 	}
 
     if (inputFileName) {
-        pInputFile = new ifstream(inputFileName);
+        pInputFile = new std::ifstream(inputFileName);
     }
     if (outputFileName) {
-        pOutputFile = new ofstream(outputFileName);
+        pOutputFile = new std::ofstream(outputFileName);
     }
 
     TextReader* pReader = CreateTextReader(inputFormat, *pInputFile);

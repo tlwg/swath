@@ -7,7 +7,7 @@
 #ifndef CONVFACT_INC
 #define CONVFACT_INC
 
-#include <iostream.h>
+#include <iostream>
 #include "convkit.h"
 
 enum ETextFormat {
@@ -15,8 +15,8 @@ enum ETextFormat {
     UTF8,
 };
 
-TextReader* CreateTextReader(ETextFormat format, istream& input);
-TextWriter* CreateTextWriter(ETextFormat format, ostream& output);
+TextReader* CreateTextReader(ETextFormat format, std::istream& input);
+TextWriter* CreateTextWriter(ETextFormat format, std::ostream& output);
 
 #endif // CONVFACT_INC
 

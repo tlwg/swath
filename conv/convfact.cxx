@@ -8,7 +8,7 @@
 #include "utf8.h"
 #include "tis620.h"
 
-TextReader* CreateTextReader(ETextFormat format, istream& input)
+TextReader* CreateTextReader(ETextFormat format, std::istream& input)
 {
     switch (format) {
         case TIS620:  return new TIS620Reader(input);
@@ -17,7 +17,7 @@ TextReader* CreateTextReader(ETextFormat format, istream& input)
     }
 }
 
-TextWriter* CreateTextWriter(ETextFormat format, ostream& output)
+TextWriter* CreateTextWriter(ETextFormat format, std::ostream& output)
 {
     switch (format) {
         case TIS620:  return new TIS620Writer(output);
