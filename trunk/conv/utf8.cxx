@@ -7,7 +7,7 @@
 #include "utf8.h"
 #include "unichar.h"
 
-int writeUTF8(ostream& output, unsigned unicode)
+int writeUTF8(std::ostream& output, unsigned unicode)
 {
     if (unicode <= 0x007F) {
         output.put((unsigned char)(unicode & 0x7F));
@@ -43,10 +43,12 @@ int writeUTF8(ostream& output, unsigned unicode)
     return 0;
 }
 
-int readUTF8(istream& input, unsigned* pUnicode)
+int readUTF8(std::istream& input, unsigned* pUnicode)
 {
-    unsigned char c;
-    if (!input.get(c)) { return -1; }
+    char tmp;
+    if (!input.get(tmp)) { return -1; }
+    unsigned char c(tmp);
+
     if ((c & 0x80) == 0x00) {
         *pUnicode = c;
     } else {
@@ -63,7 +65,8 @@ int readUTF8(istream& input, unsigned* pUnicode)
 
         // get rest bits
         while (nBytes-- > 0) {
-            if (!input.get(c)) { return -1; }
+            if (!input.get(tmp)) { return -1; }
+	    c = tmp;
             c ^= 0x80;  // 10xx xxxx -> 00xx xxxx
             if (c & 0xC0) { return -1; }  // not 10xx xxxx form
             *pUnicode = (*pUnicode << 6) | c;

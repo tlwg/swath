@@ -37,8 +37,9 @@ tischar unicode2tis(unichar u)
 
 bool TIS620Reader::Read(unichar& c)
 {
-    tischar t;
-    if (!input.get(t)) { return false; }
+    char tmp;
+    if (!input.get(tmp)) { return false; }
+    tischar t (tmp);
     c = tis2unicode(t);
     return true;
 }
