@@ -11,7 +11,9 @@
 #define VMEM_INC
 
 #include "misc/typedefs.h"
-#include <fstream.h>
+#include <fstream>
+
+using namespace std;
 
 //////////////
 // Contents //
@@ -76,11 +78,11 @@ public:  // public types & constants
     };
 
 public:  // public functions
-    PageMap(const char* swapFileName, int iosModes);
+    PageMap(const char* swapFileName, ios_base::openmode iosModes);
     ~PageMap();
 
     // swap file status & operations (same meaning as corresponding ios funcs)
-    bool        OpenSwapFile(const char* swapFileName, int iosModes);
+    bool        OpenSwapFile(const char* swapFileName, ios_base::openmode iosModes);
     bool        CloseSwapFile();
     const char* SwapFileName() const;
     bool        IsSwapFileOpen();
@@ -106,16 +108,16 @@ private:  // private functions
 
 private:  // private data
     char*         swapFileName;
-    fstream       swapStream;
+    fstream  swapStream;
     PageNumber    totalPages;
     PageMapEntry  pages[MaxPages];
     FrameMapEntry frames[MaxFrames];
 };
 
 // swap file status & operations
-inline bool PageMap::OpenSwapFile(const char* swapFileName, int iosModes)
+inline bool PageMap::OpenSwapFile(const char* swapFileName, ios_base::openmode iosModes)
 {
-    swapStream.open(swapFileName, iosModes|ios::binary);
+    swapStream.open(swapFileName, iosModes|ios_base::binary);
     return (bool)swapStream.rdbuf()->is_open();
 }
 inline bool PageMap::CloseSwapFile()
@@ -162,10 +164,10 @@ inline PageNumber PageMap::TotalPages() const  { return totalPages; }
 
 class VirtualMem {
 public:  // public functions
-    VirtualMem(const char* swapFileName, int iosModes);
+    VirtualMem(const char* swapFileName, ios_base::openmode iosModes);
 
     // Swap file status (same meaning as the corresponding ios funcs)
-    bool        OpenSwapFile(const char* swapFileName, int iosModes);
+    bool        OpenSwapFile(const char* swapFileName, ios_base::openmode iosModes);
     bool        CloseSwapFile();
     const char* SwapFileName() const;
     bool        IsSwapFileOpen();
@@ -258,14 +260,14 @@ private:  // private data
 };
 
 // constructor
-inline VirtualMem::VirtualMem(const char* swapFileName, int iosModes)
+inline VirtualMem::VirtualMem(const char* swapFileName, ios_base::openmode iosModes)
     : pgMap(swapFileName, iosModes) {}
 
 // parameters
 inline int VirtualMem::PageSize()  { return pageSize; }
 
 // swap file status
-inline bool VirtualMem::OpenSwapFile(const char* swapFileName, int iosModes)
+inline bool VirtualMem::OpenSwapFile(const char* swapFileName, ios_base::openmode iosModes)
     { return pgMap.OpenSwapFile(swapFileName, iosModes); }
 inline bool VirtualMem::CloseSwapFile()        { return pgMap.CloseSwapFile(); }
 inline const char* VirtualMem::SwapFileName() const
@@ -317,7 +319,7 @@ inline char* VirtualMem::pageFrameRef(PageNumber pageNo)
 
 class VirtualHeap : public VirtualMem {
 public:
-    VirtualHeap(const char* swapFileName, int iosModes);
+    VirtualHeap(const char* swapFileName, ios_base::openmode iosModes);
 
     Pointer NewBlock(int size);
     void    DeleteBlock(Pointer p);
