@@ -100,7 +100,10 @@ char *stVer;
 					return true; //next GetToken() must return false
 				}
 				curPtr=buffer;
-				if (*curPtr>0){ //not thai character
+#ifdef CAT_THAI_LINES
+				if (*curPtr>0) //not thai character
+#endif
+				{
 					strcat(token,"\n");
 					return true;
 				}

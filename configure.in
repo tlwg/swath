@@ -49,6 +49,21 @@ AC_TYPE_SIZE_T
 dnl Checks for library functions.
 AC_CHECK_FUNCS(strstr)
 
+dnl Check commandline options
+AC_ARG_ENABLE(debug,
+              [  --enable-debug          enable assertion checks [default=yes]],
+              , enable_debug="yes")
+if test "x$enable_debug" = "xno"; then
+  CPPFLAGS="$CPPFLAGS -DNDEBUG"
+fi
+
+AC_ARG_ENABLE(catthai,
+              [  --enable-catthai        enable catenation of Thai lines [default=no]],
+              , enable_catthai="no")
+if test "x$enable_catthai" = "xyes"; then
+  CPPFLAGS="$CPPFLAGS -DCAT_THAI_LINES"
+fi
+
 AC_OUTPUT(
   Makefile
   swath.spec

@@ -1,3 +1,13 @@
+2002-09-23  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add --enable-debug to allow assertions disabling.
+
+	* configure.in, src/filterlatex.cpp:
+	Add --enable-catthai to allow Thai line catenation disabling.
+	(temporary solution, may be replaced with command-line option or
+	hard-coding later)
+
 2002-09-21  Theppitak Karoonboonyanan <thep@linux.thai.net>
 
 	* configure.in:
