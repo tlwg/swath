@@ -1,3 +1,8 @@
+2002-09-21  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add missing debian/Makefile in AC_OUTPUT.
+
 2001-12-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
 
 	* GNU autotools files:

@@ -57,4 +57,5 @@ AC_OUTPUT(
   vmem/Makefile
   trie/Makefile
   src/Makefile
-  data/Makefile)
+  data/Makefile
+  debian/Makefile)
