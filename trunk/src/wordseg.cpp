@@ -96,6 +96,30 @@ void WordSegmentation(AbsWordSeg **wseg, char *wbr, char *line, char* output)
 	(*wseg)->WordSeg(line,output,wbr);
 }
 
+static void Usage(int verbose)
+{
+    printf("Usage: swath [mule|-v] [-b \"wordseperator\"] [-d wordsegdatadir]\n"
+           "[-f html|rtf|latex|lambda] [-m long|max] [-l] [-help]\n");
+    if (verbose) {
+	  printf("\tOption mule : for mule\n");
+	  printf("\tOption -v   : verbose mode\n");
+	  printf("\tOption -b   : user define a word seperator\n");
+	  printf("\tOption -d   : set a new data path\n");
+	  printf("\tOption -f   : specify a format of an input file\n");
+	  printf("\t\t html     : html file\n");
+	  printf("\t\t rtf      : rtf file\n");
+	  printf("\t\t latex    : LaTeX file\n");
+	  printf("\t\t lambda	: An input and output are same as latex but only\n\t\t\t word break strings are ^^^^^^^^200c\n");
+//	  printf("\t\t winlatex : LaTeX file shaping on Windows\n");
+//	  printf("\t\t maclatex : LaTeX file shaping on Macintosh\n");
+	  printf("\tOption -m   : choose an algorithm of word segmentation\n");
+	  printf("\t\t long     : longest matching algorithm\n");
+	  printf("\t\t max      : maximal matching algorithm\n");
+	  printf("\tOption -l   : line processing(effect only in a bigram algo.)\n");
+	  printf("\tOption -help: Help\n");
+    }
+}
+
 #ifndef WORDSEGDATA_DIR
 #define WORDSEGDATA_DIR "/usr/local/lib/wordseg"
 #endif
@@ -151,31 +175,15 @@ int main(int argc, char *argv[])
 		unicode = new char[strlen(argv[iargc]) + 1];
 		strcpy(unicode, argv[iargc]);
 	}else if (strcmp("-help", argv[iargc]) == 0 ) {
-      printf("USAGE: swath [mule|-v] [-b \"wordseperator\"] [-d wordsegdatadir] [-f html|rtf|latex|lambda|winlatext|maclatex] [-m long|max] [-l] [-help]\n");
-	  printf("\tOption mule : for mule\n");
-	  printf("\tOption -v   : verbose mode\n");
-	  printf("\tOption -b   : user define a word seperator\n");
-	  printf("\tOption -d   : set a new data path\n");
-	  printf("\tOption -f   : specify a format of an input file\n");
-	  printf("\t\t html     : html file\n");
-	  printf("\t\t rtf      : rtf file\n");
-	  printf("\t\t latex    : laTex file\n");
-	  printf("\t\t lambda	: An input and output are same as latex but only\n\t\t\t word break strings are ^^^^^^^^200c\n");
-	  printf("\t\t winlatex : laTex file shaping on Windows\n");
-	  printf("\t\t maclatex : laTex file shaping on Macintosh\n");
-	  printf("\tOption -m   : choose an algorithm of word segmentation\n");
-	  printf("\t\t long     : longest matching algorithm\n");
-	  printf("\t\t max      : maximal matching algorithm\n");
-	  printf("\tOption -l   : line processing(effect only in a bigram algo.)\n");
-	  printf("\tOption -help: Help\n");
-      delete wbr;
-      delete wsegpath;
-      return 1;
-    }else{
-      printf("USAGE: swath [mule|-v] [-b \"wordseperator\"] [-d wordsegdatadir] [-f html|rtf|latex|lambda|winlatext|maclatex] [-m long|max] [-l] [-help]\n");
-      delete wbr;
-      delete wsegpath;
-      return 1;
+		Usage(1);
+		delete wbr;
+		delete wsegpath;
+		return 1;
+	}else{
+		Usage(0);
+		delete wbr;
+		delete wsegpath;
+		return 1;
 	}
   }
 
@@ -229,7 +237,11 @@ int main(int argc, char *argv[])
   if (fileformat!=NULL) {
 	  FileFlt=new FileFilter();
 	  FltX=FileFlt->CreateFilter(tmpin,tmpout,fileformat);
-	  if (FltX==NULL) printf("Invalid file format");
+	  if (FltX==NULL) {
+		printf("Invalid file format: %s\n", fileformat);
+		// FIXME: still mem leak hmm..
+		return 1;
+	  }
 	  FltX->GetWordBreak(wbr);
 	  while (FltX->GetNextToken(line,&thaifag)){
 		if (!thaifag){
