@@ -1,3 +1,9 @@
+2003-04-04  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* conv/tis620.cxx, conv/utf8.cxx:
+	Use casting instead of declaring temp vars in dealing with
+	iostream::get() with unsigned char argument.
+
 2003-04-03  Chanop Silpa-Anan <chanop@debian.org>
 	* conv/{conv.cxx conv.h convfact.cxx convfact.h tis620.cxx tis620.h
 	  utf8.cxx utf8.}:
