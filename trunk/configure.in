@@ -51,6 +51,7 @@ AC_CHECK_FUNCS(strstr)
 
 AC_OUTPUT(
   Makefile
+  swath.spec
   conv/Makefile
   misc/Makefile
   vmem/Makefile
