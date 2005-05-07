@@ -5,7 +5,11 @@
 //#include ""
 #include "abswordseg.h"
 #include "dictpath.h"
-#include <malloc.h>
+#ifdef __APPLE__
+# include <stdlib.h>
+#else
+# include <malloc.h>
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

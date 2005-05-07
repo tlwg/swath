@@ -1,3 +1,8 @@
+2005-05-07  Chanop Silpa-Anan <chanop@debian.org>
+	* src/abswordseg.cpp:
+	A quick hack for Apple/Darwin: malloc is defined in stdlib.h instead
+	of a more common place malloc.h.
+
 2004-03-30  Theppitak Karoonboonyanan <thep@linux.thai.net>
 
 	* AUTHORS:
