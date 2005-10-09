@@ -51,14 +51,16 @@ AC_CHECK_FUNCS(strstr)
 
 dnl Check commandline options
 AC_ARG_ENABLE(debug,
-              [  --enable-debug          enable assertion checks [default=yes]],
-              , enable_debug="yes")
+              [AC_HELP_STRING([--enable-debug],
+                              [enable assertion checks])],
+              , enable_debug="no")
 if test "x$enable_debug" = "xno"; then
   CPPFLAGS="$CPPFLAGS -DNDEBUG"
 fi
 
 AC_ARG_ENABLE(catthai,
-              [  --enable-catthai        enable catenation of Thai lines [default=no]],
+              [AC_HELP_STRING([--enable-catthai],
+                              [enable catenation of Thai lines])],
               , enable_catthai="no")
 if test "x$enable_catthai" = "xyes"; then
   CPPFLAGS="$CPPFLAGS -DCAT_THAI_LINES"
