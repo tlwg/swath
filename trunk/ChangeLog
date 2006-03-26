@@ -2,6 +2,8 @@
 
 	* Makefile.am: Removed debian from SUBDIRS.
 
+	* configure.in: Removed debian/Makefile generation.
+
 2005-10-09  Theppitak Karoonboonyanan <thep@linux.thai.net>
 
 	* configure.in:
