@@ -1,3 +1,7 @@
+2006-03-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* Makefile.am: Removed debian from SUBDIRS.
+
 2005-10-09  Theppitak Karoonboonyanan <thep@linux.thai.net>
 
 	* configure.in:
