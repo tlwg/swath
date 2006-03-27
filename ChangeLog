@@ -1,3 +1,7 @@
+2006-03-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Used section number instead of version number.
+
 2006-03-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* Makefile.am: Removed debian from SUBDIRS.
