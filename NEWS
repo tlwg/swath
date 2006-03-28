@@ -1,0 +1,11 @@
+0.3.1 (2006-03-28)
+=====
+Includes all changes in CVS during the last 4 years
+- More configure options (debug, thai line catenation control)
+- C++ transition
+- Misceleneous bug fixes
+
+0.3.0 (2001-12-21)
+=====
+- First autotoolized version.
+
