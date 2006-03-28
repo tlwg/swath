@@ -1,0 +1,88 @@
+2006-03-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.1 ===
+
+2006-03-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Used section number instead of version number.
+
+2006-03-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* Makefile.am: Removed debian from SUBDIRS.
+
+	* configure.in: Removed debian/Makefile generation.
+
+2005-10-09  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Formatted configure options help strings with AC_HELP_STRING().
+	Used --disable/--enable help style rather than --enable with default
+	yes or no. Also disabled debug by default.
+
+2005-05-07  Chanop Silpa-Anan <chanop@debian.org>
+	* src/abswordseg.cpp:
+	A quick hack for Apple/Darwin: malloc is defined in stdlib.h instead
+	of a more common place malloc.h.
+
+2004-03-30  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* AUTHORS:
+	Fix my e-mail address.
+
+2003-04-04  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* conv/tis620.cxx, conv/utf8.cxx:
+	Use casting instead of declaring temp vars in dealing with
+	iostream::get() with unsigned char argument.
+
+2003-04-03  Chanop Silpa-Anan <chanop@debian.org>
+	* conv/{conv.cxx conv.h convfact.cxx convfact.h tis620.cxx tis620.h
+	  utf8.cxx utf8.}:
+	Clean up for g++-3.2: compilation errors, compiler warnings
+	and namespace issues.
+
+	* trie/{trie.h trie.cxx}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers.
+
+	* vmem/{dataheap.cxx dataheap.h vmem.cxx vmem.h}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers. Also use namespace std in .h files, a quick hack.
+
+2003-01-14  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* swath.spec.in:
+	Fix "%install" mess in comment (rpmbuild oddity)
+
+2002-09-24  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* src/wordseg.cpp:
+	Fix segfault in case of unknown file format.
+	Nicer "Usage:" handling.
+	Remove winlatex, maclatex from Usage:
+
+2002-09-23  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add --enable-debug to allow assertions disabling.
+
+	* configure.in, src/filterlatex.cpp:
+	Add --enable-catthai to allow Thai line catenation disabling.
+	(temporary solution, may be replaced with command-line option or
+	hard-coding later)
+
+2002-09-21  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add missing debian/Makefile in AC_OUTPUT.
+
+2001-12-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* GNU autotools files:
+	Rearrange source tree and apply GNU autotools.
+
+	* Version 0.3.0.
+
