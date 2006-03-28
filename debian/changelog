@@ -1,3 +1,21 @@
+swath (0.3.1-1) unstable; urgency=low
+
+  * New maintainer (Closes: #357877)
+  * New upstream release
+  * debian/control:
+    - put me as the maintainer
+    - changed standards version to 3.6.2.2
+  * debian/copyright:
+    - clarified maintainer info
+    - added copyright message
+  * debian/rules:
+    - removed replacement of upstream's config.guess and config.sub
+    - installed ChangeLog with dh_installchangelogs
+  * debian/docs:
+    - added to keep track of doc files
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Tue, 28 Mar 2006 15:37:40 +0700
+
 swath (0.3.0.cvs20030404) unstable; urgency=low
 
   * Snap-shot, fixes segfault bug.
