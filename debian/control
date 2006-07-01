@@ -3,7 +3,7 @@ Section: text
 Priority: optional
 Maintainer: Theppitak Karoonboonyanan <thep@linux.thai.net>
 Build-Depends: debhelper (>= 4.0.0)
-Standards-Version: 3.6.2.2
+Standards-Version: 3.7.2
 
 Package: swath
 Architecture: any
