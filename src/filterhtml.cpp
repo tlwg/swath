@@ -36,7 +36,7 @@ int tmp=0;
 		*token=chbuff;
 		chbuff=0; //clear the character buffer.
 	}
-	*thaiFlag=((*token)<0)? true:false;
+	*thaiFlag=((*token)&0x80)? true:false;
 	//loop for finding a token that containing only Thai characters or Eng+space characters
 	while (feof(fpin)==0){
 		*(token+1)=(char)fgetc(fpin);
@@ -45,7 +45,7 @@ int tmp=0;
 				if (*(token+1)=='\n'){
 					if (feof(fpin)!=0) break;
 					chbuff=(char)fgetc(fpin);
-					if (chbuff<0){
+					if (chbuff&0x80){
 						*(token+1)=chbuff;
 						chbuff=0;
 					}else{

@@ -28,7 +28,7 @@ FilterRTF::~FilterRTF()
 bool FilterRTF::GetNextToken(char * token, bool * thaiFlag)
 {
 char *sttoken,*tmp;
-int nextState,i=0,l;
+int nextState,i=0,l,c;
 
 	//sequence of characters is    \ ' x x (one character for Thai char)
 	strcpy(token,"");
@@ -38,12 +38,13 @@ int nextState,i=0,l;
 		return false;
 	if (strcmp(strbuff,"")==0){
 		do {
-			if ((*token=fgetc(fpin))==-1) {
+			if ((c=fgetc(fpin))==EOF) {
 				*thaiFlag=false;
 				*token=0;
 				token=sttoken;
 				return false;
 			}
+			*token=c;
 			nextState=chgCharState(*(token++),psState);
 			if (nextState <= psState)
 				break;
@@ -66,12 +67,13 @@ int nextState,i=0,l;
 		token=sttoken;
 		return false;
 	}
-	if ((*token=fgetc(fpin))==-1) {
+	if ((c=fgetc(fpin))==EOF) {
 		*thaiFlag=false;
 		*token=0;
 		token=sttoken;
 		return false;
 	}
+	*token=c;
 	
 
  	if (!(*thaiFlag)){
@@ -80,8 +82,8 @@ int nextState,i=0,l;
 		while (((!isSpace(*token++)) && 
 			   (nextState=chgCharState(token[-1],psState))!=4)){
 			psState=nextState;
-			if ((*token=fgetc(fpin))==-1) break;
-			
+			if ((c=fgetc(fpin))==EOF) break;
+			*token=c;
 		}
 		*token=0;
 		//found thai character
@@ -107,7 +109,8 @@ int nextState,i=0,l;
 				sscanf(tmp,"%x",&token[-4]);
 				token=&token[-3];
 			}
-			if ((*token=fgetc(fpin))==-1) break;
+			if ((c=fgetc(fpin))==EOF) break;
+			*token=c;
 		}		
 		*token=0;
 		tmp=&token[-1*(psState%4)-1];

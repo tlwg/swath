@@ -74,11 +74,11 @@ char *stVer;
 
 	while (isPunc(*curPtr))
 		curPtr++;
-	*thaiFlag=(*curPtr < 0)? true:false;
+	*thaiFlag=(*curPtr & 0x80)? true:false;
 	curPtr++;
 	if (*thaiFlag){
 		for(;;){ //for finding thai line + thailine +...+ thailine
-			while (*curPtr<0) {  //isPunc(*curPtr);
+			while (*curPtr & 0x80) {  //isPunc(*curPtr);
 				curPtr++;
 			}
 			if ((*curPtr!=0)&&(*curPtr!='\n')){

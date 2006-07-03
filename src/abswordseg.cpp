@@ -47,7 +47,8 @@ State curState,terState;
    amb_sep_cnt=0;
    for(i=0;i<len;i++) { //word boundry start at i and end at j.
 	
-	  if ( (IsLeadChar(sen[i])==0)||(IsLastChar(sen[i-1])==0) ){
+     if ( IsLeadChar((unsigned char)sen[i])||
+          IsLastChar((unsigned char)sen[i-1]) ){
          IdxSep[i]=-2; //cannot leading for unknown word.
 			continue;
       }
@@ -104,7 +105,7 @@ State curState,terState;
 			//found word in dictionary
             //To check word boundary,Is it should be segment or not????
 			//===========================================================
-			if ( !((Has_Karun(&sen[i+j],&en_word)) || (IsLeadChar(sen[i+j+1])==0)) ){
+			if ( !((Has_Karun(&sen[i+j],&en_word)) || IsLeadChar((unsigned char)sen[i+j+1])) ){
                LinkSep[cntLink]=i+j+1;
 			   LinkSep[cntLink+1]=-1; //debug 24 nov
 			   //LinkSepDataIdx[cntLink]=data_idx;
@@ -151,14 +152,14 @@ int i,sl;
    return true; //true<>0
 }
 
-bool AbsWordSeg::IsLeadChar(char ch){
-	if ( ((ch>=-49)&&(ch<=-39)) || ((ch>=-26)&&(ch<=-20)) )
+bool AbsWordSeg::IsLeadChar(unsigned char ch){
+	if ( ((0xcf<=ch)&&(ch<=0xd9)) || ((0xe6<=ch)&&(ch<=0xec)) )
 		return false; //false
 	else
 		return true; //true
 }
-bool AbsWordSeg::IsLastChar(char ch){
-	if ( ((ch>=-32)&&(ch<=-28))||(ch==-47) )
+bool AbsWordSeg::IsLastChar(unsigned char ch){
+	if ( ((0xe0<=ch)&&(ch<=0xe4))||(ch==0xd1) )
    	return false;
    else
    	return true;

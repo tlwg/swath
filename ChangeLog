@@ -1,3 +1,11 @@
+2006-07-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.{h,cpp} (IsLeadChar(), IsLastChar()),
+	src/filterhtml.cpp (GetNextToken()),
+	src/filterlatex.cpp (GetNextToken()),
+	src/filterrtf.cpp (GetNextToken()): Fixed char signedness portability
+	issues (found on s390, powerpc, arm builds by debian buildd).
+
 2006-03-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* configure.in, NEWS:
