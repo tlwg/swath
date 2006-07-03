@@ -36,8 +36,8 @@ protected:
 	virtual unsigned short int copySepData(short int sourceIdxSen,short int targetIdxSen,short int sepPoint);
 	void GetWord(short int idxsen,short int idx,char *buff);
 	//============Check Character Type Function============
-	bool IsLeadChar(char ch);
-	bool IsLastChar(char ch);
+	bool IsLeadChar(unsigned char ch);
+	bool IsLastChar(unsigned char ch);
 	bool IsNumber(char *str);
 	bool IsEnglish(char *str);
 	//============Check Karan rule=========================
