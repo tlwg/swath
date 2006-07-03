@@ -1,3 +1,9 @@
+swath (0.3.1-2) UNRELEASED; urgency=low
+
+  * debian/watch: Added.
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Mon,  3 Jul 2006 16:22:56 +0700
+
 swath (0.3.1-1) unstable; urgency=low
 
   * New maintainer (Closes: #357877)
