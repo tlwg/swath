@@ -3,7 +3,7 @@ MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 # ** to use midatrie **
 # INCLUDES = @MIDATRIE_CFLAGS@
 INCLUDES = -I$(top_srcdir)
-DEFS = -DWORDSEGDATA_DIR=\"@datadir@\"
+DEFS = -DWORDSEGDATA_DIR=\"${pkgdatadir}\"
 
 EXTRA_DIST = \
 	abswordseg.h \
