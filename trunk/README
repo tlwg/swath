@@ -1,0 +1,39 @@
+SWATH (Smart Word Analysis for THai)
+====================================
+
+Thai script has no word delimitor. While it's trivial for human readers to
+recognize word boundaries while reading, it requires some knowledge for the
+machine to do the same when wrapping lines or moving cursor word-wise, etc.
+Normally, applications need such feature to support Thai text processing.
+
+Swath is a general-purpose utility to workaround the lack of such capability
+in applications. It analyzes the given Thai text by consulting a Thai word
+list for word boundaries, before outputting the same text with the predefined
+word delimitors inserted.
+
+It can read many kinds of input, including plain text and structured documents
+like HTML, RTF, LaTeX and Lambda (Unicode version of LaTeX with Omega
+typesetter kernel). [See -f option].
+
+For the known documents, it inserts the common word delimitors used in the
+corresponding formats, and pipes (|) for plain text. But the user can always
+override this with a preferred delimitor. [See -b option.]
+
+Swath can also be configured to use different algorithms for the analysis.
+Currently, it supports two schemes: longest (greedy) matching and maximal
+(least words) matching. [See -m option.]
+
+EXAMPLES
+========
+
+- For LaTeX (to be used with thailatex package):
+
+  $ swath -f latex < mydoc.tex > mydoc.ttex
+  $ latex mydoc.ttex
+
+- For HTML (to provide web pages to web browsers that cannot wrap Thai lines
+  properly, but support the <wbr> tag):
+
+  $ swath -f html < mydoc.html > mydoc-wbr.html
+
+

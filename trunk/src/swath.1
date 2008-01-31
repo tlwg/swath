@@ -2,7 +2,7 @@
 .\" First parameter, NAME, should be all caps
 .\" Second parameter, SECTION, should be 1-8, maybe w/ subsection
 .\" other parameters are allowed: see man(7), man(1)
-.TH SWATH 1 "March 2006"
+.TH SWATH 1 "January 2008"
 .\" Please adjust this date whenever revising the manpage.
 .\"
 .\" Some roff macros, for reference:
@@ -16,32 +16,63 @@
 .\" .sp <n>    insert n+1 empty lines
 .\" for manpage-specific macros, see man(7)
 .SH NAME
-swath \- Thai word cut for TeTeX/LaTeX and other
+swath \- General-purpose Thai word segmentation utility
 .SH SYNOPSIS
 .B swath
-[options] \<\ infile.tex\ \>\ outfile.tex
+[options] \<\ \fIinfile\fP\ \>\ \fIoutfile\fP
 .br
 .SH DESCRIPTION
-This manual page documents briefly the
-.B swath
-commands.
-This manual page was written for the Debian GNU/Linux distribution
+Thai script has no word delimitor. Applications need some knowledge about
+Thai word list to recognize word boundaries before they can do useful things
+about Thai text, such as line wrapping.
 .sp
-Use swath on your TeX/LaTeX file before LaTexing. For example,
+Swath provides word analysis filter to insert word delimitors in a text
+stream. It reads text from standard input, analyze it for word boundaries
+by consulting a Thai word list, and output to standard output the same text
+with the predefined word delimitors inserted.
 .sp
-$ 
-.B swath
--f latex < thaifile.tex > thaifile.ttex
+Currently, it can read plain text, HTML, RTF, LaTeX and Lambda (Unicode version
+of LaTeX with Omega typesetter kernel) documents and insert commonly used word
+delimitors for each format (pipe `|' for plain text). But the user can always
+override this with a preferred delimitor.
+.SH OPTIONS
+.TP
+.B \-b [\fIdelimitor\fP]
+Define a string to be used as word delimitor code in the output text.
+.TP
+.B \-d [\fIdict-dir\fP]
+Specify alternative dictionary location. \fIdict-dir\fP must contain the swath
+dictionary files `swathdic.br' and `swathdic.tl'.
+.TP
+.B \-f [\fIformat\fP]
+Specify format of the input. Possible formats are: html, rtf, latex, lambda.
+.TP
+.B \-m [\fIscheme\fP]
+Choose word matching scheme when analyzing word boundaries. Possible schemes
+are `long' (for longest or greedy matching) and `max' (for maximal matching,
+with least words preferred).
+.TP
+.B \-v
+Turn on verbose mode.
+.TP
+.B \-help, \-\-help
+Show help.
+.SH EXAMPLES
+For LaTeX (to be used with thailatex package):
+.sp
+$ \fBswath\fP -f latex < thaifile.tex > thaifile.ttex
 .br
-$ 
-.B latex
-thaifile.ttex
+$ \fBlatex\fP thaifile.ttex
 .sp
-.SH MORE INFORMATION
-.B swath
--help
+For HTML (to provide web pages to web browsers that cannot wrap Thai lines
+properly, but support the <wbr> tag.):
+.sp
+$ \fBswath\fP -f html < myweb.html > myweb-wbr.html
+.sp
+To use maximal matching scheme with LaTeX document:
+.sp
+$ \fBswath\fP -f latex -m max < thaifile.tex > thaifile.ttex
 .br
-.b:dis:r
+$ \fBlatex\fP thaifile.ttex
 .SH AUTHOR
-This manual page was written by Chanop Silpa-Anan <chanop@debian.org>,
-for the Debian GNU/Linux system (but may be used by others).
+This manual page was written by Theppitak Karoonboonyanan <thep@linux.thai.net>.
