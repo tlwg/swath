@@ -1,5 +1,10 @@
 2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (Usage): Revise wording for the help message.
+	Use string catenation instead of separate printf's.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* README: Write document.
 	* src/swath.1: Rewrite the whole page, with more detailed info.
 
