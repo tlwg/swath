@@ -98,25 +98,27 @@ void WordSegmentation(AbsWordSeg **wseg, char *wbr, char *line, char* output)
 
 static void Usage(int verbose)
 {
-    printf("Usage: swath [mule|-v] [-b \"wordseperator\"] [-d wordsegdatadir]\n"
+    printf("Usage: swath [mule|-v] [-b \"delimitor\"] [-d dict-dir]\n"
            "[-f html|rtf|latex|lambda] [-m long|max] [-l] [-help]\n");
     if (verbose) {
-	  printf("\tOption mule : for mule\n");
-	  printf("\tOption -v   : verbose mode\n");
-	  printf("\tOption -b   : user define a word seperator\n");
-	  printf("\tOption -d   : set a new data path\n");
-	  printf("\tOption -f   : specify a format of an input file\n");
-	  printf("\t\t html     : html file\n");
-	  printf("\t\t rtf      : rtf file\n");
-	  printf("\t\t latex    : LaTeX file\n");
-	  printf("\t\t lambda	: An input and output are same as latex but only\n\t\t\t word break strings are ^^^^^^^^200c\n");
-//	  printf("\t\t winlatex : LaTeX file shaping on Windows\n");
-//	  printf("\t\t maclatex : LaTeX file shaping on Macintosh\n");
-	  printf("\tOption -m   : choose an algorithm of word segmentation\n");
-	  printf("\t\t long     : longest matching algorithm\n");
-	  printf("\t\t max      : maximal matching algorithm\n");
-	  printf("\tOption -l   : line processing(effect only in a bigram algo.)\n");
-	  printf("\tOption -help: Help\n");
+	  printf("Options:\n"
+	         "\tmule : for use with mule\n"
+	         "\t-v   : verbose mode\n"
+	         "\t-b   : define a word delimitor string for the output\n"
+	         "\t-d   : specify dictionary path\n"
+	         "\t-f   : specify format of the input\n"
+	         "\t\thtml     : HTML file\n"
+	         "\t\trtf      : RTF file\n"
+	         "\t\tlatex    : LaTeX file\n"
+	         "\t\tlambda   : The input and output are same as latex, except that\n"
+	         "\t\t           the word delimitor is ^^^^^^^^200c\n"
+//	         "\t\twinlatex : LaTeX file shaping on Windows\n"
+//	         "\t\tmaclatex : LaTeX file shaping on Macintosh\n"
+	         "\t-m   : choose word matching scheme when analyzing\n"
+	         "\t\tlong     : longest matching scheme\n"
+	         "\t\tmax      : maximal matching scheme\n"
+//	         "\t-l   : line processing(effect only in a bigram algo.)\n"
+	         "\t-help: Help\n");
     }
 }
 
