@@ -1,5 +1,10 @@
 2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* README: Write document.
+	* src/swath.1: Rewrite the whole page, with more detailed info.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* data/Makefile.am: Install dict in ${pkgdatadir}, not ${datadir}.
 	* src/Makefile.am: Update dict location macro acoordingly.
 
