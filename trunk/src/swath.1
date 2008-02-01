@@ -50,9 +50,15 @@ Specify format of the input. Possible formats are: html, rtf, latex, lambda.
 .B \-m [\fIscheme\fP]
 Choose word matching scheme when analyzing word boundaries. Possible schemes
 are `long' (for longest or greedy matching) and `max' (for maximal matching,
-with least words preferred).
+with least words preferred). Maximal matching is the default value.
 .TP
-.B \-v
+.B \-u \fIinput-enc\fP,\fIoutput-enc\fP
+Specify encodings of input and output. \fIinput-enc\fP and \fIoutput-enc\fP
+can be one of 'u' (for UTF-8 encoding) and 't' (for TIS-620 encoding).
+Swath will convert the character encoding as necessary. If omitted, TIS-620
+encodings on both input and output are assumed.
+.TP
+.B \-v, \-\-verbose
 Turn on verbose mode.
 .TP
 .B \-help, \-\-help
@@ -65,13 +71,27 @@ $ \fBswath\fP -f latex < thaifile.tex > thaifile.ttex
 $ \fBlatex\fP thaifile.ttex
 .sp
 For HTML (to provide web pages to web browsers that cannot wrap Thai lines
-properly, but support the <wbr> tag.):
+properly, but support the <wbr> tag):
 .sp
 $ \fBswath\fP -f html < myweb.html > myweb-wbr.html
 .sp
-To use maximal matching scheme with LaTeX document:
+To preprocess a Thai UTF-8 encoded LaTeX file for thailatex, which always works 
+with TIS-620:
 .sp
-$ \fBswath\fP -f latex -m max < thaifile.tex > thaifile.ttex
+$ \fBswath\fP -f latex -u u,t < thaifile.tex > thaifile.ttex
+.br
+$ \fBlatex\fP thaifile.ttex
+.sp
+This is equivalent to filtering with \fBiconv(1)\fP:
+.sp
+$ \fBiconv\fP -f UTF-8 -t TIS-620 thaifile.tex | \fBswath\fP -f latex > 
+thaifile.ttex
+.br
+$ \fBlatex\fP thaifile.ttex
+.sp
+To use longest matching scheme with LaTeX document:
+.sp
+$ \fBswath\fP -f latex -m long < thaifile.tex > thaifile.ttex
 .br
 $ \fBlatex\fP thaifile.ttex
 .SH AUTHOR
