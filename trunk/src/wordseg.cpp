@@ -143,50 +143,56 @@ int main(int argc, char *argv[])
   strcpy(wbr, "|");
   strcpy(mulestr,"");
   for (int iargc = 1; iargc < argc; iargc++) {
-	  if (strcmp("mule", argv[iargc]) == 0){
-		strcpy(mulestr,"mule");
-		mode = 1;
-	  }else if (strcmp("-b", argv[iargc]) == 0 && iargc + 1 < argc) {
+    if (strcmp("mule", argv[iargc]) == 0){
+      strcpy(mulestr,"mule");
+      mode = 1;
+    } else if (strcmp("-b", argv[iargc]) == 0 && iargc + 1 < argc) {
       iargc++;
       delete wbr;
       wbr = new char[strlen(argv[iargc]) + 1];
       strcpy(wbr, argv[iargc]);
-      continue;
     } else if (strcmp("-d", argv[iargc]) == 0 && iargc + 1 < argc) {
       iargc++;
       wsegpath = new char[strlen(argv[iargc]) + 1];
       strcpy(wsegpath, argv[iargc]);
-      continue;
     } else if (strcmp("-f", argv[iargc]) == 0 && iargc + 1 < argc) {
       iargc++;
       fileformat = new char[strlen(argv[iargc]) + 1];
       strcpy(fileformat, argv[iargc]);
-      continue;
-    } else if (strcmp("-v", argv[iargc]) == 0 ) {
-	  mode=0;
+    } else if (strcmp("-v", argv[iargc]) == 0 ||
+               strcmp("--verbose", argv[iargc]) == 0)
+    {
+      mode=0;
     } else if (strcmp("-m", argv[iargc]) == 0 && iargc + 1 < argc) {
       iargc++;
       method = new char[strlen(argv[iargc]) + 1];
-	  strcpy(method,argv[iargc]);
-      continue;
-	} else if (strcmp("-l", argv[iargc]) == 0 ) {
-		//send only token which has no white space in to wordseg
-		wholeLine=true;
-	} else if (strcmp("-u", argv[iargc]) ==0 ) {
-		iargc++; // format
-		unicode = new char[strlen(argv[iargc]) + 1];
-		strcpy(unicode, argv[iargc]);
-	}else if (strcmp("-help", argv[iargc]) == 0 ) {
-		Usage(1);
-		delete wbr;
-		delete wsegpath;
-		return 1;
-	}else{
-		Usage(0);
-		delete wbr;
-		delete wsegpath;
-		return 1;
-	}
+      strcpy(method,argv[iargc]);
+    } else if (strcmp("-l", argv[iargc]) == 0) {
+      //send only token which has no white space in to wordseg
+      wholeLine=true;
+    } else if (strcmp("-u", argv[iargc]) ==0 && iargc + 1 < argc) {
+      iargc++; // format
+      unicode = new char[strlen(argv[iargc]) + 1];
+      strcpy(unicode, argv[iargc]);
+    } else if (strcmp("-help", argv[iargc]) == 0 ||
+               strcmp("--help", argv[iargc]) == 0)
+    {
+      Usage(1);
+      delete wbr;
+      delete wsegpath;
+      delete fileformat;
+      delete method;
+      delete unicode;
+      return 1;
+    } else {
+      Usage(0);
+      delete wbr;
+      delete wsegpath;
+      delete fileformat;
+      delete method;
+      delete unicode;
+      return 1;
+    }
   }
 
   if (mode == 0) printf("*** Word Segmentation ***\n");

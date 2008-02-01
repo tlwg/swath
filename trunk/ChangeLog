@@ -1,3 +1,13 @@
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main):
+	  - Also accept '--verbose' and '--help' options.
+	  - Adjust indents around the code, for readability.
+	  - Remove unnecessary continue's.
+	  - Check boundary of argc for '-u' parsing.
+	  - Free more allocated data (fileformat, method, unicode) on return
+	    after printing usage.
+
 2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/wordseg.cpp (Usage): Revise wording for the help message.
