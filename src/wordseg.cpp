@@ -99,7 +99,7 @@ void WordSegmentation(AbsWordSeg **wseg, char *wbr, char *line, char* output)
 static void Usage(int verbose)
 {
     printf("Usage: swath [mule|-v] [-b \"delimitor\"] [-d dict-dir]\n"
-           "[-f html|rtf|latex|lambda] [-m long|max] [-l] [-help]\n");
+           "[-f html|rtf|latex|lambda] [-m long|max] [-u {u|t},{u|t}] [-help]\n");
     if (verbose) {
 	  printf("Options:\n"
 	         "\tmule : for use with mule\n"
@@ -118,7 +118,11 @@ static void Usage(int verbose)
 	         "\t\tlong     : longest matching scheme\n"
 	         "\t\tmax      : maximal matching scheme\n"
 //	         "\t-l   : line processing(effect only in a bigram algo.)\n"
-	         "\t-help: Help\n");
+	         "\t-u   : specify encodings of input and output in 'i,o' form,\n"
+	         "\t       for input and output respectively, where 'i', 'o' is one of:\n"
+		 "\t\tu        : The input/output is in UTF-8\n"
+		 "\t\tt        : The input/output is in TIS-620\n"
+	         "\t-help: display this help message\n");
     }
 }
 

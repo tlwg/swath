@@ -1,5 +1,17 @@
 2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Reveal the encoding conversion feature to users.
+
+	* src/wordseg.cpp (Usage): Add '-u' option in help message.
+	* src/swath.1: Add documentation for '-u' option, with example.
+	* README: Mention the '-u' option for UTF-8 LaTeX files. Indent the
+	sample codes for readability.
+
+	* src/swath.1: Document the default matching scheme, and adjust the
+	example accordingly.
+
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (main):
 	  - Also accept '--verbose' and '--help' options.
 	  - Adjust indents around the code, for readability.

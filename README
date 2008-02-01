@@ -28,12 +28,22 @@ EXAMPLES
 
 - For LaTeX (to be used with thailatex package):
 
-  $ swath -f latex < mydoc.tex > mydoc.ttex
-  $ latex mydoc.ttex
+    $ swath -f latex < mydoc.tex > mydoc.ttex
+    $ latex mydoc.ttex
+
+  Or if you composed your LaTeX source in UTF-8:
+
+    $ swath -f latex -u u,t mydoc.tex > mydoc.ttex
+    $ latex mydoc.ttex
+
+  This is equivalent to filtering with iconv(1):
+
+    $ iconv -f UTF-8 -t TIS-620 mydoc.tex | swath -f latex > mydoc.ttex
+    $ latex mydoc.ttex
 
 - For HTML (to provide web pages to web browsers that cannot wrap Thai lines
   properly, but support the <wbr> tag):
 
-  $ swath -f html < mydoc.html > mydoc-wbr.html
+    $ swath -f html < mydoc.html > mydoc-wbr.html
 
 
