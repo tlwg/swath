@@ -1,0 +1,14 @@
+Source: swath
+Section: text
+Priority: optional
+Maintainer: Theppitak Karoonboonyanan <thep@linux.thai.net>
+Build-Depends: debhelper (>= 4.0.0)
+Standards-Version: 3.7.2
+
+Package: swath
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Thai word segmentation program
+ This is a free word segmentation program from NECTEC.
+ You need this program for thailatex and for creating proper
+ Thai html pages. It is a better choice than cttex.

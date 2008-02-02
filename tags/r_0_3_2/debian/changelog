@@ -1,0 +1,40 @@
+swath (0.3.1-2) UNRELEASED; urgency=low
+
+  * debian/watch: Added.
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Mon,  3 Jul 2006 16:22:56 +0700
+
+swath (0.3.1-1) unstable; urgency=low
+
+  * New maintainer (Closes: #357877)
+  * New upstream release
+  * Repackaged as non-native
+  * Built with g++ 4.1
+  * debian/control:
+    - put me as the maintainer
+    - changed standards version to 3.7.2, no changes needed
+  * debian/copyright:
+    - clarified maintainer info
+    - added copyright message
+  * debian/rules:
+    - removed replacement of upstream's config.guess and config.sub
+    - installed upstream ChangeLog with dh_installchangelogs
+  * debian/docs:
+    - added to keep track of doc files
+    - installed upstream NEWS
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Sat,  1 Jul 2006 11:27:08 +0700
+
+swath (0.3.0.cvs20030404) unstable; urgency=low
+
+  * Snap-shot, fixes segfault bug.
+  * Update to g++-3.2.
+
+ -- Chanop Silpa-Anan <chanop@debian.org>  Thu,  3 Apr 2003 20:10:05 +1000
+
+swath (0.3.0.cvs20020221) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Chanop Silpa-Anan <chanop@debian.org>  Thu, 21 Feb 2002 18:13:31 +1100
+
