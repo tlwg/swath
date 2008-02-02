@@ -1,3 +1,8 @@
+2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Remove unused ISODATE var. Remove checks for CC and
+	CPP. Just CXX is enough.
+
 2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Reveal the encoding conversion feature to users.
