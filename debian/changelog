@@ -1,8 +1,34 @@
-swath (0.3.1-2) UNRELEASED; urgency=low
+swath (0.3.2-1) unstable; urgency=low
 
   * debian/watch: Added.
+  * debian/copyright: Update source URL. Rewrite in machine-interpretable
+    format.
+  * Add Vcs-Cvs, Vcs-Browser and Homepage info.
+  * New upstream release
+    - Fix char signedness portability issues.
+    - Improved messages and documentation.
+  * Revise package description, to follow upstream docs.
+  * debhelper compatibility level 5, and Build-dep on debhelper (>= 5.0.0).
+  * Bump Standards-Version to 3.7.3, no changes needed.
+  * debian/rules adjustments:
+    - Pass --host=$(DEB_HOST_GNU_TYPE) to configure only when cross compiling.
+    - Do not force datadir to /usr/lib/swath; let's install dict data, which
+      is arch-indep, under /usr/share as upstream does.
+    - Do not ignore 'make distclean' errors.
+    - Update config.guess and config.sub with autotools-dev, without including
+      the changes in .diff.gz. Add Build-dep accordingly.
+  * debian/docs: Install upstream README.
+  * Fix CVSROOT in Vcs-Cvs, so it really works with debcheckout.
+  * Build-dep on dpkg-dev (>= 1.14.13), for proper support of Vcs-Cvs field.
+  * Corrections by Paul Wise's comments:
+    + debian/control: Fix wording in package description.
+    + debian/copyright: Don't refer to file in License field.
+    + debian/rules:
+      - Don't handle nostrip, as dh_strip already does.
+      - Remove -j2 make option.
+      - Pass CFLAGS to configure.
 
- -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Mon,  3 Jul 2006 16:22:56 +0700
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Wed, 06 Feb 2008 18:34:24 +0700
 
 swath (0.3.1-1) unstable; urgency=low
 
