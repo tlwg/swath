@@ -1,3 +1,7 @@
+2008-02-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Escape minus signs. Thanks debian's lintian.
+
 2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* configure.in, NEWS:
