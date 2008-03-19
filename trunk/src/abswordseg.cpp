@@ -47,8 +47,8 @@ State curState,terState;
    amb_sep_cnt=0;
    for(i=0;i<len;i++) { //word boundry start at i and end at j.
 	
-     if ( IsLeadChar((unsigned char)sen[i])||
-          IsLastChar((unsigned char)sen[i-1]) ){
+     if ( !IsLeadChar((unsigned char)sen[i])||
+          !IsLastChar((unsigned char)sen[i-1]) ){
          IdxSep[i]=-2; //cannot leading for unknown word.
 			continue;
       }
@@ -105,7 +105,7 @@ State curState,terState;
 			//found word in dictionary
             //To check word boundary,Is it should be segment or not????
 			//===========================================================
-			if ( !((Has_Karun(&sen[i+j],&en_word)) || IsLeadChar((unsigned char)sen[i+j+1])) ){
+			if ( !((Has_Karun(&sen[i+j],&en_word)) || !IsLeadChar((unsigned char)sen[i+j+1])) ){
                LinkSep[cntLink]=i+j+1;
 			   LinkSep[cntLink+1]=-1; //debug 24 nov
 			   //LinkSepDataIdx[cntLink]=data_idx;

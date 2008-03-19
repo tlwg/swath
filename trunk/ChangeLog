@@ -1,3 +1,9 @@
+2008-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList): Fix logical errors
+	introduced during portability fix, which made swath not break any
+	word. Bug report by Pisut Tempatarachoke.
+
 2008-02-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/swath.1: Escape minus signs. Thanks debian's lintian.
