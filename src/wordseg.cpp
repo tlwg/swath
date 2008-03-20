@@ -214,7 +214,6 @@ int main(int argc, char *argv[])
   }
 
   AbsWordSeg *wseg;
-  FileFilter *FileFlt;
   FilterX *FltX;
   
   char line[MAXCHAR+1], output[MAXCHAR*2+1];
@@ -247,8 +246,7 @@ int main(int argc, char *argv[])
 	  }
   }
   if (fileformat!=NULL) {
-	  FileFlt=new FileFilter();
-	  FltX=FileFlt->CreateFilter(tmpin,tmpout,fileformat);
+	  FltX=FileFilter::CreateFilter(tmpin,tmpout,fileformat);
 	  if (FltX==NULL) {
 		printf("Invalid file format: %s\n", fileformat);
 		// FIXME: still mem leak hmm..

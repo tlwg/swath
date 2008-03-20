@@ -9,17 +9,12 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-#include "filterhtml.h"
-#include "filterrtf.h"
-#include "filterlatex.h"
-#include "filterlambda.h"
+#include "filterx.h"
 
 class FileFilter
 {
 public:
-	FilterX * CreateFilter(char *filein, char *fileout, char *fileformat);
-	FileFilter();
-	virtual ~FileFilter();
+  static FilterX* CreateFilter(char *filein, char *fileout, char *fileformat);
 };
 
 #endif // !defined(AFX_FILEFILTER_H__5FA01279_2213_11D3_B449_00105A5C2417__INCLUDED_)

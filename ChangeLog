@@ -1,5 +1,14 @@
 2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filefilter.{h,cpp}: Make "FileFilter" an empty class with a
+	single static method CreateFilter(). The full-fledged
+	{con,de}structors are just unnecessary.
+
+	* src/wordseg.cpp (main): Create FilterX with the static method.
+	Remove now-unneeded FileFilter variable.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (main): Delete filter X object after finishing
 	wordseg, so output file gets flushed.
 
