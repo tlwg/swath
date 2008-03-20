@@ -5,19 +5,10 @@
 #include <string.h>
 #include "filefilter.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-FileFilter::FileFilter() 
-{
-//Enter constuctor
-}
-
-FileFilter::~FileFilter()
-{
-//Enter destructor
-}
+#include "filterhtml.h"
+#include "filterrtf.h"
+#include "filterlatex.h"
+#include "filterlambda.h"
 
 FilterX* FileFilter::CreateFilter(char *filein, char *fileout, char *fileformat)
 {
