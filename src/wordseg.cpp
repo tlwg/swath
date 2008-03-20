@@ -239,11 +239,11 @@ int main(int argc, char *argv[])
   char *tmpout=NULL, *tmpin=NULL;
   if (unicode!=NULL) { //Option -u
 	  if (unicode[0]=='u') { //unicode input file.
-		  tmpin = tmpnam( NULL );
+		  tmpin = strdup(tmpnam(NULL));
 		  conv('t', NULL, tmpin);
 	  }
 	  if (unicode[2]=='u'){
-		  tmpout = tmpnam( NULL );
+		  tmpout = strdup(tmpnam(NULL));
 	  }
   }
   if (fileformat!=NULL) {
@@ -315,11 +315,13 @@ int main(int argc, char *argv[])
 			fclose(fpout);
 		  conv('u', tmpout, NULL);
 		  remove(tmpout);
+		  free(tmpout);
 	  }
 	  if (unicode[0]=='u') {
 		  if (fpout!=stdin)
 			fclose(fpin);
 		  remove(tmpin);
+		  free(tmpin);
 	  }
 	  delete unicode;
   }
