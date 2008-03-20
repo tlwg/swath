@@ -1,5 +1,10 @@
 2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (main): Delete filter X object after finishing
+	wordseg, so output file gets flushed.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (main): duplicate tmpnam() results, instead of mere
 	pointer assignment, as the returned value is pointer to static buffer,
 	resulting in the same names for tmpin and tmpout. Fixing
