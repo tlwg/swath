@@ -214,7 +214,6 @@ int main(int argc, char *argv[])
   }
 
   AbsWordSeg *wseg;
-  FilterX *FltX;
   
   char line[MAXCHAR+1], output[MAXCHAR*2+1];
   int i;
@@ -246,7 +245,7 @@ int main(int argc, char *argv[])
 	  }
   }
   if (fileformat!=NULL) {
-	  FltX=FileFilter::CreateFilter(tmpin,tmpout,fileformat);
+	  FilterX* FltX = FileFilter::CreateFilter(tmpin,tmpout,fileformat);
 	  if (FltX==NULL) {
 		printf("Invalid file format: %s\n", fileformat);
 		// FIXME: still mem leak hmm..
@@ -263,16 +262,16 @@ int main(int argc, char *argv[])
 	  }
 	  delete FltX;
   }else{
-  if (tmpin)
-	fpin=fopen(tmpin,"r"); //set fpin
-  if (tmpout)
-	fpout=fopen(tmpout, "w"); //set fpout
+	  if (tmpin)
+		fpin=fopen(tmpin,"r"); //set fpin
+	  if (tmpout)
+		fpout=fopen(tmpout, "w"); //set fpout
 
 	  char stopstr[20];
 	  if (strcmp(mulestr,"mule")==0)
-		  strcpy(stopstr,wbr);
+		strcpy(stopstr,wbr);
 	  else
-		  strcpy(stopstr,"");
+		strcpy(stopstr,"");
 	  for (;;) { // read until end of file.
 		if (mode == 0) printf("Input : ");
 		for (i = 0; ((c = fgetc( fpin )) != '\n')

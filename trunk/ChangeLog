@@ -1,5 +1,10 @@
 2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (main): Move FltX variable into if-block. Beutify
+	some indents.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filefilter.{h,cpp}: Make "FileFilter" an empty class with a
 	single static method CreateFilter(). The full-fledged
 	{con,de}structors are just unnecessary.
