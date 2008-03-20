@@ -1,5 +1,9 @@
 2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/swath.1: Escape more minus signs. [lintian]
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* configure.in, NEWS:
 	=== Version 0.3.3 ===
 

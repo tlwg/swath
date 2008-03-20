@@ -78,7 +78,7 @@ $ \fBswath\fP \-f html < myweb.html > myweb-wbr.html
 To preprocess a Thai UTF-8 encoded LaTeX file for thailatex, which always works 
 with TIS-620:
 .sp
-$ \fBswath\fP \-f latex -u u,t < thaifile.tex > thaifile.ttex
+$ \fBswath\fP \-f latex \-u u,t < thaifile.tex > thaifile.ttex
 .br
 $ \fBlatex\fP thaifile.ttex
 .sp
@@ -91,7 +91,7 @@ $ \fBlatex\fP thaifile.ttex
 .sp
 To use longest matching scheme with LaTeX document:
 .sp
-$ \fBswath\fP \-f latex -m long < thaifile.tex > thaifile.ttex
+$ \fBswath\fP \-f latex \-m long < thaifile.tex > thaifile.ttex
 .br
 $ \fBlatex\fP thaifile.ttex
 .SH AUTHOR
