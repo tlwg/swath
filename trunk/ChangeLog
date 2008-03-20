@@ -1,5 +1,10 @@
 2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* configure.in, NEWS:
+	=== Version 0.3.3 ===
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (main): Move FltX variable into if-block. Beutify
 	some indents.
 
