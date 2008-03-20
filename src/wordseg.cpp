@@ -263,6 +263,7 @@ int main(int argc, char *argv[])
 		WordSegmentation(&wseg, wbr, line, output);
 		FltX->Print(output,thaifag);
 	  }
+	  delete FltX;
   }else{
   if (tmpin)
 	fpin=fopen(tmpin,"r"); //set fpin
