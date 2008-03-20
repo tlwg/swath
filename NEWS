@@ -1,3 +1,11 @@
+0.3.3 (2008-03-20)
+=====
+- Fix regression introduced during portability fix in 0.3.2.
+  (Bug report by Pisut Tempatarachoke)
+- Fix bug that prevent '-u u,u' from working.
+  (Bug report by Neutron Soutmun)
+- Minor code and doc improvements.
+
 0.3.2 (2008-02-02)
 =====
 - Fix char signedness portability issues.
