@@ -1,0 +1,66 @@
+swath (0.3.2-1) unstable; urgency=low
+
+  * debian/watch: Added.
+  * debian/copyright: Update source URL. Rewrite in machine-interpretable
+    format.
+  * Add Vcs-Cvs, Vcs-Browser and Homepage info.
+  * New upstream release
+    - Fix char signedness portability issues.
+    - Improved messages and documentation.
+  * Revise package description, to follow upstream docs.
+  * debhelper compatibility level 5, and Build-dep on debhelper (>= 5.0.0).
+  * Bump Standards-Version to 3.7.3, no changes needed.
+  * debian/rules adjustments:
+    - Pass --host=$(DEB_HOST_GNU_TYPE) to configure only when cross compiling.
+    - Do not force datadir to /usr/lib/swath; let's install dict data, which
+      is arch-indep, under /usr/share as upstream does.
+    - Do not ignore 'make distclean' errors.
+    - Update config.guess and config.sub with autotools-dev, without including
+      the changes in .diff.gz. Add Build-dep accordingly.
+  * debian/docs: Install upstream README.
+  * Fix CVSROOT in Vcs-Cvs, so it really works with debcheckout.
+  * Build-dep on dpkg-dev (>= 1.14.13), for proper support of Vcs-Cvs field.
+  * Corrections by Paul Wise's comments:
+    + debian/control: Fix wording in package description.
+    + debian/copyright: Don't refer to file in License field.
+    + debian/rules:
+      - Don't handle nostrip, as dh_strip already does.
+      - Remove -j2 make option.
+      - Pass CFLAGS to configure.
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Wed, 06 Feb 2008 18:34:24 +0700
+
+swath (0.3.1-1) unstable; urgency=low
+
+  * New maintainer (Closes: #357877)
+  * New upstream release
+  * Repackaged as non-native
+  * Built with g++ 4.1
+  * debian/control:
+    - put me as the maintainer
+    - changed standards version to 3.7.2, no changes needed
+  * debian/copyright:
+    - clarified maintainer info
+    - added copyright message
+  * debian/rules:
+    - removed replacement of upstream's config.guess and config.sub
+    - installed upstream ChangeLog with dh_installchangelogs
+  * debian/docs:
+    - added to keep track of doc files
+    - installed upstream NEWS
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Sat,  1 Jul 2006 11:27:08 +0700
+
+swath (0.3.0.cvs20030404) unstable; urgency=low
+
+  * Snap-shot, fixes segfault bug.
+  * Update to g++-3.2.
+
+ -- Chanop Silpa-Anan <chanop@debian.org>  Thu,  3 Apr 2003 20:10:05 +1000
+
+swath (0.3.0.cvs20020221) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Chanop Silpa-Anan <chanop@debian.org>  Thu, 21 Feb 2002 18:13:31 +1100
+

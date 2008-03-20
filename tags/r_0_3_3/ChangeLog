@@ -1,0 +1,184 @@
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.3 ===
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Move FltX variable into if-block. Beutify
+	some indents.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filefilter.{h,cpp}: Make "FileFilter" an empty class with a
+	single static method CreateFilter(). The full-fledged
+	{con,de}structors are just unnecessary.
+
+	* src/wordseg.cpp (main): Create FilterX with the static method.
+	Remove now-unneeded FileFilter variable.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Delete filter X object after finishing
+	wordseg, so output file gets flushed.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): duplicate tmpnam() results, instead of mere
+	pointer assignment, as the returned value is pointer to static buffer,
+	resulting in the same names for tmpin and tmpout. Fixing
+	non-functional '-u u,u' option. Bug report by Neutron Soutmun.
+
+2008-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList): Fix logical errors
+	introduced during portability fix, which made swath not break any
+	word. Bug report by Pisut Tempatarachoke.
+
+2008-02-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Escape minus signs. Thanks debian's lintian.
+
+2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.2 ===
+
+2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Remove unused ISODATE var. Remove checks for CC and
+	CPP. Just CXX is enough.
+
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Reveal the encoding conversion feature to users.
+
+	* src/wordseg.cpp (Usage): Add '-u' option in help message.
+	* src/swath.1: Add documentation for '-u' option, with example.
+	* README: Mention the '-u' option for UTF-8 LaTeX files. Indent the
+	sample codes for readability.
+
+	* src/swath.1: Document the default matching scheme, and adjust the
+	example accordingly.
+
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main):
+	  - Also accept '--verbose' and '--help' options.
+	  - Adjust indents around the code, for readability.
+	  - Remove unnecessary continue's.
+	  - Check boundary of argc for '-u' parsing.
+	  - Free more allocated data (fileformat, method, unicode) on return
+	    after printing usage.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (Usage): Revise wording for the help message.
+	Use string catenation instead of separate printf's.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* README: Write document.
+	* src/swath.1: Rewrite the whole page, with more detailed info.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am: Install dict in ${pkgdatadir}, not ${datadir}.
+	* src/Makefile.am: Update dict location macro acoordingly.
+
+2006-07-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.{h,cpp} (IsLeadChar(), IsLastChar()),
+	src/filterhtml.cpp (GetNextToken()),
+	src/filterlatex.cpp (GetNextToken()),
+	src/filterrtf.cpp (GetNextToken()): Fixed char signedness portability
+	issues (found on s390, powerpc, arm builds by debian buildd).
+
+2006-03-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.1 ===
+
+2006-03-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Used section number instead of version number.
+
+2006-03-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* Makefile.am: Removed debian from SUBDIRS.
+
+	* configure.in: Removed debian/Makefile generation.
+
+2005-10-09  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Formatted configure options help strings with AC_HELP_STRING().
+	Used --disable/--enable help style rather than --enable with default
+	yes or no. Also disabled debug by default.
+
+2005-05-07  Chanop Silpa-Anan <chanop@debian.org>
+	* src/abswordseg.cpp:
+	A quick hack for Apple/Darwin: malloc is defined in stdlib.h instead
+	of a more common place malloc.h.
+
+2004-03-30  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* AUTHORS:
+	Fix my e-mail address.
+
+2003-04-04  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* conv/tis620.cxx, conv/utf8.cxx:
+	Use casting instead of declaring temp vars in dealing with
+	iostream::get() with unsigned char argument.
+
+2003-04-03  Chanop Silpa-Anan <chanop@debian.org>
+	* conv/{conv.cxx conv.h convfact.cxx convfact.h tis620.cxx tis620.h
+	  utf8.cxx utf8.}:
+	Clean up for g++-3.2: compilation errors, compiler warnings
+	and namespace issues.
+
+	* trie/{trie.h trie.cxx}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers.
+
+	* vmem/{dataheap.cxx dataheap.h vmem.cxx vmem.h}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers. Also use namespace std in .h files, a quick hack.
+
+2003-01-14  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* swath.spec.in:
+	Fix "%install" mess in comment (rpmbuild oddity)
+
+2002-09-24  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* src/wordseg.cpp:
+	Fix segfault in case of unknown file format.
+	Nicer "Usage:" handling.
+	Remove winlatex, maclatex from Usage:
+
+2002-09-23  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add --enable-debug to allow assertions disabling.
+
+	* configure.in, src/filterlatex.cpp:
+	Add --enable-catthai to allow Thai line catenation disabling.
+	(temporary solution, may be replaced with command-line option or
+	hard-coding later)
+
+2002-09-21  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add missing debian/Makefile in AC_OUTPUT.
+
+2001-12-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* GNU autotools files:
+	Rearrange source tree and apply GNU autotools.
+
+	* Version 0.3.0.
+
