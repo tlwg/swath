@@ -1,3 +1,14 @@
+swath (0.3.3-1) unstable; urgency=low
+
+  * New upstream release
+    - Fix regression introduced during portability fix in 0.3.2.
+    - Fix bug that prevent '-u u,u' from working.
+    - Minor code and doc improvements.
+  * src/swath.1: Pull fix from upstream CVS for more minus sign escaping.
+    [lintian]
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Thu, 20 Mar 2008 19:20:01 +0700
+
 swath (0.3.2-1) unstable; urgency=low
 
   * debian/watch: Added.
