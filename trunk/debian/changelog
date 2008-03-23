@@ -1,13 +1,14 @@
-swath (0.3.3-1) unstable; urgency=low
+swath (0.3.3-1) unstable; urgency=medium
 
   * New upstream release
     - Fix regression introduced during portability fix in 0.3.2.
     - Fix bug that prevent '-u u,u' from working.
     - Minor code and doc improvements.
   * src/swath.1: Pull fix from upstream CVS for more minus sign escaping.
-    [lintian]
+    (lintian)
+  * Medium urgency due to grave regression fix.
 
- -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Thu, 20 Mar 2008 19:20:01 +0700
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Sun, 23 Mar 2008 09:30:59 +0700
 
 swath (0.3.2-1) unstable; urgency=low
 
