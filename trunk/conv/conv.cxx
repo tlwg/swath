@@ -4,9 +4,7 @@
 // Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
 //
 
-#include <string>
-#include <iostream>
-#include <fstream>
+#include <stdio.h>
 #include "convfact.h"
 #include "utf8.h"
 #include "tis620.h"
@@ -23,30 +21,21 @@
 //    -u  Converts TIS-620 to UTF-8 (default)
 //
 
-int conv( char format, const char *inputFileName,const char *outputFileName)
+static int do_conv(char format, FILE *input, FILE *output)
 {
     ETextFormat inputFormat = TIS620;
     ETextFormat outputFormat = UTF8;
-    std::istream*    pInputFile = &std::cin;
-    std::ostream*    pOutputFile = &std::cout;
 
-	if (format=='t') {
-		inputFormat = UTF8;
-		outputFormat = TIS620;
-	}else{
-		inputFormat = TIS620;
-		outputFormat = UTF8;
-	}
-
-    if (inputFileName) {
-        pInputFile = new std::ifstream(inputFileName);
-    }
-    if (outputFileName) {
-        pOutputFile = new std::ofstream(outputFileName);
+    if (format == 't') {
+        inputFormat = UTF8;
+        outputFormat = TIS620;
+    } else {
+        inputFormat = TIS620;
+        outputFormat = UTF8;
     }
 
-    TextReader* pReader = CreateTextReader(inputFormat, *pInputFile);
-    TextWriter* pWriter = CreateTextWriter(outputFormat, *pOutputFile);
+    TextReader* pReader = CreateTextReader(inputFormat, input);
+    TextWriter* pWriter = CreateTextWriter(outputFormat, output);
 
     if (pReader && pWriter) {
         TransferText(pReader, pWriter);
@@ -54,8 +43,42 @@ int conv( char format, const char *inputFileName,const char *outputFileName)
 
     delete pReader;
     delete pWriter;
-    if (inputFileName)  { delete pInputFile; }
-    if (outputFileName) { delete pOutputFile; }
+
+    return 0;
+}
+
+int conv(char format, const char *inputFileName, const char *outputFileName)
+{
+    FILE*  input = stdin;
+    FILE*  output = stdout;
+
+    if (inputFileName) {
+        input = fopen(inputFileName, "r");
+    }
+    if (outputFileName) {
+        output = fopen(outputFileName, "w");
+    }
+
+    do_conv(format, input, output);
+
+    if (inputFileName)  { fclose(input); }
+    if (outputFileName) { fclose(output); }
+
+    return 0;
+}
+
+int conv(char format, FILE *input, FILE *output)
+{
+    if (!input) {
+        input = stdin;
+    }
+    if (!output) {
+        output = stdout;
+    }
+
+    do_conv(format, input, output);
+
+    fflush(output);
 
     return 0;
 }

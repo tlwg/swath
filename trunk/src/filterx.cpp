@@ -8,7 +8,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterX::FilterX(char *filein,char *fileout)
+FilterX::FilterX(FILE *filein, FILE *fileout)
 {
 /*  initial string (difference in each format)
 	strcpy(wordBreakStr,"\\tb ");
@@ -20,22 +20,16 @@ FilterX::FilterX(char *filein,char *fileout)
 	fpout=stdout;
 
 	if (filein) {
-		fpin=fopen(filein,"r");
+		fpin = filein;
 	}
 	if (fileout) {
-		fpout=fopen(fileout,"w");
+		fpout = fileout;
 	}
 }
 
 FilterX::~FilterX()
 {
-	if (fpin!=stdin){
-		fclose(fpin);
-	}
-	if (fpout!=stdout){
-		fclose(fpout);
-	}
-
+	fflush(fpout);
 }
 
 bool FilterX::GetWordBreak(char *wbr)

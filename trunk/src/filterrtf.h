@@ -16,7 +16,7 @@ class FilterRTF : public FilterX
 public:
 	void Print(char *token,bool thaiFlag);
 	bool GetNextToken(char *token, bool *thaiFlag);
-	FilterRTF(char *filein, char *fileout);
+	FilterRTF(FILE *filein, FILE *fileout);
 	virtual ~FilterRTF();
 
 private:

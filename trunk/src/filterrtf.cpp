@@ -9,7 +9,8 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterRTF::FilterRTF(char *filein, char *fileout):FilterX( filein, fileout)
+FilterRTF::FilterRTF(FILE *filein, FILE *fileout)
+    : FilterX (filein, fileout)
 {
 	psState=0;
 	wordBreakStr[0]=0xDC;

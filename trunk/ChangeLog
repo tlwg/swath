@@ -1,3 +1,36 @@
+2008-03-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Use tmpfile() instead of tmpnam() when creating temp files,
+	to avoid race condition as a security measurement.
+
+	* src/wordseg.cpp (main):
+	  - Use FILE* instead of file names for temp files
+	  - Call tmpfile() to create temp files
+	  - Pass FILE* to conv() and CreateFileFilter()
+
+	* conv/conv.{h,cxx}:
+	  - Add overloaded conv() accepting FILE* arguments
+	  - Refactor do_conv() out of conv() wrappers
+	  - Pass FILE* to CreateText{Reader,Writer}
+	* conv/convfact.{h,cxx} (CreateTextReader, CreateTextWriter):
+	  - Accept FILE* arguments instead of istream, ostream
+	  - Pass FILE* arguments to {TIS620,UTF8}{Reader,Writer} c-tors
+	* conv/{tis620,utf8}.{h,cxx}:
+	  - Change stream members' type to FILE*
+	  - Use fgetc() and fputc() for character I/O
+	  - Declare internal functions static
+
+	* src/filefilter.{h,cpp} (CreateFileFilter):
+	  - Use FILE* arguments instead of file names
+	  - Pass the FILE* arguments to Filter* c-tors
+	* src/filter{html,latex,lambda,rtf}.{h,cpp}:
+	  - Accept FILE* arguments instead of file names in c-tors
+	  - Pass the FILE* arguments to FilterX base class c-tor
+	* src/filterx.{h,cpp}:
+	  - In c-tor, assign FILE* arguments to members directly, rather
+	    than creating new files from file names
+	  - In d-tor, just flush output, rather than closing files
+
 2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/swath.1: Escape more minus signs. [lintian]

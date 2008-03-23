@@ -7,27 +7,27 @@
 #ifndef TIS620_INC
 #define TIS620_INC
 
-#include <iostream>
+#include <stdio.h>
 #include "convkit.h"
 
 class TIS620Reader : public TextReader {
 public:
-    TIS620Reader(std::istream& input) : input(input) {}
+    TIS620Reader(FILE* input) : input(input) {}
 
     bool Read(unichar& c);
 
 private:
-    std::istream& input;
+    FILE* input;
 };
 
 class TIS620Writer : public TextWriter {
 public:
-    TIS620Writer(std::ostream& output) : output(output) {}
+    TIS620Writer(FILE* output) : output(output) {}
 
     bool Write(unichar c);
 
 private:
-    std::ostream& output;
+    FILE* output;
 };
 
 #endif // TIS620_INC

@@ -7,7 +7,7 @@
 #include "tis620.h"
 #include "tischar.h"
 
-unichar tis2unicode(tischar c)
+static unichar tis2unicode(tischar c)
 {
     if (c < 0x80) {
         return c;
@@ -21,7 +21,7 @@ unichar tis2unicode(tischar c)
     }
 }
 
-tischar unicode2tis(unichar u)
+static tischar unicode2tis(unichar u)
 {
     if (u < 0x0080) {
         return u;
@@ -37,14 +37,14 @@ tischar unicode2tis(unichar u)
 
 bool TIS620Reader::Read(unichar& c)
 {
-    char t;
-    if (!input.get(t)) { return false; }
+    int t;
+    if ((t = fgetc(input)) == EOF) { return false; }
     c = tis2unicode(tischar(t));
     return true;
 }
 
 bool TIS620Writer::Write(unichar c)
 {
-    return output.put(unicode2tis(c)) != 0;
+    return fputc(unicode2tis(c), output) != EOF;
 }
 

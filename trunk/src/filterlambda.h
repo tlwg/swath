@@ -14,7 +14,7 @@
 class FilterLambda : public FilterLatex  
 {
 public:
-	FilterLambda(char *filein, char *fileout ,int latexflag=0);
+	FilterLambda(FILE *filein, FILE *fileout, int latexflag=0);
 	virtual ~FilterLambda();
 
 };
