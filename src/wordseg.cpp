@@ -142,7 +142,6 @@ int main(int argc, char *argv[])
   char *unicode = NULL;
   bool thaifag;
   bool wholeLine=false;
-  FILE *fpin=stdin, *fpout=stdout;
   
   strcpy(wbr, "|");
   strcpy(mulestr,"");
@@ -234,14 +233,15 @@ int main(int argc, char *argv[])
 
 
 
-  char *tmpout=NULL, *tmpin=NULL;
+  FILE *tmpout=stdout, *tmpin=stdin;
   if (unicode!=NULL) { //Option -u
 	  if (unicode[0]=='u') { //unicode input file.
-		  tmpin = strdup(tmpnam(NULL));
+		  tmpin = tmpfile();
 		  conv('t', NULL, tmpin);
+		  rewind(tmpin);
 	  }
 	  if (unicode[2]=='u'){
-		  tmpout = strdup(tmpnam(NULL));
+		  tmpout = tmpfile();
 	  }
   }
   if (fileformat!=NULL) {
@@ -262,11 +262,6 @@ int main(int argc, char *argv[])
 	  }
 	  delete FltX;
   }else{
-	  if (tmpin)
-		fpin=fopen(tmpin,"r"); //set fpin
-	  if (tmpout)
-		fpout=fopen(tmpout, "w"); //set fpout
-
 	  char stopstr[20];
 	  if (strcmp(mulestr,"mule")==0)
 		strcpy(stopstr,wbr);
@@ -274,7 +269,7 @@ int main(int argc, char *argv[])
 		strcpy(stopstr,"");
 	  for (;;) { // read until end of file.
 		if (mode == 0) printf("Input : ");
-		for (i = 0; ((c = fgetc( fpin )) != '\n')
+		for (i = 0; ((c = fgetc(tmpin)) != '\n')
 			&& (i <= MAXCHAR) && (c!=EOF);i++) 
 			line[i] = (char)c;
 		line[i] = 0;
@@ -302,24 +297,18 @@ int main(int argc, char *argv[])
 			strcat(gout,stopstr);
 		}
 		if (mode == 0) printf("Output: ");
-		fprintf(fpout,"%s\n", gout);
-		fflush(fpout);
-		if (feof(fpin)!=0) break;
+		fprintf(tmpout, "%s\n", gout);
+		if (feof(tmpin)) break;
 	  }// end for (;;)
   }
   if (unicode!=NULL) {
 	  if (unicode[2]=='u') {
-		  if (fpout!=stdout)
-			fclose(fpout);
-		  conv('u', tmpout, NULL);
-		  remove(tmpout);
-		  free(tmpout);
+		rewind(tmpout);
+		conv('u', tmpout, NULL);
+		fclose(tmpout);
 	  }
 	  if (unicode[0]=='u') {
-		  if (fpout!=stdin)
-			fclose(fpin);
-		  remove(tmpin);
-		  free(tmpin);
+		fclose(tmpin);
 	  }
 	  delete unicode;
   }

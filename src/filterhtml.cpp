@@ -10,7 +10,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterHtml::FilterHtml(char *filein,char *fileout) : FilterX(filein,fileout) 
+FilterHtml::FilterHtml(FILE *filein, FILE *fileout) : FilterX(filein,fileout) 
 {
 	strcpy(wordBreakStr,"<wbr>");
 	strcpy(prefixStr,"");

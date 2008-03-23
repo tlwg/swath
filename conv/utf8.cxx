@@ -7,35 +7,35 @@
 #include "utf8.h"
 #include "unichar.h"
 
-int writeUTF8(std::ostream& output, unsigned unicode)
+static int writeUTF8(FILE* output, unsigned unicode)
 {
     if (unicode <= 0x007F) {
-        output.put((unsigned char)(unicode & 0x7F));
+        fputc((unsigned char)(unicode & 0x7F), output);
     } else if (unicode <= 0x07FF) {
-        output.put((unsigned char)(0xC0 | (unicode >> 6)));
-        output.put((unsigned char)(0x80 | (unicode & 0x3F)));
+        fputc((unsigned char)(0xC0 | (unicode >> 6)), output);
+        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
     } else if (unicode <= 0xFFFF) {
-        output.put((unsigned char)(0xE0 | (unicode >> 12)));
-        output.put((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)));
-        output.put((unsigned char)(0x80 | (unicode & 0x3F)));
+        fputc((unsigned char)(0xE0 | (unicode >> 12)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
     } else if (unicode <= 0x1FFFFF) {
-        output.put((unsigned char)(0xF0 | (unicode >> 18)));
-        output.put((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)));
-        output.put((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)));
-        output.put((unsigned char)(0x80 | (unicode & 0x3F)));
+        fputc((unsigned char)(0xF0 | (unicode >> 18)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
     } else if (unicode <= 0x3FFFFFF) {
-        output.put((unsigned char)(0xF8 | (unicode >> 24)));
-        output.put((unsigned char)(0x80 | ((unicode >> 18) & 0x3F)));
-        output.put((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)));
-        output.put((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)));
-        output.put((unsigned char)(0x80 | (unicode & 0x3F)));
+        fputc((unsigned char)(0xF8 | (unicode >> 24)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 18) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
     } else if (unicode <= 0x7FFFFFFF) {
-        output.put((unsigned char)(0xFC | (unicode >> 30)));
-        output.put((unsigned char)(0x80 | ((unicode >> 24) & 0x3F)));
-        output.put((unsigned char)(0x80 | ((unicode >> 18) & 0x3F)));
-        output.put((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)));
-        output.put((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)));
-        output.put((unsigned char)(0x80 | (unicode & 0x3F)));
+        fputc((unsigned char)(0xFC | (unicode >> 30)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 24) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 18) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
+        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
     } else {
         // error
         return -1;
@@ -43,10 +43,10 @@ int writeUTF8(std::ostream& output, unsigned unicode)
     return 0;
 }
 
-int readUTF8(std::istream& input, unsigned* pUnicode)
+static int readUTF8(FILE* input, unsigned* pUnicode)
 {
-    unsigned char c;
-    if (!input.get(reinterpret_cast<char&>(c))) { return -1; }
+    int c;
+    if ((c = fgetc(input)) == EOF) { return -1; }
 
     if ((c & 0x80) == 0x00) {
         *pUnicode = c;
@@ -64,7 +64,7 @@ int readUTF8(std::istream& input, unsigned* pUnicode)
 
         // get rest bits
         while (nBytes-- > 0) {
-            if (!input.get(reinterpret_cast<char&>(c))) { return -1; }
+            if ((c = fgetc(input)) == EOF) { return -1; }
             c ^= 0x80;  // 10xx xxxx -> 00xx xxxx
             if (c & 0xC0) { return -1; }  // not 10xx xxxx form
             *pUnicode = (*pUnicode << 6) | c;

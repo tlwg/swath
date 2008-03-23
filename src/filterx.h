@@ -20,7 +20,7 @@ public:
 	bool GetPrefix(char *preStr);
 	virtual bool GetNextToken(char *token, bool *thaiFlag)=0;
 	virtual void Print(char *token, bool thaiFlag)=0;
-	FilterX(char *filein,char *fileout);
+	FilterX(FILE *filein, FILE *fileout);
 	virtual ~FilterX();
 
 protected:

@@ -14,7 +14,8 @@
 class FileFilter
 {
 public:
-  static FilterX* CreateFilter(char *filein, char *fileout, char *fileformat);
+  static FilterX* CreateFilter(FILE *filein, FILE *fileout,
+                               const char *fileformat);
 };
 
 #endif // !defined(AFX_FILEFILTER_H__5FA01279_2213_11D3_B449_00105A5C2417__INCLUDED_)

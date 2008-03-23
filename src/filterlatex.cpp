@@ -25,7 +25,8 @@ int WinOffsetNormal[5]   = {139, 140, 141, 142, 143};
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterLatex::FilterLatex(char *filein, char *fileout ,int latexflag): FilterX (filein,fileout)
+FilterLatex::FilterLatex(FILE *filein, FILE *fileout, int latexflag)
+    : FilterX (filein,fileout)
 {
 	strcpy(wordBreakStr,"{\\wbr}");
 	strcpy(prefixStr,"");

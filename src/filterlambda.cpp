@@ -9,9 +9,10 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterLambda::FilterLambda(char *filein, char *fileout ,int latexflag):FilterLatex( filein, fileout, latexflag)
+FilterLambda::FilterLambda(FILE *filein, FILE *fileout, int latexflag)
+    : FilterLatex(filein, fileout, latexflag)
 {
-		strcpy(wordBreakStr,"^^^^200c");
+	strcpy(wordBreakStr,"^^^^200c");
 }
 
 FilterLambda::~FilterLambda()

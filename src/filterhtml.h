@@ -16,7 +16,7 @@ class FilterHtml : public FilterX
 public:
 	void Print(char *token,bool thaiFlag);
 	bool GetNextToken(char *token, bool *thaiFlag);
-	FilterHtml(char *filein, char *fileout);
+	FilterHtml(FILE *filein, FILE *fileout);
 	virtual ~FilterHtml();
 
 };
