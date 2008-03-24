@@ -1,3 +1,8 @@
+2008-03-24  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am, +data/swathdic.lst: Add dictionary word list
+	dumped from the dict binary files, for dict adjustments in the future.
+
 2008-03-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Use tmpfile() instead of tmpnam() when creating temp files,
