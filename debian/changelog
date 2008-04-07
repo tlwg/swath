@@ -1,3 +1,12 @@
+swath (0.3.4-1) unstable; urgency=low
+
+  * New upstream release
+    - More secure temporary file handling
+  * debian/control: Add DM-Upload-Allowed field, so I can upload it myself
+    next time.
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Sun, 06 Apr 2008 12:43:10 +0700
+
 swath (0.3.3-1) unstable; urgency=medium
 
   * New upstream release
