@@ -1,3 +1,10 @@
+swath (0.3.4-2) UNRELEASED; urgency=low
+
+  * debian/watch: Fix watch pattern so that only *.tar.gz is matched, not
+    *.tar.gz.md5sum.
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Sat, 31 May 2008 08:15:28 +0700
+
 swath (0.3.4-1) unstable; urgency=low
 
   * New upstream release
