@@ -109,11 +109,9 @@ TrieState *curState;
 			   LinkSep[cntLink+1]=-1; //debug 24 nov
 			   //LinkSepDataIdx[cntLink]=data_idx;
                cntFound++;
-			}else{
-				continue;
+               if (cntFound==1) IdxSep[i]=cntLink;
+               cntLink++;
 			}
-            cntLink++;
-            if (cntFound==1) IdxSep[i]=cntLink-1;  //set IdxSep[i] value
          }//end if WalkResult
 	  } //end for j
       if (cntFound==0)

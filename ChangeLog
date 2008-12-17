@@ -1,5 +1,10 @@
 2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	Remove unnecessary 'continue'.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.h
 	(AbsWordSeg::IsLeadChar, IsLastChar, IsNumber, IsEnglish):
 	Declare utility functions as static members.
