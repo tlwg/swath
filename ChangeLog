@@ -1,5 +1,14 @@
 2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Get rid of the unnecessary src/dictpath.cpp.
+
+	* src/Makefile.am, -src/dictpath.cpp: Remove dictpath.cpp.
+	* src/dictpath.h (d2triepath), src/wordseg.cpp (InitWordSegmentation):
+	Get rid of the unnecessary global variable 'd2triepath', which is in
+	fact only needed locally.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Switch to libdatrie. (Requires libdatrie >= 0.1.99.2)
 
 	* configure.in: Post-release version bump.
