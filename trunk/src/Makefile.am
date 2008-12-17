@@ -22,7 +22,6 @@ bin_PROGRAMS = swath
 
 swath_SOURCES = \
 	abswordseg.cpp \
-	dictpath.cpp \
 	filefilter.cpp \
 	filterhtml.cpp \
 	filterlatex.cpp \

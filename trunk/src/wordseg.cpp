@@ -50,16 +50,17 @@ void RemoveJunkChar(char *str);
 
 int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
 {
-  int wsegpathlen = strlen(wordsegdata);
   FILE* fp;
 
-
-  d2triepath = new char[wsegpathlen + 2 + strlen(D2TRIE)];
+  char *d2triepath = new char[strlen(wordsegdata) + 2 + strlen(D2TRIE)];
   strcpy(d2triepath, wordsegdata);
   strcat(d2triepath, PATHSEPERATOR);
   strcat(d2triepath, D2TRIE);    //printf("%s\n", dbranchpath); fflush(stdout);
-  if ((fp = fopen(d2triepath, "r")) == NULL) 
+  if ((fp = fopen(d2triepath, "r")) == NULL) {
+	  delete d2triepath;
 	  return 1;
+  }
+  delete d2triepath;
   fclose(fp);
 
   if (method==NULL){
@@ -77,7 +78,6 @@ int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
 
 void ExitWordSegmentation(AbsWordSeg **wseg)
 {
-  delete d2triepath;
   delete *wseg;
 }
 
