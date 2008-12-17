@@ -54,20 +54,12 @@ int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
   FILE* fp;
 
 
-  d2branchpath = new char[wsegpathlen + 2 + strlen(D2BRANCH)];
-  strcpy(d2branchpath, wordsegdata);
-  strcat(d2branchpath, PATHSEPERATOR);
-  strcat(d2branchpath, D2BRANCH);    //printf("%s\n", dbranchpath); fflush(stdout);
-  if ((fp = fopen(d2branchpath, "r")) == NULL) 
+  d2triepath = new char[wsegpathlen + 2 + strlen(D2TRIE)];
+  strcpy(d2triepath, wordsegdata);
+  strcat(d2triepath, PATHSEPERATOR);
+  strcat(d2triepath, D2TRIE);    //printf("%s\n", dbranchpath); fflush(stdout);
+  if ((fp = fopen(d2triepath, "r")) == NULL) 
 	  return 1;
-  fclose(fp);
-
-  d2tailpath = new char[wsegpathlen + 2 + strlen(D2TAIL)];
-  strcpy(d2tailpath, wordsegdata);
-  strcat(d2tailpath, PATHSEPERATOR);
-  strcat(d2tailpath, D2TAIL);    //printf("%s\n", dtailpath); fflush(stdout);
-  if ((fp = fopen(d2tailpath, "r")) == NULL) 
-	  return 2;
   fclose(fp);
 
   if (method==NULL){
@@ -85,8 +77,7 @@ int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
 
 void ExitWordSegmentation(AbsWordSeg **wseg)
 {
-  delete d2branchpath;
-  delete d2tailpath;
+  delete d2triepath;
   delete *wseg;
 }
 

@@ -23,7 +23,6 @@ AbsWordSeg::AbsWordSeg(){ //Constructor
 	LinkSep = (short int*)malloc(3*MAXLEN*sizeof(short int));
 	if ((IdxSep==NULL)||(LinkSep==NULL)){
 		printf("Cannot allocate memory\n");
-		delete MyDict;
 		exit(0);
 	}
 	cntSep=0;
@@ -34,17 +33,20 @@ AbsWordSeg::~AbsWordSeg(){// Destructor
 	delete LinkSep;
 }
 
+#define tis2uni(c)  ((c)&0x80?((c)-0xa0+0x0e00):(c))
+
 void AbsWordSeg::CreateWordList(void){
 char Buff[2000];
 short int i,j,cntLink,en_word;
 short int cntFound,amb_sep_cnt;
 int data_idx;
 unsigned char lead_ch;
-State curState,terState;
+TrieState *curState;
 
    strcpy(Buff,"");
    cntLink=0;
    amb_sep_cnt=0;
+   curState=trie_root(MyDict);
    for(i=0;i<len;i++) { //word boundry start at i and end at j.
 	
      if ( !IsLeadChar((unsigned char)sen[i])||
@@ -84,23 +86,20 @@ State curState,terState;
        	continue;
       }
       cntFound=0;
-      curState=MyDict->StartState(0);
-	  j=-1;
-      do{
-         j++;
+      trie_state_rewind(curState);
+      for (j = 0; i+j<len; j++) {
 		 if ((sen[i+j]=='æ' )&&(cntFound!=0)) {//Mai-Ya-Mok -- Stop word point 17 July 2001
 			LinkSep[cntLink-1]=i+j+1;
 			break;
 		 }
-      	 curState=MyDict->Walk(curState,(Char )sen[i+j]);
-         if (MyDict->WalkResult()==CRASH){
+         if (!trie_state_walk(curState,tis2uni((unsigned char)sen[i+j]))) {
 		 	break;
 		 }
-         terState=MyDict->Terminate(curState);
-		 if( MyDict->WalkResult() == TERMINAL ){
-            data_idx=MyDict->GetKeyData(terState);
-			char *bsep;
-			bsep=(char *)&data_idx;
+		 if( trie_state_is_terminal(curState) ){
+            //TrieState *terState = trie_state_clone (curState);
+            //trie_state_walk (terState, TRIE_CHAR_TERM);
+            //data_idx=trie_state_get_data(terState);
+            //trie_state_free (terState);
 			//===========================================================
 			//found word in dictionary
             //To check word boundary,Is it should be segment or not????
@@ -116,7 +115,7 @@ State curState,terState;
             cntLink++;
             if (cntFound==1) IdxSep[i]=cntLink-1;  //set IdxSep[i] value
          }//end if WalkResult
-	  } while (i+j<len) ; //end for j
+	  } //end for j
       if (cntFound==0)
       	IdxSep[i]=-1; //
       else if (cntFound < 2000){
@@ -124,6 +123,7 @@ State curState,terState;
       	LinkSep[cntLink++]=-1;
       }
    } //end for i
+   trie_state_free(curState);
 //   amb_sep[amb_sep_cnt].st_idx=-1;
 	LinkSep[cntLink]=-1; 
 	LinkSep[++cntLink]=-1; //add stop value;

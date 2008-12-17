@@ -1,4 +1,4 @@
-SUBDIRS = conv misc vmem trie src data
+SUBDIRS = conv src data
 
 MAINTAINERCLEANFILES = Makefile.in
 

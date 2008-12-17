@@ -1,8 +1,6 @@
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 
-# ** to use midatrie **
-# INCLUDES = @MIDATRIE_CFLAGS@
-INCLUDES = -I$(top_srcdir)
+INCLUDES = -I$(top_srcdir) $(DATRIE_CFLAGS)
 DEFS = -DWORDSEGDATA_DIR=\"${pkgdatadir}\"
 
 EXTRA_DIST = \
@@ -43,7 +41,5 @@ man_MANS = swath.1
 # swath_LDADD = @MIDATRIE_LIBS@
 swath_LDADD = \
 	$(top_builddir)/conv/libconv.la \
-	$(top_builddir)/trie/libtrie.la \
-	$(top_builddir)/vmem/libvmem.la \
-	$(top_builddir)/misc/libmisc.la
+	$(DATRIE_LIBS)
 

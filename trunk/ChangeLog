@@ -1,3 +1,54 @@
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Switch to libdatrie. (Requires libdatrie >= 0.1.99.2)
+
+	* configure.in: Post-release version bump.
+
+	* configure.in: Check for 'trietool-0.2' program (under --enable-dict)
+	and 'datrie-0.2' pkg-config.
+	* configure.in, Makefile.am: Exclude 'misc', 'vmem', and 'trie' subdirs.
+
+	* src/abswordseg.h:
+	  - Replace 'AbsWordSeg::MyDict' member with libdatrie's 'Trie'
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	  - Don't delete 'MyDict' in c-tor
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Replace calls to old 'Trie' class with corresponding libdatrie
+	    functions
+	  - Adjust loop so that terminating '\0' is not walked
+
+	* src/longwordseg.h, src/longwordseg.cpp
+	  (LongWordSeg::LongWordSeg, ~LongWordSeg):
+	  - Replace 'MyDict' creation/deletion with libdatrie's functions
+	  - Remove 'branchPath' and 'tailPath' members; and just use local
+	    vars in c-tors instead
+
+	* src/maxwordseg.h, src/maxwordseg.cpp
+	  (MaxWordSeg::MaxWordSeg, ~MaxWordSeg):
+	  - Replace 'MyDict' creation/deletion with libdatrie's functions
+	  - Remove 'branchPath' and 'tailPath' members; and just use local
+	    vars in c-tors instead
+
+	* src/dictpath.h, src/dictpath.cpp:
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Replace 'd2branchpath' and 'd2tailpath' with a single
+	    'd2triepath' variable
+	  - Replace 'D2BRANCH' and 'D2TAIL' with a single 'D2TRIE' macro
+
+	* src/wordstack.h:
+	  - Remove unneeded #include "misc/typedefs.h"
+
+	* src/Makefile.am:
+	  - Remove linkages to internal 'libmisc', 'libvmem', and 'libtrie'
+	  - Add libdatrie CFLAGS and LIBS
+
+	* data/Makefile.am, -data/swathdic.br, -data/swathdic.tl:
+	  - Exclude 'swathdic.br' and 'swathdic.tl' from distribution
+	* data/Makefile.am, +data/swathdic.abm:
+	  - Add 'swathdic.abm' to distribution
+	  - Add rule for generating 'swathdic.tri' with trietool-0.2
+	  - Install 'swathdic.tri' instead of 'swathdic.br' and 'swathdic.tl'
+
 2008-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* configure.in, NEWS:
