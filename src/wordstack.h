@@ -1,5 +1,4 @@
 #include "worddef.h"
-#include "misc/typedefs.h"
 
 #define STACKSIZE 500
 

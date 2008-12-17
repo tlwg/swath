@@ -5,8 +5,7 @@
 #ifndef DICTPATH_INC
 #define DICTPATH_INC
 
-extern char *d2branchpath;	// Path for
-extern char *d2tailpath;	// Path for d2tail.tri
+extern char *d2triepath;	// Path for dict
 
 
 #ifdef WIN32
@@ -15,8 +14,7 @@ extern char *d2tailpath;	// Path for d2tail.tri
 #define PATHSEPERATOR "/"
 #endif
 
-#define D2BRANCH "swathdic.br"
-#define D2TAIL   "swathdic.tl"
+#define D2TRIE "swathdic.tri"
 
 
 #endif

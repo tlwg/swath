@@ -9,7 +9,7 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
-#include "trie/trie.h"
+#include <datrie/trie.h>
 #include "worddef.h"
 
 class AbsWordSeg  
