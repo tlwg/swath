@@ -36,10 +36,10 @@ protected:
 	virtual unsigned short int copySepData(short int sourceIdxSen,short int targetIdxSen,short int sepPoint);
 	void GetWord(short int idxsen,short int idx,char *buff);
 	//============Check Character Type Function============
-	bool IsLeadChar(unsigned char ch);
-	bool IsLastChar(unsigned char ch);
-	bool IsNumber(char *str);
-	bool IsEnglish(char *str);
+	static bool IsLeadChar(unsigned char ch);
+	static bool IsLastChar(unsigned char ch);
+	static bool IsNumber(char *str);
+	static bool IsEnglish(char *str);
 	//============Check Karan rule=========================
 	bool Has_Karun(char* sen_ptr,short int *k_idx);
 };
