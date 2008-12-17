@@ -130,26 +130,23 @@ TrieState *curState;
 }
 
 bool AbsWordSeg::IsNumber(char *str){
-int i,sl;
-	sl=strlen(str);
-   for (i=0;i<sl;i++) {
-   	if ( (*(str+i)>='0'&&*(str+i)<='9') || (*(str+i)=='.') || (*(str+i)==',') )
-       	continue;
-      else
-         return false; //false == 0
-   }
-   return true; //true<>0
+    while (*str) {
+        if ((*str < '0' || *str > '9') && *str != '.' && *str != ',')
+            return false;
+        str++;
+    }
+    return true;
 }
 bool AbsWordSeg::IsEnglish(char *str){
-int i,sl;
-	sl=strlen(str);
-   for (i=0;i<sl;i++) {
-   	if ( (*(str+i)>='A'&&*(str+i)<='Z') || (*(str+i)>='a'&&*(str+i)<='b') || (*(str+i)=='.') || (*(str+i)=='-')||(*(str+i)==' ') )
-       	continue;
-      else
-         return false; //false == 0
-   }
-   return true; //true<>0
+    while (*str) {
+        if ((*str < 'A' || *str > 'Z') && (*str < 'a' || *str > 'z')
+            && (*str != '.') && (*str != '-') && (*str != ' '))
+        {
+            return false;
+        }
+        str++;
+    }
+    return true;
 }
 
 bool AbsWordSeg::IsLeadChar(unsigned char ch){
@@ -264,8 +261,7 @@ void AbsWordSeg::GetBestSen(int bestidx,char *wbr,char *outstr){
 int t;
 char buff[2000];
 
-	strcpy(outstr,"");
-	t=0;
+	*outstr='\0';
 	for (t=0;SepData[bestidx].Sep[t]!=len;t++){
 		GetWord(bestidx,t,buff);
 		strcat(outstr,buff);
@@ -273,6 +269,5 @@ char buff[2000];
     }
 	GetWord(bestidx,t,buff);
 	strcat(outstr,buff);
-	strcat(outstr,"\0");
 }
 

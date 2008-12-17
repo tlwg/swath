@@ -1,5 +1,15 @@
 2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.h
+	(AbsWordSeg::IsLeadChar, IsLastChar, IsNumber, IsEnglish):
+	Declare utility functions as static members.
+	* src/abswordseg.cpp (AbsWordSeg::IsNumber, IsEnglish):
+	Replace code with simpler equivalence.
+	* src/abswordseg.cpp (AbsWordSeg::GetBestSen):
+	Get rid of unnecessary assignment and strcat().
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Get rid of the unnecessary src/dictpath.cpp.
 
 	* src/Makefile.am, -src/dictpath.cpp: Remove dictpath.cpp.
