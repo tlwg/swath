@@ -1,5 +1,11 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* AUTHORS: Update info, as the trie supporting code has been removed.
+	Now my role is general maintenance. And describe Phaisarn's role as
+	the original creator.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
 	Replace C malloc() calls with C++ 'new' operator, to better match with
 	the 'delete' operator in destructor.
