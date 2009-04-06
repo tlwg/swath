@@ -36,7 +36,6 @@
 // 4: not found pbranch.tri
 // 5: not found dtail.tri
 // 6: not found ptail.tri
-char *method=NULL;
 char mulestr[5];
 char buff[2000],gout[5000];
 char *startStr;
@@ -48,7 +47,9 @@ void RemoveJunkChar(char *str);
 
 
 
-int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
+int InitWordSegmentation(const char *wordsegdata,
+                         const char *method,
+                         AbsWordSeg **pWseg)
 {
   FILE* fp;
 
@@ -64,13 +65,13 @@ int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
   fclose(fp);
 
   if (method==NULL){
-	  *wseg=new MaxWordSeg(wordsegdata);
+	  *pWseg=new MaxWordSeg(wordsegdata);
 	  return 0;
   }
   if (strcmp(method,"long")==0){
-	  *wseg=new LongWordSeg(wordsegdata);
+	  *pWseg=new LongWordSeg(wordsegdata);
   }else{
-	  *wseg=new MaxWordSeg(wordsegdata);
+	  *pWseg=new MaxWordSeg(wordsegdata);
   }
   return 0;
 }
@@ -128,6 +129,7 @@ int main(int argc, char *argv[])
   char mode = 1;  // 0 = display, 1 = don't display message
   char *wbr = new char[20];
   char *wsegpath = NULL;
+  char *method=NULL;
   char *fileformat = NULL;
   char *unicode = NULL;
   bool thaifag;
@@ -210,8 +212,8 @@ int main(int argc, char *argv[])
   char leadch[3],folch[3];
   int retval;
 
-  if  (( retval=InitWordSegmentation(".", &wseg)) > 0)
-	  retval=InitWordSegmentation(wsegpath, &wseg);
+  if  (( retval=InitWordSegmentation(".", method, &wseg)) > 0)
+	  retval=InitWordSegmentation(wsegpath, method, &wseg);
 
   delete[] wsegpath;
   delete[] method;
