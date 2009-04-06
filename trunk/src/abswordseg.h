@@ -16,7 +16,7 @@ class AbsWordSeg
 {
 public:
 	AbsWordSeg();
-	~AbsWordSeg();
+	virtual ~AbsWordSeg();
 	bool WordSeg(char* senstr,char *output,char *wbr);
 	
 protected:

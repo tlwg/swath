@@ -72,19 +72,18 @@ int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
   }else{
 	  *wseg=new MaxWordSeg(wordsegdata);
   }
-  delete method;
   return 0;
 }
 
-void ExitWordSegmentation(AbsWordSeg **wseg)
+void ExitWordSegmentation(AbsWordSeg *wseg)
 {
-  delete *wseg;
+  delete wseg;
 }
 
-void WordSegmentation(AbsWordSeg **wseg, char *wbr, char *line, char* output)
+void WordSegmentation(AbsWordSeg *wseg, char *wbr, char *line, char* output)
 {
 	//RemoveJunkChar(line);
-	(*wseg)->WordSeg(line,output,wbr);
+	wseg->WordSeg(line,output,wbr);
 }
 
 static void Usage(int verbose)
@@ -215,6 +214,7 @@ int main(int argc, char *argv[])
 	  retval=InitWordSegmentation(wsegpath, &wseg);
 
   delete[] wsegpath;
+  delete[] method;
   if (retval > 0) {
     delete[] wbr;
     return 1;
@@ -248,7 +248,7 @@ int main(int argc, char *argv[])
 			FltX->Print(line,thaifag);
 			continue;
 		}
-		WordSegmentation(&wseg, wbr, line, output);
+		WordSegmentation(wseg, wbr, line, output);
 		FltX->Print(output,thaifag);
 	  }
 	  delete FltX;
@@ -277,13 +277,13 @@ int main(int argc, char *argv[])
 				if (tokenFlag==0) {
 					strcat(gout,buff);
 				} else {
-					WordSegmentation(&wseg, wbr, buff, output);
+					WordSegmentation(wseg, wbr, buff, output);
 					strcat(gout,output);
 				}
 				strcat(gout, wbr);
 			}
 		}else{
-			WordSegmentation(&wseg, wbr, line, output);
+			WordSegmentation(wseg, wbr, line, output);
 			strcpy(gout,output);
 			strcat(gout,stopstr);
 		}
@@ -306,7 +306,7 @@ int main(int argc, char *argv[])
 
   delete[] fileformat;
   delete[] wbr;
-  ExitWordSegmentation(&wseg);
+  ExitWordSegmentation(wseg);
 
   return 0;
 }

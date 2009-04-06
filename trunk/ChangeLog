@@ -1,5 +1,19 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.h (AbsWordSeg::~AbsWordSeg): Declare d-tor as virtual,
+	fixing memory leak because its derived class d-tor was not called.
+	Thanks valgrind.
+
+	* src/wordseg.cpp (InitWordSegmentation, main): Move 'delete method' to
+	main(), where it's more obvious.
+
+	* src/wordseg.cpp (ExitWordSegmentation, WordSegmentation, main):
+	Make ExitWordSegmentation() and WordSegmentation() accept mere
+	AbsWordSeg pointer, rather than pointer to pointer, reducing
+	dereferencing steps.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Fix valgrind warnings about mismatched new/delete.
 
 	* src/abswordseg.cpp (AbsWordSeg::~AbsWordSeg):
