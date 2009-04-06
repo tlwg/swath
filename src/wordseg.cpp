@@ -36,8 +36,6 @@
 // 4: not found pbranch.tri
 // 5: not found dtail.tri
 // 6: not found ptail.tri
-char buff[2000],gout[5000];
-char *startStr;
 
 int myisspace(int ch);
 int SplitToken(char **str, char *token);
@@ -266,12 +264,13 @@ int main(int argc, char *argv[])
 			&& (i <= MAXCHAR) && (c!=EOF);i++) 
 			line[i] = (char)c;
 		line[i] = 0;
-		strcpy(gout,"");
 		//if (strcmp(line, "exit") == 0) break;
 		if (strcmp(line,"")==0) 
 			if (c==EOF) break; else continue;
 		int tokenFlag;
-		startStr=line;
+		char *startStr=line;
+		char buff[2000],gout[5000];
+		gout[0] = '\0';
 		if (!wholeLine) {
  			while ((tokenFlag=SplitToken(&startStr,buff))>=0) {
 				if (tokenFlag==-1)

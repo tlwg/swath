@@ -1,5 +1,10 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (main): Move global vars 'startStr', 'buff', 'gout'
+	to local scope, where they are actually used.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (main): Move global var 'mulestr' to local scope.
 	Make it just bool 'muleMode', as all its function is just that.
 
