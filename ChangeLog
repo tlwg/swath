@@ -1,5 +1,10 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (main): Move global var 'mulestr' to local scope.
+	Make it just bool 'muleMode', as all its function is just that.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (InitWordSegmentation, main):
 	Make the global var 'method' local and passed as argument.
 
