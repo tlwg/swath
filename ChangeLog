@@ -1,5 +1,11 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	Replace C malloc() calls with C++ 'new' operator, to better match with
+	the 'delete' operator in destructor.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.h (AbsWordSeg::Has_Karun):
 	Declare another utility function as static member.
 	* src/abswordseg.cpp (AbsWordSeg::Has_Karun):
