@@ -162,10 +162,10 @@ bool AbsWordSeg::IsLastChar(unsigned char ch){
 bool AbsWordSeg::Has_Karun(char* sen_ptr,short int *k_idx){
 short int i;
    *k_idx=-1;
-	for (i=1;i<=3;i++){
-      if (*(sen_ptr+i)=='\0')
-      	break;
-      if (*(sen_ptr+i)==-20){
+   for (i=1;i<=3;i++){
+      if (sen_ptr[i]=='\0')
+         break;
+      if ((unsigned char)sen_ptr[i]==0xec){
          *k_idx=i;
          return true;
       }

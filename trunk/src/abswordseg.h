@@ -41,7 +41,7 @@ protected:
 	static bool IsNumber(char *str);
 	static bool IsEnglish(char *str);
 	//============Check Karan rule=========================
-	bool Has_Karun(char* sen_ptr,short int *k_idx);
+	static bool Has_Karun(char* sen_ptr,short int *k_idx);
 };
 
 #endif // !defined(AFX_ABSWORDSEG_H__A0F72574_2912_11D3_B459_00105A5C2417__INCLUDED_)
