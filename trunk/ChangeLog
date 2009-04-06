@@ -1,6 +1,6 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
-	* src/abswordseg.cpp (InitWordSegmentation, main):
+	* src/wordseg.cpp (InitWordSegmentation, main):
 	Make the global var 'method' local and passed as argument.
 
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
