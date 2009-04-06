@@ -5,11 +5,6 @@
 //#include ""
 #include "abswordseg.h"
 #include "dictpath.h"
-#ifdef __APPLE__
-# include <stdlib.h>
-#else
-# include <malloc.h>
-#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -19,8 +14,8 @@
 //////////////////////////////////////////////////////////////////////
 
 AbsWordSeg::AbsWordSeg(){ //Constructor
-	IdxSep = (short int*)malloc (MAXLEN*sizeof(short int));
-	LinkSep = (short int*)malloc(3*MAXLEN*sizeof(short int));
+	IdxSep = new short int [MAXLEN];
+	LinkSep = new short int [3*MAXLEN];
 	if ((IdxSep==NULL)||(LinkSep==NULL)){
 		printf("Cannot allocate memory\n");
 		exit(0);
