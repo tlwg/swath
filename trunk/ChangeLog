@@ -1,5 +1,10 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.cpp (InitWordSegmentation, main):
+	Make the global var 'method' local and passed as argument.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.h (AbsWordSeg::~AbsWordSeg): Declare d-tor as virtual,
 	fixing memory leak because its derived class d-tor was not called.
 	Thanks valgrind.
