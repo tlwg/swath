@@ -36,7 +36,6 @@
 // 4: not found pbranch.tri
 // 5: not found dtail.tri
 // 6: not found ptail.tri
-char mulestr[5];
 char buff[2000],gout[5000];
 char *startStr;
 
@@ -132,14 +131,15 @@ int main(int argc, char *argv[])
   char *method=NULL;
   char *fileformat = NULL;
   char *unicode = NULL;
+  bool muleMode;
   bool thaifag;
   bool wholeLine=false;
   
   strcpy(wbr, "|");
-  strcpy(mulestr,"");
+  muleMode = false;
   for (int iargc = 1; iargc < argc; iargc++) {
     if (strcmp("mule", argv[iargc]) == 0){
-      strcpy(mulestr,"mule");
+      muleMode = true;
       mode = 1;
     } else if (strcmp("-b", argv[iargc]) == 0 && iargc + 1 < argc) {
       iargc++;
@@ -256,7 +256,7 @@ int main(int argc, char *argv[])
 	  delete FltX;
   }else{
 	  char stopstr[20];
-	  if (strcmp(mulestr,"mule")==0)
+	  if (muleMode)
 		strcpy(stopstr,wbr);
 	  else
 		strcpy(stopstr,"");
