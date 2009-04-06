@@ -1,5 +1,14 @@
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Fix valgrind warnings about mismatched new/delete.
+
+	* src/abswordseg.cpp (AbsWordSeg::~AbsWordSeg):
+	* src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg, MaxWordSeg::~MaxWordSeg):
+	* src/wordseg.cpp (InitWordSegmentation, main):
+	Replace 'delete' with 'delete[]' where data was created with new[].
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* AUTHORS: Update info, as the trie supporting code has been removed.
 	Now my role is general maintenance. And describe Phaisarn's role as
 	the original creator.
