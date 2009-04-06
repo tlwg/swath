@@ -57,10 +57,10 @@ int InitWordSegmentation(const char *wordsegdata, AbsWordSeg **wseg)
   strcat(d2triepath, PATHSEPERATOR);
   strcat(d2triepath, D2TRIE);    //printf("%s\n", dbranchpath); fflush(stdout);
   if ((fp = fopen(d2triepath, "r")) == NULL) {
-	  delete d2triepath;
+	  delete[] d2triepath;
 	  return 1;
   }
-  delete d2triepath;
+  delete[] d2triepath;
   fclose(fp);
 
   if (method==NULL){
@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
       mode = 1;
     } else if (strcmp("-b", argv[iargc]) == 0 && iargc + 1 < argc) {
       iargc++;
-      delete wbr;
+      delete[] wbr;
       wbr = new char[strlen(argv[iargc]) + 1];
       strcpy(wbr, argv[iargc]);
     } else if (strcmp("-d", argv[iargc]) == 0 && iargc + 1 < argc) {
@@ -172,19 +172,19 @@ int main(int argc, char *argv[])
                strcmp("--help", argv[iargc]) == 0)
     {
       Usage(1);
-      delete wbr;
-      delete wsegpath;
-      delete fileformat;
-      delete method;
-      delete unicode;
+      delete[] wbr;
+      delete[] wsegpath;
+      delete[] fileformat;
+      delete[] method;
+      delete[] unicode;
       return 1;
     } else {
       Usage(0);
-      delete wbr;
-      delete wsegpath;
-      delete fileformat;
-      delete method;
-      delete unicode;
+      delete[] wbr;
+      delete[] wsegpath;
+      delete[] fileformat;
+      delete[] method;
+      delete[] unicode;
       return 1;
     }
   }
@@ -214,9 +214,9 @@ int main(int argc, char *argv[])
   if  (( retval=InitWordSegmentation(".", &wseg)) > 0)
 	  retval=InitWordSegmentation(wsegpath, &wseg);
 
-  delete wsegpath;
+  delete[] wsegpath;
   if (retval > 0) {
-    delete wbr;
+    delete[] wbr;
     return 1;
   }
   strcpy(leadch,"");
@@ -301,11 +301,11 @@ int main(int argc, char *argv[])
 	  if (unicode[0]=='u') {
 		fclose(tmpin);
 	  }
-	  delete unicode;
+	  delete[] unicode;
   }
 
-  delete fileformat;
-  delete wbr;
+  delete[] fileformat;
+  delete[] wbr;
   ExitWordSegmentation(&wseg);
 
   return 0;

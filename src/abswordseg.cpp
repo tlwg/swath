@@ -24,8 +24,8 @@ AbsWordSeg::AbsWordSeg(){ //Constructor
 }
 
 AbsWordSeg::~AbsWordSeg(){// Destructor
-	delete IdxSep;
-	delete LinkSep;
+	delete[] IdxSep;
+	delete[] LinkSep;
 }
 
 #define tis2uni(c)  ((c)&0x80?((c)-0xa0+0x0e00):(c))
