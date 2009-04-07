@@ -21,7 +21,7 @@ LongWordSeg::LongWordSeg(const char *dataPath):AbsWordSeg()
 	char *triePath=new char[strlen(dataPath)+30];
 	sprintf(triePath,"%s/swathdic.tri",dataPath);
 	MyDict=trie_new_from_file(triePath);
-	delete triePath;
+	delete[] triePath;
 }
 
 LongWordSeg::~LongWordSeg()
@@ -57,7 +57,7 @@ wordStateType wState;
 	        Idx=LinkSep[IdxSep[Idx]];
 		}else{
            	//at Idx there is no word in dictionary
-           	while((IdxSep[Idx]<0) && (Idx<len))
+           	while((Idx<len) && (IdxSep[Idx]<0))
 		   		Idx++;
             SepData[senIdx].Sep[sepIdx++]=Idx;
 			if (Idx==len){

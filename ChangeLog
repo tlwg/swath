@@ -1,5 +1,16 @@
 2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/longwordseg.cpp (LongWordSeg::LongWordSeg):
+	Use 'delete[]' instead of 'delete', to match with 'new []', fixing
+	valgrind warning.
+
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence):
+	Check array index range before accessing, rather than after, fixing
+	valgrind warnings of conditional jumps depending on uninitialized
+	values.
+
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.cpp
 	(MaxWordSeg::CreateSentence, MaxWordSeg::WordSegArea):
 	Check range of array index for IdxSep[] *before* accessing the array
