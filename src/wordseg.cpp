@@ -219,8 +219,8 @@ int main(int argc, char *argv[])
     delete[] wbr;
     return 1;
   }
-  strcpy(leadch,"");
-  strcpy(folch,"");
+  leadch[0]='\0';
+  folch[0]='\0';
 
 
 
@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
 	  if (muleMode)
 		strcpy(stopstr,wbr);
 	  else
-		strcpy(stopstr,"");
+		stopstr[0]='\0';
 	  for (;;) { // read until end of file.
 		if (mode == 0) printf("Input : ");
 		for (i = 0; ((c = fgetc(tmpin)) != '\n')
@@ -265,7 +265,7 @@ int main(int argc, char *argv[])
 			line[i] = (char)c;
 		line[i] = 0;
 		//if (strcmp(line, "exit") == 0) break;
-		if (strcmp(line,"")==0) 
+		if (line[0]=='\0') 
 			if (c==EOF) break; else continue;
 		int tokenFlag;
 		char *startStr=line;

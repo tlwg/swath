@@ -29,9 +29,9 @@ FilterLatex::FilterLatex(FILE *filein, FILE *fileout, int latexflag)
     : FilterX (filein,fileout)
 {
 	strcpy(wordBreakStr,"{\\wbr}");
-	strcpy(prefixStr,"");
-	strcpy(suffixStr,"");
-	strcpy(buffer,"");
+	prefixStr[0]='\0';
+	suffixStr[0]='\0';
+	buffer[0]='\0';
 	verbatim=false; // Is in verbatim mode??
 	latexFlag=latexflag;	
 	if (latexFlag==1)
@@ -49,17 +49,17 @@ char *curPtr;
 char *stPtr, tmpch;
 char *stVer;
 
-	if (strcmp(buffer,"")==0) 
+	if (buffer[0]=='\0') 
 		if (fgets(buffer,1999,fpin)==NULL)
 			return false;
 	curPtr=buffer;
 	stPtr=buffer;
-	strcpy(token,"");
+	*token='\0';
 	if (verbatim) {
 		*thaiFlag=false;
 		if ((stVer=strstr(buffer,"\\end{verbatim}"))==NULL){
 			strcpy(token,buffer);
-			strcpy(buffer,"");
+			buffer[0]='\0';
 			return true;
 		}else{
 			stVer+=strlen("\\end{verbatim}");
@@ -87,13 +87,14 @@ char *stVer;
 				*curPtr=0;
 				strcat(token,stPtr);
 				*curPtr=tmpch;
-				strcpy(buffer,curPtr); //store new buffer
+				//store new buffer
+				memmove(buffer,curPtr,strlen(curPtr)+1);
 				return true;
 			}else{
 				if (*curPtr=='\n')
 					*curPtr=0; // remove new line character
 				strcat(token,stPtr);
-				strcpy(buffer,"");
+				buffer[0]='\0';
 				//if next a line is thai string, concat next line
 				// to current line
 				if (fgets(buffer,1999,fpin)==NULL){		
@@ -119,10 +120,11 @@ char *stVer;
 			*curPtr=0;
 			strcpy(token,stPtr);
 			*curPtr=tmpch;
-			strcpy(buffer,curPtr); //store new buffer
+			//store new buffer
+			memmove(buffer,curPtr,strlen(curPtr)+1);
 		}else{
 			strcpy(token,stPtr);
-			strcpy(buffer,""); //clear buffer
+			buffer[0]='\0'; //clear buffer
 		}
 		if ( strstr(token,"\\begin{verbatim}")!=NULL ){
 			verbatim=true; //entrance to verbatim model

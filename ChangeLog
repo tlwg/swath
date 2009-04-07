@@ -1,3 +1,17 @@
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	* src/filterrtf.cpp (FilterRTF::FilterRTF, FilterRTF::GetNextToken):
+	* src/filterlatex.cpp
+	  (FilterLatex::FilterLatex, FilterLatex::GetNextToken):
+	* src/wordseg.cpp (main):
+	Replace strcpy() and strcmp() calls with null string arguments with
+	first character accesses.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	Replace operlapping strcpy() with memmove(), fixing valgrind warnings.
+
 2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/wordseg.cpp (main): Move global vars 'startStr', 'buff', 'gout'
