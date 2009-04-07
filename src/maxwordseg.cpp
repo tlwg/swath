@@ -70,10 +70,10 @@ bool singleWord;
 			}
 		}
 		if (IdxSep[enAmb]<0){ //Checking for unknown
-			while ((IdxSep[enAmb]<0)&&(enAmb<len)) enAmb++;
+			while ((enAmb<len)&&(IdxSep[enAmb]<0)) enAmb++;
 			singleWord=false;
 		}
-		if (singleWord==true) {
+		if (singleWord) {
 			SepData[2].Sep[sepIdx++]=enAmb;
 		}else{
 			idxSen=WordSegArea(stAmb,enAmb);
@@ -135,7 +135,7 @@ bool stopCreate;
 	        Idx=LinkSep[IdxSep[Idx]];
 		}else{
            	//at Idx there is no word in dictionary
-           	while((IdxSep[Idx]<0) && (Idx<enSeg))
+           	while((Idx<enSeg) && (IdxSep[Idx]<0))
 		   		Idx++;
             SepData[senIdx].Sep[sepIdx++]=Idx;
 			SepData[senIdx].Score+=5;
@@ -175,7 +175,7 @@ bool stopCreate;
                 SepData[senIdx].Sep[nextSepIdx++]=curState;
 				SepData[senIdx].Score++;
 				score[++scoreidx]=(short int)SepData[senIdx].Score;
-				while((IdxSep[curState]<0)&&(curState<enSeg)) curState++;
+				while((curState<enSeg)&&(IdxSep[curState]<0)) curState++;
 				foundUnk=true;
 		        if (curState==enSeg) break;
 			}else if (LinkSep[IdxSep[curState]+1]!=-1){
