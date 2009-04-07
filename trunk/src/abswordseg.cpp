@@ -2,7 +2,6 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-//#include ""
 #include "abswordseg.h"
 #include "dictpath.h"
 #include <stdio.h>
@@ -38,7 +37,7 @@ int data_idx;
 unsigned char lead_ch;
 TrieState *curState;
 
-   strcpy(Buff,"");
+   Buff[0]='\0';
    cntLink=0;
    amb_sep_cnt=0;
    curState=trie_root(MyDict);

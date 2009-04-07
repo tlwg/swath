@@ -15,9 +15,9 @@ FilterRTF::FilterRTF(FILE *filein, FILE *fileout)
 	psState=0;
 	wordBreakStr[0]=0xDC;
 	wordBreakStr[1]=0;
-	strcpy(prefixStr,"");
-	strcpy(suffixStr,"");
-	strcpy(strbuff,"");
+	prefixStr[0]='\0';
+	suffixStr[0]='\0';
+	strbuff[0]='\0';
 
 }
 
@@ -32,12 +32,12 @@ char *sttoken,*tmp;
 int nextState,i=0,l,c;
 
 	//sequence of characters is    \ ' x x (one character for Thai char)
-	strcpy(token,"");
+	*token='\0';
 	sttoken=token;
 	
 	if ((fpin==NULL)||(feof(fpin)))
 		return false;
-	if (strcmp(strbuff,"")==0){
+	if (strbuff[0]=='\0'){
 		do {
 			if ((c=fgetc(fpin))==EOF) {
 				*thaiFlag=false;
@@ -95,7 +95,7 @@ int nextState,i=0,l,c;
 			token[-4]=0;
 		}else{
 			psState=0;
-			strcpy(strbuff,"");
+			strbuff[0]='\0';
 		}
 
 	}else{
