@@ -1,3 +1,8 @@
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
+	Check array index range before accessing, rather than after.
+
 2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/longwordseg.cpp (LongWordSeg::LongWordSeg):
