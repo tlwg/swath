@@ -1,3 +1,9 @@
+0.4.0 (2009-04-08)
+=====
+- New dictionary engine with libdatrie 0.2.
+- Fix memory leaks.
+- Various clean-ups, including Valgrind warnings.
+
 0.3.4 (2008-04-06)
 =====
 - More secure temporary file usage.
