@@ -24,8 +24,8 @@ private:
 	char strbuff[5];
 	//sequence of characters is    \ ' x x (one character)
 	//states of this sequence are  1 2 3 4 	
-	int chgCharState(char charin, int state);
-	bool isThaiChar(char *token, int *state);
+	static int chgCharState(char charin, int state);
+	static bool isThaiChar(char *token, int *state);
 
 };
 
