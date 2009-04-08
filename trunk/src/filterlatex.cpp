@@ -9,17 +9,17 @@
 //Not according Position of vowels or tone mark.
 
 						//|====OffsetHigh======| |===========Offset Normal============|
-int WinMacNormal[12]     = {232, 233, 234, 235, 236, 209, 212, 213, 214, 215, 231, 237};
+static int WinMacNormal[12]     = {232, 233, 234, 235, 236, 209, 212, 213, 214, 215, 231, 237};
 
 //Character Sets for Macintosh
-int MacOffsetLeft[12]    = {131, 132, 133, 134, 135, 146, 148, 149, 150, 151, 147, 143};
-int MacOffsetLeftHigh[5] = {152, 153, 154, 155, 156};
-int MacOffsetNormal[5]   = {136, 137, 138, 139, 140};
+static int MacOffsetLeft[12]    = {131, 132, 133, 134, 135, 146, 148, 149, 150, 151, 147, 143};
+static int MacOffsetLeftHigh[5] = {152, 153, 154, 155, 156};
+static int MacOffsetNormal[5]   = {136, 137, 138, 139, 140};
 
 //Character Sets for Windows (not unicode)
-int WinOffsetLeft[12]    = {134, 135, 136, 137, 138, 152, 129, 130, 131, 132, 154, 153};
-int WinOffsetLeftHigh[5] = {155, 156, 157, 158, 159};
-int WinOffsetNormal[5]   = {139, 140, 141, 142, 143};
+static int WinOffsetLeft[12]    = {134, 135, 136, 137, 138, 152, 129, 130, 131, 132, 154, 153};
+static int WinOffsetLeftHigh[5] = {155, 156, 157, 158, 159};
+static int WinOffsetNormal[5]   = {139, 140, 141, 142, 143};
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -247,14 +247,14 @@ unsigned char *tmpOutput;
 
 bool FilterLatex::isLongTailChar(unsigned char ch)
 {
-	return ((ch==187) || (ch==189) || (ch==191)) ? true:false;
+	return ((ch==187) || (ch==189) || (ch==191));
 }
 
 int FilterLatex::idxVowelToneMark(unsigned char ch)
 {
 int i=0;
 
-	while ( (WinMacNormal[i]!=ch)&&(i<12) )
+	while ( (i<12)&&(WinMacNormal[i]!=ch) )
 		i++;
 	return i;
 }
