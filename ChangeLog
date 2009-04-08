@@ -1,5 +1,10 @@
 2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* configure.in, NEWS:
+	=== Version 0.4.0 ===
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterrtf.h (FilterRTF::chgCharState, FilterRTF::isThaiChar):
 	Declare utility functions as static members.
 
