@@ -50,7 +50,7 @@ bool singleWord;
 		stWord=1;
 	}else{
 		i=1;
-		while ((IdxSep[i]<0)&&(i<len)) i++;
+		while ((i<len)&&(IdxSep[i]<0)) i++;
 		
 		if (i==len){
 			stWord=i;
