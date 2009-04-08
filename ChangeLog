@@ -1,5 +1,22 @@
 2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.cpp (WinMacNormal, MacOffsetLeft, MacOffsetLeftHigh,
+	MacOffsetNormal, WinOffsetLeft, WinOffsetLeftHigh, WinOffsetNormal):
+	Declare internal data as file-scoped.
+
+	* src/filterlatex.h
+	(FilterLatex::isLongTailChar, FilterLatex::idxVowelToneMark):
+	Declare utility functions as static members.
+
+	* src/filterlatex.cpp (FilterLatex::isLongTailChar):
+	Eliminate unnecessary true/false conditional expression; simple boolean
+	expression is enough.
+
+	* src/filterlatex.cpp (FilterLatex::idxVowelToneMark):
+	Check array index range before accessing, rather than after.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
 	Check array index range before accessing, rather than after.
 

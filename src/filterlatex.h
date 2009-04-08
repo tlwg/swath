@@ -23,8 +23,8 @@ public:
 protected:
 	bool winCharSet; //==true for Windows char set : false for Macintosh char set
 	int latexFlag; // 0 do nothing 1 win char set 2 mac char set
-	int idxVowelToneMark(unsigned char ch);
-	bool isLongTailChar(unsigned char ch);
+	static int idxVowelToneMark(unsigned char ch);
+	static bool isLongTailChar(unsigned char ch);
 	void AdjustText (unsigned char *input, unsigned char *output);
 private:
 	char buffer[2000];
