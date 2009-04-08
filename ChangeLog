@@ -1,5 +1,10 @@
 2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterrtf.h (FilterRTF::chgCharState, FilterRTF::isThaiChar):
+	Declare utility functions as static members.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.cpp (WinMacNormal, MacOffsetLeft, MacOffsetLeftHigh,
 	MacOffsetNormal, WinOffsetLeft, WinOffsetLeftHigh, WinOffsetNormal):
 	Declare internal data as file-scoped.
