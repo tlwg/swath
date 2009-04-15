@@ -1,3 +1,11 @@
+swath (0.4.0-2) unstable; urgency=low
+
+  * Drop versioned b-dep on dpkg-dev, as Vcs-Cvs: is no more needed.
+  * Add missing b-dep on pkg-config.
+  * Upload to unstable.
+
+ -- Theppitak Karoonboonyanan <thep@linux.thai.net>  Wed, 15 Apr 2009 11:31:50 +0700
+
 swath (0.4.0-1) experimental; urgency=low
 
   * debian/watch: Fix watch pattern so that only *.tar.gz is matched, not
