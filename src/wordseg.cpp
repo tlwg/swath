@@ -84,6 +84,18 @@ void WordSegmentation(AbsWordSeg *wseg, char *wbr, char *line, char* output)
 	wseg->WordSeg(line,output,wbr);
 }
 
+static void Version()
+{
+    printf("swath " VERSION "\n");
+    printf(
+"Copyright (C) 2001-2006 Phaisarn Charoenpornsawat <phaisarn@nectec.or.th>\n"
+"Copyright (C) 2001-2009 Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
+"License: GNU GPL version 2 or later <http://gnu.org/licenses/gpl-2.0.html>\n"
+"This is free software; you are free to change and redistribute it.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+    );
+}
+
 static void Usage(int verbose)
 {
     printf("Usage: swath [mule|-v] [-b \"delimitor\"] [-d dict-dir]\n"
@@ -167,6 +179,16 @@ int main(int argc, char *argv[])
       iargc++; // format
       unicode = new char[strlen(argv[iargc]) + 1];
       strcpy(unicode, argv[iargc]);
+    } else if (strcmp("-V", argv[iargc]) == 0 ||
+               strcmp("--version", argv[iargc]) == 0)
+    {
+      Version();
+      delete[] wbr;
+      delete[] wsegpath;
+      delete[] fileformat;
+      delete[] method;
+      delete[] unicode;
+      return 0;
     } else if (strcmp("-help", argv[iargc]) == 0 ||
                strcmp("--help", argv[iargc]) == 0)
     {
