@@ -1,7 +1,7 @@
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 
 INCLUDES = -I$(top_srcdir) $(DATRIE_CFLAGS)
-DEFS = -DWORDSEGDATA_DIR=\"${pkgdatadir}\"
+DEFS = -DWORDSEGDATA_DIR=\"${pkgdatadir}\" -DVERSION=\"$(VERSION)\"
 
 EXTRA_DIST = \
 	abswordseg.h \
