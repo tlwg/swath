@@ -1,14 +1,13 @@
 Source: swath
 Section: text
 Priority: optional
-Maintainer: Theppitak Karoonboonyanan <thep@linux.thai.net>
-DM-Upload-Allowed: yes
-Build-Depends: debhelper (>= 7), autotools-dev, pkg-config,
+Maintainer: Theppitak Karoonboonyanan <thep@debian.org>
+Build-Depends: debhelper (>= 7), libtool, automake, autoconf, pkg-config,
  libdatrie-dev (>= 0.2.0), libdatrie1-bin
 Vcs-Svn: http://linux.thai.net/svn/software/swath
 Vcs-Browser: http://linux.thai.net/websvn/wsvn/software.swath/?sc=0
 Homepage: http://linux.thai.net/projects/thailatex
-Standards-Version: 3.8.1
+Standards-Version: 3.8.3
 
 Package: swath
 Architecture: any
