@@ -1,0 +1,20 @@
+Source: swath
+Section: text
+Priority: optional
+Maintainer: Theppitak Karoonboonyanan <thep@debian.org>
+Build-Depends: debhelper (>= 7), libtool, automake, autoconf, pkg-config,
+ libdatrie-dev (>= 0.2.0), libdatrie1-bin
+Vcs-Svn: http://linux.thai.net/svn/software/swath
+Vcs-Browser: http://linux.thai.net/websvn/wsvn/software.swath/?sc=0
+Homepage: http://linux.thai.net/projects/thailatex
+Standards-Version: 3.8.3
+
+Package: swath
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Thai word segmentation program
+ Swath is a general-purpose utility for analyzing word boundaries in Thai
+ text and inserting predefined word delimiter codes. It can be used as a
+ filter for Thai LaTeX files so the lines are wrapped properly when processed
+ with thailatex macros. Other formats that swath can also handle include HTML,
+ RTF and plain text.
