@@ -1,0 +1,435 @@
+2009-04-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Post-release version suffix added.
+	* src/wordseg.cpp (main, +Version): Add -V/--version to print version
+	info, as suggested by Beamer User.
+	* src/Makefile.am: Pass -DVERSION CFLAGS.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.4.0 ===
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterrtf.h (FilterRTF::chgCharState, FilterRTF::isThaiChar):
+	Declare utility functions as static members.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (WinMacNormal, MacOffsetLeft, MacOffsetLeftHigh,
+	MacOffsetNormal, WinOffsetLeft, WinOffsetLeftHigh, WinOffsetNormal):
+	Declare internal data as file-scoped.
+
+	* src/filterlatex.h
+	(FilterLatex::isLongTailChar, FilterLatex::idxVowelToneMark):
+	Declare utility functions as static members.
+
+	* src/filterlatex.cpp (FilterLatex::isLongTailChar):
+	Eliminate unnecessary true/false conditional expression; simple boolean
+	expression is enough.
+
+	* src/filterlatex.cpp (FilterLatex::idxVowelToneMark):
+	Check array index range before accessing, rather than after.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
+	Check array index range before accessing, rather than after.
+
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/longwordseg.cpp (LongWordSeg::LongWordSeg):
+	Use 'delete[]' instead of 'delete', to match with 'new []', fixing
+	valgrind warning.
+
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence):
+	Check array index range before accessing, rather than after, fixing
+	valgrind warnings of conditional jumps depending on uninitialized
+	values.
+
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp
+	(MaxWordSeg::CreateSentence, MaxWordSeg::WordSegArea):
+	Check range of array index for IdxSep[] *before* accessing the array
+	element, rather than *after*, fixing valgrind warnings of conditional
+	jumps depending on uninitialized values.
+
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	* src/filterrtf.cpp (FilterRTF::FilterRTF, FilterRTF::GetNextToken):
+	* src/filterlatex.cpp
+	  (FilterLatex::FilterLatex, FilterLatex::GetNextToken):
+	* src/wordseg.cpp (main):
+	Replace strcpy() and strcmp() calls with null string arguments with
+	first character accesses.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	Replace operlapping strcpy() with memmove(), fixing valgrind warnings.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Move global vars 'startStr', 'buff', 'gout'
+	to local scope, where they are actually used.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Move global var 'mulestr' to local scope.
+	Make it just bool 'muleMode', as all its function is just that.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (InitWordSegmentation, main):
+	Make the global var 'method' local and passed as argument.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h (AbsWordSeg::~AbsWordSeg): Declare d-tor as virtual,
+	fixing memory leak because its derived class d-tor was not called.
+	Thanks valgrind.
+
+	* src/wordseg.cpp (InitWordSegmentation, main): Move 'delete method' to
+	main(), where it's more obvious.
+
+	* src/wordseg.cpp (ExitWordSegmentation, WordSegmentation, main):
+	Make ExitWordSegmentation() and WordSegmentation() accept mere
+	AbsWordSeg pointer, rather than pointer to pointer, reducing
+	dereferencing steps.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix valgrind warnings about mismatched new/delete.
+
+	* src/abswordseg.cpp (AbsWordSeg::~AbsWordSeg):
+	* src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg, MaxWordSeg::~MaxWordSeg):
+	* src/wordseg.cpp (InitWordSegmentation, main):
+	Replace 'delete' with 'delete[]' where data was created with new[].
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* AUTHORS: Update info, as the trie supporting code has been removed.
+	Now my role is general maintenance. And describe Phaisarn's role as
+	the original creator.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	Replace C malloc() calls with C++ 'new' operator, to better match with
+	the 'delete' operator in destructor.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h (AbsWordSeg::Has_Karun):
+	Declare another utility function as static member.
+	* src/abswordseg.cpp (AbsWordSeg::Has_Karun):
+	Replace negative number literal with hexadecimal code, for readability.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	Remove unnecessary 'continue'.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h
+	(AbsWordSeg::IsLeadChar, IsLastChar, IsNumber, IsEnglish):
+	Declare utility functions as static members.
+	* src/abswordseg.cpp (AbsWordSeg::IsNumber, IsEnglish):
+	Replace code with simpler equivalence.
+	* src/abswordseg.cpp (AbsWordSeg::GetBestSen):
+	Get rid of unnecessary assignment and strcat().
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Get rid of the unnecessary src/dictpath.cpp.
+
+	* src/Makefile.am, -src/dictpath.cpp: Remove dictpath.cpp.
+	* src/dictpath.h (d2triepath), src/wordseg.cpp (InitWordSegmentation):
+	Get rid of the unnecessary global variable 'd2triepath', which is in
+	fact only needed locally.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Switch to libdatrie. (Requires libdatrie >= 0.1.99.2)
+
+	* configure.in: Post-release version bump.
+
+	* configure.in: Check for 'trietool-0.2' program (under --enable-dict)
+	and 'datrie-0.2' pkg-config.
+	* configure.in, Makefile.am: Exclude 'misc', 'vmem', and 'trie' subdirs.
+
+	* src/abswordseg.h:
+	  - Replace 'AbsWordSeg::MyDict' member with libdatrie's 'Trie'
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	  - Don't delete 'MyDict' in c-tor
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Replace calls to old 'Trie' class with corresponding libdatrie
+	    functions
+	  - Adjust loop so that terminating '\0' is not walked
+
+	* src/longwordseg.h, src/longwordseg.cpp
+	  (LongWordSeg::LongWordSeg, ~LongWordSeg):
+	  - Replace 'MyDict' creation/deletion with libdatrie's functions
+	  - Remove 'branchPath' and 'tailPath' members; and just use local
+	    vars in c-tors instead
+
+	* src/maxwordseg.h, src/maxwordseg.cpp
+	  (MaxWordSeg::MaxWordSeg, ~MaxWordSeg):
+	  - Replace 'MyDict' creation/deletion with libdatrie's functions
+	  - Remove 'branchPath' and 'tailPath' members; and just use local
+	    vars in c-tors instead
+
+	* src/dictpath.h, src/dictpath.cpp:
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Replace 'd2branchpath' and 'd2tailpath' with a single
+	    'd2triepath' variable
+	  - Replace 'D2BRANCH' and 'D2TAIL' with a single 'D2TRIE' macro
+
+	* src/wordstack.h:
+	  - Remove unneeded #include "misc/typedefs.h"
+
+	* src/Makefile.am:
+	  - Remove linkages to internal 'libmisc', 'libvmem', and 'libtrie'
+	  - Add libdatrie CFLAGS and LIBS
+
+	* data/Makefile.am, -data/swathdic.br, -data/swathdic.tl:
+	  - Exclude 'swathdic.br' and 'swathdic.tl' from distribution
+	* data/Makefile.am, +data/swathdic.abm:
+	  - Add 'swathdic.abm' to distribution
+	  - Add rule for generating 'swathdic.tri' with trietool-0.2
+	  - Install 'swathdic.tri' instead of 'swathdic.br' and 'swathdic.tl'
+
+2008-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.4 ===
+
+2008-03-24  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am, +data/swathdic.lst: Add dictionary word list
+	dumped from the dict binary files, for dict adjustments in the future.
+
+2008-03-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Use tmpfile() instead of tmpnam() when creating temp files,
+	to avoid race condition as a security measurement.
+
+	* src/wordseg.cpp (main):
+	  - Use FILE* instead of file names for temp files
+	  - Call tmpfile() to create temp files
+	  - Pass FILE* to conv() and CreateFileFilter()
+
+	* conv/conv.{h,cxx}:
+	  - Add overloaded conv() accepting FILE* arguments
+	  - Refactor do_conv() out of conv() wrappers
+	  - Pass FILE* to CreateText{Reader,Writer}
+	* conv/convfact.{h,cxx} (CreateTextReader, CreateTextWriter):
+	  - Accept FILE* arguments instead of istream, ostream
+	  - Pass FILE* arguments to {TIS620,UTF8}{Reader,Writer} c-tors
+	* conv/{tis620,utf8}.{h,cxx}:
+	  - Change stream members' type to FILE*
+	  - Use fgetc() and fputc() for character I/O
+	  - Declare internal functions static
+
+	* src/filefilter.{h,cpp} (CreateFileFilter):
+	  - Use FILE* arguments instead of file names
+	  - Pass the FILE* arguments to Filter* c-tors
+	* src/filter{html,latex,lambda,rtf}.{h,cpp}:
+	  - Accept FILE* arguments instead of file names in c-tors
+	  - Pass the FILE* arguments to FilterX base class c-tor
+	* src/filterx.{h,cpp}:
+	  - In c-tor, assign FILE* arguments to members directly, rather
+	    than creating new files from file names
+	  - In d-tor, just flush output, rather than closing files
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Escape more minus signs. [lintian]
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.3 ===
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Move FltX variable into if-block. Beutify
+	some indents.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filefilter.{h,cpp}: Make "FileFilter" an empty class with a
+	single static method CreateFilter(). The full-fledged
+	{con,de}structors are just unnecessary.
+
+	* src/wordseg.cpp (main): Create FilterX with the static method.
+	Remove now-unneeded FileFilter variable.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Delete filter X object after finishing
+	wordseg, so output file gets flushed.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): duplicate tmpnam() results, instead of mere
+	pointer assignment, as the returned value is pointer to static buffer,
+	resulting in the same names for tmpin and tmpout. Fixing
+	non-functional '-u u,u' option. Bug report by Neutron Soutmun.
+
+2008-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList): Fix logical errors
+	introduced during portability fix, which made swath not break any
+	word. Bug report by Pisut Tempatarachoke.
+
+2008-02-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Escape minus signs. Thanks debian's lintian.
+
+2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.2 ===
+
+2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Remove unused ISODATE var. Remove checks for CC and
+	CPP. Just CXX is enough.
+
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Reveal the encoding conversion feature to users.
+
+	* src/wordseg.cpp (Usage): Add '-u' option in help message.
+	* src/swath.1: Add documentation for '-u' option, with example.
+	* README: Mention the '-u' option for UTF-8 LaTeX files. Indent the
+	sample codes for readability.
+
+	* src/swath.1: Document the default matching scheme, and adjust the
+	example accordingly.
+
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main):
+	  - Also accept '--verbose' and '--help' options.
+	  - Adjust indents around the code, for readability.
+	  - Remove unnecessary continue's.
+	  - Check boundary of argc for '-u' parsing.
+	  - Free more allocated data (fileformat, method, unicode) on return
+	    after printing usage.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (Usage): Revise wording for the help message.
+	Use string catenation instead of separate printf's.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* README: Write document.
+	* src/swath.1: Rewrite the whole page, with more detailed info.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am: Install dict in ${pkgdatadir}, not ${datadir}.
+	* src/Makefile.am: Update dict location macro acoordingly.
+
+2006-07-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.{h,cpp} (IsLeadChar(), IsLastChar()),
+	src/filterhtml.cpp (GetNextToken()),
+	src/filterlatex.cpp (GetNextToken()),
+	src/filterrtf.cpp (GetNextToken()): Fixed char signedness portability
+	issues (found on s390, powerpc, arm builds by debian buildd).
+
+2006-03-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.1 ===
+
+2006-03-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Used section number instead of version number.
+
+2006-03-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* Makefile.am: Removed debian from SUBDIRS.
+
+	* configure.in: Removed debian/Makefile generation.
+
+2005-10-09  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Formatted configure options help strings with AC_HELP_STRING().
+	Used --disable/--enable help style rather than --enable with default
+	yes or no. Also disabled debug by default.
+
+2005-05-07  Chanop Silpa-Anan <chanop@debian.org>
+	* src/abswordseg.cpp:
+	A quick hack for Apple/Darwin: malloc is defined in stdlib.h instead
+	of a more common place malloc.h.
+
+2004-03-30  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* AUTHORS:
+	Fix my e-mail address.
+
+2003-04-04  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* conv/tis620.cxx, conv/utf8.cxx:
+	Use casting instead of declaring temp vars in dealing with
+	iostream::get() with unsigned char argument.
+
+2003-04-03  Chanop Silpa-Anan <chanop@debian.org>
+	* conv/{conv.cxx conv.h convfact.cxx convfact.h tis620.cxx tis620.h
+	  utf8.cxx utf8.}:
+	Clean up for g++-3.2: compilation errors, compiler warnings
+	and namespace issues.
+
+	* trie/{trie.h trie.cxx}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers.
+
+	* vmem/{dataheap.cxx dataheap.h vmem.cxx vmem.h}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers. Also use namespace std in .h files, a quick hack.
+
+2003-01-14  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* swath.spec.in:
+	Fix "%install" mess in comment (rpmbuild oddity)
+
+2002-09-24  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* src/wordseg.cpp:
+	Fix segfault in case of unknown file format.
+	Nicer "Usage:" handling.
+	Remove winlatex, maclatex from Usage:
+
+2002-09-23  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add --enable-debug to allow assertions disabling.
+
+	* configure.in, src/filterlatex.cpp:
+	Add --enable-catthai to allow Thai line catenation disabling.
+	(temporary solution, may be replaced with command-line option or
+	hard-coding later)
+
+2002-09-21  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add missing debian/Makefile in AC_OUTPUT.
+
+2001-12-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* GNU autotools files:
+	Rearrange source tree and apply GNU autotools.
+
+	* Version 0.3.0.
+
