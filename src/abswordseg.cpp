@@ -142,7 +142,7 @@ bool AbsWordSeg::IsEnglish(char *str){
 }
 
 bool AbsWordSeg::IsLeadChar(unsigned char ch){
-	if ( ((0xcf<=ch)&&(ch<=0xd9)) || ((0xe6<=ch)&&(ch<=0xec)) )
+	if ( ((0xcf<=ch)&&(ch<=0xda)) || ((0xe6<=ch)&&(ch<=0xee)) )
 		return false; //false
 	else
 		return true; //true
