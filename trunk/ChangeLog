@@ -1,5 +1,14 @@
 2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace partial copy using temporary null-termination with
+	    strncpy() and strncat().
+	  - Replace a risky strcpy() on overlapping buffers with memmove().
+	  - Split an assignment in if-condition into sepearate statement,
+	    for more readability.
+
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/worddef.cpp (isSpace, isHex, isPunc):
 	  - Replace decimal ASCII codes with char literals, for more
 	    readability
