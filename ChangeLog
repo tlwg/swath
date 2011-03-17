@@ -1,5 +1,15 @@
 2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Make check functions in worddef.cpp inline.
+
+	* src/Makefile.am, src/worddef.h, -src/worddef.cpp
+	(isSpace, isHex, isPunc, isThai):
+	  - Move function definitions from worddef.cpp to worddef.h and make
+	    them inline.
+	  - Remove worddef.cpp from the project.
+
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Replace hard checks for Thainess with new function isThai().
 
 	* src/worddef.h, src/worddef.cpp (+isThai): Add the check function.

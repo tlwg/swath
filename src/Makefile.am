@@ -30,7 +30,6 @@ swath_SOURCES = \
 	filterx.cpp \
 	longwordseg.cpp \
 	maxwordseg.cpp \
-	worddef.cpp \
 	wordseg.cpp \
 	wordstack.cpp
 
