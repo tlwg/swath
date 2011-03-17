@@ -46,7 +46,7 @@ FilterLatex::~FilterLatex()
 bool FilterLatex::GetNextToken(char * token, bool * thaiFlag)
 {
 char *curPtr;
-char *stPtr, tmpch;
+char *stPtr;
 char *stVer;
 
 	if (buffer[0]=='\0') 
@@ -57,17 +57,16 @@ char *stVer;
 	*token='\0';
 	if (verbatim) {
 		*thaiFlag=false;
-		if ((stVer=strstr(buffer,"\\end{verbatim}"))==NULL){
+		stVer=strstr(buffer,"\\end{verbatim}");
+		if (stVer==NULL){
 			strcpy(token,buffer);
 			buffer[0]='\0';
 			return true;
 		}else{
 			stVer+=strlen("\\end{verbatim}");
-			tmpch=*stVer;
-			*stVer=0;
-			strcpy(token,buffer);
-			*stVer=tmpch;
-			strcpy(buffer,stVer);
+			strncpy(token,buffer,stVer-buffer);
+			token[stVer-buffer]='\0';
+			memmove(buffer,stVer,strlen(stVer)+1);
 			verbatim=false;
 			return true;
 		}
@@ -83,10 +82,9 @@ char *stVer;
 				curPtr++;
 			}
 			if ((*curPtr!=0)&&(*curPtr!='\n')){
-				tmpch=*curPtr;
-				*curPtr=0;
-				strcat(token,stPtr);
-				*curPtr=tmpch;
+				int prevLen=strlen(token);
+				strncat(token,stPtr,curPtr-stPtr);
+				token[prevLen+(curPtr-stPtr)]='\0';
 				//store new buffer
 				memmove(buffer,curPtr,strlen(curPtr)+1);
 				return true;
@@ -116,10 +114,8 @@ char *stVer;
 			curPtr++;
 		}
 		if (*curPtr!=0){
-			tmpch=*curPtr;
-			*curPtr=0;
-			strcpy(token,stPtr);
-			*curPtr=tmpch;
+			strncpy(token,stPtr,curPtr-stPtr);
+			token[curPtr-stPtr]='\0';
 			//store new buffer
 			memmove(buffer,curPtr,strlen(curPtr)+1);
 		}else{
