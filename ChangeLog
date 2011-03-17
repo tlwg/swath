@@ -1,3 +1,10 @@
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/worddef.cpp (isSpace, isHex, isPunc):
+	  - Replace decimal ASCII codes with char literals, for more
+	    readability
+	  - Simplify return expressions
+
 2010-09-24  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/abswordseg.cpp (AbsWordSeg::IsLeadChar): Also include PHINTHU,
