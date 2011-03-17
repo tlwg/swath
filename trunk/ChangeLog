@@ -1,5 +1,13 @@
 2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Replace hard checks for Thainess with new function isThai().
+
+	* src/worddef.h, src/worddef.cpp (+isThai): Add the check function.
+	* src/filterlatex.cpp (FilterLatex::GetNextToken): Replace hard
+	checks (c & 0x80), or (c > 0), with isThai(c) calls.
+
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.cpp (FilterLatex::GetNextToken):
 	  - Replace partial copy using temporary null-termination with
 	    strncpy() and strncat().
