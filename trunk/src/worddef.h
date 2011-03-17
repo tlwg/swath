@@ -32,9 +32,26 @@ typedef struct SepTypeDef {
    short int Sep[MAXSEP];
 } SepType;
 
-bool isSpace(char ch);
-bool isHex(char ch);
-bool isPunc(char ch);
-bool isThai(char ch);
+inline bool isSpace(char ch)
+{
+	return (ch==' ') || ('\t'<=ch && ch<='\r');
+}
+
+inline bool isHex(char ch)
+{
+	return ('0'<=ch && ch<='9') || ('a'<=ch && ch<='f');
+}
+
+inline bool isPunc(char ch)
+{
+//	if (  ((ch>=33)&&(ch<=47)) || ((ch>=58)&&(ch<=63))
+//		      || ((ch>=91)&&(ch<=96))  )
+	return ch=='\'' || ch=='"' || ch=='`' || ch=='.';
+}
+
+inline bool isThai(char ch)
+{
+	return ch & 0x80;
+}
 
 #endif
