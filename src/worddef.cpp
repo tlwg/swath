@@ -15,3 +15,8 @@ bool isPunc(char ch)
 //		      || ((ch>=91)&&(ch<=96))  )
 	return ch=='\'' || ch=='"' || ch=='`' || ch=='.';
 }
+
+bool isThai(char ch)
+{
+	return ch & 0x80;
+}

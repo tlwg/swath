@@ -74,14 +74,14 @@ char *stVer;
 
 	while (isPunc(*curPtr))
 		curPtr++;
-	*thaiFlag=(*curPtr & 0x80)? true:false;
+	*thaiFlag=isThai(*curPtr);
 	curPtr++;
 	if (*thaiFlag){
 		for(;;){ //for finding thai line + thailine +...+ thailine
-			while (*curPtr & 0x80) {  //isPunc(*curPtr);
+			while (isThai(*curPtr)) {  //isPunc(*curPtr);
 				curPtr++;
 			}
-			if ((*curPtr!=0)&&(*curPtr!='\n')){
+			if (*curPtr!=0 && *curPtr!='\n'){
 				int prevLen=strlen(token);
 				strncat(token,stPtr,curPtr-stPtr);
 				token[prevLen+(curPtr-stPtr)]='\0';
@@ -101,7 +101,7 @@ char *stVer;
 				}
 				curPtr=buffer;
 #ifdef CAT_THAI_LINES
-				if (*curPtr>0) //not thai character
+				if (!isThai(*curPtr)) //not thai character
 #endif
 				{
 					strcat(token,"\n");
@@ -110,7 +110,7 @@ char *stVer;
 			}
 		}
 	}else{
-		while ((*curPtr>0) || (isPunc(*curPtr)) || (isSpace(*curPtr)) ){
+		while (*curPtr && !isThai(*curPtr)){
 			curPtr++;
 		}
 		if (*curPtr!=0){

@@ -35,5 +35,6 @@ typedef struct SepTypeDef {
 bool isSpace(char ch);
 bool isHex(char ch);
 bool isPunc(char ch);
+bool isThai(char ch);
 
 #endif
