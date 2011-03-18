@@ -219,7 +219,7 @@ int main(int argc, char *argv[])
   if (fileformat!=NULL) {
 	  FilterX* FltX = FileFilter::CreateFilter(tmpin,tmpout,fileformat);
 	  if (FltX==NULL) {
-		printf("Invalid file format: %s\n", fileformat);
+		fprintf(stderr, "Invalid file format: %s\n", fileformat);
 		// FIXME: still mem leak hmm..
 		return 1;
 	  }
