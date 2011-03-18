@@ -16,8 +16,6 @@ class FilterX
 public:
 
 	const char* GetWordBreak();
-	bool GetSuffix(char *suffStr);
-	bool GetPrefix(char *preStr);
 	virtual bool GetNextToken(char *token, bool *thaiFlag)=0;
 	virtual void Print(char *token, bool thaiFlag)=0;
 	FilterX(FILE *filein, FILE *fileout);
@@ -27,9 +25,7 @@ protected:
 	char chbuff; //character buff
 	FILE *fpin;
 	FILE *fpout;
-	char suffixStr[10];
-	char prefixStr[10];
-	char wordBreakStr[25];
+	const char *wordBreakStr;
 
 private:
 	bool fileopen;

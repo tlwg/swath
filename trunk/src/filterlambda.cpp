@@ -12,7 +12,7 @@
 FilterLambda::FilterLambda(FILE *filein, FILE *fileout, int latexflag)
     : FilterLatex(filein, fileout, latexflag)
 {
-	strcpy(wordBreakStr,"^^^^200c");
+	wordBreakStr = "^^^^200c";
 }
 
 FilterLambda::~FilterLambda()
