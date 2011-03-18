@@ -1,5 +1,11 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg, AbsWordSeg::AbsWordSeg, AbsWordSeg::InitData):
+	  - Remove unused 'cntSep' member.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Move dict initialization to AbsWordSeg base class.
 
 	* src/abswordseg.h (MyDict, InitData):
