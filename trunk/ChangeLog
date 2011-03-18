@@ -1,5 +1,23 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Enhance -d option to also accept a trie file.
+
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::AbsWordSeg, +AbsWordSeg::InitDict):
+	  - Make dictionary opening be a normal method to be called after
+	    construction, so the return state can be checked.
+	  - Check if the path is a regular file or directory. If it's a
+	    directory, append usual dict file name to it before opening.
+	* src/maxwordseg.h, src/maxwordseg.cpp:
+	* src/longwordseg.h, src/longwordseg.cpp:
+	  - Remove c-tor with dict path arg.
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Don't try opening file. Just create the wordseg object and
+	    call InitDict() to determine successfulness.
+	* src/swath.1: Update man page to cover the new behavior, with example.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (InitWordSegmentation):
 	  - Use sprintf instead of series of strcat to format trie path name.
 

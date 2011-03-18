@@ -17,13 +17,6 @@ MaxWordSeg::MaxWordSeg():AbsWordSeg()
 	score = new short int[MAXSEP];
 }
 
-MaxWordSeg::MaxWordSeg(const char *dataPath):AbsWordSeg(dataPath)
-{
-	noAmbArea=0;
-	score = new short int[MAXSEP];
-}
-
-
 MaxWordSeg::~MaxWordSeg()
 {
 	delete[] score;

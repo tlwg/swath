@@ -44,29 +44,21 @@ void RemoveJunkChar(char *str);
 
 
 
-int InitWordSegmentation(const char *wordsegdata,
+int InitWordSegmentation(const char *dictpath,
                          const char *method,
                          AbsWordSeg **pWseg)
 {
-  FILE* fp;
-
-  char *d2triepath = new char[strlen(wordsegdata) + 1 + sizeof(D2TRIE)];
-  sprintf(d2triepath, "%s" PATHSEPERATOR D2TRIE, wordsegdata);
-  if ((fp = fopen(d2triepath, "r")) == NULL) {
-	  delete[] d2triepath;
-	  return 1;
-  }
-  delete[] d2triepath;
-  fclose(fp);
-
   if (method==NULL){
-	  *pWseg=new MaxWordSeg(wordsegdata);
-	  return 0;
-  }
-  if (strcmp(method,"long")==0){
-	  *pWseg=new LongWordSeg(wordsegdata);
+    *pWseg=new MaxWordSeg;
+  } else if (strcmp(method,"long")==0){
+    *pWseg=new LongWordSeg;
   }else{
-	  *pWseg=new MaxWordSeg(wordsegdata);
+    *pWseg=new MaxWordSeg;
+  }
+
+  if (!(*pWseg)->InitDict(dictpath)) {
+    delete *pWseg;
+    return 1;
   }
   return 0;
 }

@@ -16,8 +16,8 @@ class AbsWordSeg
 {
 public:
 	AbsWordSeg();
-	AbsWordSeg(const char *dataPath);
 	virtual ~AbsWordSeg();
+	bool InitDict(const char *dictPath);
 	bool WordSeg(char* senstr,char *output,const char *wbr);
 	
 protected:
