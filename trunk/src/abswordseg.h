@@ -17,7 +17,7 @@ class AbsWordSeg
 public:
 	AbsWordSeg();
 	virtual ~AbsWordSeg();
-	bool WordSeg(char* senstr,char *output,char *wbr);
+	bool WordSeg(char* senstr,char *output,const char *wbr);
 	
 protected:
 	void InitData();
@@ -30,7 +30,7 @@ protected:
 	short int *IdxSep;
 	//============Function for Wordseg=====================
 	virtual void SwapLinkSep();
-	virtual void GetBestSen(int bestidx,char *wbr,char *outstr);
+	virtual void GetBestSen(int bestidx,const char *wbr,char *outstr);
 	virtual void CreateWordList(void);
 	virtual int CreateSentence()=0; //return idx of best sen
 	virtual unsigned short int copySepData(short int sourceIdxSen,short int targetIdxSen,short int sepPoint);

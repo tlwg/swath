@@ -32,10 +32,9 @@ FilterX::~FilterX()
 	fflush(fpout);
 }
 
-bool FilterX::GetWordBreak(char *wbr)
+const char* FilterX::GetWordBreak()
 {
-	strcpy(wbr,wordBreakStr);
-	return true;
+	return wordBreakStr;
 }
 
 bool FilterX::GetPrefix(char *preStr)

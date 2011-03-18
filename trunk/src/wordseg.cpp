@@ -78,7 +78,8 @@ void ExitWordSegmentation(AbsWordSeg *wseg)
   delete wseg;
 }
 
-void WordSegmentation(AbsWordSeg *wseg, char *wbr, char *line, char* output)
+void WordSegmentation(AbsWordSeg *wseg, const char *wbr, char *line,
+                      char* output)
 {
 	//RemoveJunkChar(line);
 	wseg->WordSeg(line,output,wbr);
@@ -136,7 +137,7 @@ static void Usage(int verbose)
 int main(int argc, char *argv[])
 {
   char mode = 1;  // 0 = display, 1 = don't display message
-  char *wbr = new char[20];
+  const char *wbr;
   char *wsegpath = NULL;
   char *method=NULL;
   char *fileformat = NULL;
@@ -145,17 +146,14 @@ int main(int argc, char *argv[])
   bool thaifag;
   bool wholeLine=false;
   
-  strcpy(wbr, "|");
+  wbr = "|";
   muleMode = false;
   for (int iargc = 1; iargc < argc; iargc++) {
     if (strcmp("mule", argv[iargc]) == 0){
       muleMode = true;
       mode = 1;
     } else if (strcmp("-b", argv[iargc]) == 0 && iargc + 1 < argc) {
-      iargc++;
-      delete[] wbr;
-      wbr = new char[strlen(argv[iargc]) + 1];
-      strcpy(wbr, argv[iargc]);
+      wbr = argv[++iargc];
     } else if (strcmp("-d", argv[iargc]) == 0 && iargc + 1 < argc) {
       iargc++;
       wsegpath = new char[strlen(argv[iargc]) + 1];
@@ -183,7 +181,6 @@ int main(int argc, char *argv[])
                strcmp("--version", argv[iargc]) == 0)
     {
       Version();
-      delete[] wbr;
       delete[] wsegpath;
       delete[] fileformat;
       delete[] method;
@@ -193,7 +190,6 @@ int main(int argc, char *argv[])
                strcmp("--help", argv[iargc]) == 0)
     {
       Usage(1);
-      delete[] wbr;
       delete[] wsegpath;
       delete[] fileformat;
       delete[] method;
@@ -201,7 +197,6 @@ int main(int argc, char *argv[])
       return 1;
     } else {
       Usage(0);
-      delete[] wbr;
       delete[] wsegpath;
       delete[] fileformat;
       delete[] method;
@@ -238,7 +233,6 @@ int main(int argc, char *argv[])
   delete[] wsegpath;
   delete[] method;
   if (retval > 0) {
-    delete[] wbr;
     return 1;
   }
   leadch[0]='\0';
@@ -264,7 +258,7 @@ int main(int argc, char *argv[])
 		// FIXME: still mem leak hmm..
 		return 1;
 	  }
-	  FltX->GetWordBreak(wbr);
+	  wbr = FltX->GetWordBreak();
 	  while (FltX->GetNextToken(line,&thaifag)){
 		if (!thaifag){
 			FltX->Print(line,thaifag);
@@ -328,7 +322,6 @@ int main(int argc, char *argv[])
   }
 
   delete[] fileformat;
-  delete[] wbr;
   ExitWordSegmentation(wseg);
 
   return 0;

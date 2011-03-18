@@ -15,7 +15,7 @@ class FilterX
 {
 public:
 
-	bool GetWordBreak(char *wbr);
+	const char* GetWordBreak();
 	bool GetSuffix(char *suffStr);
 	bool GetPrefix(char *preStr);
 	virtual bool GetNextToken(char *token, bool *thaiFlag)=0;
