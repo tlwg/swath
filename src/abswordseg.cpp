@@ -167,7 +167,7 @@ short int i;
    return false;
 }
 
-bool AbsWordSeg::WordSeg(char* senstr,char *output,char *wbr){
+bool AbsWordSeg::WordSeg(char* senstr,char *output,const char *wbr){
 int bestidx;
    strcpy(sen,senstr);
    len=strlen(senstr);
@@ -249,7 +249,7 @@ short int i=0;
 	return i;
 }
 
-void AbsWordSeg::GetBestSen(int bestidx,char *wbr,char *outstr){
+void AbsWordSeg::GetBestSen(int bestidx,const char *wbr,char *outstr){
 int t;
 char buff[2000];
 

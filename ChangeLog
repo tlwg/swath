@@ -1,5 +1,21 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Make 'wbr' word delimiter a (const char *).
+
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::WordSeg, AbsWordSeg::GetBestSen):
+	  - Declare 'wbr' arg (const char *).
+	* src/filterx.h, src/filterx.cpp (FilterX::GetWordBreak):
+	  - Make it return (const char *) instead of copying string back.
+	* src/wordseg.cpp (WordSegmentation):
+	  - Declare 'wbr' arg (const char *).
+	* src/wordseg.cpp (main):
+	  - Make 'wbr' (const char *).
+	  - Replace all allocs & copies with pointer assignments.
+	  - Remove all deletes.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/swath.1: Update doc for -d option. The dictionary file is now
 	a single `swathdic.tri' file.
 
