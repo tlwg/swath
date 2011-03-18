@@ -1,5 +1,10 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	Use macro D2TRIE for trie file name instead of hard literal.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.h, src/abswordseg.cpp
 	  (AbsWordSeg, AbsWordSeg::AbsWordSeg, AbsWordSeg::InitData):
 	  - Remove unused 'cntSep' member.
