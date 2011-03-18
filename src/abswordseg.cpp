@@ -19,7 +19,6 @@ void AbsWordSeg::Construct(){ //Common Constructor code
 		printf("Cannot allocate memory\n");
 		exit(0);
 	}
-	cntSep=0;
 }
 
 AbsWordSeg::AbsWordSeg(){
@@ -233,7 +232,6 @@ char *sen_ptr;
 
 void AbsWordSeg::InitData(){
 int i;
-	cntSep=0;
     for(i=0;(i<len) && (i<MAXLEN) ;i++){
     	IdxSep[i]=-1;
     }

@@ -23,7 +23,6 @@ public:
 protected:
 	SepType SepData[3];
 	unsigned short int len;
-	short int cntSep;
 	char sen[MAXLEN];
 	short int *LinkSep;
 	short int *IdxSep;
