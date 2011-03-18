@@ -99,31 +99,33 @@ static void Version()
 
 static void Usage(int verbose)
 {
-    printf("Usage: swath [mule|-v] [-b \"delimitor\"] [-d dict-dir]\n"
-           "[-f html|rtf|latex|lambda] [-m long|max] [-u {u|t},{u|t}] [-help]\n");
+    fprintf(stderr,
+            "Usage: swath [mule|-v] [-b \"delimitor\"] [-d dict-dir]\n"
+            "[-f html|rtf|latex|lambda] [-m long|max] [-u {u|t},{u|t}] [-help]\n");
     if (verbose) {
-	  printf("Options:\n"
-	         "\tmule : for use with mule\n"
-	         "\t-v   : verbose mode\n"
-	         "\t-b   : define a word delimitor string for the output\n"
-	         "\t-d   : specify dictionary path\n"
-	         "\t-f   : specify format of the input\n"
-	         "\t\thtml     : HTML file\n"
-	         "\t\trtf      : RTF file\n"
-	         "\t\tlatex    : LaTeX file\n"
-	         "\t\tlambda   : The input and output are same as latex, except that\n"
-	         "\t\t           the word delimitor is ^^^^^^^^200c\n"
-//	         "\t\twinlatex : LaTeX file shaping on Windows\n"
-//	         "\t\tmaclatex : LaTeX file shaping on Macintosh\n"
-	         "\t-m   : choose word matching scheme when analyzing\n"
-	         "\t\tlong     : longest matching scheme\n"
-	         "\t\tmax      : maximal matching scheme\n"
-//	         "\t-l   : line processing(effect only in a bigram algo.)\n"
-	         "\t-u   : specify encodings of input and output in 'i,o' form,\n"
-	         "\t       for input and output respectively, where 'i', 'o' is one of:\n"
-		 "\t\tu        : The input/output is in UTF-8\n"
-		 "\t\tt        : The input/output is in TIS-620\n"
-	         "\t-help: display this help message\n");
+	  fprintf(stderr,
+	          "Options:\n"
+	          "\tmule : for use with mule\n"
+	          "\t-v   : verbose mode\n"
+	          "\t-b   : define a word delimitor string for the output\n"
+	          "\t-d   : specify dictionary path\n"
+	          "\t-f   : specify format of the input\n"
+	          "\t\thtml     : HTML file\n"
+	          "\t\trtf      : RTF file\n"
+	          "\t\tlatex    : LaTeX file\n"
+	          "\t\tlambda   : The input and output are same as latex, except that\n"
+	          "\t\t           the word delimitor is ^^^^^^^^200c\n"
+//	          "\t\twinlatex : LaTeX file shaping on Windows\n"
+//	          "\t\tmaclatex : LaTeX file shaping on Macintosh\n"
+	          "\t-m   : choose word matching scheme when analyzing\n"
+	          "\t\tlong     : longest matching scheme\n"
+	          "\t\tmax      : maximal matching scheme\n"
+//	          "\t-l   : line processing(effect only in a bigram algo.)\n"
+	          "\t-u   : specify encodings of input and output in 'i,o' form,\n"
+	          "\t       for input and output respectively, where 'i', 'o' is one of:\n"
+		  "\t\tu        : The input/output is in UTF-8\n"
+		  "\t\tt        : The input/output is in TIS-620\n"
+	          "\t-help: display this help message\n");
     }
 }
 
