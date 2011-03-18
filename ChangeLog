@@ -1,5 +1,10 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Use sprintf instead of series of strcat to format trie path name.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterx.h, src/filterx.cpp
 	  (GetSuffix, GetPrefix, suffixStr, prefixStr):
 	* src/filterrtf.cpp (FilterRTF::FilterRTF):
