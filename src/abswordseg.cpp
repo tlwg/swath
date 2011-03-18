@@ -17,7 +17,7 @@ AbsWordSeg::AbsWordSeg(){
 	IdxSep = new short int [MAXLEN];
 	LinkSep = new short int [3*MAXLEN];
 	if ((IdxSep==NULL)||(LinkSep==NULL)){
-		printf("Cannot allocate memory\n");
+		fprintf(stderr, "Cannot allocate memory\n");
 		exit(0);
 	}
 	MyDict = NULL;
