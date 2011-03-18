@@ -1,5 +1,9 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (main): Rename 'wsegpath' var to 'dictpath'.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Enhance -d option to also accept a trie file.
 
 	* src/abswordseg.h, src/abswordseg.cpp

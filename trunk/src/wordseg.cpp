@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
 {
   char mode = 1;  // 0 = display, 1 = don't display message
   const char *wbr;
-  const char *wsegpath = NULL;
+  const char *dictpath = NULL;
   const char *method=NULL;
   const char *fileformat = NULL;
   const char *unicode = NULL;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
     } else if (strcmp("-b", argv[iargc]) == 0 && iargc + 1 < argc) {
       wbr = argv[++iargc];
     } else if (strcmp("-d", argv[iargc]) == 0 && iargc + 1 < argc) {
-      wsegpath = argv[++iargc];
+      dictpath = argv[++iargc];
     } else if (strcmp("-f", argv[iargc]) == 0 && iargc + 1 < argc) {
       fileformat = argv[++iargc];
     } else if (strcmp("-v", argv[iargc]) == 0 ||
@@ -179,10 +179,10 @@ int main(int argc, char *argv[])
 
   if (mode == 0) printf("*** Word Segmentation ***\n");
 
-  if (wsegpath == NULL) {
-    wsegpath = getenv("WORDSEGDATA");
-    if (wsegpath == NULL) {
-      wsegpath = WORDSEGDATA_DIR;
+  if (dictpath == NULL) {
+    dictpath = getenv("WORDSEGDATA");
+    if (dictpath == NULL) {
+      dictpath = WORDSEGDATA_DIR;
     }
   }
 
@@ -195,7 +195,7 @@ int main(int argc, char *argv[])
   int retval;
 
   if  (( retval=InitWordSegmentation(".", method, &wseg)) > 0)
-	  retval=InitWordSegmentation(wsegpath, method, &wseg);
+	  retval=InitWordSegmentation(dictpath, method, &wseg);
 
   if (retval > 0) {
     return 1;
