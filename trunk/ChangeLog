@@ -1,5 +1,21 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Move dict initialization to AbsWordSeg base class.
+
+	* src/abswordseg.h (MyDict, InitData):
+	  - Make the members private.
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::AbsWordSeg, +Construct, AbsWordSeg::~AbsWordSeg):
+	* src/longwordseg.cpp (LongWordSeg::LongWordSeg):
+	* src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg):
+	  - Move MyDict c-tor & d-tor code from derived class to base class.
+	  - Add base class c-tor which accepts dataPath arg, and split common
+	    c-tor code into AbsWordSeg::Construct().
+	* src/longwordseg.h, src/longwordseg.cpp (-LongWordSeg::~LongWordSeg):
+	  - Remove the now-empty d-tor.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/wordseg.cpp (Usage): Print usage on stderr, not stdout.
 
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>

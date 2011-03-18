@@ -12,7 +12,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-AbsWordSeg::AbsWordSeg(){ //Constructor
+void AbsWordSeg::Construct(){ //Common Constructor code
 	IdxSep = new short int [MAXLEN];
 	LinkSep = new short int [3*MAXLEN];
 	if ((IdxSep==NULL)||(LinkSep==NULL)){
@@ -22,9 +22,25 @@ AbsWordSeg::AbsWordSeg(){ //Constructor
 	cntSep=0;
 }
 
+AbsWordSeg::AbsWordSeg(){
+	Construct();
+	MyDict=trie_new_from_file("swathdic.tri");
+}
+
+AbsWordSeg::AbsWordSeg(const char *dataPath){
+	Construct();
+
+	char *triePath=new char[strlen(dataPath)+30];
+	sprintf(triePath,"%s/swathdic.tri",dataPath);
+	MyDict=trie_new_from_file(triePath);
+	delete[] triePath;
+}
+
 AbsWordSeg::~AbsWordSeg(){// Destructor
 	delete[] IdxSep;
 	delete[] LinkSep;
+
+	trie_free(MyDict);
 }
 
 #define tis2uni(c)  ((c)&0x80?((c)-0xa0+0x0e00):(c))

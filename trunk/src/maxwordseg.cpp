@@ -14,16 +14,11 @@
 MaxWordSeg::MaxWordSeg():AbsWordSeg()
 {
 	noAmbArea=0;
-	MyDict=trie_new_from_file("swathdic.tri");
 	score = new short int[MAXSEP];
 }
 
-MaxWordSeg::MaxWordSeg(const char *dataPath):AbsWordSeg()
+MaxWordSeg::MaxWordSeg(const char *dataPath):AbsWordSeg(dataPath)
 {
-	char *triePath=new char[strlen(dataPath)+30];
-	sprintf(triePath,"%s/swathdic.tri",dataPath);
-	MyDict=trie_new_from_file(triePath);
-	delete[] triePath;
 	noAmbArea=0;
 	score = new short int[MAXSEP];
 }
@@ -32,7 +27,6 @@ MaxWordSeg::MaxWordSeg(const char *dataPath):AbsWordSeg()
 MaxWordSeg::~MaxWordSeg()
 {
 	delete[] score;
-	trie_free(MyDict);
 }
 
 
