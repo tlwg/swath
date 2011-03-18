@@ -40,9 +40,11 @@ override this with a preferred delimitor.
 .B \-b [\fIdelimitor\fP]
 Define a string to be used as word delimitor code in the output text.
 .TP
-.B \-d [\fIdict-dir\fP]
-Specify alternative dictionary location. \fIdict-dir\fP must contain the swath
-dictionary file `swathdic.tri'.
+.B \-d [\fIdict-path\fP]
+Specify alternative dictionary location. \fIdict-path\fP must either be a
+directory containing the swath dictionary file `swathdic.tri', or be a path
+to the dictionary file itself. The dictionary file must be a trie file
+prepared using \fBtrietool-0.2\fP(1) utility from libdatrie package.
 .TP
 .B \-f [\fIformat\fP]
 Specify format of the input. Possible formats are: html, rtf, latex, lambda.
@@ -94,5 +96,10 @@ To use longest matching scheme with LaTeX document:
 $ \fBswath\fP \-f latex \-m long < thaifile.tex > thaifile.ttex
 .br
 $ \fBlatex\fP thaifile.ttex
+.sp
+To use an alternative dictionary from libthai:
+.sp
+$ \fBswath\fP \-f latex \-d /usr/share/libthai/thbrk.tri < thaifile.tex >
+thaifile.ttex
 .SH AUTHOR
 This manual page was written by Theppitak Karoonboonyanan <thep@linux.thai.net>.

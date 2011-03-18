@@ -15,7 +15,6 @@ class MaxWordSeg : public AbsWordSeg
 {
 public:
 	MaxWordSeg();
-	MaxWordSeg(const char *datapath);
 	~MaxWordSeg();
 
 protected:

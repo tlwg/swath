@@ -15,7 +15,6 @@ class LongWordSeg : public AbsWordSeg
 {
 public:
 	LongWordSeg();
-	LongWordSeg(const char *dataPath);
 
 protected:
 	virtual int CreateSentence();

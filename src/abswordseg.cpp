@@ -7,40 +7,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/stat.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-void AbsWordSeg::Construct(){ //Common Constructor code
+AbsWordSeg::AbsWordSeg(){
 	IdxSep = new short int [MAXLEN];
 	LinkSep = new short int [3*MAXLEN];
 	if ((IdxSep==NULL)||(LinkSep==NULL)){
 		printf("Cannot allocate memory\n");
 		exit(0);
 	}
+	MyDict = NULL;
 }
 
-AbsWordSeg::AbsWordSeg(){
-	Construct();
-	MyDict=trie_new_from_file(D2TRIE);
-}
-
-AbsWordSeg::AbsWordSeg(const char *dataPath){
-	Construct();
-
-	char *triePath=new char[strlen(dataPath)+30];
-	sprintf(triePath,"%s/" D2TRIE,dataPath);
-	MyDict=trie_new_from_file(triePath);
-	delete[] triePath;
-}
-
-AbsWordSeg::~AbsWordSeg(){// Destructor
+AbsWordSeg::~AbsWordSeg(){
 	delete[] IdxSep;
 	delete[] LinkSep;
 
-	trie_free(MyDict);
+	if (MyDict) {
+		trie_free(MyDict);
+	}
 }
+
+bool AbsWordSeg::InitDict(const char *dictPath)
+{
+	char* trieBuff = NULL;
+	const char* triePath;
+	struct stat sb;
+
+	if (stat (dictPath, &sb) == -1) {
+		perror (dictPath);
+		return false;
+	}
+
+	if (S_ISDIR (sb.st_mode)) {
+		trieBuff = new char[strlen(dictPath)+2+sizeof(D2TRIE)];
+		sprintf (trieBuff, "%s" PATHSEPERATOR D2TRIE, dictPath);
+		triePath = trieBuff;
+	} else if (S_ISREG (sb.st_mode)) {
+		triePath = dictPath;
+	} else {
+		fprintf (stderr, "%s is not a directory or regular file\n",
+		         dictPath);
+		return false;
+	}
+
+	MyDict = trie_new_from_file (triePath);
+
+	if (trieBuff) {
+		delete[] trieBuff;
+	}
+
+	return MyDict != NULL;
+}
+
 
 #define tis2uni(c)  ((c)&0x80?((c)-0xa0+0x0e00):(c))
 

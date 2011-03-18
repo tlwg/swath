@@ -15,10 +15,6 @@ LongWordSeg::LongWordSeg():AbsWordSeg()
 {
 }
 
-LongWordSeg::LongWordSeg(const char *dataPath):AbsWordSeg(dataPath)
-{
-}
-
 int LongWordSeg::CreateSentence()
 {
 WordStack BackTrackStack;
