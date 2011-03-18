@@ -50,10 +50,8 @@ int InitWordSegmentation(const char *wordsegdata,
 {
   FILE* fp;
 
-  char *d2triepath = new char[strlen(wordsegdata) + 2 + strlen(D2TRIE)];
-  strcpy(d2triepath, wordsegdata);
-  strcat(d2triepath, PATHSEPERATOR);
-  strcat(d2triepath, D2TRIE);    //printf("%s\n", dbranchpath); fflush(stdout);
+  char *d2triepath = new char[strlen(wordsegdata) + 1 + sizeof(D2TRIE)];
+  sprintf(d2triepath, "%s" PATHSEPERATOR D2TRIE, wordsegdata);
   if ((fp = fopen(d2triepath, "r")) == NULL) {
 	  delete[] d2triepath;
 	  return 1;
