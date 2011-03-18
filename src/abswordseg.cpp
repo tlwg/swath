@@ -23,14 +23,14 @@ void AbsWordSeg::Construct(){ //Common Constructor code
 
 AbsWordSeg::AbsWordSeg(){
 	Construct();
-	MyDict=trie_new_from_file("swathdic.tri");
+	MyDict=trie_new_from_file(D2TRIE);
 }
 
 AbsWordSeg::AbsWordSeg(const char *dataPath){
 	Construct();
 
 	char *triePath=new char[strlen(dataPath)+30];
-	sprintf(triePath,"%s/swathdic.tri",dataPath);
+	sprintf(triePath,"%s/" D2TRIE,dataPath);
 	MyDict=trie_new_from_file(triePath);
 	delete[] triePath;
 }
