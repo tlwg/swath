@@ -138,10 +138,10 @@ int main(int argc, char *argv[])
 {
   char mode = 1;  // 0 = display, 1 = don't display message
   const char *wbr;
-  char *wsegpath = NULL;
-  char *method=NULL;
-  char *fileformat = NULL;
-  char *unicode = NULL;
+  const char *wsegpath = NULL;
+  const char *method=NULL;
+  const char *fileformat = NULL;
+  const char *unicode = NULL;
   bool muleMode;
   bool thaifag;
   bool wholeLine=false;
@@ -155,52 +155,32 @@ int main(int argc, char *argv[])
     } else if (strcmp("-b", argv[iargc]) == 0 && iargc + 1 < argc) {
       wbr = argv[++iargc];
     } else if (strcmp("-d", argv[iargc]) == 0 && iargc + 1 < argc) {
-      iargc++;
-      wsegpath = new char[strlen(argv[iargc]) + 1];
-      strcpy(wsegpath, argv[iargc]);
+      wsegpath = argv[++iargc];
     } else if (strcmp("-f", argv[iargc]) == 0 && iargc + 1 < argc) {
-      iargc++;
-      fileformat = new char[strlen(argv[iargc]) + 1];
-      strcpy(fileformat, argv[iargc]);
+      fileformat = argv[++iargc];
     } else if (strcmp("-v", argv[iargc]) == 0 ||
                strcmp("--verbose", argv[iargc]) == 0)
     {
       mode=0;
     } else if (strcmp("-m", argv[iargc]) == 0 && iargc + 1 < argc) {
-      iargc++;
-      method = new char[strlen(argv[iargc]) + 1];
-      strcpy(method,argv[iargc]);
+      method = argv[++iargc];
     } else if (strcmp("-l", argv[iargc]) == 0) {
       //send only token which has no white space in to wordseg
       wholeLine=true;
     } else if (strcmp("-u", argv[iargc]) ==0 && iargc + 1 < argc) {
-      iargc++; // format
-      unicode = new char[strlen(argv[iargc]) + 1];
-      strcpy(unicode, argv[iargc]);
+      unicode = argv[++iargc];
     } else if (strcmp("-V", argv[iargc]) == 0 ||
                strcmp("--version", argv[iargc]) == 0)
     {
       Version();
-      delete[] wsegpath;
-      delete[] fileformat;
-      delete[] method;
-      delete[] unicode;
       return 0;
     } else if (strcmp("-help", argv[iargc]) == 0 ||
                strcmp("--help", argv[iargc]) == 0)
     {
       Usage(1);
-      delete[] wsegpath;
-      delete[] fileformat;
-      delete[] method;
-      delete[] unicode;
       return 1;
     } else {
       Usage(0);
-      delete[] wsegpath;
-      delete[] fileformat;
-      delete[] method;
-      delete[] unicode;
       return 1;
     }
   }
@@ -208,14 +188,9 @@ int main(int argc, char *argv[])
   if (mode == 0) printf("*** Word Segmentation ***\n");
 
   if (wsegpath == NULL) {
-    char *env = getenv("WORDSEGDATA");
-    if (env != NULL) {
-      wsegpath = new char[strlen(env) + 1];
-      strcpy(wsegpath, env);
-    }
-    else {
-      wsegpath = new char[strlen(WORDSEGDATA_DIR) + 1];
-      strcpy(wsegpath, WORDSEGDATA_DIR);
+    wsegpath = getenv("WORDSEGDATA");
+    if (wsegpath == NULL) {
+      wsegpath = WORDSEGDATA_DIR;
     }
   }
 
@@ -230,8 +205,6 @@ int main(int argc, char *argv[])
   if  (( retval=InitWordSegmentation(".", method, &wseg)) > 0)
 	  retval=InitWordSegmentation(wsegpath, method, &wseg);
 
-  delete[] wsegpath;
-  delete[] method;
   if (retval > 0) {
     return 1;
   }
@@ -318,10 +291,8 @@ int main(int argc, char *argv[])
 	  if (unicode[0]=='u') {
 		fclose(tmpin);
 	  }
-	  delete[] unicode;
   }
 
-  delete[] fileformat;
   ExitWordSegmentation(wseg);
 
   return 0;

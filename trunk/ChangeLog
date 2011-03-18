@@ -1,5 +1,10 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp (main): Make 'wsegpath', 'method', 'fileformat',
+	'unicode' (const char *).
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Make 'wbr' word delimiter a (const char *).
 
 	* src/abswordseg.h, src/abswordseg.cpp
