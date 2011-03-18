@@ -13,20 +13,10 @@
 
 LongWordSeg::LongWordSeg():AbsWordSeg()
 {
-	MyDict=trie_new_from_file("swathdic.tri");
 }
 
-LongWordSeg::LongWordSeg(const char *dataPath):AbsWordSeg()
+LongWordSeg::LongWordSeg(const char *dataPath):AbsWordSeg(dataPath)
 {
-	char *triePath=new char[strlen(dataPath)+30];
-	sprintf(triePath,"%s/swathdic.tri",dataPath);
-	MyDict=trie_new_from_file(triePath);
-	delete[] triePath;
-}
-
-LongWordSeg::~LongWordSeg()
-{
-	trie_free(MyDict);
 }
 
 int LongWordSeg::CreateSentence()
