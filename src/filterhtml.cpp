@@ -12,9 +12,7 @@
 
 FilterHtml::FilterHtml(FILE *filein, FILE *fileout) : FilterX(filein,fileout) 
 {
-	strcpy(wordBreakStr,"<wbr>");
-	prefixStr[0]='\0';
-	suffixStr[0]='\0';
+	wordBreakStr = "<wbr>";
 }
 
 FilterHtml::~FilterHtml()

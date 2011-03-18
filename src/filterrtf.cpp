@@ -13,12 +13,8 @@ FilterRTF::FilterRTF(FILE *filein, FILE *fileout)
     : FilterX (filein, fileout)
 {
 	psState=0;
-	wordBreakStr[0]=0xDC;
-	wordBreakStr[1]=0;
-	prefixStr[0]='\0';
-	suffixStr[0]='\0';
+	wordBreakStr = "\xDC";
 	strbuff[0]='\0';
-
 }
 
 FilterRTF::~FilterRTF()

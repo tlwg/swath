@@ -1,5 +1,21 @@
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterx.h, src/filterx.cpp
+	  (GetSuffix, GetPrefix, suffixStr, prefixStr):
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	* src/filterlatex.cpp (FilterLatex::FilterLatex):
+	  - Remove unused members & methods.
+
+	* src/filterx.h (wordBreakStr)
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	* src/filterlatex.cpp (FilterLatex::FilterLatex):
+	* src/filterlambda.cpp (FilterLatex::FilterLatex):
+	  - Make 'wordBreakStr' member (const char *) to string literal.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
 	Use macro D2TRIE for trie file name instead of hard literal.
 

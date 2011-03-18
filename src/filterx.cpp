@@ -37,16 +37,3 @@ const char* FilterX::GetWordBreak()
 	return wordBreakStr;
 }
 
-bool FilterX::GetPrefix(char *preStr)
-{
-	strcpy(preStr,prefixStr);
-	return true;
-}
-
-bool FilterX::GetSuffix(char *suffStr)
-{
-	strcpy(suffStr,suffixStr);
-	return true;
-}
-
-

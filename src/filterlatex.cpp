@@ -28,9 +28,7 @@ static int WinOffsetNormal[5]   = {139, 140, 141, 142, 143};
 FilterLatex::FilterLatex(FILE *filein, FILE *fileout, int latexflag)
     : FilterX (filein,fileout)
 {
-	strcpy(wordBreakStr,"{\\wbr}");
-	prefixStr[0]='\0';
-	suffixStr[0]='\0';
+	wordBreakStr = "{\\wbr}";
 	buffer[0]='\0';
 	verbatim=false; // Is in verbatim mode??
 	latexFlag=latexflag;	
