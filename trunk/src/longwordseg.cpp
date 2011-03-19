@@ -23,7 +23,7 @@ short int senIdx=0;
 short int sepIdx=0,Idx=0;
 short int nextSepIdx=0,curState;
 
-wordStateType wState;
+wordState wState;
     // ========================================
     // this loop for get the first sentecne
 	//      and Create Backtrack point.....

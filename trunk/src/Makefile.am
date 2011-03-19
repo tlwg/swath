@@ -30,8 +30,7 @@ swath_SOURCES = \
 	filterx.cpp \
 	longwordseg.cpp \
 	maxwordseg.cpp \
-	wordseg.cpp \
-	wordstack.cpp
+	wordseg.cpp
 
 man_MANS = swath.1
 

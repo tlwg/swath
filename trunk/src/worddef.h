@@ -7,10 +7,14 @@
 #define MAXSEP 500   // maximun of seperation points (maximun words in a sentences)
 #define MAXTAG 47     // number of all posible POSs.
 
-typedef struct wordStateDef {
+struct wordState {
 	int backState;
 	unsigned char branchState;
-} wordStateType;
+
+	wordState () {}
+	wordState (int backState, unsigned char branchState)
+		: backState (backState), branchState (branchState) {}
+};
 
 typedef struct wt_detail_def {
   char tag_no;

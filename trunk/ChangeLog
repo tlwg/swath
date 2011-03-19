@@ -1,5 +1,21 @@
 2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Make class WordStack methods inline.
+
+	* src/worddef.h (wordStateType):
+	  - Simply name the struct type "wordState" and remove typedef'd type.
+	  - Add c-tors for instantiation convenience.
+	* src/wordstack.h (class WordStack):
+	  - Replace "wordStateType" type with "wordState".
+	  - Make all methods inline. They are all short functions.
+	* src/Makefile.am, -src/wordstack.cpp:
+	  - Remove the now-unused source file.
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence):
+	  - Replace "wordStateType" type with "wordState".
+
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Change the dictionary search order & mechanism.
 
 	* src/swath.1: Document the new behavior.
