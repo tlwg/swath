@@ -1,5 +1,14 @@
 2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.cpp (AbsWordSeg::IsLeadChar, AbsWordSeg::IsLastChar):
+	  - Simplify the methods.
+	  - For IsLeadChar(), also exclude LAKKHANGYAO.
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::IsNumber, AbsWordSeg::IsEnglish, AbsWordSeg::Has_Karun):
+	  - Make the methods accept const pointer as input.
+
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Make class WordStack methods inline.
 
 	* src/worddef.h (wordStateType):

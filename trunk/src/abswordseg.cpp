@@ -159,7 +159,7 @@ TrieState *curState;
 	LinkSep[++cntLink]=-1; //add stop value;
 }
 
-bool AbsWordSeg::IsNumber(char *str){
+bool AbsWordSeg::IsNumber(const char *str){
     while (*str) {
         if ((*str < '0' || *str > '9') && *str != '.' && *str != ',')
             return false;
@@ -167,7 +167,7 @@ bool AbsWordSeg::IsNumber(char *str){
     }
     return true;
 }
-bool AbsWordSeg::IsEnglish(char *str){
+bool AbsWordSeg::IsEnglish(const char *str){
     while (*str) {
         if ((*str < 'A' || *str > 'Z') && (*str < 'a' || *str > 'z')
             && (*str != '.') && (*str != '-') && (*str != ' '))
@@ -180,18 +180,12 @@ bool AbsWordSeg::IsEnglish(char *str){
 }
 
 bool AbsWordSeg::IsLeadChar(unsigned char ch){
-	if ( ((0xcf<=ch)&&(ch<=0xda)) || ((0xe6<=ch)&&(ch<=0xee)) )
-		return false; //false
-	else
-		return true; //true
+	return ! ((0xcf<=ch && ch<=0xda) || (0xe5<=ch && ch<=0xee));
 }
 bool AbsWordSeg::IsLastChar(unsigned char ch){
-	if ( ((0xe0<=ch)&&(ch<=0xe4))||(ch==0xd1) )
-   	return false;
-   else
-   	return true;
+	return ! ((0xe0<=ch && ch<=0xe4) || ch==0xd1);
 }
-bool AbsWordSeg::Has_Karun(char* sen_ptr,short int *k_idx){
+bool AbsWordSeg::Has_Karun(const char* sen_ptr,short int *k_idx){
 short int i;
    *k_idx=-1;
    for (i=1;i<=3;i++){
