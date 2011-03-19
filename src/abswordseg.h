@@ -41,10 +41,10 @@ private:
 	//============Check Character Type Function============
 	static bool IsLeadChar(unsigned char ch);
 	static bool IsLastChar(unsigned char ch);
-	static bool IsNumber(char *str);
-	static bool IsEnglish(char *str);
+	static bool IsNumber(const char *str);
+	static bool IsEnglish(const char *str);
 	//============Check Karan rule=========================
-	static bool Has_Karun(char* sen_ptr,short int *k_idx);
+	static bool Has_Karun(const char* sen_ptr,short int *k_idx);
 
 private:
 	Trie *MyDict;
