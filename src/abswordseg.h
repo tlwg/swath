@@ -35,7 +35,6 @@ protected:
 	void GetWord(short int idxsen,short int idx,char *buff);
 
 private:
-	void Construct();
 	void InitData();
 
 	//============Check Character Type Function============
