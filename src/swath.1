@@ -45,6 +45,11 @@ Specify alternative dictionary location. \fIdict-path\fP must either be a
 directory containing the swath dictionary file `swathdic.tri', or be a path
 to the dictionary file itself. The dictionary file must be a trie file
 prepared using \fBtrietool-0.2\fP(1) utility from libdatrie package.
+.sp
+If this option is given, \fBswath\fP will override normal dictionary search
+and will exit on failure. Otherwise, it will try to open dictionary from
+the location specified in SWATHDICT environment if set, then in current
+working directory, and finally in the usual installed location.
 .TP
 .B \-f [\fIformat\fP]
 Specify format of the input. Possible formats are: html, rtf, latex, lambda.
@@ -65,6 +70,11 @@ Turn on verbose mode.
 .TP
 .B \-help, \-\-help
 Show help.
+.SH ENVIRONMENT VARIABLES
+.IP SWATHDICT
+If specified, \fBswath\fP will search for dictionary in this location before
+the usual places (current working directory and usual installed directory,
+respectively). This value is overridden by \fB\-d\fP option.
 .SH EXAMPLES
 For LaTeX (to be used with thailatex package):
 .sp

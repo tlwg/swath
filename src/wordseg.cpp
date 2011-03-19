@@ -56,11 +56,32 @@ int InitWordSegmentation(const char *dictpath,
     *pWseg=new MaxWordSeg;
   }
 
-  if (!(*pWseg)->InitDict(dictpath)) {
-    delete *pWseg;
-    return 1;
+  // Dict search order:
+  // 1. dictpath, if not NULL, exit on failure
+  // 2. ${SWATHDICT} env, if not NULL, continue on failure
+  // 3. current dir, continue on failure
+  // 4. WORDSEGDATADIR macro
+  if (dictpath) {
+    if (!(*pWseg)->InitDict(dictpath)) {
+      delete *pWseg;
+      return 1;
+    }
+    return 0;
   }
-  return 0;
+
+  dictpath = getenv("SWATHDICT");
+  if (dictpath && (*pWseg)->InitDict(dictpath))
+    return 0;
+
+  if ((*pWseg)->InitDict("."))
+    return 0;
+
+  if ((*pWseg)->InitDict(WORDSEGDATA_DIR))
+    return 0;
+
+  // All fail
+  delete *pWseg;
+  return 1;
 }
 
 void ExitWordSegmentation(AbsWordSeg *wseg)
@@ -179,27 +200,16 @@ int main(int argc, char *argv[])
 
   if (mode == 0) printf("*** Word Segmentation ***\n");
 
-  if (dictpath == NULL) {
-    dictpath = getenv("WORDSEGDATA");
-    if (dictpath == NULL) {
-      dictpath = WORDSEGDATA_DIR;
-    }
-  }
-
   AbsWordSeg *wseg;
   
   char line[MAXCHAR+1], output[MAXCHAR*2+1];
   int i;
   int c;
   char leadch[3],folch[3];
-  int retval;
 
-  if  (( retval=InitWordSegmentation(".", method, &wseg)) > 0)
-	  retval=InitWordSegmentation(dictpath, method, &wseg);
-
-  if (retval > 0) {
+  if (InitWordSegmentation(dictpath, method, &wseg) != 0)
     return 1;
-  }
+
   leadch[0]='\0';
   folch[0]='\0';
 

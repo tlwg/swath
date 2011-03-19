@@ -1,3 +1,16 @@
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Change the dictionary search order & mechanism.
+
+	* src/swath.1: Document the new behavior.
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Implement the search order here instead of in main, so the
+	    wordseg object is created and destroyed only once.
+	  - WORDSEGDATA env is now changed to SWATHDICT.
+	* src/wordseg.cpp (main):
+	  - Call InitWordSegmentation() only once and let the multiple
+	    trials happen there.
+
 2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
