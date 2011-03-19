@@ -94,7 +94,7 @@ short int senIdx=0,bestSenIdx=0,prevSenIdx=0,tmps; //tmps save score.
 short int sepIdx=0,Idx=0,tmpidx;
 short int nextSepIdx=0,curState;
 short int scoreidx;
-wordStateType wState;
+wordState wState;
 short int bestScore=0;
 bool foundUnk;
 bool stopCreate;
