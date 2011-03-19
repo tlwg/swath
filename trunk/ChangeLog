@@ -1,5 +1,10 @@
 2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.h (AbsWordSeg::Construct):
+	  - Remove the remaining declaration of the removed method.
+
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.cpp (AbsWordSeg::IsLeadChar, AbsWordSeg::IsLastChar):
 	  - Simplify the methods.
 	  - For IsLeadChar(), also exclude LAKKHANGYAO.
