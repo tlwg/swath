@@ -1,3 +1,16 @@
+swath (0.4.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * debian/copyright:
+    - Updated to DEP-5 rev 173.
+    - Update copyright years.
+  * debian/rules: Switch to dh 7 rules with dh-autoreconf.
+  * B-Dep on dh-autoreconf.
+  * B-Dep on debhelper (>= 7.0.50~) for override_dh_ targets support.
+  * Bump Standards-Version to 3.9.1 (no changes needed).
+
+ -- Theppitak Karoonboonyanan <thep@debian.org>  Sun, 20 Mar 2011 15:24:15 +0700
+
 swath (0.4.0-4) unstable; urgency=low
 
   * debian/rules: Fix failure to build twice in a row:

@@ -1,16 +1,16 @@
-Format-Specification: http://wiki.debian.org/Proposals/CopyrightFormat?action=recall&rev=454
+Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=173
 Upstream-Name: swath
-Upstream-Maintainer: Theppitak Karoonboonyanan <thep@linux.thai.net>
-Upstream-Source: ftp://linux.thai.net/pub/thailinux/software/swath/
+Upstream-Contact: Theppitak Karoonboonyanan <thep@linux.thai.net>
+Source: ftp://linux.thai.net/pub/thailinux/software/swath/
 
 Files: *
-Copyright: © 2001-2006 Phaisarn Charoenpornsawat <phaisarn@nectec.or.th>
-Copyright: © 2001-2009 Theppitak Karoonboonyanan <thep@linux.thai.net>
+Copyright: 2001-2006 Phaisarn Charoenpornsawat <phaisarn@nectec.or.th>
+Copyright: 2001-2011 Theppitak Karoonboonyanan <thep@linux.thai.net>
 License: GPL-2+
 
 Files: debian/*
-Copyright: © 2002 Chanop Silpa-Anan <chanop@debian.org>
-Copyright: © 2006, 2009 Theppitak Karoonboonyanan <thep@debian.org>
+Copyright: 2002 Chanop Silpa-Anan <chanop@debian.org>
+Copyright: 2006-2011 Theppitak Karoonboonyanan <thep@debian.org>
 License: GPL-2+
 
 License: GPL-2+
