@@ -1,3 +1,13 @@
+0.4.1 (2011-03-20)
+=====
+- Fixed bugs which caused wrong word break before PHINTHU, NIKHAHIT, YAMAKKAN
+  and LAKKHANGYAO.
+- Enhanced custom dictionary options ('-d' on command line and SWATHDICT
+  environment [formerly WORDSEGDATA]) to cover any datrie file, not just
+  directory, for more convenient use of custom dictionary.
+- Various more code clean-ups.
+- Long-outdated and unmaintained RPM spec is now removed.
+
 0.4.0 (2009-04-08)
 =====
 - New dictionary engine with libdatrie 0.2.
