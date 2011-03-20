@@ -1,3 +1,7 @@
+2011-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, -swath.spec.in: Remove the outdated, unmaintained file.
+
 2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/abswordseg.h (AbsWordSeg::Construct):

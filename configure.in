@@ -81,7 +81,6 @@ PKG_CHECK_MODULES(DATRIE,datrie-0.2)
 
 AC_OUTPUT(
   Makefile
-  swath.spec
   conv/Makefile
   src/Makefile
   data/Makefile)
