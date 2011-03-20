@@ -1,5 +1,10 @@
 2011-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* configure.in: Add AC_CONFIG_MACRO_DIR, as suggested by libtoolize.
+	* Makefile.am: Add ACLOCAL_AMFLAGS, as suggested by libtoolize.
+
+2011-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* configure.in, -swath.spec.in: Remove the outdated, unmaintained file.
 
 2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
