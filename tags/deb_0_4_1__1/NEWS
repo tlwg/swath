@@ -1,0 +1,44 @@
+0.4.1 (2011-03-20)
+=====
+- Fixed bugs which caused wrong word break before PHINTHU, NIKHAHIT, YAMAKKAN
+  and LAKKHANGYAO.
+- Enhanced custom dictionary options ('-d' on command line and SWATHDICT
+  environment [formerly WORDSEGDATA]) to cover any datrie file, not just
+  directory, for more convenient use of custom dictionary.
+- Various more code clean-ups.
+- Long-outdated and unmaintained RPM spec is now removed.
+
+0.4.0 (2009-04-08)
+=====
+- New dictionary engine with libdatrie 0.2.
+- Fix memory leaks.
+- Various clean-ups, including Valgrind warnings.
+
+0.3.4 (2008-04-06)
+=====
+- More secure temporary file usage.
+
+0.3.3 (2008-03-20)
+=====
+- Fix regression introduced during portability fix in 0.3.2.
+  (Bug report by Pisut Tempatarachoke)
+- Fix bug that prevent '-u u,u' from working.
+  (Bug report by Neutron Soutmun)
+- Minor code and doc improvements.
+
+0.3.2 (2008-02-02)
+=====
+- Fix char signedness portability issues.
+- Improved messages and documentation.
+
+0.3.1 (2006-03-28)
+=====
+Includes all changes in CVS during the last 4 years
+- More configure options (debug, thai line catenation control)
+- C++ transition
+- Misceleneous bug fixes
+
+0.3.0 (2001-12-21)
+=====
+- First autotoolized version.
+

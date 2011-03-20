@@ -1,0 +1,15 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+%:
+	dh $@ --with autoreconf
+
+override_dh_autoreconf:
+	[ -d m4 ] || mkdir m4
+	dh_autoreconf
+
+binary-indep: build install
+# We have nothing to do.
+
