@@ -1,3 +1,20 @@
+swath (0.4.1-2) unstable; urgency=low
+
+  * Build with hardening flags:
+    - Bump debhelper compat to level 9.
+    - B-Dep on dpkg-dev (>= 0.16.1~) for dpkg-buildflags.
+    - B-Dep on debhelper (>= 8.9.0~) for dh_auto_configure that uses
+      dpkg-buildflags.
+    - debian/rules: Add DEB_BUILD_MAINT_OPTIONS to also enable bindnow & PIE.
+  * debian/rules: Remove dependencies from binary-indep target.
+  * debian/copyright:
+    - Use non-forwarding format URL; Bump to revision 202.
+    - Add extended text for GPL-2.
+  * Bump Standards-Version to 3.9.2 (no changes needed)
+  * Override package-needs-versioned-debhelper-build-depends 9 lintian tag.
+
+ -- Theppitak Karoonboonyanan <thep@debian.org>  Sun, 06 Nov 2011 15:08:43 +0700
+
 swath (0.4.1-1) unstable; urgency=low
 
   * New upstream release.

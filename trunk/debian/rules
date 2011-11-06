@@ -3,6 +3,8 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
+export DEB_BUILD_MAINT_OPTIONS := hardening=+bindnow,+pie
+
 %:
 	dh $@ --with autoreconf
 
@@ -10,6 +12,6 @@ override_dh_autoreconf:
 	[ -d m4 ] || mkdir m4
 	dh_autoreconf
 
-binary-indep: build install
+binary-indep:
 # We have nothing to do.
 
