@@ -17,6 +17,7 @@ Standards-Version: 3.9.2
 Package: swath
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}
+Suggests: libthai-data
 Description: Thai word segmentation program
  Swath is a general-purpose utility for analyzing word boundaries in Thai
  text and inserting predefined word delimiter codes. It can be used as a
