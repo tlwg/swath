@@ -4,6 +4,7 @@
 
 #include "abswordseg.h"
 #include "dictpath.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -66,6 +67,7 @@ bool AbsWordSeg::InitDict(const char *dictPath)
 
 
 #define tis2uni(c)  ((c)&0x80?((c)-0xa0+0x0e00):(c))
+#define isthaidigit(c) (0xf0<=(c)&&(c)<=0xf9)
 
 void AbsWordSeg::CreateWordList(void){
 char Buff[2000];
@@ -88,39 +90,39 @@ TrieState *curState;
       }
       lead_ch=(unsigned char)sen[i];
       // FIND SINGLE PUNCTUATION.
-      if ( ((33<=lead_ch)&&(lead_ch<=47))||((58<=lead_ch)&&(lead_ch<=64))||
-           ((91<=lead_ch)&&(lead_ch<=96))||((123<=lead_ch)&&(lead_ch<=126)) ){
-			IdxSep[i]=cntLink;
+      if (ispunct (lead_ch)) {
+	IdxSep[i]=cntLink;
       	LinkSep[cntLink++]=i+1;
       	LinkSep[cntLink++]=-1;
        	continue;
-      } else if ( ((48<=lead_ch)&&(lead_ch<=57))||((240<=lead_ch)&&(lead_ch<=249)) ){
-			// FIND STRING OF NUMBER.
-		IdxSep[i]=cntLink;
-      	while ( (((48<=lead_ch)&&(lead_ch<=57))||((240<=lead_ch)&&(lead_ch<=249))
-         			|| (lead_ch=='.') || (lead_ch==',') )&& (sen[i]!='\0') )  {
-		      lead_ch=(unsigned char)sen[++i];
-         }
-         LinkSep[cntLink++]=i;
-         LinkSep[cntLink++]=-1;
-         i--;
+      } else if ( isdigit (lead_ch) || isthaidigit (lead_ch) ){
+	// FIND STRING OF NUMBER.
+	IdxSep[i]=cntLink;
+      	while ( (isdigit (lead_ch) || isthaidigit (lead_ch)
+         	 || lead_ch=='.' || lead_ch==',') && sen[i]!='\0' )
+        {
+	      lead_ch=(unsigned char)sen[++i];
+        }
+        LinkSep[cntLink++]=i;
+        LinkSep[cntLink++]=-1;
+        i--;
        	continue;
-      }if ( ((65<=lead_ch)&&(lead_ch<=90))||((97<=lead_ch)&&(lead_ch<=122)) ){
-            // FIND STRING OF ENGLISH.
-			IdxSep[i]=cntLink;
-      	while ( (((65<=lead_ch)&&(lead_ch<=90))||((97<=lead_ch)&&(lead_ch<=122)))
-         			&& (sen[i]!='\0') ){
-		      lead_ch=(unsigned char)sen[++i];
-         }
-         LinkSep[cntLink++]=i;
-         LinkSep[cntLink++]=-1;
-         i--;
+      }
+      if ( isalpha (lead_ch) ){
+        // FIND STRING OF ENGLISH.
+	IdxSep[i]=cntLink;
+      	while ( isalpha (lead_ch) && (sen[i]!='\0') ){
+	      lead_ch=(unsigned char)sen[++i];
+        }
+        LinkSep[cntLink++]=i;
+        LinkSep[cntLink++]=-1;
+        i--;
        	continue;
       }
       cntFound=0;
       trie_state_rewind(curState);
       for (j = 0; i+j<len; j++) {
-		 if ((sen[i+j]=='æ' )&&(cntFound!=0)) {//Mai-Ya-Mok -- Stop word point 17 July 2001
+		 if ((sen[i+j]==0xe6 )&&(cntFound!=0)) {//Mai-Ya-Mok -- Stop word point 17 July 2001
 			LinkSep[cntLink-1]=i+j+1;
 			break;
 		 }
