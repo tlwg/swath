@@ -1,5 +1,10 @@
 2011-12-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Guard against i being 0 before accessing sen[i-1].
+
+2011-12-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.cpp (AbsWordSeg::IsNumber, AbsWordSeg::IsEnglish):
 	  - Replace ASCII range checks with ctype.h functions.
 

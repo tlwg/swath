@@ -82,11 +82,11 @@ TrieState *curState;
    amb_sep_cnt=0;
    curState=trie_root(MyDict);
    for(i=0;i<len;i++) { //word boundry start at i and end at j.
-	
-     if ( !IsLeadChar((unsigned char)sen[i])||
-          !IsLastChar((unsigned char)sen[i-1]) ){
-         IdxSep[i]=-2; //cannot leading for unknown word.
-			continue;
+      if ( !IsLeadChar((unsigned char)sen[i])
+           || (i > 0 && !IsLastChar((unsigned char)sen[i-1])) )
+      {
+        IdxSep[i]=-2; //cannot leading for unknown word.
+        continue;
       }
       lead_ch=(unsigned char)sen[i];
       // FIND SINGLE PUNCTUATION.
