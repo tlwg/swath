@@ -161,18 +161,19 @@ TrieState *curState;
 	LinkSep[++cntLink]=-1; //add stop value;
 }
 
-bool AbsWordSeg::IsNumber(const char *str){
+bool AbsWordSeg::IsNumber(const char *str)
+{
     while (*str) {
-        if ((*str < '0' || *str > '9') && *str != '.' && *str != ',')
+        if (!isdigit(*str) && *str != '.' && *str != ',')
             return false;
         str++;
     }
     return true;
 }
-bool AbsWordSeg::IsEnglish(const char *str){
+bool AbsWordSeg::IsEnglish(const char *str)
+{
     while (*str) {
-        if ((*str < 'A' || *str > 'Z') && (*str < 'a' || *str > 'z')
-            && (*str != '.') && (*str != '-') && (*str != ' '))
+        if (!isalpha(*str) && (*str != '.') && (*str != '-') && (*str != ' '))
         {
             return false;
         }
