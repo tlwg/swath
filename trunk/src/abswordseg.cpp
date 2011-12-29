@@ -95,8 +95,9 @@ TrieState *curState;
       	LinkSep[cntLink++]=i+1;
       	LinkSep[cntLink++]=-1;
        	continue;
-      } else if ( isdigit (lead_ch) || isthaidigit (lead_ch) ){
-	// FIND STRING OF NUMBER.
+      }
+      // FIND STRING OF NUMBER.
+      if ( isdigit (lead_ch) || isthaidigit (lead_ch) ){
 	IdxSep[i]=cntLink;
       	while ( (isdigit (lead_ch) || isthaidigit (lead_ch)
          	 || lead_ch=='.' || lead_ch==',') && sen[i]!='\0' )
@@ -108,8 +109,8 @@ TrieState *curState;
         i--;
        	continue;
       }
+      // FIND STRING OF ENGLISH.
       if ( isalpha (lead_ch) ){
-        // FIND STRING OF ENGLISH.
 	IdxSep[i]=cntLink;
       	while ( isalpha (lead_ch) && (sen[i]!='\0') ){
 	      lead_ch=(unsigned char)sen[++i];
@@ -122,32 +123,27 @@ TrieState *curState;
       cntFound=0;
       trie_state_rewind(curState);
       for (j = 0; i+j<len; j++) {
-		 if ((sen[i+j]==0xe6 )&&(cntFound!=0)) {//Mai-Ya-Mok -- Stop word point 17 July 2001
-			LinkSep[cntLink-1]=i+j+1;
-			break;
-		 }
-         if (!trie_state_walk(curState,tis2uni((unsigned char)sen[i+j]))) {
-		 	break;
-		 }
-		 if( trie_state_is_terminal(curState) ){
-            //TrieState *terState = trie_state_clone (curState);
-            //trie_state_walk (terState, TRIE_CHAR_TERM);
-            //data_idx=trie_state_get_data(terState);
-            //trie_state_free (terState);
-			//===========================================================
-			//found word in dictionary
-            //To check word boundary,Is it should be segment or not????
-			//===========================================================
-			if ( !((Has_Karun(&sen[i+j],&en_word)) || !IsLeadChar((unsigned char)sen[i+j+1])) ){
-               LinkSep[cntLink]=i+j+1;
-			   LinkSep[cntLink+1]=-1; //debug 24 nov
-			   //LinkSepDataIdx[cntLink]=data_idx;
-               cntFound++;
-               if (cntFound==1) IdxSep[i]=cntLink;
-               cntLink++;
-			}
-         }//end if WalkResult
-	  } //end for j
+	 if ((sen[i+j]==0xe6 )&&(cntFound!=0)) {//Mai-Ya-Mok -- Stop word point 17 July 2001
+		LinkSep[cntLink-1]=i+j+1;
+		break;
+	 }
+         if (!trie_state_walk(curState,tis2uni((unsigned char)sen[i+j])))
+	 	break;
+	 if( trie_state_is_terminal(curState) ) {
+		//found word in dictionary
+		//check whether it should be segmented here
+		if ( IsLeadChar((unsigned char)sen[i+j+1])
+		     && !Has_Karun(&sen[i+j],&en_word) )
+		{
+			LinkSep[cntLink]=i+j+1;
+			LinkSep[cntLink+1]=-1; //debug 24 nov
+			//LinkSepDataIdx[cntLink]=data_idx;
+			cntFound++;
+			if (cntFound==1) IdxSep[i]=cntLink;
+			cntLink++;
+		}
+         }
+      }
       if (cntFound==0)
       	IdxSep[i]=-1; //
       else if (cntFound < 2000){
