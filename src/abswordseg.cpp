@@ -214,22 +214,22 @@ int bestidx;
 void AbsWordSeg::SwapLinkSep(){
 short int st_idx,en_idx,end_point,tmp;
 
-	st_idx=0,en_idx=0;
-	while (LinkSep[st_idx]!=-1){
+	st_idx=0; en_idx=0;
+	while (LinkSep[st_idx]!=-1) {
 		while (LinkSep[en_idx++]!=-1);
-        end_point=en_idx-1;
+        	end_point=en_idx-1;
 		en_idx-=2;
-        while (st_idx<en_idx){
-	        tmp=LinkSep[st_idx];
+        	while (st_idx<en_idx) {
+			tmp=LinkSep[st_idx];
 			//tmpI=LinkSepDataIdx[st_idx];
-    	    LinkSep[st_idx]=LinkSep[en_idx];
+			LinkSep[st_idx]=LinkSep[en_idx];
 			//LinkSepDataIdx[st_idx]=LinkSepDataIdx[en_idx];
 			st_idx++;
 			LinkSep[en_idx]=tmp;
 			//LinkSepDataIdx[en_idx]=tmpI;
 			en_idx--;
 		}
-        st_idx=end_point+1;
+		st_idx=end_point+1;
 		en_idx=st_idx;
 	}
 }
@@ -284,11 +284,11 @@ int t;
 char buff[2000];
 
 	*outstr='\0';
-	for (t=0;SepData[bestidx].Sep[t]!=len;t++){
+	for (t=0;SepData[bestidx].Sep[t]!=len;t++) {
 		GetWord(bestidx,t,buff);
 		strcat(outstr,buff);
 		strcat(outstr,wbr);
-    }
+	}
 	GetWord(bestidx,t,buff);
 	strcat(outstr,buff);
 }
