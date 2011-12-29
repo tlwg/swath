@@ -89,12 +89,16 @@ TrieState *curState;
         continue;
       }
       lead_ch=(unsigned char)sen[i];
-      // FIND SINGLE PUNCTUATION.
+      // FIND STRING OF PUNCTUATION.
       if (ispunct (lead_ch)) {
-	IdxSep[i]=cntLink;
-      	LinkSep[cntLink++]=i+1;
-      	LinkSep[cntLink++]=-1;
-       	continue;
+        IdxSep[i]=cntLink;
+        while ( ispunct (lead_ch) && (sen[i]!='\0') ) {
+              lead_ch=(unsigned char)sen[++i];
+        }
+        LinkSep[cntLink++]=i;
+        LinkSep[cntLink++]=-1;
+        i--;
+        continue;
       }
       // FIND STRING OF NUMBER.
       if ( isdigit (lead_ch) || isthaidigit (lead_ch) ){
