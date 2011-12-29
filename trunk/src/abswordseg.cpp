@@ -92,37 +92,36 @@ TrieState *curState;
       // FIND STRING OF PUNCTUATION.
       if (ispunct (lead_ch)) {
         IdxSep[i]=cntLink;
-        while ( ispunct (lead_ch) && (sen[i]!='\0') ) {
-              lead_ch=(unsigned char)sen[++i];
-        }
+        do {
+                lead_ch = (unsigned char)sen[++i];
+        } while (lead_ch != '\0' && ispunct (lead_ch));
         LinkSep[cntLink++]=i;
         LinkSep[cntLink++]=-1;
         i--;
         continue;
       }
       // FIND STRING OF NUMBER.
-      if ( isdigit (lead_ch) || isthaidigit (lead_ch) ){
-	IdxSep[i]=cntLink;
-      	while ( (isdigit (lead_ch) || isthaidigit (lead_ch)
-         	 || lead_ch=='.' || lead_ch==',') && sen[i]!='\0' )
-        {
-	      lead_ch=(unsigned char)sen[++i];
-        }
+      if (isdigit (lead_ch) || isthaidigit (lead_ch)) {
+        IdxSep[i]=cntLink;
+        do {
+                lead_ch = (unsigned char)sen[++i];
+        } while (lead_ch != '\0' && isdigit (lead_ch) || isthaidigit (lead_ch)
+         	 || lead_ch=='.' || lead_ch==',');
         LinkSep[cntLink++]=i;
         LinkSep[cntLink++]=-1;
         i--;
        	continue;
       }
       // FIND STRING OF ENGLISH.
-      if ( isalpha (lead_ch) ){
-	IdxSep[i]=cntLink;
-      	while ( isalpha (lead_ch) && (sen[i]!='\0') ){
-	      lead_ch=(unsigned char)sen[++i];
-        }
+      if (isalpha (lead_ch)){
+        IdxSep[i]=cntLink;
+        do {
+                lead_ch = (unsigned char)sen[++i];
+        } while (lead_ch != '\0' && isalpha (lead_ch));
         LinkSep[cntLink++]=i;
         LinkSep[cntLink++]=-1;
         i--;
-       	continue;
+        continue;
       }
       cntFound=0;
       trie_state_rewind(curState);

@@ -1,6 +1,11 @@
 2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Adjust loops.
+
+2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
 	  - Tokenize punctuation marks in chunks, not in characters,
 	    to prevent breaking word in between, fixing problem with `` or ''
 	    at line beginning in LaTeX. This should also be true in general.
