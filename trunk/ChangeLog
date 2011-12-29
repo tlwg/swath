@@ -5,7 +5,7 @@
 
 2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
-	* src/abswordseg.cpp (AnsWordSeg::CreateWordList):
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
 	  - Reformat source a little bit.
 
 2011-12-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
