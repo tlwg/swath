@@ -1,5 +1,10 @@
 2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Reformat source a little bit.
+
+2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/abswordseg.cpp (AbsWordSeg::SwapLinkSep, AbsWordSeg::GetBestSen):
 	  - Reformat source a little bit.
 

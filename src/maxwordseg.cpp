@@ -99,45 +99,45 @@ short int bestScore=0;
 bool foundUnk;
 bool stopCreate;
 
-    // ========================================
-    // this loop for get the first sentecne
+	// ========================================
+	// this loop for get the first sentecne
 	//      and Create Backtrack point.....
-    // ========================================
+	// ========================================
 	Idx=stSeg;
 
 	scoreidx=-1;
 	SepData[0].Score=10000;
 	SepData[1].Score=10000;
-	while (Idx<enSeg){//(LinkSep[IdxSep[Idx]]!=enSeg){
-        // found some words that start with Idx character
-		if (IdxSep[Idx]>=0){
-			if (LinkSep[IdxSep[Idx]+1]!=-1){
-                wState.backState=Idx;
-                wState.branchState=0;
-                BackTrackStack.Push(wState);
+	while (Idx<enSeg) {//(LinkSep[IdxSep[Idx]]!=enSeg){
+		// found some words that start with Idx character
+		if (IdxSep[Idx]>=0) {
+			if (LinkSep[IdxSep[Idx]+1]!=-1) {
+				wState.backState=Idx;
+				wState.branchState=0;
+				BackTrackStack.Push(wState);
 			}
 			SepData[senIdx].Sep[sepIdx++]=LinkSep[IdxSep[Idx]];
 			tmps=(short int)++SepData[senIdx].Score;
 			score[++scoreidx]=tmps;
-	        Idx=LinkSep[IdxSep[Idx]];
-		}else{
-           	//at Idx there is no word in dictionary
-           	while((Idx<enSeg) && (IdxSep[Idx]<0))
+			Idx=LinkSep[IdxSep[Idx]];
+		} else {
+			//at Idx there is no word in dictionary
+			while((Idx<enSeg) && (IdxSep[Idx]<0))
 		   		Idx++;
-            SepData[senIdx].Sep[sepIdx++]=Idx;
+			SepData[senIdx].Sep[sepIdx++]=Idx;
 			SepData[senIdx].Score+=5;
 			score[++scoreidx]=(short int)SepData[senIdx].Score;
 		}
 	}
 	SepData[senIdx].Sep[sepIdx]=-1;
 	bestScore=(short int)SepData[senIdx].Score;
-    bestSenIdx=senIdx++;
-    //================================================
+	bestSenIdx=senIdx++;
+	//================================================
 	//create all posible sentences
 	//using backtrack (use my stack not use recursive)
-    //================================================
+	//================================================
 	int looptime=0;
-    while (!BackTrackStack.Empty()){
+	while (!BackTrackStack.Empty()) {
 //		printf("loop times :%d\n",++looptime);
 		if (looptime++>200) 
 			break;
@@ -146,7 +146,7 @@ bool stopCreate;
 		curState=wState.backState; //curState store the nth of character 
  		BackTrackStack.Pop();
 		wState.branchState++;
-        if ((curState=LinkSep[IdxSep[curState]+wState.branchState])!=-1)
+		if ((curState=LinkSep[IdxSep[curState]+wState.branchState])!=-1)
 			BackTrackStack.Push(wState);
 		else
 			continue;
@@ -156,16 +156,16 @@ bool stopCreate;
 		scoreidx=nextSepIdx-1;
 		SepData[senIdx].Score=(scoreidx<0)?10000:score[scoreidx];
 		//loop for filling the rest sep point of new sentence
-		while (curState!=enSeg){
+		while (curState!=enSeg) {
 			foundUnk=false;
-            if (IdxSep[curState]<0){ //found unknown string.
-                SepData[senIdx].Sep[nextSepIdx++]=curState;
+			if (IdxSep[curState]<0) { //found unknown string.
+				SepData[senIdx].Sep[nextSepIdx++]=curState;
 				SepData[senIdx].Score++;
 				score[++scoreidx]=(short int)SepData[senIdx].Score;
 				while((curState<enSeg)&&(IdxSep[curState]<0)) curState++;
 				foundUnk=true;
-		        if (curState==enSeg) break;
-			}else if (LinkSep[IdxSep[curState]+1]!=-1){
+				if (curState==enSeg) break;
+			} else if (LinkSep[IdxSep[curState]+1]!=-1) {
 				//having another branchs 
 				//then it should push backtrack state into Stack.
 				wState.backState=curState;
@@ -173,25 +173,25 @@ bool stopCreate;
 				BackTrackStack.Push(wState);
 			}
 			SepData[senIdx].Sep[nextSepIdx++]=curState;
-			if (foundUnk){
+			if (foundUnk) {
 				SepData[senIdx].Score+=5;
 				foundUnk=false;
-			}else
+			} else
 				SepData[senIdx].Score++;
 			score[++scoreidx]=(short int)SepData[senIdx].Score;
-			if (SepData[senIdx].Score>=bestScore-1){
+			if (SepData[senIdx].Score>=bestScore-1) {
 				prevSenIdx=senIdx;
 				stopCreate=true;
 				break;
 			}
-            curState=LinkSep[IdxSep[curState]];
+			curState=LinkSep[IdxSep[curState]];
 		} //finish create a new sentence.
 		if (stopCreate) continue;
 		SepData[senIdx].Sep[nextSepIdx]=enSeg;
 		SepData[senIdx].Score+=(foundUnk)?5:1;
 		SepData[senIdx].Sep[nextSepIdx+1]=-1;
 		prevSenIdx=senIdx;
-		if (SepData[senIdx].Score<bestScore){
+		if (SepData[senIdx].Score<bestScore) {
 			bestScore=(short int)SepData[senIdx].Score;
 			tmpidx=bestSenIdx;
 			bestSenIdx=senIdx;
