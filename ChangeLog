@@ -1,5 +1,16 @@
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Move tis2uni() and isthaidigit() to worddef.h
+
+	* src/worddef.h:
+	  - Define tis2uni() & isThaiDigit() inline functions here.
+	* src/abswordseg.cpp:
+	  - Drop old macros.
+	  - Include worddef.h.
+	  - Replace isthaidigit() calls with isThaiDigit().
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Replace some internal char classifiers with <ctype.h>
 
 	* src/worddef.h, src/filterrtf.cpp, src/filterhtml.cpp:
