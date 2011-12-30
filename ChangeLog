@@ -1,6 +1,14 @@
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/wordseg.cpp:
+	  - Declare internal functions static.
+	  - Simplify myyisspace() and make it bool.
+	  - Simplify RemoveJunkChars() and invert IsJunkChar() to
+	    IsValidChar().
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp:
 	  - Apply "indent -nut" + manual adjustments.
 
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>

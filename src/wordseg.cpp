@@ -37,14 +37,12 @@
 // 5: not found dtail.tri
 // 6: not found ptail.tri
 
-int myisspace (int ch);
-int SplitToken (char **str, char *token);
-bool IsJunkChar (unsigned char ch);
-void RemoveJunkChar (char *str);
+static inline bool myisspace (int ch);
+static int SplitToken (char **str, char *token);
+static void RemoveJunkChars (char *str);
 
 
-
-int
+static int
 InitWordSegmentation (const char *dictpath,
                       const char *method, AbsWordSeg ** pWseg)
 {
@@ -91,17 +89,17 @@ InitWordSegmentation (const char *dictpath,
   return 1;
 }
 
-void
+static void
 ExitWordSegmentation (AbsWordSeg * wseg)
 {
   delete wseg;
 }
 
-void
+static void
 WordSegmentation (AbsWordSeg * wseg, const char *wbr, char *line,
                   char *output)
 {
-  //RemoveJunkChar(line);
+  //RemoveJunkChars (line);
   wseg->WordSeg (line, output, wbr);
 }
 
@@ -245,8 +243,6 @@ main (int argc, char *argv[])
   leadch[0] = '\0';
   folch[0] = '\0';
 
-
-
   FILE *tmpout = stdout, *tmpin = stdin;
   if (unicode != NULL)
     {                           //Option -u
@@ -364,17 +360,17 @@ main (int argc, char *argv[])
 //return -1 in case there is no data in str
 //return 0 for a token which is contain only white spaces.
 //return 1 for a token which is contain only alpha charecters.
-int
+static int
 SplitToken (char **str, char *token)
 {
   int i = 0;
 
   if (**str == 0)
     return -1;
-  if (myisspace (**str) != 0)
+  if (myisspace (**str))
     {
       //found white space.
-      while (myisspace (**str) != 0 && **str != 0)
+      while (myisspace (**str) && **str != 0)
         {
           *token = **str;
           (*str)++;
@@ -385,7 +381,7 @@ SplitToken (char **str, char *token)
     }
   else
     {
-      while (myisspace (**str) == 0 && **str != 0)
+      while (!myisspace (**str) && **str != 0)
         {
           *token = **str;
           (*str)++;
@@ -396,40 +392,30 @@ SplitToken (char **str, char *token)
     }
 }
 
-int
+static inline bool
 myisspace (int ch)
 {
-
-  if (0x09 <= ch && ch <= 0x0d || ch == ' ')
-    return ch;
-  else
-    return 0;
+  return (0x09 <= ch && ch <= 0x0d) || ch == ' ';
 }
 
-bool
-IsJunkChar (unsigned char ch)
+static inline bool
+IsValidChar (unsigned char ch)
 {
-  if (ch == '\t' || ch == '\n' || ch == '\r' || (0x20 <= ch && ch <= 0x7e)
-      || (0xa1 <= ch && ch <= 0xfb))
-    return false;
-  else
-    return true;
+  return ch == '\t' || ch == '\n' || ch == '\r' || (0x20 <= ch && ch <= 0x7e)
+         || (0xa1 <= ch && ch <= 0xfb);
 }
 
-void
-RemoveJunkChar (char *str)
+static void
+RemoveJunkChars (char *str)
 {
-  char *srcStr, *desStr;
-  srcStr = str;
-  desStr = str;
-  while (*srcStr != 0)
+  char *desStr;
+
+  for (desStr = str; *str != '\0'; str++)
     {
-      if (!IsJunkChar (*srcStr))
+      if (IsValidChar (*str))
         {
-          *desStr = *srcStr;
-          desStr++;
+          *desStr++ = *str;
         }
-      srcStr++;
     }
-  *desStr = 0;
+  *desStr = '\0';
 }
