@@ -1,5 +1,10 @@
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordseg.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg):
 	  - Reformat c-tor.
 
