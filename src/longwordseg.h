@@ -11,13 +11,13 @@
 
 #include "abswordseg.h"
 
-class LongWordSeg : public AbsWordSeg  
+class LongWordSeg : public AbsWordSeg
 {
 public:
-	LongWordSeg();
+  LongWordSeg ();
 
 protected:
-	virtual int CreateSentence();
+  virtual int CreateSentence ();
 };
 
-#endif // !defined(AFX_LONGWORDSEG_H__40352894_2A0D_11D3_B45C_00105A5C2417__INCLUDED_)
+#endif

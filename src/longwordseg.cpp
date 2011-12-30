@@ -11,51 +11,61 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-LongWordSeg::LongWordSeg():AbsWordSeg()
+LongWordSeg::LongWordSeg ()
+  : AbsWordSeg ()
 {
 }
 
-int LongWordSeg::CreateSentence()
+int
+LongWordSeg::CreateSentence ()
 {
-WordStack BackTrackStack;
+  WordStack BackTrackStack;
 
-short int senIdx=0;
-short int sepIdx=0,Idx=0;
-short int nextSepIdx=0,curState;
+  short int senIdx = 0;
+  short int sepIdx = 0, Idx = 0;
+  short int nextSepIdx = 0, curState;
 
-wordState wState;
-    // ========================================
-    // this loop for get the first sentecne
-	//      and Create Backtrack point.....
-    // ========================================
+  wordState wState;
+  // ========================================
+  // this loop gets the first sentence
+  //      and Create Backtrack point.....
+  // ========================================
 
-	while (Idx<len){//(LinkSep[IdxSep[Idx]]!=len){
-        // found some words that start with Idx character
-		if (IdxSep[Idx]>=0){
-			if (LinkSep[IdxSep[Idx]+1]!=-1){
-                wState.backState=Idx;
-                wState.branchState=0;
-                BackTrackStack.Push(wState);
-			}
-			SepData[senIdx].Sep[sepIdx++]=LinkSep[IdxSep[Idx]];
-            if (LinkSep[IdxSep[Idx]]==len)
-				break;
-	        Idx=LinkSep[IdxSep[Idx]];
-		}else{
-           	//at Idx there is no word in dictionary
-           	while((Idx<len) && (IdxSep[Idx]<0))
-		   		Idx++;
-            SepData[senIdx].Sep[sepIdx++]=Idx;
-			if (Idx==len){
-				break;
-			}
-		}
-	}
-    if (SepData[senIdx].Sep[sepIdx-1]==len){
-		SepData[senIdx].Sep[sepIdx]=-1;
-	}else{
-		SepData[senIdx].Sep[sepIdx++]=len;
-		SepData[senIdx].Sep[sepIdx]=-1;
-	}
-    return 0;
+  while (Idx < len) // (LinkSep[IdxSep[Idx]]!=len)
+    {
+      // found some words that start with Idx character
+      if (IdxSep[Idx] >= 0)
+        {
+          if (LinkSep[IdxSep[Idx] + 1] != -1)
+            {
+              wState.backState = Idx;
+              wState.branchState = 0;
+              BackTrackStack.Push (wState);
+            }
+          SepData[senIdx].Sep[sepIdx++] = LinkSep[IdxSep[Idx]];
+          if (LinkSep[IdxSep[Idx]] == len)
+            break;
+          Idx = LinkSep[IdxSep[Idx]];
+        }
+      else
+        {
+          //at Idx there is no word in dictionary
+          while (Idx < len && IdxSep[Idx] < 0)
+            Idx++;
+          SepData[senIdx].Sep[sepIdx++] = Idx;
+          if (Idx == len)
+            break;
+        }
+    }
+  if (SepData[senIdx].Sep[sepIdx - 1] == len)
+    {
+      SepData[senIdx].Sep[sepIdx] = -1;
+    }
+  else
+    {
+      SepData[senIdx].Sep[sepIdx++] = len;
+      SepData[senIdx].Sep[sepIdx] = -1;
+    }
+
+  return 0;
 }
