@@ -56,4 +56,16 @@ isThai (char ch)
   return ch & 0x80;
 }
 
+inline bool
+isThaiDigit (unsigned char ch)
+{
+  return 0xf0 <= ch && ch <= 0xf9;
+}
+
+inline unsigned int
+tis2uni (unsigned char ch)
+{
+  return (ch & 0x80) ? ch - 0xa0 + 0x0e00 : ch;
+}
+
 #endif

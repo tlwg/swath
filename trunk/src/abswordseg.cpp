@@ -4,6 +4,7 @@
 
 #include "abswordseg.h"
 #include "dictpath.h"
+#include "worddef.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -77,9 +78,6 @@ AbsWordSeg::InitDict (const char *dictPath)
 }
 
 
-#define tis2uni(c)  ((c) & 0x80 ? (c) - 0xa0 + 0x0e00 : (c))
-#define isthaidigit(c) (0xf0 <= (c) && (c) <= 0xf9)
-
 void
 AbsWordSeg::CreateWordList (void)
 {
@@ -118,14 +116,14 @@ AbsWordSeg::CreateWordList (void)
           continue;
         }
       // FIND STRING OF NUMBER.
-      if (isdigit (lead_ch) || isthaidigit (lead_ch))
+      if (isdigit (lead_ch) || isThaiDigit (lead_ch))
         {
           IdxSep[i] = cntLink;
           do
             {
               lead_ch = (unsigned char) sen[++i];
             }
-          while (lead_ch != '\0' && isdigit (lead_ch) || isthaidigit (lead_ch)
+          while (lead_ch != '\0' && isdigit (lead_ch) || isThaiDigit (lead_ch)
                  || lead_ch == '.' || lead_ch == ',');
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
