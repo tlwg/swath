@@ -51,4 +51,4 @@ private:
     Trie * MyDict;
 };
 
-#endif // !defined(AFX_ABSWORDSEG_H__A0F72574_2912_11D3_B459_00105A5C2417__INCLUDED_)
+#endif

@@ -1,5 +1,10 @@
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.h:
+	  - Remove obfuscated comment after last #endif.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.h, src/maxwordseg.cpp:
 	  - Apply "indent -nut" + manual adjustments.
 
