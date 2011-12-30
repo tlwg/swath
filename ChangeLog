@@ -1,5 +1,10 @@
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/wordstack.h:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Move tis2uni() and isthaidigit() to worddef.h
 
 	* src/worddef.h:
