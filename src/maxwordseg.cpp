@@ -11,7 +11,8 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-MaxWordSeg::MaxWordSeg ():AbsWordSeg ()
+MaxWordSeg::MaxWordSeg ()
+  : AbsWordSeg ()
 {
   noAmbArea = 0;
   score = new short int[MAXSEP];
