@@ -43,18 +43,6 @@ typedef struct SepTypeDef
 } SepType;
 
 inline bool
-isSpace (char ch)
-{
-  return ch == ' ' || ('\t' <= ch && ch <= '\r');
-}
-
-inline bool
-isHex (char ch)
-{
-  return ('0' <= ch && ch <= '9') || ('a' <= ch && ch <= 'f');
-}
-
-inline bool
 isPunc (char ch)
 {
 //      if (  ((ch>=33)&&(ch<=47)) || ((ch>=58)&&(ch<=63))
