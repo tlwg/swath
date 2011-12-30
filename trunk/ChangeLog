@@ -1,3 +1,9 @@
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h, src/abswordseg.cpp:
+	  - Reformat source as GNU style using "indent -nut" plus manual
+	    adjustments.
+
 2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
