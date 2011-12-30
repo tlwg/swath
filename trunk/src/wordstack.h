@@ -1,3 +1,10 @@
+#if !defined(INC_WORDSTACK)
+#define INC_WORDSTACK
+
+#if _MSC_VER >= 1000
+#pragma once
+#endif // _MSC_VER >= 1000
+
 #include "worddef.h"
 
 #define STACKSIZE 500
@@ -56,3 +63,5 @@ WordStack::Top ()
 {
   return (top_idx >= 0) ? stack[top_idx] : wordState (-1, 0);
 }
+
+#endif
