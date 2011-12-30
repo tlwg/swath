@@ -1,6 +1,11 @@
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/wordstack.h:
+	  - Add preprocessor to prevent duplicated inclusion.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordstack.h:
 	  - Apply "indent -nut" + manual adjustments.
 
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
