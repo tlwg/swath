@@ -3,8 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <string.h>
+#include <ctype.h>
 #include "filterhtml.h"
-#include "worddef.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -38,7 +38,7 @@ int tmp=0;
 	//loop for finding a token that containing only Thai characters or Eng+space characters
 	while (feof(fpin)==0){
 		*(token+1)=(char)fgetc(fpin);
-		if (((((*token)^(*(token+1)))&0x80)!=0 ) || (tmp=isSpace((int)*(token+1))) || (*(token+1)=='.') ) {
+		if (((((*token)^(*(token+1)))&0x80)!=0 ) || (tmp=isspace((int)*(token+1))) || (*(token+1)=='.') ) {
 			if (*thaiFlag) {
 				if (*(token+1)=='\n'){
 					if (feof(fpin)!=0) break;

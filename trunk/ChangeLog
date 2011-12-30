@@ -1,5 +1,13 @@
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Replace some internal char classifiers with <ctype.h>
+
+	* src/worddef.h, src/filterrtf.cpp, src/filterhtml.cpp:
+	  - Drop isSpace(), use isspace() instead.
+	  - Drop isHex(), use isxdigit() instead.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/worddef.h:
 	  - Apply "indent -nut" + manual adjustments.
 

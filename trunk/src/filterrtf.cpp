@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 #include <string.h>
-#include "worddef.h"
+#include <ctype.h>
 #include "filterrtf.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ int nextState,i=0,l,c;
  	if (!(*thaiFlag)){
 		//Loop finding a sequence of Non-Thai characters
 		//So to stop finding seq of Non-Thai, must find Thai character
-		while (((!isSpace(*token++)) && 
+		while (((!isspace(*token++)) && 
 			   (nextState=chgCharState(token[-1],psState))!=4)){
 			psState=nextState;
 			if ((c=fgetc(fpin))==EOF) break;
@@ -150,14 +150,14 @@ int FilterRTF::chgCharState(char charin, int state)
 			else
 				return 0;
 		case 2:
-			if (isHex(charin))
+			if (isxdigit(charin))
 				return 3;
 			else if (charin=='\\')
 				return 1;
 			else
 				return 0;
 		case 3:
-			if (isHex(charin))
+			if (isxdigit(charin))
 				return 4;
 			else if (charin=='\\')
 				return 1;
