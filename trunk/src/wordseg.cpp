@@ -38,13 +38,13 @@
 // 6: not found ptail.tri
 
 static inline bool myisspace (int ch);
-static int SplitToken (char **str, char *token);
-static void RemoveJunkChars (char *str);
+static int SplitToken (char** str, char* token);
+static void RemoveJunkChars (char* str);
 
 
 static int
-InitWordSegmentation (const char *dictpath,
-                      const char *method, AbsWordSeg ** pWseg)
+InitWordSegmentation (const char* dictpath,
+                      const char* method, AbsWordSeg** pWseg)
 {
   if (method == NULL)
     {
@@ -90,14 +90,14 @@ InitWordSegmentation (const char *dictpath,
 }
 
 static void
-ExitWordSegmentation (AbsWordSeg * wseg)
+ExitWordSegmentation (AbsWordSeg* wseg)
 {
   delete wseg;
 }
 
 static void
-WordSegmentation (AbsWordSeg * wseg, const char *wbr, char *line,
-                  char *output)
+WordSegmentation (AbsWordSeg* wseg, const char* wbr, char* line,
+                  char* output)
 {
   //RemoveJunkChars (line);
   wseg->WordSeg (line, output, wbr);
@@ -157,14 +157,14 @@ Usage (int verbose)
 #define MAXCHAR 2000
 
 int
-main (int argc, char *argv[])
+main (int argc, char* argv[])
 {
   char mode = 1;                // 0 = display, 1 = don't display message
-  const char *wbr;
-  const char *dictpath = NULL;
-  const char *method = NULL;
-  const char *fileformat = NULL;
-  const char *unicode = NULL;
+  const char* wbr;
+  const char* dictpath = NULL;
+  const char* method = NULL;
+  const char* fileformat = NULL;
+  const char* unicode = NULL;
   bool muleMode;
   bool thaifag;
   bool wholeLine = false;
@@ -230,7 +230,7 @@ main (int argc, char *argv[])
   if (mode == 0)
     printf ("*** Word Segmentation ***\n");
 
-  AbsWordSeg *wseg;
+  AbsWordSeg* wseg;
 
   char line[MAXCHAR + 1], output[MAXCHAR * 2 + 1];
   int i;
@@ -243,7 +243,8 @@ main (int argc, char *argv[])
   leadch[0] = '\0';
   folch[0] = '\0';
 
-  FILE *tmpout = stdout, *tmpin = stdin;
+  FILE* tmpout = stdout;
+  FILE* tmpin = stdin;
   if (unicode != NULL)
     {                           //Option -u
       if (unicode[0] == 'u')
@@ -259,7 +260,7 @@ main (int argc, char *argv[])
     }
   if (fileformat != NULL)
     {
-      FilterX *FltX = FileFilter::CreateFilter (tmpin, tmpout, fileformat);
+      FilterX* FltX = FileFilter::CreateFilter (tmpin, tmpout, fileformat);
       if (FltX == NULL)
         {
           fprintf (stderr, "Invalid file format: %s\n", fileformat);
@@ -304,7 +305,7 @@ main (int argc, char *argv[])
               continue;
             }
           int tokenFlag;
-          char *startStr = line;
+          char* startStr = line;
           char buff[2000], gout[5000];
           gout[0] = '\0';
           if (!wholeLine)
@@ -361,7 +362,7 @@ main (int argc, char *argv[])
 //return 0 for a token which is contain only white spaces.
 //return 1 for a token which is contain only alpha charecters.
 static int
-SplitToken (char **str, char *token)
+SplitToken (char** str, char* token)
 {
   int i = 0;
 
@@ -406,9 +407,9 @@ IsValidChar (unsigned char ch)
 }
 
 static void
-RemoveJunkChars (char *str)
+RemoveJunkChars (char* str)
 {
-  char *desStr;
+  char* desStr;
 
   for (desStr = str; *str != '\0'; str++)
     {

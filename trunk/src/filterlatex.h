@@ -15,11 +15,11 @@
 class FilterLatex : public FilterX
 {
 public:
-  FilterLatex (FILE * filein, FILE * fileout, int latexflag = 0);
+  FilterLatex (FILE* filein, FILE* fileout, int latexflag = 0);
   virtual ~FilterLatex ();
 
-  void Print (char *token, bool thaiFlag);
-  bool GetNextToken (char *token, bool * thaiFlag);
+  void Print (char* token, bool thaiFlag);
+  bool GetNextToken (char* token, bool* thaiFlag);
 
 protected:
   bool winCharSet;  // true for Windows char set; false for Mac char set
@@ -28,7 +28,7 @@ protected:
   static int idxVowelToneMark (unsigned char ch);
   static bool isLongTailChar (unsigned char ch);
 
-  void AdjustText (unsigned char *input, unsigned char *output);
+  void AdjustText (unsigned char* input, unsigned char* output);
 
 private:
   char buffer[2000];

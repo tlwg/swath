@@ -39,10 +39,10 @@ AbsWordSeg::~AbsWordSeg ()
 }
 
 bool
-AbsWordSeg::InitDict (const char *dictPath)
+AbsWordSeg::InitDict (const char* dictPath)
 {
-  char *trieBuff = NULL;
-  const char *triePath;
+  char* trieBuff = NULL;
+  const char* triePath;
   struct stat sb;
 
   if (stat (dictPath, &sb) == -1)
@@ -86,7 +86,7 @@ AbsWordSeg::CreateWordList (void)
   short int cntFound, amb_sep_cnt;
   int data_idx;
   unsigned char lead_ch;
-  TrieState *curState;
+  TrieState* curState;
 
   Buff[0] = '\0';
   cntLink = 0;
@@ -187,7 +187,7 @@ AbsWordSeg::CreateWordList (void)
 }
 
 bool
-AbsWordSeg::IsNumber (const char *str)
+AbsWordSeg::IsNumber (const char* str)
 {
   while (*str)
     {
@@ -199,7 +199,7 @@ AbsWordSeg::IsNumber (const char *str)
 }
 
 bool
-AbsWordSeg::IsEnglish (const char *str)
+AbsWordSeg::IsEnglish (const char* str)
 {
   while (*str)
     {
@@ -223,9 +223,10 @@ AbsWordSeg::IsLastChar (unsigned char ch)
 }
 
 bool
-AbsWordSeg::Has_Karun (const char *sen_ptr, short int *k_idx)
+AbsWordSeg::Has_Karun (const char* sen_ptr, short int* k_idx)
 {
   short int i;
+
   *k_idx = -1;
   for (i = 1; i <= 3 && sen_ptr[i] != '\0'; i++)
     {
@@ -239,7 +240,7 @@ AbsWordSeg::Has_Karun (const char *sen_ptr, short int *k_idx)
 }
 
 bool
-AbsWordSeg::WordSeg (char *senstr, char *output, const char *wbr)
+AbsWordSeg::WordSeg (char* senstr, char* output, const char* wbr)
 {
   int bestidx;
 
@@ -284,9 +285,9 @@ AbsWordSeg::SwapLinkSep ()
 }
 
 void
-AbsWordSeg::GetWord (short int idxsen, short int idx, char *buff)
+AbsWordSeg::GetWord (short int idxsen, short int idx, char* buff)
 {
-  char *sen_ptr;
+  char* sen_ptr;
   sen_ptr = sen;
   if (idx > 0)
     {
@@ -346,7 +347,7 @@ AbsWordSeg::copySepData (short int sourceIdxSen, short int targetIdxSen,
 }
 
 void
-AbsWordSeg::GetBestSen (int bestidx, const char *wbr, char *outstr)
+AbsWordSeg::GetBestSen (int bestidx, const char* wbr, char* outstr)
 {
   int t;
   char buff[2000];

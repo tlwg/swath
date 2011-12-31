@@ -14,7 +14,7 @@
 class FileFilter
 {
 public:
-  static FilterX *CreateFilter (FILE * filein, FILE * fileout,
+  static FilterX* CreateFilter (FILE* filein, FILE* fileout,
                                 const char *fileformat);
 };
 

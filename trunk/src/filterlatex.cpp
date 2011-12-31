@@ -28,7 +28,7 @@ static int WinOffsetNormal[5] = { 139, 140, 141, 142, 143 };
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterLatex::FilterLatex (FILE * filein, FILE * fileout, int latexflag)
+FilterLatex::FilterLatex (FILE* filein, FILE* fileout, int latexflag)
   : FilterX (filein, fileout)
 {
   wordBreakStr = "{\\wbr}";
@@ -44,11 +44,11 @@ FilterLatex::~FilterLatex ()
 }
 
 bool
-FilterLatex::GetNextToken (char *token, bool * thaiFlag)
+FilterLatex::GetNextToken (char* token, bool* thaiFlag)
 {
-  char *curPtr;
-  char *stPtr;
-  char *stVer;
+  char* curPtr;
+  char* stPtr;
+  char* stVer;
 
   if (buffer[0] == '\0')
     if (fgets (buffer, 1999, fpin) == NULL)
@@ -151,14 +151,14 @@ FilterLatex::GetNextToken (char *token, bool * thaiFlag)
 }
 
 void
-FilterLatex::Print (char *token, bool thaiFlag)
+FilterLatex::Print (char* token, bool thaiFlag)
 {
   if (thaiFlag)
     {
       if (latexFlag != 0)
         {
-          char *output = new char[2000];
-          AdjustText ((unsigned char *) token, (unsigned char *) output);
+          char* output = new char[2000];
+          AdjustText ((unsigned char*) token, (unsigned char*) output);
           fprintf (fpout, "%s", output);
           delete output;
         }
@@ -175,13 +175,13 @@ FilterLatex::Print (char *token, bool thaiFlag)
 }
 
 void
-FilterLatex::AdjustText (unsigned char *input, unsigned char *output)
+FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
 {
   int idxNormal;
   int cntChar = 1;
   bool chgchar = false;
-  unsigned char *tmpInput;
-  unsigned char *tmpOutput;
+  unsigned char* tmpInput;
+  unsigned char* tmpOutput;
 
   tmpInput = input;
   tmpOutput = output;
