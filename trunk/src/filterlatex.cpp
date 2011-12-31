@@ -30,13 +30,12 @@ static int WinOffsetNormal[5] = { 139, 140, 141, 142, 143 };
 
 FilterLatex::FilterLatex (FILE* filein, FILE* fileout, int latexflag,
                           const char* wordBreakStr)
-  : FilterX (filein, fileout, wordBreakStr)
+  : FilterX (filein, fileout, wordBreakStr),
+    winCharSet (latexflag == 1),
+    latexFlag (latexflag),
+    verbatim (false)
 {
   buffer[0] = '\0';
-  verbatim = false;             // Is in verbatim mode??
-  latexFlag = latexflag;
-  if (latexFlag == 1)
-    winCharSet = true;
 }
 
 FilterLatex::~FilterLatex ()
