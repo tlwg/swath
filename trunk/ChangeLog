@@ -1,6 +1,7 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/filterx.h, -src/filterx.cpp, src/Makefile.am:
+	  - Drop unused member "fileopen".
 	  - Adjust c-tor to use initialization list; also initialize
 	    wordBreakStr to a default value.
 	  - Move all FilterX member functions to header and make them inline.
