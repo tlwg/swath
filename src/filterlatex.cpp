@@ -28,10 +28,10 @@ static int WinOffsetNormal[5] = { 139, 140, 141, 142, 143 };
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterLatex::FilterLatex (FILE* filein, FILE* fileout, int latexflag)
-  : FilterX (filein, fileout)
+FilterLatex::FilterLatex (FILE* filein, FILE* fileout, int latexflag,
+                          const char* wordBreakStr)
+  : FilterX (filein, fileout, wordBreakStr)
 {
-  wordBreakStr = "{\\wbr}";
   buffer[0] = '\0';
   verbatim = false;             // Is in verbatim mode??
   latexFlag = latexflag;

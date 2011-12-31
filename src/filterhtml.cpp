@@ -12,9 +12,8 @@
 //////////////////////////////////////////////////////////////////////
 
 FilterHtml::FilterHtml (FILE* filein, FILE* fileout)
-  : FilterX (filein, fileout)
+  : FilterX (filein, fileout, "<wbr>")
 {
-  wordBreakStr = "<wbr>";
 }
 
 FilterHtml::~FilterHtml ()

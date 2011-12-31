@@ -1,5 +1,26 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Make FilterX::wordBreakStr private and initialized by c-tor.
+
+	* src/filterx.h:
+	  - Make FilterX::wordBreakStr private.
+	  - Add wordBreakStr arg to c-tor.
+	* src/filterlatex.h:
+	  - Add wordBreakStr arg to c-tor with default value for LaTeX,
+	    so it can be overridden by FilterLambda.
+	* src/filterlatex.cpp (FilterLatex::FilterLatex):
+	  - Pass the wordBreakStr to FilterX c-tor instead of direct
+	    assignment.
+	* src/filterlambda.h (FilterLambda::FilterLambda):
+	  - Pass Lambda word break string to FilterLatex c-tor instead of
+	    direct assignment.
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	  - Pass specific word break string to FilterX c-tor instead of
+	    direct assignment.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterrtf.h, src/filterrtf.cpp:
 	  - Apply "indent -nut" + manual adjustments.
 
