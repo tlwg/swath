@@ -1,5 +1,18 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.h:
+	* src/abswordseg.cpp:
+	* src/wordseg.cpp:
+	* src/filterx.h:
+	* src/filterlatex.h:
+	* src/filterlatex.cpp:
+	* src/filefilter.h:
+	* src/filefilter.cpp:
+	* src/maxwordseg.h:
+	  - Change pointer declarations to C++ style.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterhtml.h, src/filterhtml.cpp:
 	  - Apply "indent -nut" + manual adjustments.
 

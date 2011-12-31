@@ -10,9 +10,9 @@
 #include "filterlatex.h"
 #include "filterlambda.h"
 
-FilterX *
-FileFilter::CreateFilter (FILE * filein, FILE * fileout,
-                          const char *fileformat)
+FilterX*
+FileFilter::CreateFilter (FILE* filein, FILE* fileout,
+                          const char* fileformat)
 {
   if (strcmp (fileformat, "html") == 0)
     return new FilterHtml (filein, fileout);

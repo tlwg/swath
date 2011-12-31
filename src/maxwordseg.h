@@ -18,7 +18,7 @@ public:
   ~MaxWordSeg ();
 
 protected:
-  short int *score;
+  short int* score;
   void saveSegment (int idxSen, int lastPoint);
   int noAmbArea;
   int sepIdx;
