@@ -1,5 +1,10 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.h, src/filterlatex.cpp:
+	  - Drop the empty d-tor.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.cpp (FilterLatex::FilterLatex):
 	  - Initialize members with initialization list where possible.
 
