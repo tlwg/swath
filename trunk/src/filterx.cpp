@@ -8,32 +8,34 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterX::FilterX(FILE *filein, FILE *fileout)
+FilterX::FilterX (FILE * filein, FILE * fileout)
 {
 /*  initial string (difference in each format)
 	strcpy(wordBreakStr,"\\tb ");
 	strcpy(prefixStr,"{\\thai ");
 	strcpy(suffixStr,"}");
 */
-	chbuff=0;
-	fpin=stdin;
-	fpout=stdout;
+  chbuff = 0;
+  fpin = stdin;
+  fpout = stdout;
 
-	if (filein) {
-		fpin = filein;
-	}
-	if (fileout) {
-		fpout = fileout;
-	}
+  if (filein)
+    {
+      fpin = filein;
+    }
+  if (fileout)
+    {
+      fpout = fileout;
+    }
 }
 
-FilterX::~FilterX()
+FilterX::~FilterX ()
 {
-	fflush(fpout);
+  fflush (fpout);
 }
 
-const char* FilterX::GetWordBreak()
+const char *
+FilterX::GetWordBreak ()
 {
-	return wordBreakStr;
+  return wordBreakStr;
 }
-
