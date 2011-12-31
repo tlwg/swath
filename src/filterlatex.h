@@ -16,7 +16,7 @@ class FilterLatex : public FilterX
 {
 public:
   FilterLatex (FILE * filein, FILE * fileout, int latexflag = 0);
-  virtual ~ FilterLatex ();
+  virtual ~FilterLatex ();
 
   void Print (char *token, bool thaiFlag);
   bool GetNextToken (char *token, bool * thaiFlag);
