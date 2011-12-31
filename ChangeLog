@@ -1,3 +1,8 @@
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterx.cpp, src/filterx.h:
+	  - Apply "indent -nut" + manual adjustments.
+
 2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/wordstack.h:
