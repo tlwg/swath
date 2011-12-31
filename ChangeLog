@@ -1,5 +1,12 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.h:
+	  - Rearrange member declarations.
+	  - Make AdjustText() private.
+	  - Make winCharSet, latexFlag private.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.h, src/filterlatex.cpp:
 	  - Make idxVowelToneMark() non-member, as it depends on file-internal
 	    static vars.
