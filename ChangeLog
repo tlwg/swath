@@ -1,5 +1,10 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/abswordseg.h:
+	  - Rearrange member declarations.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/dictpath.h:
 	* src/wordstack.h:
 	* src/worddef.h:

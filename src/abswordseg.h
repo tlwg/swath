@@ -17,15 +17,11 @@ class AbsWordSeg
 public:
   AbsWordSeg ();
   virtual ~AbsWordSeg ();
+
   bool InitDict (const char* dictPath);
   bool WordSeg (char* senstr, char* output, const char* wbr);
 
 protected:
-  SepType SepData[3];
-  unsigned short int len;
-  char sen[MAXLEN];
-  short int* LinkSep;
-  short int* IdxSep;
   //============Function for Wordseg=====================
   virtual void SwapLinkSep ();
   virtual void GetBestSen (int bestidx, const char* wbr, char* outstr);
@@ -35,6 +31,13 @@ protected:
                                           short int targetIdxSen,
                                           short int sepPoint);
   void GetWord (short int idxsen, short int idx, char* buff);
+
+protected:
+  SepType SepData[3];
+  unsigned short int len;
+  char sen[MAXLEN];
+  short int* LinkSep;
+  short int* IdxSep;
 
 private:
   void InitData ();
