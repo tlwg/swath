@@ -10,10 +10,9 @@
 //////////////////////////////////////////////////////////////////////
 
 FilterRTF::FilterRTF (FILE* filein, FILE* fileout)
-  : FilterX (filein, fileout)
+  : FilterX (filein, fileout, "\xDC")
 {
   psState = 0;
-  wordBreakStr = "\xDC";
   strbuff[0] = '\0';
 }
 

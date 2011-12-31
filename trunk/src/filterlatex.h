@@ -15,7 +15,8 @@
 class FilterLatex : public FilterX
 {
 public:
-  FilterLatex (FILE* filein, FILE* fileout, int latexflag = 0);
+  FilterLatex (FILE* filein, FILE* fileout, int latexflag = 0,
+               const char *wordBreakStr = "{\\wbr}");
   virtual ~FilterLatex ();
 
   void Print (char* token, bool thaiFlag);

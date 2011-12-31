@@ -14,7 +14,7 @@
 class FilterX
 {
 public:
-  FilterX (FILE* filein, FILE* fileout);
+  FilterX (FILE* filein, FILE* fileout, const char* wordBreakStr);
   virtual ~FilterX ();
 
   const char* GetWordBreak ();
@@ -26,15 +26,17 @@ protected:
   char  chbuff;
   FILE* fpin;
   FILE* fpout;
+
+private:
   const char* wordBreakStr;
 };
 
 inline
-FilterX::FilterX (FILE* filein, FILE* fileout)
+FilterX::FilterX (FILE* filein, FILE* fileout, const char* wordBreakStr)
   : chbuff (0),
     fpin (filein ? filein : stdin),
     fpout (fileout ? fileout : stdout),
-    wordBreakStr ("|")
+    wordBreakStr (wordBreakStr)
 {
 }
 
