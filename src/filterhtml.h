@@ -2,23 +2,23 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_FILTERHTML_H__5FA01276_2213_11D3_B449_00105A5C2417__INCLUDED_)
-#define AFX_FILTERHTML_H__5FA01276_2213_11D3_B449_00105A5C2417__INCLUDED_
+#ifndef __FILTERHTML_H
+#define __FILTERHTML_H
 
 #if _MSC_VER >= 1000
 #pragma once
-#endif // _MSC_VER >= 1000
+#endif
 
 #include "filterx.h"
 
-class FilterHtml : public FilterX  
+class FilterHtml : public FilterX
 {
 public:
-	void Print(char *token,bool thaiFlag);
-	bool GetNextToken(char *token, bool *thaiFlag);
-	FilterHtml(FILE *filein, FILE *fileout);
-	virtual ~FilterHtml();
+  FilterHtml (FILE* filein, FILE* fileout);
+  virtual ~FilterHtml ();
 
+  void Print (char* token, bool thaiFlag);
+  bool GetNextToken (char* token, bool* thaiFlag);
 };
 
-#endif // !defined(AFX_FILTERHTML_H__5FA01276_2213_11D3_B449_00105A5C2417__INCLUDED_)
+#endif
