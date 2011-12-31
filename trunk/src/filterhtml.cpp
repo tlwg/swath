@@ -16,10 +16,6 @@ FilterHtml::FilterHtml (FILE* filein, FILE* fileout)
 {
 }
 
-FilterHtml::~FilterHtml ()
-{
-}
-
 bool
 FilterHtml::GetNextToken (char* token, bool* thaiFlag)
 {

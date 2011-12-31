@@ -1,5 +1,12 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterhtml.h, src/filterhtml.cpp:
+	* src/filterrtf.h, src/filterrtf.cpp:
+	  - Rearrange member declarations.
+	  - Drop the empty d-tor.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.h, src/filterlatex.cpp:
 	  - Drop the empty d-tor.
 
