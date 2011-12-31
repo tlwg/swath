@@ -1,5 +1,11 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.h, src/filterlatex.cpp:
+	  - Make idxVowelToneMark() non-member, as it depends on file-internal
+	    static vars.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.h, src/worddef.h, src/filterlatex.cpp:
 	  - Move isLongTailChar() to global worddef.h. Rename it to
 	    isThaiLongTailChar().
