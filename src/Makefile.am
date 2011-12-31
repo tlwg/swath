@@ -26,7 +26,6 @@ swath_SOURCES = \
 	filterhtml.cpp \
 	filterlatex.cpp \
 	filterrtf.cpp \
-	filterlambda.cpp \
 	longwordseg.cpp \
 	maxwordseg.cpp \
 	wordseg.cpp

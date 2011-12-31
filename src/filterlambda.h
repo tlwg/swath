@@ -2,21 +2,26 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_FILTERLAMBDA_H__0D404F43_F0D6_11D4_ACC5_00D0B7929F0B__INCLUDED_)
-#define AFX_FILTERLAMBDA_H__0D404F43_F0D6_11D4_ACC5_00D0B7929F0B__INCLUDED_
+#ifndef __FILTERLAMBDA_H
+#define __FILTERLAMBDA_H
 
 #if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+#endif
 
 #include "filterlatex.h"
 
-class FilterLambda : public FilterLatex  
+class FilterLambda : public FilterLatex
 {
 public:
-	FilterLambda(FILE *filein, FILE *fileout, int latexflag=0);
-	virtual ~FilterLambda();
-
+  FilterLambda (FILE* filein, FILE* fileout, int latexflag = 0);
 };
 
-#endif // !defined(AFX_FILTERLAMBDA_H__0D404F43_F0D6_11D4_ACC5_00D0B7929F0B__INCLUDED_)
+inline
+FilterLambda::FilterLambda (FILE * filein, FILE * fileout, int latexflag)
+  : FilterLatex (filein, fileout, latexflag)
+{
+  wordBreakStr = "^^^^200c";
+}
+
+#endif
