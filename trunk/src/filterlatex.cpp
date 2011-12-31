@@ -38,10 +38,6 @@ FilterLatex::FilterLatex (FILE* filein, FILE* fileout, int latexflag,
   buffer[0] = '\0';
 }
 
-FilterLatex::~FilterLatex ()
-{
-}
-
 static int
 idxVowelToneMark (unsigned char ch)
 {
