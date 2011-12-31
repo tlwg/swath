@@ -62,6 +62,12 @@ isThaiDigit (unsigned char ch)
   return 0xf0 <= ch && ch <= 0xf9;
 }
 
+inline bool
+isThaiLongTailChar (unsigned char ch)
+{
+  return ch == 0xbb || ch == 0xbd || ch == 0xbf;
+}
+
 inline unsigned int
 tis2uni (unsigned char ch)
 {

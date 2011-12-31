@@ -1,5 +1,12 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.h, src/worddef.h, src/filterlatex.cpp:
+	  - Move isLongTailChar() to global worddef.h. Rename it to
+	    isThaiLongTailChar().
+	  - Adjust all calls in filterlatex.cpp accordingly.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Make FilterX::wordBreakStr private and initialized by c-tor.
 
 	* src/filterx.h:
