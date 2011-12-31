@@ -1,9 +1,9 @@
-#if !defined(INC_WORDSTACK)
-#define INC_WORDSTACK
+#ifndef __WORDSTACK_H
+#define __WORDSTACK_H
 
 #if _MSC_VER >= 1000
 #pragma once
-#endif // _MSC_VER >= 1000
+#endif
 
 #include "worddef.h"
 

@@ -2,8 +2,8 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(INC_ABSWORDSEG)
-#define INC_ABSWORDSEG
+#ifndef __ABSWORDSEG_H
+#define __ABSWORDSEG_H
 
 #if _MSC_VER >= 1000
 #pragma once

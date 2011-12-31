@@ -2,12 +2,12 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(INC_MAXWORDSEG)
-#define INC_MAXWORDSEG
+#ifndef __MAXWORDSEG_H
+#define __MAXWORDSEG_H
 
 #if _MSC_VER >= 1000
 #pragma once
-#endif // _MSC_VER >= 1000
+#endif
 
 #include "abswordseg.h"
 
