@@ -153,8 +153,6 @@ FilterLatex::GetNextToken (char *token, bool * thaiFlag)
 void
 FilterLatex::Print (char *token, bool thaiFlag)
 {
-  int lwbr;
-  lwbr = strlen (wordBreakStr);
   if (thaiFlag)
     {
       if (latexFlag != 0)
