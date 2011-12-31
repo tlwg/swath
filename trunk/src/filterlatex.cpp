@@ -194,7 +194,7 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
           if (cntChar > 1)
             {
               //case Long Tail+Sara-Am
-              if (isLongTailChar (input[-1]))
+              if (isThaiLongTailChar (input[-1]))
                 {
                   *output = (winCharSet == true) ? 153 : 143;     //offset left
                 }
@@ -203,7 +203,7 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
                   //case character+ToneMark+Sara-Am
                   if (cntChar > 2)
                     {
-                      if (isLongTailChar (input[-2]))
+                      if (isThaiLongTailChar (input[-2]))
                         {
                           //offset left
                           *output = winCharSet ? WinOffsetLeftHigh[idxNormal]
@@ -233,7 +233,7 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
         {
           if (cntChar > 1)
             {
-              if (isLongTailChar (input[-1]))
+              if (isThaiLongTailChar (input[-1]))
                 {
                   // Long Tail Char + Vowel or Tonemarks.
                   *output = winCharSet ? WinOffsetLeft[idxNormal]
@@ -245,7 +245,7 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
                   //char + Vowel + Tone Mark
                   if (cntChar > 2)
                     {
-                      if (isLongTailChar (input[-2]))
+                      if (isThaiLongTailChar (input[-2]))
                         {
                           //Long Tail Char + Vowel + Tone Mark
                           *output = winCharSet ? WinOffsetLeftHigh[idxNormal]
@@ -299,12 +299,6 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
   *output = 0;
   input = tmpInput;
   output = tmpOutput;
-}
-
-bool
-FilterLatex::isLongTailChar (unsigned char ch)
-{
-  return ch == 187 || ch == 189 || ch == 191;
 }
 
 int

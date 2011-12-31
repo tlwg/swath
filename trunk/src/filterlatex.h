@@ -27,7 +27,6 @@ protected:
   int latexFlag;    // 0 do nothing; 1 win char set; 2 mac char set
 
   static int idxVowelToneMark (unsigned char ch);
-  static bool isLongTailChar (unsigned char ch);
 
   void AdjustText (unsigned char* input, unsigned char* output);
 
