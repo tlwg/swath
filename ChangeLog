@@ -1,5 +1,13 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterx.h, -src/filterx.cpp, src/Makefile.am:
+	  - Adjust c-tor to use initialization list; also initialize
+	    wordBreakStr to a default value.
+	  - Move all FilterX member functions to header and make them inline.
+	  - Drop now-unneeded filterx.cpp.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterx.cpp, src/filterx.h:
 	  - Apply "indent -nut" + manual adjustments.
 
