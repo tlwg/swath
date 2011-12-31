@@ -43,6 +43,16 @@ FilterLatex::~FilterLatex ()
 {
 }
 
+static int
+idxVowelToneMark (unsigned char ch)
+{
+  int i = 0;
+
+  while (i < 12 && WinMacNormal[i] != ch)
+    i++;
+  return i;
+}
+
 bool
 FilterLatex::GetNextToken (char* token, bool* thaiFlag)
 {
@@ -299,15 +309,5 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
   *output = 0;
   input = tmpInput;
   output = tmpOutput;
-}
-
-int
-FilterLatex::idxVowelToneMark (unsigned char ch)
-{
-  int i = 0;
-
-  while (i < 12 && WinMacNormal[i] != ch)
-    i++;
-  return i;
 }
 
