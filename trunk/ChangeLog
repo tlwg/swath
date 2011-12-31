@@ -1,5 +1,10 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.h, src/filterlatex.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filefilter.h, src/filefilter.cpp:
 	  - Apply "indent -nut" + manual adjustments.
 
