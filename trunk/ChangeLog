@@ -1,5 +1,10 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterhtml.h, src/filterhtml.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.cpp (FilterLatex::Print):
 	  - Remove unused var "lwbr".
 
