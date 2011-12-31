@@ -10,9 +10,9 @@
 //////////////////////////////////////////////////////////////////////
 
 FilterRTF::FilterRTF (FILE* filein, FILE* fileout)
-  : FilterX (filein, fileout, "\xDC")
+  : FilterX (filein, fileout, "\xDC"),
+    psState (0)
 {
-  psState = 0;
   strbuff[0] = '\0';
 }
 
