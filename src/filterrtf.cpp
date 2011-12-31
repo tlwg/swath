@@ -16,10 +16,6 @@ FilterRTF::FilterRTF (FILE* filein, FILE* fileout)
   strbuff[0] = '\0';
 }
 
-FilterRTF::~FilterRTF ()
-{
-}
-
 bool
 FilterRTF::GetNextToken (char* token, bool* thaiFlag)
 {

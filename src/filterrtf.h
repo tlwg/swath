@@ -15,10 +15,9 @@ class FilterRTF : public FilterX
 {
 public:
   FilterRTF (FILE* filein, FILE* fileout);
-  virtual ~FilterRTF ();
 
-  void Print (char* token, bool thaiFlag);
   bool GetNextToken (char* token, bool* thaiFlag);
+  void Print (char* token, bool thaiFlag);
 
 private:
   int psState;

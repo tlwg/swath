@@ -15,10 +15,9 @@ class FilterHtml : public FilterX
 {
 public:
   FilterHtml (FILE* filein, FILE* fileout);
-  virtual ~FilterHtml ();
 
-  void Print (char* token, bool thaiFlag);
   bool GetNextToken (char* token, bool* thaiFlag);
+  void Print (char* token, bool thaiFlag);
 };
 
 #endif
