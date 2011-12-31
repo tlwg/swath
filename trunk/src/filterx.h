@@ -27,9 +27,27 @@ protected:
   FILE *fpin;
   FILE *fpout;
   const char *wordBreakStr;
-
-private:
-  bool fileopen;
 };
+
+inline
+FilterX::FilterX (FILE * filein, FILE * fileout)
+  : chbuff (0),
+    fpin (filein ? filein : stdin),
+    fpout (fileout ? fileout : stdout),
+    wordBreakStr ("|")
+{
+}
+
+inline
+FilterX::~FilterX ()
+{
+  fflush (fpout);
+}
+
+inline const char *
+FilterX::GetWordBreak ()
+{
+  return wordBreakStr;
+}
 
 #endif
