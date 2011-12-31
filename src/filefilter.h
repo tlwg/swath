@@ -2,20 +2,20 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#if !defined(AFX_FILEFILTER_H__5FA01279_2213_11D3_B449_00105A5C2417__INCLUDED_)
-#define AFX_FILEFILTER_H__5FA01279_2213_11D3_B449_00105A5C2417__INCLUDED_
+#ifndef __FILEFILTER_H
+#define __FILEFILTER_H
 
 #if _MSC_VER >= 1000
 #pragma once
-#endif // _MSC_VER >= 1000
+#endif
 
 #include "filterx.h"
 
 class FileFilter
 {
 public:
-  static FilterX* CreateFilter(FILE *filein, FILE *fileout,
-                               const char *fileformat);
+  static FilterX *CreateFilter (FILE * filein, FILE * fileout,
+                                const char *fileformat);
 };
 
-#endif // !defined(AFX_FILEFILTER_H__5FA01279_2213_11D3_B449_00105A5C2417__INCLUDED_)
+#endif
