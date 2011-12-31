@@ -20,14 +20,14 @@ public:
   void Print (char* token, bool thaiFlag);
 
 private:
-  int psState;
-  char strbuff[5];
-
-private:
   //sequence of characters is    \ ' x x (one character)
   //states of this sequence are  1 2 3 4  
   static int chgCharState (char charin, int state);
   static bool isThaiChar (char *token, int *state);
+
+private:
+  int psState;
+  char strbuff[5];
 };
 
 #endif

@@ -1,5 +1,10 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterrtf.h:
+	  - More member declaration rearrangement.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterhtml.h, src/filterhtml.cpp:
 	* src/filterrtf.h, src/filterrtf.cpp:
 	  - Rearrange member declarations.
