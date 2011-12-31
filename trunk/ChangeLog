@@ -1,5 +1,10 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterrtf.h, src/filterrtf.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlambda.h, -src/filterlambda.cpp, src/Makefile.am:
 	  - Apply "indent -nut" + manual adjustments.
 	  - Move FilterLambda member functions to header and make them inline.
