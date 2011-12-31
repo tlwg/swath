@@ -1,5 +1,16 @@
 2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/dictpath.h:
+	* src/wordstack.h:
+	* src/worddef.h:
+	* src/abswordseg.h:
+	* src/longwordseg.h:
+	* src/maxwordseg.h:
+	  - Adjust repeated-inclusion-preventing preprocessor style for
+	    consistency.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterrtf.cpp (FilterRTF::FilterRTF):
 	  - Initialize members with initialization list where possible.
 

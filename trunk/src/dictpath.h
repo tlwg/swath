@@ -2,8 +2,8 @@
 // Author: Chaivit Poovanich
 // October 14, 1998
 
-#ifndef DICTPATH_INC
-#define DICTPATH_INC
+#ifndef __DICTPATH_H
+#define __DICTPATH_H
 
 #ifdef WIN32
 #define PATHSEPERATOR "\\"

@@ -1,5 +1,4 @@
 #ifndef __WORDDEF_H
-
 #define __WORDDEF_H
 
 #define MAXCHOICE 150           // NUMBER OF ALL POSSIBLE SENTENCES.
