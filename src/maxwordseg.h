@@ -15,7 +15,6 @@ class MaxWordSeg : public AbsWordSeg
 {
 public:
   MaxWordSeg ();
-  ~MaxWordSeg ();
 
 protected:
   virtual int CreateSentence ();
@@ -24,9 +23,6 @@ private:
   int saveSegment (int sepIdx, int idxSen, int lastPoint);
   int findAmbArea ();           //return number of ambiguous area.
   int WordSegArea (int stSeg, int enSeg);
-
-private:
-  short int* score;
 };
 
 #endif
