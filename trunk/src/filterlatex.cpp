@@ -158,19 +158,11 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
 void
 FilterLatex::Print (char* token, bool thaiFlag)
 {
-  if (thaiFlag)
+  if (thaiFlag && latexFlag != 0)
     {
-      if (latexFlag != 0)
-        {
-          char* output = new char[2000];
-          AdjustText ((unsigned char*) token, (unsigned char*) output);
-          fprintf (fpout, "%s", output);
-          delete output;
-        }
-      else
-        {
-          fprintf (fpout, "%s", token);
-        }
+      char output[2000];
+      AdjustText ((unsigned char*) token, (unsigned char*) output);
+      fprintf (fpout, "%s", output);
     }
   else
     {
