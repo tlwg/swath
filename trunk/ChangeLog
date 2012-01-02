@@ -1,5 +1,23 @@
 2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Get rid of temporary member MaxWordSeg::sepIdx.
+
+	Its only use was to pass value between CreateSentence() and
+	saveSegment() methods. This should be done via function arg instead.
+
+	The other occurrence of "sepIdx" in WordSegArea() is already local
+	var, and thus irrelevant.
+
+	* src/maxwordseg.h, src/maxwordseg.cpp (MaxWordSeg::saveSegment):
+	  - Add "sepIdx" arg and return its updated value when finished.
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
+	  - Declare "sepIdx" as local var.
+	  - Update its value from saveSegment() return value.
+	* src/maxwordseg.h (class MaxWordSeg):
+	  - Drop "sepIdx" member.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.h, src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg):
 	  - Drop unused "noAmbArea" member.
 
