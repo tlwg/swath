@@ -18,15 +18,17 @@ public:
   ~MaxWordSeg ();
 
 protected:
-  short int* score;
+  virtual int CreateSentence ();
+
+private:
   void saveSegment (int idxSen, int lastPoint);
-  int noAmbArea;
-  int sepIdx;
   int findAmbArea ();           //return number of ambiguous area.
   int WordSegArea (int stSeg, int enSeg);
 
-protected:
-  virtual int CreateSentence ();
+private:
+  short int* score;
+  int noAmbArea;
+  int sepIdx;
 };
 
 #endif
