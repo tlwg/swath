@@ -21,13 +21,12 @@ protected:
   virtual int CreateSentence ();
 
 private:
-  void saveSegment (int idxSen, int lastPoint);
+  int saveSegment (int sepIdx, int idxSen, int lastPoint);
   int findAmbArea ();           //return number of ambiguous area.
   int WordSegArea (int stSeg, int enSeg);
 
 private:
   short int* score;
-  int sepIdx;
 };
 
 #endif
