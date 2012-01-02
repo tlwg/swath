@@ -51,25 +51,19 @@ idxVowelToneMark (unsigned char ch)
 bool
 FilterLatex::GetNextToken (char* token, bool* thaiFlag)
 {
-  char* curPtr;
-  char* stPtr;
-  char* stVer;
-
   if (buffer[0] == '\0')
-    if (fgets (buffer, 1999, fpin) == NULL)
+    if (fgets (buffer, sizeof buffer, fpin) == NULL)
       return false;
-  curPtr = buffer;
-  stPtr = buffer;
+
   *token = '\0';
   if (verbatim)
     {
       *thaiFlag = false;
-      stVer = strstr (buffer, "\\end{verbatim}");
-      if (stVer == NULL)
+      char* stVer = strstr (buffer, "\\end{verbatim}");
+      if (!stVer)
         {
           strcpy (token, buffer);
           buffer[0] = '\0';
-          return true;
         }
       else
         {
@@ -78,12 +72,16 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
           token[stVer - buffer] = '\0';
           memmove (buffer, stVer, strlen (stVer) + 1);
           verbatim = false;
-          return true;
         }
+      return true;
     }
 
+  char* curPtr = buffer;
+
   while (isPunc (*curPtr))
-    curPtr++;
+    {
+      curPtr++;
+    }
   *thaiFlag = isThai (*curPtr);
   curPtr++;
   if (*thaiFlag)
@@ -98,8 +96,8 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
           if (*curPtr != 0 && *curPtr != '\n')
             {
               int prevLen = strlen (token);
-              strncat (token, stPtr, curPtr - stPtr);
-              token[prevLen + (curPtr - stPtr)] = '\0';
+              strncat (token, buffer, curPtr - buffer);
+              token[prevLen + (curPtr - buffer)] = '\0';
               //store new buffer
               memmove (buffer, curPtr, strlen (curPtr) + 1);
               return true;
@@ -107,12 +105,14 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
           else
             {
               if (*curPtr == '\n')
-                *curPtr = 0;
-              strcat (token, stPtr);
+                {
+                  *curPtr = '\0';
+                }
+              strcat (token, buffer);
               buffer[0] = '\0';
               //if next a line is thai string, concat next line
               // to current line
-              if (fgets (buffer, 1999, fpin) == NULL)
+              if (fgets (buffer, sizeof buffer, fpin) == NULL)
                 {
                   strcat (token, "\n");
                   return true;  //next GetToken() must return false
@@ -136,14 +136,14 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
         }
       if (*curPtr != 0)
         {
-          strncpy (token, stPtr, curPtr - stPtr);
-          token[curPtr - stPtr] = '\0';
+          strncpy (token, buffer, curPtr - buffer);
+          token[curPtr - buffer] = '\0';
           //store new buffer
           memmove (buffer, curPtr, strlen (curPtr) + 1);
         }
       else
         {
-          strcpy (token, stPtr);
+          strcpy (token, buffer);
           buffer[0] = '\0';     //clear buffer
         }
       if (strstr (token, "\\begin{verbatim}") != NULL)

@@ -1,5 +1,16 @@
 2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Adjust source.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace hard-coded buffer size 1999 with "sizeof buffer".
+	  - Get rid of "stPtr" var, which was set only once to "buffer"
+	    and never changed.
+	  - Declare vars where they are used.
+	  - Adjust brackets & conditions.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.h:
 	  - Drop "findAmbArea()" method, which was never defined nor
 	    referenced from anywhere.
