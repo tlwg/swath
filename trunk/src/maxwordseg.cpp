@@ -14,14 +14,7 @@
 MaxWordSeg::MaxWordSeg ()
   : AbsWordSeg ()
 {
-  score = new short int[MAXSEP];
 }
-
-MaxWordSeg::~MaxWordSeg ()
-{
-  delete[] score;
-}
-
 
 int
 MaxWordSeg::CreateSentence ()   //return number of ambiguous area.
@@ -123,6 +116,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
   short int bestScore = 0;
   bool foundUnk;
   bool stopCreate;
+  short int score[MAXSEP];
 
   // ========================================
   // this loop gets the first sentence

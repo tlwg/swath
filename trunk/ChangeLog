@@ -1,5 +1,17 @@
 2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Get rid of temporary member MaxWordSeg::score.
+
+	Its only use was in WordSegArea(), so it can be local var.
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Declare score as local array (no heap allocation).
+	* src/maxwordseg.h, src/maxwordseg.cpp:
+	  - Drop "score" new/delete.
+	  - Drop now-empty d-tor.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Get rid of temporary member MaxWordSeg::sepIdx.
 
 	Its only use was to pass value between CreateSentence() and
