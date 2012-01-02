@@ -2,6 +2,14 @@
 
 	Adjust source.
 
+	* src/filterlatex.cpp (FilterLatex::Print):
+	  - Use stack array instead of heap allocation for output buffer.
+	  - Merge if-cases.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Adjust source.
+
 	* src/filterlatex.cpp (FilterLatex::GetNextToken):
 	  - Replace hard-coded buffer size 1999 with "sizeof buffer".
 	  - Get rid of "stPtr" var, which was set only once to "buffer"
