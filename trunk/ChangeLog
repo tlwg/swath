@@ -1,5 +1,10 @@
 2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/maxwordseg.h, src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg):
+	  - Drop unused "noAmbArea" member.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.h:
 	  - Rearrange member declarations.
 

@@ -27,7 +27,6 @@ private:
 
 private:
   short int* score;
-  int noAmbArea;
   int sepIdx;
 };
 
