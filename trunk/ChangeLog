@@ -1,5 +1,11 @@
 2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/maxwordseg.h:
+	  - Drop "findAmbArea()" method, which was never defined nor
+	    referenced from anywhere.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Get rid of temporary member MaxWordSeg::score.
 
 	Its only use was in WordSegArea(), so it can be local var.

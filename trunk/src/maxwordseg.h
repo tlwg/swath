@@ -21,7 +21,6 @@ protected:
 
 private:
   int saveSegment (int sepIdx, int idxSen, int lastPoint);
-  int findAmbArea ();           //return number of ambiguous area.
   int WordSegArea (int stSeg, int enSeg);
 };
 
