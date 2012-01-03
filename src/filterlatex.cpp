@@ -177,11 +177,7 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
   int idxNormal;
   int cntChar = 1;
   bool chgchar = false;
-  unsigned char* tmpInput;
-  unsigned char* tmpOutput;
 
-  tmpInput = input;
-  tmpOutput = output;
   while (*input != 0)
     {
       //Sara-Amm must split to Sara-Arr + NiKhaHit(circle)
@@ -294,7 +290,5 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
       cntChar++;
     }
   *output = 0;
-  input = tmpInput;
-  output = tmpOutput;
 }
 
