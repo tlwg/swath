@@ -336,6 +336,25 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
                         }
                     }
                 }
+              else if (idxBelowMark (input[-1]) != -1)
+                {
+                  // character + below vowel + tone mark
+                  if (cntChar > 2)
+                    {
+                      if (isThaiLongTailChar (input[-2]))
+                        {
+                          // long tail + below vowel + tone mark
+                          *out_p = winCharSet ? WinTopMarksLowLeft[idxNormal]
+                                              : MacTopMarksLowLeft[idxNormal];
+                        }
+                      else
+                        {
+                          // character + below vowel + tone mark
+                          *out_p = winCharSet ? WinTopMarksLow[idxNormal]
+                                              : MacTopMarksLow[idxNormal];
+                        }
+                    }
+                }
               else
                 {
                   // character + tone mark

@@ -1,5 +1,10 @@
 2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Add the missing case of "below vowel + tone mark".
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.cpp (static data, idxVowelToneMark):
 	  - Move static data definitions to near FilterLatex::AdjustText().
 	  - Rearrange the data so that 3 sets of characters are handled
