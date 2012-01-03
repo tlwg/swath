@@ -5,25 +5,6 @@
 #include <string.h>
 #include "filterlatex.h"
 #include "worddef.h"
-//Normal Characters (tonemarks & vowels ) of both of Windows and Macintosh
-//Not according Position of vowels or tone mark.
-
-//|====OffsetHigh======| |===========Offset Normal============|
-static int WinMacNormal[12] =
-  { 232, 233, 234, 235, 236, 209, 212, 213, 214, 215, 231, 237 };
-
-//Character Sets for Macintosh
-static int MacOffsetLeft[12] =
-  { 131, 132, 133, 134, 135, 146, 148, 149, 150, 151, 147, 143 };
-static int MacOffsetLeftHigh[5] = { 152, 153, 154, 155, 156 };
-static int MacOffsetNormal[5] = { 136, 137, 138, 139, 140 };
-
-//Character Sets for Windows (not unicode)
-static int WinOffsetLeft[12] =
-  { 134, 135, 136, 137, 138, 152, 129, 130, 131, 132, 154, 153 };
-static int WinOffsetLeftHigh[5] = { 155, 156, 157, 158, 159 };
-static int WinOffsetNormal[5] = { 139, 140, 141, 142, 143 };
-
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -36,16 +17,6 @@ FilterLatex::FilterLatex (FILE* filein, FILE* fileout, int latexflag,
     verbatim (false)
 {
   buffer[0] = '\0';
-}
-
-static int
-idxVowelToneMark (unsigned char ch)
-{
-  int i = 0;
-
-  while (i < 12 && WinMacNormal[i] != ch)
-    i++;
-  return i;
 }
 
 bool
@@ -171,6 +142,120 @@ FilterLatex::Print (char* token, bool thaiFlag)
   fflush (fpout);
 }
 
+//Normal Characters (tonemarks & vowels ) of both of Windows and Macintosh
+//Not according Position of vowels or tone mark.
+
+// ---------------------
+// 8-bit character codes
+// ---------------------
+static int CharTopMarks[] =
+  {
+    0xe8, 0xe9, 0xea, 0xeb, 0xec, // tone marks & Thanthakhat
+    0x00
+  };
+static int CharAboveMarks[] =
+  {
+    0xd1, 0xd4, 0xd5, 0xd6, 0xd7, // upper vowels
+    0xe7,                         // Maitaikhu
+    0xed,                         // Nikhahit
+    0x00
+  };
+static int CharBelowMarks[] =
+  {
+    0xd8, 0xd9, 0xda,             // below vowels + Phinthu
+    0x00
+  };
+
+// ------------------------
+// 8-bit Glyph sets for Mac
+// ------------------------
+static int MacTopMarksLow[] =
+  {
+    0x88, 0x89, 0x8a, 0x8b, 0x8c, // tone marks & Thanthakhat
+    0x00
+  };
+static int MacTopMarksLowLeft[] =
+  {
+    0x83, 0x84, 0x85, 0x86, 0x87, // tone marks & Thanthakhat
+    0x00
+  };
+static int MacTopMarksLeft[] =
+  {
+    0x98, 0x99, 0x9a, 0x9b, 0x9c, // tone marks & Thanthakhat
+    0x00
+  };
+static int MacAboveMarksLeft[] =
+  {
+    0x92, 0x94, 0x95, 0x96, 0x97, // upper vowels
+    0x93,                         // Maitaikhu
+    0x8f,                         // Nikhahit
+    0x00
+  };
+static int MacBelowMarksLow[] =
+  {
+    0xfc, 0xfd, 0xfe,             // Sara U, Sara Uu, Phinthu
+    0x00
+  };
+
+// 8-bit Glyph sets for Windows (not unicode)
+static int WinTopMarksLow[] =
+  {
+    0x8b, 0x8c, 0x8d, 0x8e, 0x8f, // tone marks & Thanthakhat
+    0x00
+  };
+static int WinTopMarksLowLeft[] =
+  {
+    0x86, 0x87, 0x88, 0x89, 0x8a, // tone marks & Thanthakhat
+    0x00
+  };
+static int WinTopMarksLeft[] =
+  {
+    0x9b, 0x9c, 0x9d, 0x9e, 0x9f, // tone marks & Thanthakhat
+    0x00
+  };
+static int WinAboveMarksLeft[] =
+  {
+    0x98, 0x81, 0x82, 0x83, 0x84, // upper vowels
+    0x9a,                         // Maitaikhu
+    0x99,                         // Nikhahit
+    0x00
+  };
+static int WinBelowMarksLow[] =
+  {
+    0xfc, 0xfd, 0xfe,             // Sara U, Sara Uu, Phinthu
+    0x00
+  };
+
+static int
+idxTopMark (unsigned char ch)
+{
+  for (int i = 0; CharTopMarks[i]; i++)
+    if (CharTopMarks[i] == ch)
+      return i;
+
+  return -1;
+}
+
+static int
+idxAboveMark (unsigned char ch)
+{
+  for (int i = 0; CharAboveMarks[i]; i++)
+    if (CharAboveMarks[i] == ch)
+      return i;
+
+  return -1;
+}
+
+static int
+idxBelowMark (unsigned char ch)
+{
+  for (int i = 0; CharBelowMarks[i]; i++)
+    if (CharBelowMarks[i] == ch)
+      return i;
+
+  return -1;
+}
+
 int
 FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
                          int output_sz)
@@ -183,101 +268,114 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
     {
       *out_p = *input;
 
-      //Sara-Amm must split to Sara-Arr + NiKhaHit(circle)
-      if (*input == 211)
+      // decompose Sara-Am into Nikhahit + Sara-Aa
+      if (*input == 0xd3)
         {
           if (cntChar > 1)
             {
-              //case Long Tail+Sara-Am
+              // long tail + Sara-Am
               if (isThaiLongTailChar (input[-1]))
                 {
-                  *out_p = (winCharSet == true) ? 153 : 143;     //offset left
+                  *out_p = winCharSet ? 0x99 : 0x8f;     // left Nikhahit
                 }
-              else if ((idxNormal = idxVowelToneMark (input[-1])) < 12)
+              else if ((idxNormal = idxTopMark (input[-1])) != -1)
                 {
-                  //case character+ToneMark+Sara-Am
+                  // character + tone mark + Sara-Am
                   if (cntChar > 2)
                     {
                       if (isThaiLongTailChar (input[-2]))
                         {
-                          //offset left
-                          *out_p = winCharSet ? WinOffsetLeftHigh[idxNormal]
-                                              : MacOffsetLeftHigh[idxNormal];
-                          out_p[-1] = winCharSet ? 153 : 143;
+                          // left tone mark
+                          *out_p = winCharSet ? WinTopMarksLeft[idxNormal]
+                                              : MacTopMarksLeft[idxNormal];
+                          // left Nikhahit
+                          out_p[-1] = winCharSet ? 0x99 : 0x8f;
                         }
                       else
                         {
                           *out_p = input[-1];
-                          out_p[-1] = 237;
+                          out_p[-1] = 0xed;
                         }
                     }
                 }
               else
                 {
-                  *out_p = 237;
+                  *out_p = 0xed;
                 }
             }
           else
             {
-              *out_p = 237;
+              *out_p = 0xed;
             }
 
           if (out_p < output + output_sz)
             {
-              *(++out_p) = 210;    //Sara-Aa
+              *(++out_p) = 0xd2;    // Sara-Aa
             }
         }
-      else if ((idxNormal = idxVowelToneMark (*input)) < 12)
+      else if ((idxNormal = idxTopMark (*input)) != -1)
         {
           if (cntChar > 1)
             {
               if (isThaiLongTailChar (input[-1]))
                 {
-                  // Long Tail Char + Vowel or Tonemarks.
-                  *out_p = winCharSet ? WinOffsetLeft[idxNormal]
-                                      : MacOffsetLeft[idxNormal];
+                  // long tail + tone mark
+                  *out_p = winCharSet ? WinTopMarksLowLeft[idxNormal]
+                                      : MacTopMarksLowLeft[idxNormal];
                 }
-              else if (idxVowelToneMark (input[-1]) < 12)
+              else if (idxAboveMark (input[-1]) != -1)
                 {
-                  //char + Vowel + Tone Mark
+                  // character + upper vowel + tone mark
                   if (cntChar > 2)
                     {
                       if (isThaiLongTailChar (input[-2]))
                         {
-                          //Long Tail Char + Vowel + Tone Mark
-                          *out_p = winCharSet ? WinOffsetLeftHigh[idxNormal]
-                                              : MacOffsetLeftHigh[idxNormal];
+                          // long tail + upper vowel + tone mark
+                          *out_p = winCharSet ? WinTopMarksLeft[idxNormal]
+                                              : MacTopMarksLeft[idxNormal];
                         }
                     }
                 }
               else
                 {
-                  //Normal Char + Tone Mark
-                  if ((idxNormal < 5) && (input[1] != 211))
+                  // character + tone mark
+                  if (input[1] != 0xd3)
                     {
-                      *out_p = winCharSet ? WinOffsetNormal[idxNormal]
-                                          : MacOffsetNormal[idxNormal];
+                      *out_p = winCharSet ? WinTopMarksLow[idxNormal]
+                                          : MacTopMarksLow[idxNormal];
                     }
                 }
             }
         }
-      else if ((*input == 216) || (*input == 217))
-        {                       //Sara-Ui. Sara-U
+      else if ((idxNormal = idxAboveMark (*input)) != -1)
+        {
+          if (cntChar > 1)
+            {
+              if (isThaiLongTailChar (input[-1]))
+                {
+                  // long tail + upper vowel
+                  *out_p = winCharSet ? WinAboveMarksLeft[idxNormal]
+                                      : MacAboveMarksLeft[idxNormal];
+                }
+            }
+        }
+      else if ((idxNormal = idxBelowMark (*input)) != -1)
+        {
           if (cntChar > 1)
             {
               switch (input[-1])
                 {
-                case 173:      //YoYing
-                  out_p[-1] = 144;
+                case 0xad:      // Yo Ying
+                  out_p[-1] = 0x90;
                   break;
-                case 174:      //DoChaDa
-                  *out_p = 252;
+                case 0xae:      // Do Chada
+                case 0xaf:      // To Patak
+                  *out_p = winCharSet ? WinBelowMarksLow[idxNormal]
+                                      : MacBelowMarksLow[idxNormal];
                   break;
-                case 175:      // ToPaTak
-                  *out_p = 253;
+                case 0xb0:      // Tho Than
+                  out_p[-1] = winCharSet ? 0x80 : 0x9f;
                   break;
-                case 176:      //ThoThan
-                  out_p[-1] = winCharSet ? 128 : 159;
                 }
             }
         }
