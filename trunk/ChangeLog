@@ -1,5 +1,11 @@
 2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Get rid of "chgchar" var by just writing output first and
+	    overwriting it later.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex::AdjustText):
 	  - Add "output_sz" arg and check to prevent buffer overflow.
 	  - Also return total written bytes for caller to check.

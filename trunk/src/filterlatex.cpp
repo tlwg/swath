@@ -177,13 +177,13 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
 {
   int idxNormal;
   int cntChar = 1;
-  bool chgchar = false;
   unsigned char* out_p = output;
 
   while (*input != 0 && out_p - output < output_sz)
     {
+      *out_p = *input;
+
       //Sara-Amm must split to Sara-Arr + NiKhaHit(circle)
-      chgchar = false;
       if (*input == 211)
         {
           if (cntChar > 1)
@@ -222,7 +222,6 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
               *out_p = 237;
             }
           *(++out_p) = 210;    //Sara-Aa
-          chgchar = true;
         }
       else if ((idxNormal = idxVowelToneMark (*input)) < 12)
         {
@@ -233,7 +232,6 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
                   // Long Tail Char + Vowel or Tonemarks.
                   *out_p = winCharSet ? WinOffsetLeft[idxNormal]
                                       : MacOffsetLeft[idxNormal];
-                  chgchar = true;
                 }
               else if (idxVowelToneMark (input[-1]) < 12)
                 {
@@ -245,7 +243,6 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
                           //Long Tail Char + Vowel + Tone Mark
                           *out_p = winCharSet ? WinOffsetLeftHigh[idxNormal]
                                               : MacOffsetLeftHigh[idxNormal];
-                          chgchar = true;
                         }
                     }
                 }
@@ -256,7 +253,6 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
                     {
                       *out_p = winCharSet ? WinOffsetNormal[idxNormal]
                                           : MacOffsetNormal[idxNormal];
-                      chgchar = true;
                     }
                 }
             }
@@ -271,21 +267,15 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
                   out_p[-1] = 144;
                   break;
                 case 174:      //DoChaDa
-                  chgchar = true;
                   *out_p = 252;
                   break;
                 case 175:      // ToPaTak
-                  chgchar = true;
                   *out_p = 253;
                   break;
                 case 176:      //ThoThan
                   out_p[-1] = winCharSet ? 128 : 159;
                 }
             }
-        }
-      if (!chgchar)
-        {
-          *out_p = *input;
         }
       out_p++;
       input++;
