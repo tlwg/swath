@@ -22,7 +22,8 @@ public:
   void Print (char* token, bool thaiFlag);
 
 private:
-  void AdjustText (unsigned char* input, unsigned char* output);
+  int AdjustText (const unsigned char* input, unsigned char* output,
+                  int output_sz);
 
 private:
   bool winCharSet;  // true for Windows char set; false for Mac char set

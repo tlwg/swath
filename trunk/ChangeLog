@@ -1,5 +1,13 @@
 2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Add "output_sz" arg and check to prevent buffer overflow.
+	  - Also return total written bytes for caller to check.
+	* src/filterlatex.cpp (FilterLatex::Print):
+	  - Adjust call accordingly.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.cpp (FilterLatex::AdjustText):
 	  - Drop unnecessary vars "tmpInput" and "tmpOutput".
 

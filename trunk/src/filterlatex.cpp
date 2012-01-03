@@ -160,8 +160,8 @@ FilterLatex::Print (char* token, bool thaiFlag)
 {
   if (thaiFlag && latexFlag != 0)
     {
-      char output[2000];
-      AdjustText ((unsigned char*) token, (unsigned char*) output);
+      unsigned char output[2000];
+      AdjustText ((unsigned char*) token, output, sizeof output);
       fprintf (fpout, "%s", output);
     }
   else
@@ -171,14 +171,16 @@ FilterLatex::Print (char* token, bool thaiFlag)
   fflush (fpout);
 }
 
-void
-FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
+int
+FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
+                         int output_sz)
 {
   int idxNormal;
   int cntChar = 1;
   bool chgchar = false;
+  unsigned char* out_p = output;
 
-  while (*input != 0)
+  while (*input != 0 && out_p - output < output_sz)
     {
       //Sara-Amm must split to Sara-Arr + NiKhaHit(circle)
       chgchar = false;
@@ -189,7 +191,7 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
               //case Long Tail+Sara-Am
               if (isThaiLongTailChar (input[-1]))
                 {
-                  *output = (winCharSet == true) ? 153 : 143;     //offset left
+                  *out_p = (winCharSet == true) ? 153 : 143;     //offset left
                 }
               else if ((idxNormal = idxVowelToneMark (input[-1])) < 12)
                 {
@@ -199,27 +201,27 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
                       if (isThaiLongTailChar (input[-2]))
                         {
                           //offset left
-                          *output = winCharSet ? WinOffsetLeftHigh[idxNormal]
-                                               : MacOffsetLeftHigh[idxNormal];
-                          output[-1] = winCharSet ? 153 : 143;
+                          *out_p = winCharSet ? WinOffsetLeftHigh[idxNormal]
+                                              : MacOffsetLeftHigh[idxNormal];
+                          out_p[-1] = winCharSet ? 153 : 143;
                         }
                       else
                         {
-                          *output = input[-1];
-                          output[-1] = 237;
+                          *out_p = input[-1];
+                          out_p[-1] = 237;
                         }
                     }
                 }
               else
                 {
-                  *output = 237;
+                  *out_p = 237;
                 }
             }
           else
             {
-              *output = 237;
+              *out_p = 237;
             }
-          *(++output) = 210;    //Sara-Aa
+          *(++out_p) = 210;    //Sara-Aa
           chgchar = true;
         }
       else if ((idxNormal = idxVowelToneMark (*input)) < 12)
@@ -229,8 +231,8 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
               if (isThaiLongTailChar (input[-1]))
                 {
                   // Long Tail Char + Vowel or Tonemarks.
-                  *output = winCharSet ? WinOffsetLeft[idxNormal]
-                                       : MacOffsetLeft[idxNormal];
+                  *out_p = winCharSet ? WinOffsetLeft[idxNormal]
+                                      : MacOffsetLeft[idxNormal];
                   chgchar = true;
                 }
               else if (idxVowelToneMark (input[-1]) < 12)
@@ -241,8 +243,8 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
                       if (isThaiLongTailChar (input[-2]))
                         {
                           //Long Tail Char + Vowel + Tone Mark
-                          *output = winCharSet ? WinOffsetLeftHigh[idxNormal]
-                                               : MacOffsetLeftHigh[idxNormal];
+                          *out_p = winCharSet ? WinOffsetLeftHigh[idxNormal]
+                                              : MacOffsetLeftHigh[idxNormal];
                           chgchar = true;
                         }
                     }
@@ -252,8 +254,8 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
                   //Normal Char + Tone Mark
                   if ((idxNormal < 5) && (input[1] != 211))
                     {
-                      *output = winCharSet ? WinOffsetNormal[idxNormal]
-                                           : MacOffsetNormal[idxNormal];
+                      *out_p = winCharSet ? WinOffsetNormal[idxNormal]
+                                          : MacOffsetNormal[idxNormal];
                       chgchar = true;
                     }
                 }
@@ -266,29 +268,31 @@ FilterLatex::AdjustText (unsigned char* input, unsigned char* output)
               switch (input[-1])
                 {
                 case 173:      //YoYing
-                  output[-1] = 144;
+                  out_p[-1] = 144;
                   break;
                 case 174:      //DoChaDa
                   chgchar = true;
-                  *output = 252;
+                  *out_p = 252;
                   break;
                 case 175:      // ToPaTak
                   chgchar = true;
-                  *output = 253;
+                  *out_p = 253;
                   break;
                 case 176:      //ThoThan
-                  output[-1] = winCharSet ? 128 : 159;
+                  out_p[-1] = winCharSet ? 128 : 159;
                 }
             }
         }
       if (!chgchar)
         {
-          *output = *input;
+          *out_p = *input;
         }
-      output++;
+      out_p++;
       input++;
       cntChar++;
     }
-  *output = 0;
+  *out_p = 0;
+
+  return out_p - output;
 }
 
