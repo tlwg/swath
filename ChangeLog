@@ -1,5 +1,19 @@
 2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/filterlatex.cpp (static data, idxVowelToneMark):
+	  - Move static data definitions to near FilterLatex::AdjustText().
+	  - Rearrange the data so that 3 sets of characters are handled
+	    separately (top marks, above marks, below marks).
+	  - Split idxVowelToneMark() into idxTopMark(), idxAboveMark() and
+	    idxBelowMark(); make them return -1 on failure, for easy data
+	    management.
+	  - Replace all 8-bit codes with hex.
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Call the classifiers and use the data under new convention.
+	  - Fix bug for the case of below vowels under Do Chada, To Patak.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterlatex.cpp (FilterLatex::AdjustText):
 	  - Guard against buffer overflow on extra char (Sara-Aa).
 	  - Change boundary checking condition, to improve the chance of
