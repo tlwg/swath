@@ -179,7 +179,7 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
   int cntChar = 1;
   unsigned char* out_p = output;
 
-  while (*input != 0 && out_p - output < output_sz)
+  while (*input != 0 && out_p < output + output_sz)
     {
       *out_p = *input;
 
@@ -221,7 +221,11 @@ FilterLatex::AdjustText (const unsigned char* input, unsigned char* output,
             {
               *out_p = 237;
             }
-          *(++out_p) = 210;    //Sara-Aa
+
+          if (out_p < output + output_sz)
+            {
+              *(++out_p) = 210;    //Sara-Aa
+            }
         }
       else if ((idxNormal = idxVowelToneMark (*input)) < 12)
         {

@@ -1,6 +1,13 @@
 2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Guard against buffer overflow on extra char (Sara-Aa).
+	  - Change boundary checking condition, to improve the chance of
+	    optimization.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
 	  - Get rid of "chgchar" var by just writing output first and
 	    overwriting it later.
 
