@@ -16,31 +16,25 @@ MaxWordSeg::MaxWordSeg ()
 {
 }
 
+// Return number of ambiguous areas.
 int
-MaxWordSeg::CreateSentence ()   //return number of ambiguous area.
+MaxWordSeg::CreateSentence ()
 {
-  int sepIdx;
-  int cntArea = 1;
-  int stAmb, enAmb, stWord;
-  int i, idxSen;
-  bool singleWord;
-
-  sepIdx = 0;
-  stAmb = 0;
+  int stWord, enAmb;
   if (IdxSep[0] >= 0)
     {
-      enAmb = LinkSep[IdxSep[0]];
       stWord = 1;
+      enAmb = LinkSep[IdxSep[0]];
     }
   else
     {
+      int i;
       for (i = 1; i < len && IdxSep[i] < 0; i++)
         ;
 
       if (i == len)
         {
-          stWord = i;
-          enAmb = len;
+          stWord = enAmb = len;
         }
       else
         {
@@ -48,9 +42,12 @@ MaxWordSeg::CreateSentence ()   //return number of ambiguous area.
           enAmb = LinkSep[IdxSep[stWord]];
         }
     }
+
+  int sepIdx = 0;
+  int stAmb = 0;
   while (enAmb <= len)
     {
-      singleWord = true;
+      bool singleWord = true;
       for (; stWord < enAmb && stWord < len; stWord++)
         {
           if (IdxSep[stWord] < 0)
@@ -74,7 +71,7 @@ MaxWordSeg::CreateSentence ()   //return number of ambiguous area.
         }
       else
         {
-          idxSen = WordSegArea (stAmb, enAmb);
+          int idxSen = WordSegArea (stAmb, enAmb);
           sepIdx = saveSegment (sepIdx, idxSen, enAmb);
         }
       stAmb = enAmb;
