@@ -105,15 +105,16 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
 {
   WordStack BackTrackStack;
 
-  short int senIdx = 0, bestSenIdx = 0, prevSenIdx = 0, tmps;   //tmps save score.
+  short int senIdx = 0, bestSenIdx = 0, prevSenIdx = 0;
   short int sepIdx = 0, Idx = 0, tmpidx;
   short int nextSepIdx = 0, curState;
   short int scoreidx;
   wordState wState;
-  short int bestScore = 0;
+  int bestScore = 0;
+  int tmps;
   bool foundUnk;
   bool stopCreate;
-  short int score[MAXSEP];
+  int score[MAXSEP];
 
   // ========================================
   // this loop gets the first sentence
@@ -136,7 +137,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
               BackTrackStack.Push (wState);
             }
           SepData[senIdx].Sep[sepIdx++] = LinkSep[IdxSep[Idx]];
-          tmps = (short int) ++SepData[senIdx].Score;
+          tmps = ++SepData[senIdx].Score;
           score[++scoreidx] = tmps;
           Idx = LinkSep[IdxSep[Idx]];
         }
@@ -147,11 +148,11 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
             Idx++;
           SepData[senIdx].Sep[sepIdx++] = Idx;
           SepData[senIdx].Score += 5;
-          score[++scoreidx] = (short int) SepData[senIdx].Score;
+          score[++scoreidx] = SepData[senIdx].Score;
         }
     }
   SepData[senIdx].Sep[sepIdx] = -1;
-  bestScore = (short int) SepData[senIdx].Score;
+  bestScore = SepData[senIdx].Score;
   bestSenIdx = senIdx++;
   //================================================
   //create all posible sentences
@@ -184,7 +185,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
             {                   //found unknown string.
               SepData[senIdx].Sep[nextSepIdx++] = curState;
               SepData[senIdx].Score++;
-              score[++scoreidx] = (short int) SepData[senIdx].Score;
+              score[++scoreidx] = SepData[senIdx].Score;
               while (curState < enSeg && IdxSep[curState] < 0)
                 curState++;
               foundUnk = true;
@@ -207,7 +208,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
             }
           else
             SepData[senIdx].Score++;
-          score[++scoreidx] = (short int) SepData[senIdx].Score;
+          score[++scoreidx] = SepData[senIdx].Score;
           if (SepData[senIdx].Score >= bestScore - 1)
             {
               prevSenIdx = senIdx;
@@ -224,7 +225,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
       prevSenIdx = senIdx;
       if (SepData[senIdx].Score < bestScore)
         {
-          bestScore = (short int) SepData[senIdx].Score;
+          bestScore = SepData[senIdx].Score;
           tmpidx = bestSenIdx;
           bestSenIdx = senIdx;
           senIdx = tmpidx;
