@@ -1,3 +1,10 @@
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
+	  - Declare vars where they are used.
+	  - Drop unused var "cntArea".
+	  - Rearrange source.
+
 2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/filterlatex.cpp (FilterLatex::AdjustText):
