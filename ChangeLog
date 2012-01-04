@@ -1,5 +1,15 @@
 2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Declare vars where they are used.
+	  - "Idx" var type from short int to int, to match function args it
+	    keeps up with.
+	  - First "wState" use is temporary, replaced with intermediate object.
+	  - "tmps" var eliminated, replaced with immediate assignment.
+	  - Merge "looptime" break into while-loop condition.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Change MaxWordSeg SepType::Score type from float to int.
 
 	All calculations are already in int, and the casts are just

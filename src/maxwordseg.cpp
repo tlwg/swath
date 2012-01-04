@@ -106,21 +106,16 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
   WordStack BackTrackStack;
 
   short int senIdx = 0, bestSenIdx = 0, prevSenIdx = 0;
-  short int sepIdx = 0, Idx = 0, tmpidx;
-  short int nextSepIdx = 0, curState;
+  short int sepIdx = 0;
   short int scoreidx;
-  wordState wState;
   int bestScore = 0;
-  int tmps;
-  bool foundUnk;
-  bool stopCreate;
   int score[MAXSEP];
 
   // ========================================
   // this loop gets the first sentence
   //      and Create Backtrack point.....
   // ========================================
-  Idx = stSeg;
+  int Idx = stSeg;
 
   scoreidx = -1;
   SepData[0].Score = 10000;
@@ -132,13 +127,10 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
         {
           if (LinkSep[IdxSep[Idx] + 1] != -1)
             {
-              wState.backState = Idx;
-              wState.branchState = 0;
-              BackTrackStack.Push (wState);
+              BackTrackStack.Push (wordState (Idx, 0));
             }
           SepData[senIdx].Sep[sepIdx++] = LinkSep[IdxSep[Idx]];
-          tmps = ++SepData[senIdx].Score;
-          score[++scoreidx] = tmps;
+          score[++scoreidx] = ++SepData[senIdx].Score;
           Idx = LinkSep[IdxSep[Idx]];
         }
       else
@@ -159,14 +151,11 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
   //using backtrack (use my stack not use recursive)
   //================================================
   int looptime = 0;
-  while (!BackTrackStack.Empty ())
+  while (!BackTrackStack.Empty () && looptime++ <= 200)
     {
-//      printf("loop times :%d\n",++looptime);
-      if (looptime++ > 200)
-        break;
-      stopCreate = false;
-      wState = BackTrackStack.Top ();
-      curState = wState.backState;      //curState store the nth of character 
+      bool stopCreate = false;
+      wordState wState = BackTrackStack.Top ();
+      int curState = wState.backState;   //curState store the nth of character 
       BackTrackStack.Pop ();
       wState.branchState++;
       if ((curState = LinkSep[IdxSep[curState] + wState.branchState]) == -1)
@@ -174,10 +163,12 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
       BackTrackStack.Push (wState);
       //create new sentence from prev sentence and save score to new sen.
       //change 1st parameter of copySepData from bestSenIdx to prevSenIdx
-      nextSepIdx = copySepData (prevSenIdx, senIdx, wState.backState);
+      short int nextSepIdx = copySepData (prevSenIdx, senIdx, wState.backState);
       scoreidx = nextSepIdx - 1;
       SepData[senIdx].Score = (scoreidx < 0) ? 10000 : score[scoreidx];
+
       //loop for filling the rest sep point of new sentence
+      bool foundUnk;
       while (curState != enSeg)
         {
           foundUnk = false;
@@ -226,7 +217,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
       if (SepData[senIdx].Score < bestScore)
         {
           bestScore = SepData[senIdx].Score;
-          tmpidx = bestSenIdx;
+          short int tmpidx = bestSenIdx;
           bestSenIdx = senIdx;
           senIdx = tmpidx;
         }
