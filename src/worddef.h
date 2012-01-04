@@ -37,7 +37,7 @@ typedef struct CDAreaDef
 
 typedef struct SepTypeDef
 {
-  float Score;
+  int Score;
   short int Sep[MAXSEP];
 } SepType;
 

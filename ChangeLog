@@ -1,5 +1,19 @@
 2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Change MaxWordSeg SepType::Score type from float to int.
+
+	All calculations are already in int, and the casts are just
+	unnecessary, and indicates that "float" is never intended.
+	Change short int to int to be more machine-native.
+
+	* src/worddef.h:
+	  - Change SepType::Score type to int.
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Change types of "bestScore", "tmps", "score[]" to int.
+	  - Drop all (short int) type casts.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
 	  - Declare vars where they are used.
 	  - Drop unused var "cntArea".
