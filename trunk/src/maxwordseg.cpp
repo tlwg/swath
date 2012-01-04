@@ -189,9 +189,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
             {
               //having another branch
               //then it should push backtrack state into Stack.
-              wState.backState = curState;
-              wState.branchState = 0;
-              BackTrackStack.Push (wState);
+              BackTrackStack.Push (wordState (curState, 0));
             }
           SepData[senIdx].Sep[nextSepIdx++] = curState;
           if (foundUnk)

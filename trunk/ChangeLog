@@ -1,6 +1,12 @@
 2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - The last "wState" use is also temporary, replaced with
+	    intermediate object.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
 	  - Split out the assignment in if-condition.
 	  - Delay the "curState" declaration and merge the steps.
 
