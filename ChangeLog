@@ -1,6 +1,12 @@
 2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Split out the assignment in if-condition.
+	  - Delay the "curState" declaration and merge the steps.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
 	  - Declare vars where they are used.
 	  - "Idx" var type from short int to int, to match function args it
 	    keeps up with.
