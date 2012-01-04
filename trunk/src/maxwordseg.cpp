@@ -155,11 +155,13 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
     {
       bool stopCreate = false;
       wordState wState = BackTrackStack.Top ();
-      int curState = wState.backState;   //curState store the nth of character 
       BackTrackStack.Pop ();
+
       wState.branchState++;
-      if ((curState = LinkSep[IdxSep[curState] + wState.branchState]) == -1)
+      int curState = LinkSep[IdxSep[wState.backState] + wState.branchState];
+      if (curState == -1)
         continue;
+
       BackTrackStack.Push (wState);
       //create new sentence from prev sentence and save score to new sen.
       //change 1st parameter of copySepData from bestSenIdx to prevSenIdx
