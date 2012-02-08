@@ -1,5 +1,10 @@
 2012-02-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* configure.in, NEWS:
+	=== Version 0.4.2 ===
+
+2012-02-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* src/filterrtf.cpp (FilterRTF::GetNextToken):
 	  - Fix GCC warnings on sscanf format strings.
 
