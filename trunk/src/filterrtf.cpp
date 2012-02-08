@@ -21,7 +21,7 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
 {
   char* sttoken;
   char* tmp;
-  int nextState, i = 0, c;
+  int nextState, c;
 
   //sequence of characters is    \ ' x x (one character for Thai char)
   *token = '\0';
@@ -31,7 +31,8 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
     return false;
   if (strbuff[0] == '\0')
     {
-      do
+      int i;
+      for (i = 0; i < 4; i++)
         {
           c = fgetc (fpin);
           if (c == EOF)
@@ -41,21 +42,19 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
               token = sttoken;
               return false;
             }
-          *token = c;
-          nextState = chgCharState (*(token++), psState);
+          *token++ = c;
+          nextState = chgCharState (c, psState);
           if (nextState <= psState)
             break;
           psState = nextState;
-          i++;
         }
-      while (i < 4);
       *thaiFlag = (i == 4);
       if (*thaiFlag)
         {
           *token = 0;
-          tmp = &token[-2];
-          sscanf (tmp, "%x", &token[-4]);
-          token = &token[-3];
+          sscanf (token - 2, "%x", &c);
+          token[-4] = (char) c;
+          token -= 3;
         }
     }
   else
@@ -98,8 +97,8 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
       if (nextState == 4)
         {
           psState = 4;
-          tmp = &token[-2];
-          sscanf (tmp, "%x", strbuff);
+          sscanf (token - 2, "%x", &c);
+          strbuff[0] = (char) c;
           token[-4] = 0;
         }
       else
@@ -120,9 +119,9 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
           if (psState == 4)
             {
               *token = 0;
-              tmp = &token[-2];
-              sscanf (tmp, "%x", &token[-4]);
-              token = &token[-3];
+              sscanf (token - 2, "%x", &c);
+              token[-4] = c;
+              token -= 3;
             }
           c = fgetc (fpin);
           if (c == EOF)
