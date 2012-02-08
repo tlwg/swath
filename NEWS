@@ -1,3 +1,9 @@
+0.4.2 (2012-02-08)
+=====
+- Fix wrong word break within punctuation sequences like LaTeX `` and ''.
+- Reformat source for readability.
+- Significant source clean-ups.
+
 0.4.1 (2011-03-20)
 =====
 - Fixed bugs which caused wrong word break before PHINTHU, NIKHAHIT, YAMAKKAN
