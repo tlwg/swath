@@ -1,3 +1,8 @@
+2012-02-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Fix GCC warnings on sscanf format strings.
+
 2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
