@@ -1,5 +1,9 @@
 2012-03-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* data/Makefile.am, data/swathdic.lst: Convert word list to UTF-8.
+
+2012-03-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* configure.in: Post-release version suffix added.
 
 2012-02-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
