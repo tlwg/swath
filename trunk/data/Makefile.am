@@ -1,10 +1,26 @@
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
-CLEANFILES = swathdic.tri
+CLEANFILES = swathdic.lst swathdic.tri
+
+DICT_SRC =  \
+	tdict-city.txt \
+	tdict-collection.txt \
+	tdict-common.txt \
+	tdict-country.txt \
+	tdict-district.txt \
+	tdict-geo.txt \
+	tdict-history.txt \
+	tdict-ict.txt \
+	tdict-lang-ethnic.txt \
+	tdict-proper.txt \
+	tdict-science.txt \
+	tdict-spell.txt \
+	tdict-std-compound.txt \
+	tdict-std.txt
 
 EXTRA_DIST = \
 	update-dict.sh \
 	swathdic.abm \
-	swathdic.lst
+	$(DICT_SRC)
 
 if ENABLE_DICT
 pkgdata_DATA = \
@@ -12,6 +28,9 @@ pkgdata_DATA = \
 else
 pkgdata_DATA =
 endif
+
+swathdic.lst: ${DICT_SRC}
+	cat $^ | LC_ALL=C sort -u > $@
 
 swathdic.tri: swathdic.lst
 	if test ! -e swathdic.abm; then \

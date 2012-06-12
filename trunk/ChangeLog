@@ -1,5 +1,15 @@
 2012-06-12  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* data/Makefile.am, +data/tdict-*.txt:
+	  - Add dictionary source from dehyphenated text of thailatex
+	    hyphenation dictionary source.
+
+	* data/Makefile.am, -data/swathdic.lst:
+	  - Drop old dictionary source.
+	  - Build the dictionary source by catenating dict files.
+
+2012-06-12  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* data/Makefile.am, +data/update-dict.sh:
 	  - Add script for updating dictionary from thailatex hyphenation
 	    source.
