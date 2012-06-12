@@ -1,3 +1,9 @@
+2012-06-12  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am, +data/update-dict.sh:
+	  - Add script for updating dictionary from thailatex hyphenation
+	    source.
+
 2012-03-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* data/Makefile.am, data/swathdic.lst: Convert word list to UTF-8.

@@ -2,6 +2,7 @@ MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 CLEANFILES = swathdic.tri
 
 EXTRA_DIST = \
+	update-dict.sh \
 	swathdic.abm \
 	swathdic.lst
 
