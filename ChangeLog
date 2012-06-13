@@ -1,3 +1,7 @@
+2012-06-13  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* AUTHORS: Add info for word list source.
+
 2012-06-12  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* data/Makefile.am, +data/tdict-*.txt:
