@@ -1,3 +1,8 @@
+0.4.3 (2012-06-13)
+=====
+- Replace word break dictionary with the word lists used to prepare
+  hyphenation patterns for the upcoming ThaiLaTeX, for best results.
+
 0.4.2 (2012-02-08)
 =====
 - Fix wrong word break within punctuation sequences like LaTeX `` and ''.
