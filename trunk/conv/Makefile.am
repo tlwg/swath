@@ -13,7 +13,6 @@ noinst_LTLIBRARIES = libconv.la
 libconv_la_SOURCES = \
 	conv.cxx \
 	convfact.cxx \
-	convkit.cxx \
 	tis620.cxx \
 	utf8.cxx
 

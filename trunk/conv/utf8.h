@@ -12,22 +12,18 @@
 
 class UTF8Reader : public TextReader {
 public:
-    UTF8Reader(FILE* input) : input(input) {}
+    UTF8Reader(const char* inText)
+        : TextReader (inText) {}
 
     bool Read(unichar& c);
-
-private:
-    FILE* input;
 };
 
 class UTF8Writer : public TextWriter {
 public:
-    UTF8Writer(FILE* output) : output(output) {}
+    UTF8Writer(char* outText, int outLen)
+        : TextWriter (outText, outLen) {}
 
     bool Write(unichar c);
-
-private:
-    FILE* output;
 };
 
 #endif  // UTF8_INC

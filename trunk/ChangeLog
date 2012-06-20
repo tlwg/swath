@@ -1,3 +1,21 @@
+2012-04-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	== Begin of spontaneous conversion branch ==
+	Adjust convkit API for in-memory conversion.
+
+	* conv/conv.h, conv/conv.cxx:
+	 - Change conv() API to accept in-memory storage.
+	* conv/Makefile.am, -conv/convkit.cxx:
+	 - Move TransferText() code into conv() and remove the function.
+	* conv/convkit.h:
+	 - Make TextReader & TextWriter include internal text buffer
+	   and pointer.
+	 - Add getChar(), writeChar(), spaceLeft() methods.
+	* conv/tis620.h, conv/tis620.cxx, conv/utf8.h, conv/utf8.cxx:
+	 - Adjust concrete classes according to the newer base classes.
+	* conv/convfact.h, conv/convfact.cxx:
+	 - Adjust the factories according to the newer classes.
+
 2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	* configure.in: Post-release version suffix added.
