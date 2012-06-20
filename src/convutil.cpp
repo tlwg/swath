@@ -20,6 +20,38 @@ ConvGetS (char* buffer, int buffSz, FILE* fpin, bool isUniIn)
 }
 
 int
+ConvGetC (FILE* fpin, bool isUniIn)
+{
+  if (!isUniIn)
+    return fgetc (fpin);
+
+  int c = fgetc (fpin);
+  if (EOF == c)
+    return EOF;
+
+  if (0 == (c & 0x80))
+    return c;
+
+  char uniBuff[10];
+  uniBuff[0] = char (c);
+  int  len = 1;
+  for (c <<= 1; c & 0x80; c <<= 1)
+    {
+      int inp = fgetc (fpin);
+      if (EOF == inp)
+        return EOF;
+      uniBuff[len++] = char (inp);
+    }
+  uniBuff[len] = '\0';
+
+  char buffer[2];
+  if (conv ('u', 't', uniBuff, buffer, sizeof buffer) != 0)
+    return EOF;
+
+  return buffer[0];
+}
+
+int
 ConvCopy (char *dst, int dstSz, const char* tisSrc, bool isUniOut)
 {
   int copyLen = 0;
