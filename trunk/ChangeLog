@@ -1,5 +1,41 @@
 2012-05-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Only convert output text, not the wbr string.
+
+	Let's move the output sentence creation into WordSegmentation().
+	This means Unicode moving conversion from main() (upper layer),
+	and wbr insertion from AbsWordSeg::WordSeg() (lower layer).
+
+	* src/wordseg.cpp (WordSegmentation):
+	  - Add isUniOut parameter.
+	  - Also add outputSz to guard against buffer overflow.
+	  - Assuming AbsWordSeg::WordSeg() returns sep points array,
+	    alternately do text conversion and inserting wbr at the sep points.
+	* src/wordseg.cpp (UCopy):
+	  - Add the utility function for copying text with conditional
+	    conversion.
+	* src/wordseg.cpp (main):
+	  - Add "isUniOut" and "sizeof output" args to all WordSegmentation()
+	    calls.
+	  - Replace all UPrint() calls with plain printf(), as no more
+	    conversion is needed at this layer.
+	  - Adjust loop condition a little bit.
+	* src/wordseg.cpp (UPrint):
+	  - Drop the now-unused utility function.
+	* src/abswordseg.h, src/abswordseg.cpp (WordSeg):
+	  - Redefine WordSeg() method to accept outSeps[] array, with size,
+	    and return the total members filled.
+	* src/abswordseg.h, src/abswordseg.cpp (GetBestSen):
+	  - Simply copy the SepData[bestidx] to outSeps[] array, instead of
+	    copying the original text and inserting wbr.
+	* src/abswordseg.h, src/abswordseg.cpp (GetWord):
+	  - Drop the now-unused method.
+	* src/abswordseg.h (SwapLinkSep, GetBestSen, CreateWordList,
+	  copySepData):
+	  - Make methods non-virtual, no need.
+
+2012-05-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Null-terminate conversion output string.
 
 	* conv/conv.cxx (conv): Write '\0' to terminate output string.

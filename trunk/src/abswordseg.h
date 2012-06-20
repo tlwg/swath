@@ -19,18 +19,17 @@ public:
   virtual ~AbsWordSeg ();
 
   bool InitDict (const char* dictPath);
-  bool WordSeg (char* senstr, char* output, const char* wbr);
+  int WordSeg (const char* senstr, short int* outSeps, int outSepsSz);
 
 protected:
   //============Function for Wordseg=====================
-  virtual void SwapLinkSep ();
-  virtual void GetBestSen (int bestidx, const char* wbr, char* outstr);
-  virtual void CreateWordList (void);
+  void SwapLinkSep ();
+  int GetBestSen (int bestidx, short int* outSeps, int outSepsSz);
+  void CreateWordList (void);
   virtual int CreateSentence () = 0;    //return idx of best sen
-  virtual unsigned short int copySepData (short int sourceIdxSen,
-                                          short int targetIdxSen,
-                                          short int sepPoint);
-  void GetWord (short int idxsen, short int idx, char* buff);
+  unsigned short int copySepData (short int sourceIdxSen,
+                                  short int targetIdxSen,
+                                  short int sepPoint);
 
 protected:
   SepType SepData[3];

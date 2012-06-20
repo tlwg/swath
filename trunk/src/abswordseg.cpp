@@ -239,8 +239,8 @@ AbsWordSeg::Has_Karun (const char* sen_ptr, short int* k_idx)
   return false;
 }
 
-bool
-AbsWordSeg::WordSeg (char* senstr, char* output, const char* wbr)
+int
+AbsWordSeg::WordSeg (const char* senstr, short int* outSeps, int outSepsSz)
 {
   int bestidx;
 
@@ -250,9 +250,7 @@ AbsWordSeg::WordSeg (char* senstr, char* output, const char* wbr)
   CreateWordList ();
   SwapLinkSep ();
   bestidx = CreateSentence ();
-  GetBestSen (bestidx, wbr, output);
-
-  return 0;
+  return GetBestSen (bestidx, outSeps, outSepsSz);
 }
 
 void
@@ -281,24 +279,6 @@ AbsWordSeg::SwapLinkSep ()
         }
       st_idx = end_point + 1;
       en_idx = st_idx;
-    }
-}
-
-void
-AbsWordSeg::GetWord (short int idxsen, short int idx, char* buff)
-{
-  char* sen_ptr;
-  sen_ptr = sen;
-  if (idx > 0)
-    {
-      strncpy (buff, sen_ptr + SepData[idxsen].Sep[idx - 1],
-               SepData[idxsen].Sep[idx] - SepData[idxsen].Sep[idx - 1]);
-      buff[SepData[idxsen].Sep[idx] - SepData[idxsen].Sep[idx - 1]] = '\0';
-    }
-  else
-    {
-      strncpy (buff, sen_ptr, SepData[idxsen].Sep[0]);
-      buff[SepData[idxsen].Sep[0]] = '\0';
     }
 }
 
@@ -346,19 +326,15 @@ AbsWordSeg::copySepData (short int sourceIdxSen, short int targetIdxSen,
   return i;
 }
 
-void
-AbsWordSeg::GetBestSen (int bestidx, const char* wbr, char* outstr)
+int
+AbsWordSeg::GetBestSen (int bestidx, short int* outSeps, int outSepsSz)
 {
   int t;
-  char buff[2000];
 
-  *outstr = '\0';
-  for (t = 0; SepData[bestidx].Sep[t] != len; t++)
+  for (t = 0; SepData[bestidx].Sep[t] != len && t < outSepsSz; t++)
     {
-      GetWord (bestidx, t, buff);
-      strcat (outstr, buff);
-      strcat (outstr, wbr);
+      outSeps[t] = SepData[bestidx].Sep[t];
     }
-  GetWord (bestidx, t, buff);
-  strcat (outstr, buff);
+
+  return t;
 }
