@@ -6,6 +6,7 @@
 #include <ctype.h>
 #include "filterhtml.h"
 #include "worddef.h"
+#include "convutil.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -26,7 +27,7 @@ FilterHtml::GetNextToken (char* token, bool* thaiFlag)
     return false;
   sttoken = token;
   if (chbuff == 0)
-    *token = (char) fgetc (fpin);
+    *token = (char) ConvGetC (fpin, isUniIn);
   else
     {
       *token = chbuff;
@@ -36,7 +37,7 @@ FilterHtml::GetNextToken (char* token, bool* thaiFlag)
   //find a token that containing only Thai characters or Eng+space characters
   while (feof (fpin) == 0)
     {
-      token[1] = (char) fgetc (fpin);
+      token[1] = (char) ConvGetC (fpin, isUniIn);
       if (((token[0] ^ token[1]) & 0x80)
           || isspace ((int) token[1]) || token[1] == '.')
         {
@@ -46,7 +47,7 @@ FilterHtml::GetNextToken (char* token, bool* thaiFlag)
                 {
                   if (feof (fpin) != 0)
                     break;
-                  chbuff = (char) fgetc (fpin);
+                  chbuff = (char) ConvGetC (fpin, isUniIn);
                   if (chbuff & 0x80)
                     {
                       token[1] = chbuff;

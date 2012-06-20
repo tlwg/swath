@@ -8,6 +8,7 @@
 #include <stdio.h>
 
 bool ConvGetS (char* buffer, int buffSz, FILE* fpin, bool isUniIn);
+int  ConvGetC (FILE* fpin, bool isUniIn);
 
 int  ConvCopy (char *dst, int dstSz, const char* tisSrc, bool isUniOut);
 
