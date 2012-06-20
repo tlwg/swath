@@ -182,8 +182,6 @@ Usage (int verbose)
 #endif
 //#define WORDSEGDATA_DIR "./data"
 
-#define MAXCHAR 2000
-
 int
 main (int argc, char* argv[])
 {
@@ -260,7 +258,7 @@ main (int argc, char* argv[])
 
   AbsWordSeg* wseg;
 
-  char line[MAXCHAR + 1], output[MAXCHAR * 2 + 1];
+  char line[MAXLEN + 1], output[MAXLEN * 2 + 1];
   int i;
   int c;
   char leadch[3], folch[3];
@@ -320,7 +318,7 @@ main (int argc, char* argv[])
           if (mode == 0)
             printf ("Input : ");
           for (i = 0; (c = fgetc (stdin)) != '\n' && c != EOF
-                      && i <= MAXCHAR; i++)
+                      && i <= MAXLEN; i++)
             {
               line[i] = (char) c;
             }
@@ -335,7 +333,7 @@ main (int argc, char* argv[])
 
           if (isUniIn)
             {
-              char tisBuff[MAXCHAR + 1];
+              char tisBuff[MAXLEN + 1];
               conv ('u', 't', line, tisBuff, sizeof tisBuff);
               strncpy (line, tisBuff, sizeof tisBuff);
             }

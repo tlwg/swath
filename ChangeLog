@@ -1,5 +1,13 @@
 2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Drop MAXCHAR macro and just use MAXLEN.
+
+	* src/wordseg.cpp:
+	  - Drop MAXCHAR macro def.
+	  - s/MAXCHAR/MAXLEN/g.
+
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Add input conversion for FilterLatex.
 
 	* src/Makefile.am, +src/convutil.h, +src/convutil.cpp:
