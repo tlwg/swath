@@ -5,6 +5,7 @@ DEFS = -DWORDSEGDATA_DIR=\"${pkgdatadir}\" -DVERSION=\"$(VERSION)\"
 
 EXTRA_DIST = \
 	abswordseg.h \
+	convutil.h \
 	dictpath.h \
 	filefilter.h \
 	filterhtml.h \
@@ -22,6 +23,7 @@ bin_PROGRAMS = swath
 
 swath_SOURCES = \
 	abswordseg.cpp \
+	convutil.cpp \
 	filefilter.cpp \
 	filterhtml.cpp \
 	filterlatex.cpp \

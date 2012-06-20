@@ -1,3 +1,16 @@
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Add input conversion for FilterLatex.
+
+	* src/Makefile.am, +src/convutil.h, +src/convutil.cpp:
+	  - Add conversion utility functions resembling libc functions.
+	  - Move UCopy() from src/wordseg.cpp to ConvCopy() here.
+	  - Add ConvGetS() function resembling fgets().
+	* src/wordseg.cpp (WordSegmentation):
+	  - Replace UCopy() calls with ConvCopy().
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace fgets() calls with ConvGetS().
+
 2012-05-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Only convert output text, not the wbr string.
