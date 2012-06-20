@@ -1,3 +1,9 @@
+2012-05-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Null-terminate conversion output string.
+
+	* conv/conv.cxx (conv): Write '\0' to terminate output string.
+
 2012-05-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Prepare internal APIs for on-the-fly conversion.

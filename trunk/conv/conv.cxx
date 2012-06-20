@@ -43,6 +43,7 @@ conv (char inFormat, char outFormat, const char *inText,
             pWriter->Write (c);
         }
     }
+    pWriter->Write (0);
 
     delete pReader;
     delete pWriter;
