@@ -14,7 +14,7 @@
 class FilterRTF : public FilterX
 {
 public:
-  FilterRTF (FILE* filein, FILE* fileout);
+  FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut);
 
   bool GetNextToken (char* token, bool* thaiFlag);
   void Print (char* token, bool thaiFlag);

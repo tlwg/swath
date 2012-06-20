@@ -14,7 +14,7 @@
 class FilterHtml : public FilterX
 {
 public:
-  FilterHtml (FILE* filein, FILE* fileout);
+  FilterHtml (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut);
 
   bool GetNextToken (char* token, bool* thaiFlag);
   void Print (char* token, bool thaiFlag);

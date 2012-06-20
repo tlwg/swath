@@ -9,8 +9,9 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterRTF::FilterRTF (FILE* filein, FILE* fileout)
-  : FilterX (filein, fileout, "\xDC"),
+FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
+  : FilterX (filein, fileout, isUniIn, isUniOut,
+    isUniOut ? "\E2\x80\x8B" : "\xDC"), // U+200B or \xDC
     psState (0)
 {
   strbuff[0] = '\0';

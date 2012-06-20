@@ -9,9 +9,10 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterLatex::FilterLatex (FILE* filein, FILE* fileout, int latexflag,
-                          const char* wordBreakStr)
-  : FilterX (filein, fileout, wordBreakStr),
+FilterLatex::FilterLatex (FILE* filein, FILE* fileout,
+                          bool isUniIn, bool isUniOut,
+                          int latexflag, const char* wordBreakStr)
+  : FilterX (filein, fileout, isUniIn, isUniOut, wordBreakStr),
     winCharSet (latexflag == 1),
     latexFlag (latexflag),
     verbatim (false)
