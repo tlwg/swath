@@ -21,64 +21,31 @@
 //    -u  Converts TIS-620 to UTF-8 (default)
 //
 
-static int do_conv(char format, FILE *input, FILE *output)
+static inline ETextFormat
+TextFormatFromChar (char f)
 {
-    ETextFormat inputFormat = TIS620;
-    ETextFormat outputFormat = UTF8;
+  return (f == 't') ? TIS620 : UTF8;
+}
 
-    if (format == 't') {
-        inputFormat = UTF8;
-        outputFormat = TIS620;
-    } else {
-        inputFormat = TIS620;
-        outputFormat = UTF8;
-    }
+int
+conv (char inFormat, char outFormat, const char *inText,
+      char *outText, int outLen)
+{
+    ETextFormat inputFormat = TextFormatFromChar (inFormat);
+    ETextFormat outputFormat = TextFormatFromChar (outFormat);
 
-    TextReader* pReader = CreateTextReader(inputFormat, input);
-    TextWriter* pWriter = CreateTextWriter(outputFormat, output);
+    TextReader* pReader = CreateTextReader (inputFormat, inText);
+    TextWriter* pWriter = CreateTextWriter (outputFormat, outText, outLen);
 
     if (pReader && pWriter) {
-        TransferText(pReader, pWriter);
+        unichar c;
+        while (pReader->Read (c)) {
+            pWriter->Write (c);
+        }
     }
 
     delete pReader;
     delete pWriter;
-
-    return 0;
-}
-
-int conv(char format, const char *inputFileName, const char *outputFileName)
-{
-    FILE*  input = stdin;
-    FILE*  output = stdout;
-
-    if (inputFileName) {
-        input = fopen(inputFileName, "r");
-    }
-    if (outputFileName) {
-        output = fopen(outputFileName, "w");
-    }
-
-    do_conv(format, input, output);
-
-    if (inputFileName)  { fclose(input); }
-    if (outputFileName) { fclose(output); }
-
-    return 0;
-}
-
-int conv(char format, FILE *input, FILE *output)
-{
-    if (!input) {
-        input = stdin;
-    }
-    if (!output) {
-        output = stdout;
-    }
-
-    do_conv(format, input, output);
-
-    fflush(output);
 
     return 0;
 }

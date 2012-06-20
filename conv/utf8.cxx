@@ -7,80 +7,78 @@
 #include "utf8.h"
 #include "unichar.h"
 
-static int writeUTF8(FILE* output, unsigned unicode)
+bool
+UTF8Writer::Write (unichar uniChar)
 {
-    if (unicode <= 0x007F) {
-        fputc((unsigned char)(unicode & 0x7F), output);
-    } else if (unicode <= 0x07FF) {
-        fputc((unsigned char)(0xC0 | (unicode >> 6)), output);
-        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
-    } else if (unicode <= 0xFFFF) {
-        fputc((unsigned char)(0xE0 | (unicode >> 12)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
-    } else if (unicode <= 0x1FFFFF) {
-        fputc((unsigned char)(0xF0 | (unicode >> 18)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
-    } else if (unicode <= 0x3FFFFFF) {
-        fputc((unsigned char)(0xF8 | (unicode >> 24)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 18) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
-    } else if (unicode <= 0x7FFFFFFF) {
-        fputc((unsigned char)(0xFC | (unicode >> 30)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 24) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 18) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 12) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | ((unicode >> 6) & 0x3F)), output);
-        fputc((unsigned char)(0x80 | (unicode & 0x3F)), output);
+    if (uniChar <= 0x007F) {
+        writeChar ((unsigned char)(uniChar & 0x7F));
+    } else if (uniChar <= 0x07FF) {
+        if (spaceLeft() < 2)  return false;
+        writeChar ((unsigned char)(0xC0 | (uniChar >> 6)));
+        writeChar ((unsigned char)(0x80 | (uniChar & 0x3F)));
+    } else if (uniChar <= 0xFFFF) {
+        if (spaceLeft() < 3)  return false;
+        writeChar ((unsigned char)(0xE0 | (uniChar >> 12)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 6) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | (uniChar & 0x3F)));
+    } else if (uniChar <= 0x1FFFFF) {
+        if (spaceLeft() < 4)  return false;
+        writeChar ((unsigned char)(0xF0 | (uniChar >> 18)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 12) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 6) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | (uniChar & 0x3F)));
+    } else if (uniChar <= 0x3FFFFFF) {
+        if (spaceLeft() < 5)  return false;
+        writeChar ((unsigned char)(0xF8 | (uniChar >> 24)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 18) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 12) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 6) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | (uniChar & 0x3F)));
+    } else if (uniChar <= 0x7FFFFFFF) {
+        if (spaceLeft() < 6)  return false;
+        writeChar ((unsigned char)(0xFC | (uniChar >> 30)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 24) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 18) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 12) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | ((uniChar >> 6) & 0x3F)));
+        writeChar ((unsigned char)(0x80 | (uniChar & 0x3F)));
     } else {
         // error
-        return -1;
+        return false;
     }
-    return 0;
+    return true;
 }
 
-static int readUTF8(FILE* input, unsigned* pUnicode)
+bool
+UTF8Reader::Read (unichar& uniChar)
 {
-    int c;
-    if ((c = fgetc(input)) == EOF) { return -1; }
+    unsigned char c = getChar();
+    if (!c) return false;
 
     if ((c & 0x80) == 0x00) {
-        *pUnicode = c;
+        uniChar = c;
     } else {
         // count rest bytes
         unsigned char sig = (c << 1);
         int nBytes = 0;
         while (sig & 0x80) { nBytes++; sig <<= 1; }
-        if (nBytes == 0) { return -1; }  // undefined signature
+        if (nBytes == 0) return false;  // undefined signature
 
         // get most significant bits of unicode data
         //    signature bits = nBytes+2 (MSB)
         // -> data bits = 8 - (nBytes+2) = 6 - nBytes (LSB)
-        *pUnicode = (c & (0x3F >> nBytes));
+        uniChar = (c & (0x3F >> nBytes));
 
         // get rest bits
         while (nBytes-- > 0) {
-            if ((c = fgetc(input)) == EOF) { return -1; }
+            c = getChar();
+            if (!c) return false;
             c ^= 0x80;  // 10xx xxxx -> 00xx xxxx
-            if (c & 0xC0) { return -1; }  // not 10xx xxxx form
-            *pUnicode = (*pUnicode << 6) | c;
+            if (c & 0xC0) return false;  // not 10xx xxxx form
+            uniChar = (uniChar << 6) | c;
         }
     }
 
-    return 0;
-}
-
-bool UTF8Reader::Read(unichar& c)
-{
-    return readUTF8(input, &c) == 0;
-}
-
-bool UTF8Writer::Write(unichar c)
-{
-    return writeUTF8(output, c) == 0;
+    return true;
 }
 

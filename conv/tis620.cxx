@@ -37,14 +37,14 @@ static tischar unicode2tis(unichar u)
 
 bool TIS620Reader::Read(unichar& c)
 {
-    int t;
-    if ((t = fgetc(input)) == EOF) { return false; }
-    c = tis2unicode(tischar(t));
+    tischar t = tischar (getChar());
+    if (!t) return false;
+    c = tis2unicode (t);
     return true;
 }
 
 bool TIS620Writer::Write(unichar c)
 {
-    return fputc(unicode2tis(c), output) != EOF;
+    return writeChar (unicode2tis (c));
 }
 

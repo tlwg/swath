@@ -1,8 +1,9 @@
 #ifndef CONV_INC
 #define CONV_INC
 
-int conv(char format, const char *inputFileName, const char *outputFileName);
-int conv(char format, FILE *inputFile, FILE *outputFile);
+// inFormat, outFormat: 't' = TIS-620; 'u' = UTF-8
+int conv(char inFormat, char outFormat, const char *inText,
+         char *outText, int outLen);
 
 #endif
 

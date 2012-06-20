@@ -12,22 +12,18 @@
 
 class TIS620Reader : public TextReader {
 public:
-    TIS620Reader(FILE* input) : input(input) {}
+    TIS620Reader(const char*inText)
+        : TextReader (inText) {}
 
     bool Read(unichar& c);
-
-private:
-    FILE* input;
 };
 
 class TIS620Writer : public TextWriter {
 public:
-    TIS620Writer(FILE* output) : output(output) {}
+    TIS620Writer(char* outText, int outLen)
+        : TextWriter (outText, outLen) {}
 
     bool Write(unichar c);
-
-private:
-    FILE* output;
 };
 
 #endif // TIS620_INC

@@ -8,20 +8,22 @@
 #include "utf8.h"
 #include "tis620.h"
 
-TextReader* CreateTextReader(ETextFormat format, FILE* input)
+TextReader*
+CreateTextReader (ETextFormat format, const char* inText)
 {
     switch (format) {
-        case TIS620:  return new TIS620Reader(input);
-        case UTF8:    return new UTF8Reader(input);
+        case TIS620:  return new TIS620Reader (inText);
+        case UTF8:    return new UTF8Reader (inText);
         default:      return 0;
     }
 }
 
-TextWriter* CreateTextWriter(ETextFormat format, FILE* output)
+TextWriter*
+CreateTextWriter (ETextFormat format, char* outText, int outLen)
 {
     switch (format) {
-        case TIS620:  return new TIS620Writer(output);
-        case UTF8:    return new UTF8Writer(output);
+        case TIS620:  return new TIS620Writer (outText, outLen);
+        case UTF8:    return new UTF8Writer (outText, outLen);
         default:      return 0;
     }
 }

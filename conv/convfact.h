@@ -15,8 +15,8 @@ enum ETextFormat {
     UTF8,
 };
 
-TextReader* CreateTextReader(ETextFormat format, FILE* input);
-TextWriter* CreateTextWriter(ETextFormat format, FILE* output);
+TextReader* CreateTextReader (ETextFormat format, const char* inText);
+TextWriter* CreateTextWriter (ETextFormat format, char* outText, int outLen);
 
 #endif // CONVFACT_INC
 
