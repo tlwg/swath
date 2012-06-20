@@ -1,5 +1,12 @@
 2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Add input conversion for FilterRTF.
+
+	* src/filterhtml.cpp (FilterRTF::GetNextToken):
+	  - Replace fgetc() calls with ConvGetC().
+
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Add input conversion for FilterHtml.
 
 	* src/convutil.h, src/convutil.cpp:
