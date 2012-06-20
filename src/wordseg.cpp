@@ -26,6 +26,7 @@
 #include "dictpath.h"
 #include "longwordseg.h"
 #include "maxwordseg.h"
+#include "convutil.h"
 #include "conv/conv.h"
 
 // Return
@@ -40,7 +41,6 @@
 static inline bool myisspace (int ch);
 static int SplitToken (char** str, char* token);
 static void RemoveJunkChars (char* str);
-static int UCopy (char* dst, int dstSz, const char* src, bool isUniOut);
 
 
 static int
@@ -110,14 +110,14 @@ WordSegmentation (AbsWordSeg* wseg, const char* wbr, const char* line,
       char* theWord = new char[wordEnd - pLine + 1];
       strncpy (theWord, pLine, wordEnd - pLine);
       theWord[wordEnd - pLine] = '\0';
-      int outLen = UCopy (output, outputSz, theWord, isUniOut);
+      int outLen = ConvCopy (output, outputSz, theWord, isUniOut);
       delete[] theWord;
       if (outLen < 0)
         break;
       output += outLen;
       outputSz -= outLen;
 
-      outLen = UCopy (output, outputSz, wbr, false);
+      outLen = ConvCopy (output, outputSz, wbr, false);
       if (outLen < 0)
         break;
       output += outLen;
@@ -126,7 +126,7 @@ WordSegmentation (AbsWordSeg* wseg, const char* wbr, const char* line,
       pLine = wordEnd;
     }
 
-  UCopy (output, outputSz, pLine, isUniOut);
+  ConvCopy (output, outputSz, pLine, isUniOut);
 
   delete[] seps;
 }
@@ -183,30 +183,6 @@ Usage (int verbose)
 //#define WORDSEGDATA_DIR "./data"
 
 #define MAXCHAR 2000
-
-static int
-UCopy (char* dst, int dstSz, const char* src, bool isUniOut)
-{
-  int copyLen = 0;
-  if (isUniOut)
-    {
-      char uniBuff[MAXCHAR * 3 + 1];
-      conv ('t', 'u', src, uniBuff, sizeof uniBuff);
-      copyLen = strlen (uniBuff);
-      if (copyLen > dstSz)
-        return -1;
-      strcpy (dst, uniBuff);
-    }
-  else
-    {
-      copyLen = strlen (src);
-      if (copyLen > dstSz)
-        return -1;
-      strcpy (dst, src);
-    }
-
-  return copyLen;
-}
 
 int
 main (int argc, char* argv[])

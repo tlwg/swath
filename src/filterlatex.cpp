@@ -5,6 +5,7 @@
 #include <string.h>
 #include "filterlatex.h"
 #include "worddef.h"
+#include "convutil.h"
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -24,7 +25,7 @@ bool
 FilterLatex::GetNextToken (char* token, bool* thaiFlag)
 {
   if (buffer[0] == '\0')
-    if (fgets (buffer, sizeof buffer, fpin) == NULL)
+    if (!ConvGetS (buffer, sizeof buffer, fpin, isUniIn))
       return false;
 
   *token = '\0';
@@ -84,7 +85,7 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
               buffer[0] = '\0';
               //if next a line is thai string, concat next line
               // to current line
-              if (fgets (buffer, sizeof buffer, fpin) == NULL)
+              if (!ConvGetS (buffer, sizeof buffer, fpin, isUniIn))
                 {
                   strcat (token, "\n");
                   return true;  //next GetToken() must return false
