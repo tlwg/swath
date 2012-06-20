@@ -40,6 +40,7 @@
 static inline bool myisspace (int ch);
 static int SplitToken (char** str, char* token);
 static void RemoveJunkChars (char* str);
+static int UCopy (char* dst, int dstSz, const char* src, bool isUniOut);
 
 
 static int
@@ -96,11 +97,38 @@ ExitWordSegmentation (AbsWordSeg* wseg)
 }
 
 static void
-WordSegmentation (AbsWordSeg* wseg, const char* wbr, char* line,
-                  char* output)
+WordSegmentation (AbsWordSeg* wseg, const char* wbr, const char* line,
+                  bool isUniOut, char* output, int outputSz)
 {
-  //RemoveJunkChars (line);
-  wseg->WordSeg (line, output, wbr);
+  short int *seps = new short int [outputSz];
+  int nSeps = wseg->WordSeg (line, seps, outputSz);
+
+  const char* pLine = line;
+  for (int i = 0; i < nSeps; i++)
+    {
+      const char* wordEnd = line + seps[i];
+      char* theWord = new char[wordEnd - pLine + 1];
+      strncpy (theWord, pLine, wordEnd - pLine);
+      theWord[wordEnd - pLine] = '\0';
+      int outLen = UCopy (output, outputSz, theWord, isUniOut);
+      delete[] theWord;
+      if (outLen < 0)
+        break;
+      output += outLen;
+      outputSz -= outLen;
+
+      outLen = UCopy (output, outputSz, wbr, false);
+      if (outLen < 0)
+        break;
+      output += outLen;
+      outputSz -= outLen;
+
+      pLine = wordEnd;
+    }
+
+  UCopy (output, outputSz, pLine, isUniOut);
+
+  delete[] seps;
 }
 
 static void
@@ -156,19 +184,28 @@ Usage (int verbose)
 
 #define MAXCHAR 2000
 
-static void
-UPrint (const char* text, bool isUniOut)
+static int
+UCopy (char* dst, int dstSz, const char* src, bool isUniOut)
 {
+  int copyLen = 0;
   if (isUniOut)
     {
       char uniBuff[MAXCHAR * 3 + 1];
-      conv ('t', 'u', text, uniBuff, sizeof uniBuff);
-      printf ("%s", uniBuff);
+      conv ('t', 'u', src, uniBuff, sizeof uniBuff);
+      copyLen = strlen (uniBuff);
+      if (copyLen > dstSz)
+        return -1;
+      strcpy (dst, uniBuff);
     }
   else
     {
-      printf ("%s", text);
+      copyLen = strlen (src);
+      if (copyLen > dstSz)
+        return -1;
+      strcpy (dst, src);
     }
+
+  return copyLen;
 }
 
 int
@@ -290,7 +327,7 @@ main (int argc, char* argv[])
               FltX->Print (line, thaifag);
               continue;
             }
-          WordSegmentation (wseg, wbr, line, output);
+          WordSegmentation (wseg, wbr, line, isUniOut, output, sizeof output);
           FltX->Print (output, thaifag);
         }
       delete FltX;
@@ -302,8 +339,8 @@ main (int argc, char* argv[])
         strcpy (stopstr, wbr);
       else
         stopstr[0] = '\0';
-      for (;;)
-        {                       // read until end of file.
+      while (!feof (stdin))
+        {
           if (mode == 0)
             printf ("Input : ");
           for (i = 0; (c = fgetc (stdin)) != '\n' && c != EOF
@@ -338,27 +375,26 @@ main (int argc, char* argv[])
                 {
                   if (tokenFlag == 0)
                     {
-                      UPrint (buff, isUniOut);
+                      printf ("%s", buff);
                     }
                   else
                     {
-                      WordSegmentation (wseg, wbr, buff, output);
-                      UPrint (output, isUniOut);
+                      WordSegmentation (wseg, wbr, buff, isUniOut, output,
+                                        sizeof output);
+                      printf ("%s", output);
                     }
-                  UPrint (wbr, false);
+                  printf ("%s", wbr);
                 }
             }
           else
             {
-              WordSegmentation (wseg, wbr, line, output);
-              UPrint (output, isUniOut);
-              UPrint (stopstr, false);
+              WordSegmentation (wseg, wbr, line, isUniOut, output,
+                                sizeof output);
+              printf ("%s", output);
+              printf ("%s", stopstr);
             }
           printf ("\n");
-
-          if (feof (stdin))
-            break;
-        }                       // end for (;;)
+        }
     }
 
   ExitWordSegmentation (wseg);
