@@ -11,8 +11,9 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-FilterHtml::FilterHtml (FILE* filein, FILE* fileout)
-  : FilterX (filein, fileout, "<wbr>")
+FilterHtml::FilterHtml (FILE* filein, FILE* fileout,
+                        bool isUniIn, bool isUniOut)
+  : FilterX (filein, fileout, isUniIn, isUniOut, "<wbr>")
 {
 }
 

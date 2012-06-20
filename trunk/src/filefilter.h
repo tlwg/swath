@@ -15,6 +15,7 @@ class FileFilter
 {
 public:
   static FilterX* CreateFilter (FILE* filein, FILE* fileout,
+                                bool isUniIn, bool isUniOut,
                                 const char *fileformat);
 };
 

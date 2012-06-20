@@ -156,6 +156,21 @@ Usage (int verbose)
 
 #define MAXCHAR 2000
 
+static void
+UPrint (const char* text, bool isUniOut)
+{
+  if (isUniOut)
+    {
+      char uniBuff[MAXCHAR * 3 + 1];
+      conv ('t', 'u', text, uniBuff, sizeof uniBuff);
+      printf ("%s", uniBuff);
+    }
+  else
+    {
+      printf ("%s", text);
+    }
+}
+
 int
 main (int argc, char* argv[])
 {
@@ -243,24 +258,24 @@ main (int argc, char* argv[])
   leadch[0] = '\0';
   folch[0] = '\0';
 
-  FILE* tmpout = stdout;
-  FILE* tmpin = stdin;
+  bool  isUniIn = false;
+  bool  isUniOut = false;
   if (unicode != NULL)
     {                           //Option -u
       if (unicode[0] == 'u')
-        {                       //unicode input file.
-          tmpin = tmpfile ();
-          conv ('t', NULL, tmpin);
-          rewind (tmpin);
+        {
+          isUniIn = true;
         }
       if (unicode[2] == 'u')
         {
-          tmpout = tmpfile ();
+          isUniOut = true;
         }
     }
   if (fileformat != NULL)
     {
-      FilterX* FltX = FileFilter::CreateFilter (tmpin, tmpout, fileformat);
+      FilterX* FltX = FileFilter::CreateFilter (stdin, stdout,
+                                                isUniIn, isUniOut,
+                                                fileformat);
       if (FltX == NULL)
         {
           fprintf (stderr, "Invalid file format: %s\n", fileformat);
@@ -291,7 +306,7 @@ main (int argc, char* argv[])
         {                       // read until end of file.
           if (mode == 0)
             printf ("Input : ");
-          for (i = 0; (c = fgetc (tmpin)) != '\n' && c != EOF
+          for (i = 0; (c = fgetc (stdin)) != '\n' && c != EOF
                       && i <= MAXCHAR; i++)
             {
               line[i] = (char) c;
@@ -304,53 +319,46 @@ main (int argc, char* argv[])
                 break;
               continue;
             }
+
+          if (isUniIn)
+            {
+              char tisBuff[MAXCHAR + 1];
+              conv ('u', 't', line, tisBuff, sizeof tisBuff);
+              strncpy (line, tisBuff, sizeof tisBuff);
+            }
+
           int tokenFlag;
           char* startStr = line;
-          char buff[2000], gout[5000];
-          gout[0] = '\0';
+          char buff[2000];
+          if (mode == 0)
+            printf ("Output: ");
           if (!wholeLine)
             {
               while ((tokenFlag = SplitToken (&startStr, buff)) >= 0)
                 {
-                  if (tokenFlag == -1)
-                    break;
                   if (tokenFlag == 0)
                     {
-                      strcat (gout, buff);
+                      UPrint (buff, isUniOut);
                     }
                   else
                     {
                       WordSegmentation (wseg, wbr, buff, output);
-                      strcat (gout, output);
+                      UPrint (output, isUniOut);
                     }
-                  strcat (gout, wbr);
+                  UPrint (wbr, false);
                 }
             }
           else
             {
               WordSegmentation (wseg, wbr, line, output);
-              strcpy (gout, output);
-              strcat (gout, stopstr);
+              UPrint (output, isUniOut);
+              UPrint (stopstr, false);
             }
-          if (mode == 0)
-            printf ("Output: ");
-          fprintf (tmpout, "%s\n", gout);
-          if (feof (tmpin))
+          printf ("\n");
+
+          if (feof (stdin))
             break;
         }                       // end for (;;)
-    }
-  if (unicode != NULL)
-    {
-      if (unicode[2] == 'u')
-        {
-          rewind (tmpout);
-          conv ('u', tmpout, NULL);
-          fclose (tmpout);
-        }
-      if (unicode[0] == 'u')
-        {
-          fclose (tmpin);
-        }
     }
 
   ExitWordSegmentation (wseg);

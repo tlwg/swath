@@ -1,3 +1,31 @@
+2012-05-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Prepare internal APIs for on-the-fly conversion.
+
+	* src/filefilter.h, src/filefilter.cpp (CreateFilter):
+	  - Add isUniIn, isUniOut parameters.
+	  - Pass the additional args to filter c-tors.
+	* src/filterx.h (FilterX):
+	  - Add isUniIn, isUniOut members and stores them via c-tor.
+	* src/filterhtml.h, src/filterhtml.cpp (FilterHtml):
+	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex):
+	* src/filterlambda.h (FilterLambda):
+	* src/filterrtf.h, src/filterrtf.cpp (FilterRTF):
+	  - Add isUniIn, isUniOut parameters to c-tors and pass them to
+	    FilterX base c-tor.
+	* src/wordseg.cpp (UPrint):
+	  - Add the UPrint utility function which condintally convert
+	    encoding before printing.
+	* src/wordseg.cpp (main):
+	  - Drop old via-tmpfile conversion codes.
+	  - Replace tmpin, tmpout with stdin and stdout.
+	  - Add bool isUniIn, isUniOut vars.
+	  - Pass isUniIn, isUniOut to CreateFilter() for formatted files.
+	  - For plain text:
+	    - Conditionally convert input text before processing.
+	    - Conditionally convert output text chunk by chunk using UPrint().
+	    - Never convert wbr text.
+
 2012-04-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	== Begin of spontaneous conversion branch ==
