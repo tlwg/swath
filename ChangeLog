@@ -1,5 +1,12 @@
 2012-06-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Escape RTF word break.
+
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - Escape word break text, according to Widhaya Trisarnwadhana.
+
+2012-06-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Revert input conversion on FilterRTF.
 
 	* src/filterhtml.cpp (FilterRTF::GetNextToken):
