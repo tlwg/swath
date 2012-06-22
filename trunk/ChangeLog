@@ -1,3 +1,11 @@
+2012-06-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Revert input conversion on FilterRTF.
+
+	* src/filterhtml.cpp (FilterRTF::GetNextToken):
+	  - Revert ConvGetC() replacements to fgetc(). RTF stores characters
+	    in escaped form, not directly UTF-8.
+
 2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Add input conversion for FilterRTF.

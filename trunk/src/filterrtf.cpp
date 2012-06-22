@@ -4,7 +4,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "filterrtf.h"
-#include "convutil.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -36,7 +35,7 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
       int i;
       for (i = 0; i < 4; i++)
         {
-          c = ConvGetC (fpin, isUniIn);
+          c = fgetc (fpin);
           if (c == EOF)
             {
               *thaiFlag = false;
@@ -70,7 +69,7 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
       token = sttoken;
       return false;
     }
-  c = ConvGetC (fpin, isUniIn);
+  c = fgetc (fpin);
   if (c == EOF)
     {
       *thaiFlag = false;
@@ -89,7 +88,7 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
              (nextState = chgCharState (token[-1], psState)) != 4)
         {
           psState = nextState;
-          c = ConvGetC (fpin, isUniIn);
+          c = fgetc (fpin);
           if (c == EOF)
             break;
           *token = c;
@@ -125,7 +124,7 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
               token[-4] = c;
               token -= 3;
             }
-          c = ConvGetC (fpin, isUniIn);
+          c = fgetc (fpin);
           if (c == EOF)
             break;
           *token = c;
