@@ -1,5 +1,14 @@
 2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Fix lost input chars near EOF.
+
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - When EOF is found, check for token length before returning true
+	    or false, not just blindly returning false.
+	  - Drop an unnecessary feof() check.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Only escape Thai characters, not ASCII.
 
 	* src/filterrtf.cpp (FilterRTF::Print):

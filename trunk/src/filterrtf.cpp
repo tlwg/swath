@@ -42,7 +42,7 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
               *thaiFlag = false;
               *token = 0;
               token = sttoken;
-              return false;
+              return (*token != '\0');
             }
           *token++ = c;
           nextState = chgCharState (c, psState);
@@ -65,18 +65,13 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
       *thaiFlag = strlen (strbuff) > 1 || *token > 0;
       token += strlen (strbuff);
     }
-  if (feof (fpin))
-    {
-      token = sttoken;
-      return false;
-    }
   c = fgetc (fpin);
   if (c == EOF)
     {
       *thaiFlag = false;
       *token = 0;
       token = sttoken;
-      return false;
+      return (*token != '\0');
     }
   *token = c;
 
