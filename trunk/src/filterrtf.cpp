@@ -159,12 +159,19 @@ FilterRTF::Print (char* token, bool thaiFlag)
 
           while (ur.Read (uc))
             {
-              fprintf (fpout, "\\u%d", uc);
-              const char *q = ur.curPos();
-              while (p != q)
+              if (*token & 0x80)
                 {
-                  fprintf (fpout, "\\'%02x", (unsigned char) *p);
-                  ++p;
+                  fprintf (fpout, "\\u%d", uc);
+                  const char *q = ur.curPos();
+                  while (p != q)
+                    {
+                      fprintf (fpout, "\\'%02x", (unsigned char) *p);
+                      ++p;
+                    }
+                }
+              else
+                {
+                  fprintf (fpout, "%c", *token);
                 }
             }
         }
@@ -172,7 +179,8 @@ FilterRTF::Print (char* token, bool thaiFlag)
         {
           while (*token != 0)
             {
-              fprintf (fpout, "\\'%02x", (unsigned char) *token);
+              fprintf (fpout, (*token & 0x80) ? "\\'%02x" : "%c",
+                       (unsigned char) *token);
               token++;
             }
         }
