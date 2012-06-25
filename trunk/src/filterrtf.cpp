@@ -4,6 +4,7 @@
 #include <string.h>
 #include <ctype.h>
 #include "filterrtf.h"
+#include "conv/utf8.h"
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -150,10 +151,30 @@ FilterRTF::Print (char* token, bool thaiFlag)
     }
   else
     {
-      while (*token != 0)
+      if (isUniOut)
         {
-          fprintf (fpout, "\\'%02x", (unsigned char) *token);
-          token++;
+          UTF8Reader ur (token);
+          unichar uc;
+          const char* p = token;
+
+          while (ur.Read (uc))
+            {
+              fprintf (fpout, "\\u%d", uc);
+              const char *q = ur.curPos();
+              while (p != q)
+                {
+                  fprintf (fpout, "\\'%02x", (unsigned char) *p);
+                  ++p;
+                }
+            }
+        }
+      else
+        {
+          while (*token != 0)
+            {
+              fprintf (fpout, "\\'%02x", (unsigned char) *token);
+              token++;
+            }
         }
     }
 }

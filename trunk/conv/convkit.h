@@ -17,6 +17,8 @@ public:
     TextReader (const char* inText)
         : inText (inText) {}
 
+    const char* curPos () const;
+
 protected:
     char getChar ();
 
@@ -31,6 +33,12 @@ TextReader::getChar ()
     if (c)
         ++inText;
     return c;
+}
+
+inline const char*
+TextReader::curPos () const
+{
+  return inText;
 }
 
 class TextWriter {
