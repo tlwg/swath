@@ -28,6 +28,7 @@ private:
 private:
   int psState;
   char strbuff[5];
+  int curUTFBytes;
 };
 
 #endif
