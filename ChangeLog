@@ -1,5 +1,12 @@
 2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Only escape Thai characters, not ASCII.
+
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Only escape characters with MSB = 1, i.e. non-ASCII.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Use \u8203\'3f as word break for TIS-620 RTF
 
 	* src/filterrtf.cpp (FilterRTF::FilterRTF):
