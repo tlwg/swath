@@ -12,7 +12,7 @@
 
 FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
   : FilterX (filein, fileout, isUniIn, isUniOut,
-    isUniOut ? "\\u8203\\'e2\\'80\\'8b" : "\\'dc"), // U+200B or \xDC
+    isUniOut ? "\\u8203\\'e2\\'80\\'8b" : "\\u8203\\'3f"), // U+200B
     psState (0)
 {
   strbuff[0] = '\0';

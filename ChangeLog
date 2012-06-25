@@ -1,5 +1,12 @@
 2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Use \u8203\'3f as word break for TIS-620 RTF
+
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - Pass "\u8203\'3f" as word break for TIS-620 output.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Escape Unicode characters in UTF text.
 
 	* conv/convkit.h (TextReader):
