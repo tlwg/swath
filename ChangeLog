@@ -1,5 +1,22 @@
 2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Fix RTF Unicode output with proper \ucN.
+
+	* src/filterrtf.h (class FilterRTF):
+	  - Add curUTFBytes member to keep track of current UTF-8 bytes.
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - Initialize curUTFBytes = 1.
+	  - Initialize Unicode word break with normal UTF-8, to be escaped
+	    like ordinary characters.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Fix UTF-8 escaping loop so it outputs correctly.
+	  - Re-initialize curUTFBytes to 1 when entering and leaving scope
+	    delimitors '{' and '}'.
+	  - Add \ucN before a UTF-8 character and before leaving '}' scope
+	     when UTF-8 byte count changes from previous value.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Fix lost input chars near EOF.
 
 	* src/filterrtf.cpp (FilterRTF::GetNextToken):

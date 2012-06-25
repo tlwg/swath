@@ -12,8 +12,9 @@
 
 FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
   : FilterX (filein, fileout, isUniIn, isUniOut,
-    isUniOut ? "\\u8203\\'e2\\'80\\'8b" : "\\u8203\\'3f"), // U+200B
-    psState (0)
+    isUniOut ? "\xe2\x80\x8b" : "\\u8203\\'3f"), // U+200B
+    psState (0),
+    curUTFBytes (1)
 {
   strbuff[0] = '\0';
 }
@@ -150,14 +151,18 @@ FilterRTF::Print (char* token, bool thaiFlag)
         {
           UTF8Reader ur (token);
           unichar uc;
-          const char* p = token;
 
-          while (ur.Read (uc))
+          for (const char* p = token; ur.Read (uc); p = ur.curPos())
             {
-              if (*token & 0x80)
+              if (*p & 0x80)
                 {
-                  fprintf (fpout, "\\u%d", uc);
                   const char *q = ur.curPos();
+                  if (q - p != curUTFBytes)
+                    {
+                      curUTFBytes = q - p;
+                      fprintf (fpout, " \\uc%d ", curUTFBytes);
+                    }
+                  fprintf (fpout, "\\u%d", uc);
                   while (p != q)
                     {
                       fprintf (fpout, "\\'%02x", (unsigned char) *p);
@@ -166,7 +171,19 @@ FilterRTF::Print (char* token, bool thaiFlag)
                 }
               else
                 {
-                  fprintf (fpout, "%c", *token);
+                  switch (*p)
+                    {
+                    case '}':
+                      if (curUTFBytes != 1)
+                        {
+                          fprintf (fpout, " \\uc1 ");
+                        }
+                        /* fall through */
+                    case '{':
+                      curUTFBytes = 1;
+                      break;
+                    }
+                  fprintf (fpout, "%c", *p);
                 }
             }
         }
