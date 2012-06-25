@@ -1,3 +1,14 @@
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Escape Unicode characters in UTF text.
+
+	* conv/convkit.h (TextReader):
+	  - Add curPos() public metod for accessing current reading pos.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - If output is Unicode, escape each output character in the form
+	    "\uDDDD\'XX\'YY\'ZZ" (DDDD = decimal Unicode code point;
+	    \xXX\xYY\xZZ = UTF-8 bytes), according to Widhaya Trisarnwadhana.
+
 2012-06-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Escape RTF word break.
