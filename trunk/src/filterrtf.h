@@ -11,6 +11,9 @@
 
 #include "filterx.h"
 
+// Private implementation class
+class RTFToken;
+
 class FilterRTF : public FilterX
 {
 public:
@@ -20,15 +23,29 @@ public:
   void Print (char* token, bool thaiFlag);
 
 private:
-  //sequence of characters is    \ ' x x (one character)
-  //states of this sequence are  1 2 3 4  
-  static int chgCharState (char charin, int state);
-  static bool isThaiChar (char *token, int *state);
+  enum ECharState
+  {
+    CS_START,
+    CS_ESCAPE,
+    CS_CH_BYTE,
+    CS_UNI,
+    CS_UNI_COUNT,
+    CS_UNI_CODE,
+    CS_NONE
+  };
 
 private:
-  int psState;
+  static ECharState chgCharState (ECharState state, char charIn,
+                                  bool* charConsumed, RTFToken* rtfToken);
+
+private:
+  void  printNonThai (char c);
+
+private:
+  ECharState psState;
   char strbuff[5];
-  int curUTFBytes;
+  int  curUTFReadBytes;
+  int  curUTFWriteBytes;
 };
 
 #endif

@@ -67,10 +67,22 @@ isThaiLongTailChar (unsigned char ch)
   return ch == 0xbb || ch == 0xbd || ch == 0xbf;
 }
 
+inline bool
+isThaiUni (unsigned int uc)
+{
+  return (0x0e01 <= uc) && (uc <= 0x0e5b);
+}
+
 inline unsigned int
 tis2uni (unsigned char ch)
 {
   return (ch & 0x80) ? ch - 0xa0 + 0x0e00 : ch;
+}
+
+inline unsigned char
+uni2tis (unsigned int uc)
+{
+  return isThaiUni (uc) ? uc - 0x0e00 + 0x0a0 : uc;
 }
 
 #endif

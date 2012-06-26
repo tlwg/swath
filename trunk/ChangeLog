@@ -1,3 +1,20 @@
+2012-06-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Rewrite RTF reader for Unicode support.
+
+	* src/worddef.h (isThaiUni, uni2tis):
+	  - Add utility functions for UCS checking & conversion.
+	* src/filterrtf.h, src/filterrtf.cpp:
+	  - Make chgCharState() member returns token as object, rather than
+	    letting the caller does all the jobs.
+	  - Add class RTFToken with its manipulation methods.
+	  - Rewrite FilterRTF::GetNextToken() based on the extended state
+	    machine.
+	  - Adjust FilterRTF::Print() behavior, as the new reader now
+	    tokenizes more accurately. Some common code has been split into
+	    the new printNonThai() method.
+	  - Drop the FilterRTF::isThaiChar() method. Now unneeded.
+
 2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Fix RTF Unicode output with proper \ucN.
