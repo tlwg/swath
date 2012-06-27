@@ -29,20 +29,11 @@
 #include "convutil.h"
 #include "conv/conv.h"
 
+static int SplitToken (char** str, char* token);
+
 // Return
 // 0: successful
-// 1: can not get WORDSEGDATA environment variable
-// 2: not found alldict.bin
-// 3: not found dbranch.tri
-// 4: not found pbranch.tri
-// 5: not found dtail.tri
-// 6: not found ptail.tri
-
-static inline bool myisspace (int ch);
-static int SplitToken (char** str, char* token);
-static void RemoveJunkChars (char* str);
-
-
+// 1: can not get dictionary
 static int
 InitWordSegmentation (const char* dictpath,
                       const char* method, AbsWordSeg** pWseg)
@@ -386,10 +377,10 @@ SplitToken (char** str, char* token)
 
   if (**str == 0)
     return -1;
-  if (myisspace (**str))
+  if (isspace (**str))
     {
       //found white space.
-      while (myisspace (**str) && **str != 0)
+      while (isspace (**str) && **str != 0)
         {
           *token = **str;
           (*str)++;
@@ -400,7 +391,7 @@ SplitToken (char** str, char* token)
     }
   else
     {
-      while (!myisspace (**str) && **str != 0)
+      while (!isspace (**str) && **str != 0)
         {
           *token = **str;
           (*str)++;
@@ -411,30 +402,3 @@ SplitToken (char** str, char* token)
     }
 }
 
-static inline bool
-myisspace (int ch)
-{
-  return (0x09 <= ch && ch <= 0x0d) || ch == ' ';
-}
-
-static inline bool
-IsValidChar (unsigned char ch)
-{
-  return ch == '\t' || ch == '\n' || ch == '\r' || (0x20 <= ch && ch <= 0x7e)
-         || (0xa1 <= ch && ch <= 0xfb);
-}
-
-static void
-RemoveJunkChars (char* str)
-{
-  char* desStr;
-
-  for (desStr = str; *str != '\0'; str++)
-    {
-      if (IsValidChar (*str))
-        {
-          *desStr++ = *str;
-        }
-    }
-  *desStr = '\0';
-}
