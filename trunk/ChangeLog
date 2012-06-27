@@ -2,6 +2,14 @@
 
 	Source clean up.
 
+	* src/wordseg.cpp (SplitToken):
+	  - Drop unused var 'i'.
+	  - Rearrange loop condition and make assignments concise.
+
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
 	* src/wordseg.cpp:
 	  - Drop myisspace() and just use libc isspace().
 	  - Drop unused functions RemoveJunkChars() and IsValidChar().
