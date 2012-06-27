@@ -1,5 +1,13 @@
 2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Source clean up.
+
+	* src/wordseg.cpp:
+	  - Drop myisspace() and just use libc isspace().
+	  - Drop unused functions RemoveJunkChars() and IsValidChar().
+
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Make RTFToken methods inline.
 
 	* src/filterrtf.cpp (RTFToken):
