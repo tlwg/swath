@@ -342,76 +342,6 @@ end_of_chunk:
   return true;
 }
 
-void
-FilterRTF::Print (char* token, bool thaiFlag)
-{
-  if (!thaiFlag)
-    {
-      for (const char *p = token; *p; ++p)
-        {
-          printNonThai (*p);
-        }
-    }
-  else
-    {
-      if (isUniOut)
-        {
-          UTF8Reader ur (token);
-          unichar uc;
-
-          for (const char* p = token; ur.Read (uc); p = ur.curPos())
-            {
-              if (*p & 0x80)
-                {
-                  const char *q = ur.curPos();
-                  if (q - p != curUTFWriteBytes)
-                    {
-                      curUTFWriteBytes = q - p;
-                      fprintf (fpout, "\\uc%d ", curUTFWriteBytes);
-                    }
-                  fprintf (fpout, "\\u%d", uc);
-                  while (p != q)
-                    {
-                      fprintf (fpout, "\\'%02x", (unsigned char) *p);
-                      ++p;
-                    }
-                }
-              else
-                {
-                  printNonThai (*p);
-                }
-            }
-        }
-      else
-        {
-          while (*token != 0)
-            {
-              fprintf (fpout, (*token & 0x80) ? "\\'%02x" : "%c",
-                       (unsigned char) *token);
-              token++;
-            }
-        }
-    }
-}
-
-void
-FilterRTF::printNonThai (char c)
-{
-  switch (c)
-    {
-    case '}':
-      if (curUTFWriteBytes != 1)
-        {
-          fprintf (fpout, " \\uc1 ");
-        }
-        /* fall through */
-    case '{':
-      curUTFWriteBytes = 1;
-      break;
-    }
-  fprintf (fpout, "%c", c);
-}
-
 FilterRTF::ECharState
 FilterRTF::chgCharState (ECharState state, char charIn, bool* charConsumed,
                          RTFToken* rtfToken)
@@ -522,5 +452,75 @@ end_number:
 
   *charConsumed = (' ' == charIn);
   return CS_START;
+}
+
+void
+FilterRTF::Print (char* token, bool thaiFlag)
+{
+  if (!thaiFlag)
+    {
+      for (const char *p = token; *p; ++p)
+        {
+          printNonThai (*p);
+        }
+    }
+  else
+    {
+      if (isUniOut)
+        {
+          UTF8Reader ur (token);
+          unichar uc;
+
+          for (const char* p = token; ur.Read (uc); p = ur.curPos())
+            {
+              if (*p & 0x80)
+                {
+                  const char *q = ur.curPos();
+                  if (q - p != curUTFWriteBytes)
+                    {
+                      curUTFWriteBytes = q - p;
+                      fprintf (fpout, "\\uc%d ", curUTFWriteBytes);
+                    }
+                  fprintf (fpout, "\\u%d", uc);
+                  while (p != q)
+                    {
+                      fprintf (fpout, "\\'%02x", (unsigned char) *p);
+                      ++p;
+                    }
+                }
+              else
+                {
+                  printNonThai (*p);
+                }
+            }
+        }
+      else
+        {
+          while (*token != 0)
+            {
+              fprintf (fpout, (*token & 0x80) ? "\\'%02x" : "%c",
+                       (unsigned char) *token);
+              token++;
+            }
+        }
+    }
+}
+
+void
+FilterRTF::printNonThai (char c)
+{
+  switch (c)
+    {
+    case '}':
+      if (curUTFWriteBytes != 1)
+        {
+          fprintf (fpout, " \\uc1 ");
+        }
+        /* fall through */
+    case '{':
+      curUTFWriteBytes = 1;
+      break;
+    }
+  fprintf (fpout, "%c", c);
 }
 

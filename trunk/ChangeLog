@@ -1,3 +1,10 @@
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Rearrange functions so get related functions closer.
+
+	* src/filterrtf.cpp:
+	  - Move chgCharState() to near GetNextToken().
+
 2012-06-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Rewrite RTF reader for Unicode support.
