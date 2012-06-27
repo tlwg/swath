@@ -1,5 +1,12 @@
 2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Make RTFToken methods inline.
+
+	* src/filterrtf.cpp (RTFToken):
+	  - Make methods inline functions.
+
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Rearrange functions so get related functions closer.
 
 	* src/filterrtf.cpp:

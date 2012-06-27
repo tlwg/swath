@@ -40,14 +40,14 @@ private:
   int        valLen;
 };
 
-void
+inline void
 RTFToken::reset ()
 {
   type = RTK_NONE;
   valLen = 0;
 }
 
-void
+inline void
 RTFToken::set (char c)
 {
   val[0] = c;
@@ -55,14 +55,14 @@ RTFToken::set (char c)
   valLen = 1;
 }
 
-void
+inline void
 RTFToken::set (char c, ETokenType t)
 {
   set (c);
   type = t;
 }
 
-void
+inline void
 RTFToken::appendChar (char c)
 {
   if (valLen + 1 < sizeof val)
@@ -71,7 +71,7 @@ RTFToken::appendChar (char c)
     }
 }
 
-void
+inline void
 RTFToken::terminate (ETokenType t)
 {
   val[valLen] = '\0';
