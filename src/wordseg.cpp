@@ -373,29 +373,23 @@ main (int argc, char* argv[])
 static int
 SplitToken (char** str, char* token)
 {
-  int i = 0;
-
   if (**str == 0)
     return -1;
+
   if (isspace (**str))
     {
-      //found white space.
-      while (isspace (**str) && **str != 0)
+      while (**str != 0 && isspace (**str))
         {
-          *token = **str;
-          (*str)++;
-          token++;
+          *token++ = *(*str)++;
         }
       *token = 0;
       return 0;
     }
   else
     {
-      while (!isspace (**str) && **str != 0)
+      while (**str != 0 && !isspace (**str))
         {
-          *token = **str;
-          (*str)++;
-          token++;
+          *token++ = *(*str)++;
         }
       *token = 0;
       return 1;
