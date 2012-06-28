@@ -1,3 +1,11 @@
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/wordseg.cpp (main):
+	  - Move some vars into code block where they're used.
+	  - Fix var name spelling 'thaifag' -> 'thaiFlag'.
+
 2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Source clean up.

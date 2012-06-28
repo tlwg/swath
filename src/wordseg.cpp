@@ -183,7 +183,7 @@ main (int argc, char* argv[])
   const char* fileformat = NULL;
   const char* unicode = NULL;
   bool muleMode;
-  bool thaifag;
+  bool thaiFlag;
   bool wholeLine = false;
 
   wbr = "|";
@@ -250,8 +250,6 @@ main (int argc, char* argv[])
   AbsWordSeg* wseg;
 
   char line[MAXLEN + 1], output[MAXLEN * 2 + 1];
-  int i;
-  int c;
   char leadch[3], folch[3];
 
   if (InitWordSegmentation (dictpath, method, &wseg) != 0)
@@ -285,15 +283,15 @@ main (int argc, char* argv[])
           return 1;
         }
       wbr = FltX->GetWordBreak ();
-      while (FltX->GetNextToken (line, &thaifag))
+      while (FltX->GetNextToken (line, &thaiFlag))
         {
-          if (!thaifag)
+          if (!thaiFlag)
             {
-              FltX->Print (line, thaifag);
+              FltX->Print (line, thaiFlag);
               continue;
             }
           WordSegmentation (wseg, wbr, line, isUniOut, output, sizeof output);
-          FltX->Print (output, thaifag);
+          FltX->Print (output, thaiFlag);
         }
       delete FltX;
     }
@@ -308,6 +306,9 @@ main (int argc, char* argv[])
         {
           if (mode == 0)
             printf ("Input : ");
+
+          int i;
+          int c;
           for (i = 0; (c = fgetc (stdin)) != '\n' && c != EOF
                       && i <= MAXLEN; i++)
             {
