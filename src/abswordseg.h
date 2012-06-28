@@ -35,8 +35,8 @@ protected:
   SepType SepData[3];
   unsigned short int len;
   char sen[MAXLEN];
-  short int* LinkSep;
-  short int* IdxSep;
+  short int LinkSep[3 * MAXLEN];
+  short int IdxSep[MAXLEN];
 
 private:
   void InitData ();
@@ -44,8 +44,6 @@ private:
   //============Check Character Type Function============
   static bool IsLeadChar (unsigned char ch);
   static bool IsLastChar (unsigned char ch);
-  static bool IsNumber (const char* str);
-  static bool IsEnglish (const char* str);
   //============Check Karan rule=========================
   static bool Has_Karun (const char* sen_ptr, short int* k_idx);
 

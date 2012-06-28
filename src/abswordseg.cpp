@@ -16,22 +16,12 @@
 //////////////////////////////////////////////////////////////////////
 
 AbsWordSeg::AbsWordSeg ()
+  : MyDict (NULL)
 {
-  IdxSep = new short int[MAXLEN];
-  LinkSep = new short int[3 * MAXLEN];
-  if (IdxSep == NULL || LinkSep == NULL)
-    {
-      fprintf (stderr, "Cannot allocate memory\n");
-      exit (0);
-    }
-  MyDict = NULL;
 }
 
 AbsWordSeg::~AbsWordSeg ()
 {
-  delete[] IdxSep;
-  delete[] LinkSep;
-
   if (MyDict)
     {
       trie_free (MyDict);
@@ -81,18 +71,11 @@ AbsWordSeg::InitDict (const char* dictPath)
 void
 AbsWordSeg::CreateWordList (void)
 {
-  char Buff[2000];
-  short int i, j, cntLink, en_word;
-  short int cntFound, amb_sep_cnt;
-  int data_idx;
-  unsigned char lead_ch;
-  TrieState* curState;
+  int cntLink = 0;
+  int amb_sep_cnt = 0;
+  TrieState* curState = trie_root (MyDict);
 
-  Buff[0] = '\0';
-  cntLink = 0;
-  amb_sep_cnt = 0;
-  curState = trie_root (MyDict);
-  for (i = 0; i < len; i++)
+  for (int i = 0; i < len; i++)
     {                                //word boundry start at i and end at j.
       if (!IsLeadChar ((unsigned char) sen[i])
           || (i > 0 && !IsLastChar ((unsigned char) sen[i - 1])))
@@ -100,7 +83,7 @@ AbsWordSeg::CreateWordList (void)
           IdxSep[i] = -2;        //cannot leading for unknown word.
           continue;
         }
-      lead_ch = (unsigned char) sen[i];
+      unsigned char lead_ch = (unsigned char) sen[i];
       // FIND STRING OF PUNCTUATION.
       if (ispunct (lead_ch))
         {
@@ -144,9 +127,9 @@ AbsWordSeg::CreateWordList (void)
           i--;
           continue;
         }
-      cntFound = 0;
+      int cntFound = 0;
       trie_state_rewind (curState);
-      for (j = 0; i + j < len; j++)
+      for (int j = 0; i + j < len; j++)
         {
           if (sen[i + j] == 0xe6 && cntFound != 0)
             {                        //Mai-Ya-Mok -- break position
@@ -157,6 +140,7 @@ AbsWordSeg::CreateWordList (void)
             break;
           if (trie_state_is_terminal (curState))
             {
+              short int en_word;
               //found word in dictionary
               //check whether it should be segmented here
               if (IsLeadChar ((unsigned char) sen[i + j + 1])
@@ -164,7 +148,6 @@ AbsWordSeg::CreateWordList (void)
                 {
                   LinkSep[cntLink] = i + j + 1;
                   LinkSep[cntLink + 1] = -1;
-                  //LinkSepDataIdx[cntLink]=data_idx;
                   cntFound++;
                   if (cntFound == 1)
                     IdxSep[i] = cntLink;
@@ -184,30 +167,6 @@ AbsWordSeg::CreateWordList (void)
 //   amb_sep[amb_sep_cnt].st_idx=-1;
   LinkSep[cntLink] = -1;
   LinkSep[++cntLink] = -1;        //add stop value
-}
-
-bool
-AbsWordSeg::IsNumber (const char* str)
-{
-  while (*str)
-    {
-      if (!isdigit (*str) && *str != '.' && *str != ',')
-        return false;
-      str++;
-    }
-  return true;
-}
-
-bool
-AbsWordSeg::IsEnglish (const char* str)
-{
-  while (*str)
-    {
-      if (!isalpha (*str) && *str != '.' && *str != '-' && *str != ' ')
-        return false;
-      str++;
-    }
-  return true;
 }
 
 bool
