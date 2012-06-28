@@ -3,6 +3,14 @@
 	Source clean up.
 
 	* src/wordseg.cpp (main):
+	  - Replace fgetc() loop with fgets().
+	  - [plain text] Also print a blank line in response to blank input.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/wordseg.cpp (main):
 	  - Move some vars into code block where they're used.
 	  - Fix var name spelling 'thaifag' -> 'thaiFlag'.
 

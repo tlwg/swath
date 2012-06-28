@@ -307,19 +307,14 @@ main (int argc, char* argv[])
           if (mode == 0)
             printf ("Input : ");
 
-          int i;
-          int c;
-          for (i = 0; (c = fgetc (stdin)) != '\n' && c != EOF
-                      && i <= MAXLEN; i++)
+          if (!fgets (line, sizeof line, stdin))
+            break;
+          int len = strlen (line);
+          if ('\n' == line [len - 1])
+            line [--len] = '\0';
+          if ('\0' == line[0])
             {
-              line[i] = (char) c;
-            }
-          line[i] = 0;
-          //if (strcmp(line, "exit") == 0) break;
-          if (line[0] == '\0')
-            {
-              if (c == EOF)
-                break;
+              printf ("\n");
               continue;
             }
 
