@@ -1,5 +1,13 @@
 2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Print "Output:" title before blank line.
+
+	* src/wordseg.cpp (main):
+	  - [plain text] Previous commit introduced title-less output
+	    for blank line. Reorder the steps it to fix.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Source clean up.
 
 	* src/wordseg.cpp (main):
