@@ -244,12 +244,10 @@ AbsWordSeg::SwapLinkSep ()
 void
 AbsWordSeg::InitData ()
 {
-  int i;
-  for (i = 0; i < len && i < MAXLEN; i++)
+  for (int i = 0; i < len; i++)
     {
       IdxSep[i] = -1;
     }
-
 }
 
 // =======================================================

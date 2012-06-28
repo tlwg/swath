@@ -2,6 +2,14 @@
 
 	Source clean up.
 
+	* src/abswordseg.cpp (AbsWordSeg::InitData):
+	  - Make variable definition more concise.
+	  - Drop unnecessary loop condition.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
 	* src/abswordseg.h, src/abswordseg.cpp (class AbsWordSeg):
 	  - Make LinkSep, IdxSep members array instead of pointer to allocated
 	    memory.
