@@ -1,5 +1,17 @@
 2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Source clean up.
+
+	* src/abswordseg.h, src/abswordseg.cpp (class AbsWordSeg):
+	  - Make LinkSep, IdxSep members array instead of pointer to allocated
+	    memory.
+	  - Drop unused methods IsNumber(), IsEnglish().
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Remove unused vars Buff, data_idx.
+	  - Move variable definitions to where they're used.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Print "Output:" title before blank line.
 
 	* src/wordseg.cpp (main):
