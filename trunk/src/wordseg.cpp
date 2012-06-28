@@ -312,6 +312,10 @@ main (int argc, char* argv[])
           int len = strlen (line);
           if ('\n' == line [len - 1])
             line [--len] = '\0';
+
+          if (mode == 0)
+            printf ("Output: ");
+
           if ('\0' == line[0])
             {
               printf ("\n");
@@ -328,8 +332,6 @@ main (int argc, char* argv[])
           int tokenFlag;
           char* startStr = line;
           char buff[2000];
-          if (mode == 0)
-            printf ("Output: ");
           if (!wholeLine)
             {
               while ((tokenFlag = SplitToken (&startStr, buff)) >= 0)
