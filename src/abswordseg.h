@@ -33,8 +33,8 @@ protected:
 
 protected:
   SepType SepData[3];
-  unsigned short int len;
-  char sen[MAXLEN];
+  unsigned short int textLen;
+  char text[MAXLEN];
   short int LinkSep[3 * MAXLEN];
   short int IdxSep[MAXLEN];
 

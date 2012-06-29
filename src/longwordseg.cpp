@@ -31,7 +31,7 @@ LongWordSeg::CreateSentence ()
   //      and Create Backtrack point.....
   // ========================================
 
-  while (Idx < len) // (LinkSep[IdxSep[Idx]]!=len)
+  while (Idx < textLen) // (LinkSep[IdxSep[Idx]]!=len)
     {
       // found some words that start with Idx character
       if (IdxSep[Idx] >= 0)
@@ -43,27 +43,27 @@ LongWordSeg::CreateSentence ()
               BackTrackStack.Push (wState);
             }
           SepData[senIdx].Sep[sepIdx++] = LinkSep[IdxSep[Idx]];
-          if (LinkSep[IdxSep[Idx]] == len)
+          if (LinkSep[IdxSep[Idx]] == textLen)
             break;
           Idx = LinkSep[IdxSep[Idx]];
         }
       else
         {
           //at Idx there is no word in dictionary
-          while (Idx < len && IdxSep[Idx] < 0)
+          while (Idx < textLen && IdxSep[Idx] < 0)
             Idx++;
           SepData[senIdx].Sep[sepIdx++] = Idx;
-          if (Idx == len)
+          if (Idx == textLen)
             break;
         }
     }
-  if (SepData[senIdx].Sep[sepIdx - 1] == len)
+  if (SepData[senIdx].Sep[sepIdx - 1] == textLen)
     {
       SepData[senIdx].Sep[sepIdx] = -1;
     }
   else
     {
-      SepData[senIdx].Sep[sepIdx++] = len;
+      SepData[senIdx].Sep[sepIdx++] = textLen;
       SepData[senIdx].Sep[sepIdx] = -1;
     }
 

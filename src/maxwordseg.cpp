@@ -29,12 +29,12 @@ MaxWordSeg::CreateSentence ()
   else
     {
       int i;
-      for (i = 1; i < len && IdxSep[i] < 0; i++)
+      for (i = 1; i < textLen && IdxSep[i] < 0; i++)
         ;
 
-      if (i == len)
+      if (i == textLen)
         {
-          stWord = enAmb = len;
+          stWord = enAmb = textLen;
         }
       else
         {
@@ -45,10 +45,10 @@ MaxWordSeg::CreateSentence ()
 
   int sepIdx = 0;
   int stAmb = 0;
-  while (enAmb <= len)
+  while (enAmb <= textLen)
     {
       bool singleWord = true;
-      for (; stWord < enAmb && stWord < len; stWord++)
+      for (; stWord < enAmb && stWord < textLen; stWord++)
         {
           if (IdxSep[stWord] < 0)
             continue;
@@ -61,7 +61,7 @@ MaxWordSeg::CreateSentence ()
       if (IdxSep[enAmb] < 0)
         {
           // Check for unknown
-          while (enAmb < len && IdxSep[enAmb] < 0)
+          while (enAmb < textLen && IdxSep[enAmb] < 0)
             enAmb++;
           singleWord = false;
         }
@@ -75,7 +75,7 @@ MaxWordSeg::CreateSentence ()
           sepIdx = saveSegment (sepIdx, idxSen, enAmb);
         }
       stAmb = enAmb;
-      if (stAmb >= len)
+      if (stAmb >= textLen)
         break;
       enAmb = LinkSep[IdxSep[stAmb]];
     }
