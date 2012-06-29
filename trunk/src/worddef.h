@@ -42,14 +42,6 @@ typedef struct SepTypeDef
 } SepType;
 
 inline bool
-isPunc (char ch)
-{
-//      if (  ((ch>=33)&&(ch<=47)) || ((ch>=58)&&(ch<=63))
-//                    || ((ch>=91)&&(ch<=96))  )
-  return ch == '\'' || ch == '"' || ch == '`' || ch == '.';
-}
-
-inline bool
 isThai (unsigned char ch)
 {
   return 0xa0 < ch;
