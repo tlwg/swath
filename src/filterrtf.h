@@ -19,8 +19,8 @@ class FilterRTF : public FilterX
 public:
   FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut);
 
-  bool GetNextToken (char* token, bool* thaiFlag);
-  void Print (char* token, bool thaiFlag);
+  bool GetNextToken (wchar_t* token, bool* thaiFlag);
+  void Print (const wchar_t* token, bool thaiFlag);
 
 private:
   enum ECharState
@@ -39,11 +39,11 @@ private:
                                   bool* charConsumed, RTFToken* rtfToken);
 
 private:
-  void  printNonThai (char c);
+  void  printNonThai (wchar_t wc);
 
 private:
   ECharState psState;
-  char strbuff[5];
+  wchar_t    strbuff[5];
   int  curUTFReadBytes;
   int  curUTFWriteBytes;
 };

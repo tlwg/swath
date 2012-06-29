@@ -26,5 +26,7 @@ public:
     bool Write(unichar c);
 };
 
+int UTF8Bytes (unichar c);
+
 #endif  // UTF8_INC
 

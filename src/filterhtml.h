@@ -16,11 +16,11 @@ class FilterHtml : public FilterX
 public:
   FilterHtml (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut);
 
-  bool GetNextToken (char* token, bool* thaiFlag);
-  void Print (char* token, bool thaiFlag);
+  bool GetNextToken (wchar_t* token, bool* thaiFlag);
+  void Print (const wchar_t* token, bool thaiFlag);
 
 private:
-  char chbuff;
+  wchar_t chbuff;
 };
 
 #endif

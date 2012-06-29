@@ -1,5 +1,76 @@
 2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Use UCS as internal storage for third language character support.
+
+	* src/convutil.h, src/convutil.cpp:
+	  - Rewrite ConvGetS(), ConvGetC() to return wchar_t (string).
+	  - Add ConvPrint() for printing wchar_t string as given encoding
+	    scheme (UTF-8/TIS-620).
+	  - Add Ascii2WcsCopy() and Ascii2WcsCat() for transferring between
+	    ASCII char/wchar_t arrays.
+
+	* src/wordseg.cpp (main):
+	  - Drop UTF-8 -> TIS-620 conversion as preprocessing and replace it
+	    with ConvGetS(), which gives wchar_t string.
+	  - Replace char arrays with wchar_t ones, along with all manipulations.
+	* src/wordseg.cpp (WordSegmentation):
+	  - Change args from char* to wchar_t*.
+	  - No longer requires isUniOut arg, as it now only works on internal
+	    UCS storage. The conversion is moved back to higher layer again.
+	* src/wordseg.cpp (SplitToken):
+	  - Change args from char* to wchar_t*.
+
+	* src/abswordseg.h (class AbsWordSeg):
+	  - Redeclare char -> wchar_t:
+	    - WordSeg() arg
+	    - 'text' member
+	    - IsLeadChar(), IsLastChar(), Has_Karun() args
+	* src/abswordseg.cpp (CreateWordList, IsLeadChar, IsLastChar,
+	  Has_Karun, WordSeg):
+	  - Replace char -> wchar_t, along with manipulations.
+	* src/abswordseg.cpp (CreateWordList):
+	  - Instead of checking for English with isalpha(), check for
+	    !isThaiUni() instead, to cover third language characters.
+	* src/abswordseg.cpp (Has_Karun):
+	  - Don't bother calculate the THANTHAKHAT position, as it's never used.
+	* src/worddef.h (isThaiUniDigit):
+	  - Add helper function for checking Thai digits.
+
+	* src/filterx.h (class FilterX):
+	* src/filterlatex.h, src/filterhtml.h, src/filterrtf.h:
+	  - Redeclare abstract GetNextToken() and Print() args to wchar_t*.
+
+	* src/filterlatex.h (class FilterLatex):
+	  - Redeclare 'buffer' member as wchar_t array.
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace char -> wchar_t, along with manipulations.
+	* src/filterlatex.cpp (FilterLatex::Print):
+	  - Ignore latexFlag case which calls AdjustText(). The shaping is
+	    outdated and not worth working on.
+
+	* src/filterhtml.h (class FilterHtml):
+	  - Redeclare 'chbuff' member as wchar_t.
+	* src/filterhtml.cpp (FilterHtml::GetNextToken, FilterHtml::Print):
+	  - Replace char -> wchar_t, along with manipulations.
+
+	* src/filterrtf.h (class FilterRTF):
+	  - Redeclare char -> wchar_t:
+	    - printNonThai() method arg
+	    - strbuff[] member
+	* src/filterrtf.cpp (FilterRTF::GetNextToken, FilterRTF::Print):
+	  - Replace char -> wchar_t, along with manipulations.
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Add missing null-terminations on token.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Change logic from UTF-8 interception to direct UCS manipulation.
+	    This also requires pre-calculation of UTF-8 bytes.
+	    Helping function added in conv/utf8x.{h,cxx}.
+	  - Write UTF-8 skip bytes by the aids of UTF8Writer.
+	* conv/utf8.h, conv/utf8.cxx (UTF8Bytes):
+	  - Add utility function for pre-calculating UTF-8 bytes used by a UCS.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Source clean up.
 
 	* src/filterhtml.cpp (FilterHtml::GetNextToken):
