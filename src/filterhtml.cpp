@@ -21,11 +21,8 @@ FilterHtml::FilterHtml (FILE* filein, FILE* fileout,
 bool
 FilterHtml::GetNextToken (char* token, bool* thaiFlag)
 {
-  char* sttoken;
-
   if ((fpin == NULL) || (feof (fpin) != 0))
     return false;
-  sttoken = token;
   if (chbuff == 0)
     *token = (char) ConvGetC (fpin, isUniIn);
   else
@@ -79,7 +76,6 @@ FilterHtml::GetNextToken (char* token, bool* thaiFlag)
     }
   if (feof (fpin) != 0)
     token[1] = 0;
-  token = sttoken;
 
   return true;
 }
