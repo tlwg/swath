@@ -18,6 +18,9 @@ public:
 
   bool GetNextToken (char* token, bool* thaiFlag);
   void Print (char* token, bool thaiFlag);
+
+private:
+  char chbuff;
 };
 
 #endif

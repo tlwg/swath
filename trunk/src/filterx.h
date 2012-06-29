@@ -24,7 +24,6 @@ public:
   virtual void Print (char* token, bool thaiFlag) = 0;
 
 protected:
-  char  chbuff;
   FILE* fpin;
   FILE* fpout;
   bool  isUniIn;
@@ -37,8 +36,7 @@ private:
 inline
 FilterX::FilterX (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut,
                   const char* wordBreakStr)
-  : chbuff (0),
-    fpin (filein ? filein : stdin),
+  : fpin (filein ? filein : stdin),
     fpout (fileout ? fileout : stdout),
     isUniIn (isUniIn),
     isUniOut (isUniOut),
