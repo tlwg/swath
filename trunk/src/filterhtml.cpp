@@ -24,59 +24,55 @@ FilterHtml::GetNextToken (char* token, bool* thaiFlag)
 {
   if ((fpin == NULL) || (feof (fpin) != 0))
     return false;
+
   if (chbuff == 0)
-    *token = (char) ConvGetC (fpin, isUniIn);
+    {
+      char c = ConvGetC (fpin, isUniIn);
+      if (EOF == c)
+        return false;
+      *token = c;
+    }
   else
     {
       *token = chbuff;
-      chbuff = 0;               //clear the character buffer.
+      chbuff = 0;
     }
   *thaiFlag = isThai (*token);
-  //find a token that containing only Thai characters or Eng+space characters
-  while (feof (fpin) == 0)
+  // find a token containing only Thai characters or non-Thai+space characters
+  for (;;)
     {
-      token[1] = (char) ConvGetC (fpin, isUniIn);
-      if (((token[0] ^ token[1]) & 0x80)
-          || isspace ((int) token[1]) || token[1] == '.')
+      int nextChar = ConvGetC (fpin, isUniIn);
+      if (EOF == nextChar)
+        break;
+      if (((*token ^ nextChar) & 0x80)
+          || isspace (nextChar) || '.' == nextChar)
         {
           if (*thaiFlag)
             {
-              if (token[1] == '\n')
+              if ('\n' == nextChar)
                 {
-                  if (feof (fpin) != 0)
+                  nextChar = ConvGetC (fpin, isUniIn);
+                  if (EOF == nextChar)
                     break;
-                  chbuff = (char) ConvGetC (fpin, isUniIn);
-                  if (chbuff & 0x80)
+                  if (isThai (nextChar))
                     {
-                      token[1] = chbuff;
-                      chbuff = 0;
-                    }
-                  else
-                    {
-                      // chbuff = token[1];
-                      token[1] = 0;
-                      break;
+                      *++token = nextChar;
+                      continue;
                     }
                 }
-              else
-                {
-                  chbuff = token[1];
-                  token[1] = 0;
-                  break;
-                }
-            }
-          else
-            {
-              // Eng+space Token
-              chbuff = token[1];
-              token[1] = 0;
-              break;
             }
         }
-      token++;
+      else
+        {
+          *++token = nextChar;
+          continue;
+        }
+
+      // not continued -> put back next char & stop
+      chbuff = nextChar;
+      break;
     }
-  if (feof (fpin) != 0)
-    token[1] = 0;
+  *++token = 0;
 
   return true;
 }
