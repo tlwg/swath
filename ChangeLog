@@ -1,5 +1,21 @@
 2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Handle CR (80..A0) non-Thai chars in RTF
+
+	* src/worddef.h (isThai, tis2uni):
+	  - Check for Thai more accurately (c > 0xa0, not just c & 0x80).
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - wbr in unicode mode should be escaped, now that UTF-8 interception
+	    technique has gone.
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Distinguish non-Thai in ANSI data bytes.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Also escape 80..A0 non-Thai chars.
+	* src/filterrtf.cpp (PrintEscapedUTF8):
+	  - Refactor common code.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Source clean up.
 
 	* src/convutil.h, src/convutil.cpp (-ConvCopy):

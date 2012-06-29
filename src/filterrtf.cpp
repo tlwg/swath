@@ -86,7 +86,7 @@ RTFToken::terminate (ETokenType t)
 
 FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
   : FilterX (filein, fileout, isUniIn, isUniOut,
-             isUniOut ? "\xe2\x80\x8b" : "\\u8203\\'3f"), // U+200B
+             isUniOut ? "\\u8203\\'e2\\'80\\'8b" : "\\u8203\\'3f"), // U+200B
     psState (CS_START),
     curUTFReadBytes (1),
     curUTFWriteBytes (1)
@@ -174,12 +174,12 @@ FilterRTF::GetNextToken (wchar_t* token, bool* thaiFlag)
               else
                 {
                   // normal ANSI data bytes
-                  int c;
-                  sscanf (rtfToken.getVal(), "%x", &c);
+                  int ch;
+                  sscanf (rtfToken.getVal(), "%x", &ch);
                   rtfToken.reset ();
-                  *token++ = tis2uni (c);
+                  *token++ = tis2uni (ch);
                   *token = 0;
-                  *thaiFlag = true;
+                  *thaiFlag = isThai (ch);
                   goto thai_flag_determined;
                 }
               break;
@@ -249,10 +249,13 @@ thai_flag_determined:
               else
                 {
                   // normal ANSI data bytes
-                  int c;
-                  sscanf (rtfToken.getVal(), "%x", &c);
+                  int ch;
+                  sscanf (rtfToken.getVal(), "%x", &ch);
                   rtfToken.reset ();
-                  *token++ = tis2uni (c);
+                  // if non-Thai -> stop
+                  if (!isThai (ch))
+                    goto end_of_chunk;
+                  *token++ = tis2uni (ch);
                   *token = 0;
                 }
               break;
@@ -320,13 +323,18 @@ thai_flag_determined:
               else
                 {
                   // normal ANSI data bytes
-                  // Thai TIS-620 is assumed -> stop
-                  int c;
-                  sscanf (rtfToken.getVal(), "%x", &c);
+                  int ch;
+                  sscanf (rtfToken.getVal(), "%x", &ch);
                   rtfToken.reset ();
-                  strbuff[0] = tis2uni (c);
-                  strbuff[1] = 0;
-                  goto end_of_chunk;
+                  if (isThai (ch))
+                    {
+                      // Thai chunk is found -> stop
+                      strbuff[0] = tis2uni (ch);
+                      strbuff[1] = 0;
+                      goto end_of_chunk;
+                    }
+                  *token++ = ch;
+                  *token = 0;
                 }
               break;
             }
@@ -456,6 +464,8 @@ end_number:
   return CS_START;
 }
 
+static void PrintEscapedUTF8 (FILE* fpout, wchar_t wc);
+
 void
 FilterRTF::Print (const wchar_t* token, bool thaiFlag)
 {
@@ -482,13 +492,7 @@ FilterRTF::Print (const wchar_t* token, bool thaiFlag)
                     }
 
                   fprintf (fpout, "\\u%d", *p);
-                  char utfBuff[10];
-                  UTF8Writer uw (utfBuff, sizeof utfBuff);
-                  uw.Write (*p);
-                  for (const char* u = utfBuff; *u; ++u)
-                    {
-                      fprintf (fpout, "\\'%02x", (unsigned char) *u);
-                    }
+                  PrintEscapedUTF8 (fpout, *p);
                 }
               else
                 {
@@ -503,6 +507,10 @@ FilterRTF::Print (const wchar_t* token, bool thaiFlag)
               if (isThaiUni (*token))
                 {
                   fprintf (fpout, "\\'%02x", uni2tis (*token));
+                }
+              else if (*token >= 0x80)
+                {
+                  fprintf (fpout, "\\'%02x", (unsigned char) *token);
                 }
               else
                 {
@@ -529,6 +537,25 @@ FilterRTF::printNonThai (wchar_t wc)
       curUTFWriteBytes = 1;
       break;
     }
-  fprintf (fpout, "%c", char (wc));
+  if (wc < 0x80)
+    {
+      fprintf (fpout, "%c", char (wc));
+    }
+  else
+    {
+      PrintEscapedUTF8 (fpout, wc);
+    }
 }
 
+static void
+PrintEscapedUTF8 (FILE* fpout, wchar_t wc)
+{
+  char utfBuff[10];
+  UTF8Writer uw (utfBuff, sizeof utfBuff);
+  uw.Write (wc);
+  uw.Write (0);
+  for (const char* u = utfBuff; *u; ++u)
+    {
+      fprintf (fpout, "\\'%02x", (unsigned char) *u);
+    }
+}

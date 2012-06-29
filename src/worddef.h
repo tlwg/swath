@@ -50,9 +50,9 @@ isPunc (char ch)
 }
 
 inline bool
-isThai (char ch)
+isThai (unsigned char ch)
 {
-  return ch & 0x80;
+  return 0xa0 < ch;
 }
 
 inline bool
@@ -82,7 +82,7 @@ isThaiUniDigit (wchar_t wc)
 inline unsigned int
 tis2uni (unsigned char ch)
 {
-  return (ch & 0x80) ? ch - 0xa0 + 0x0e00 : ch;
+  return (0xa0 < ch) ? ch - 0xa0 + 0x0e00 : ch;
 }
 
 inline unsigned char
