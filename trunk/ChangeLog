@@ -1,5 +1,12 @@
 2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Source clean up.
+
+	* src/convutil.h, src/convutil.cpp (-ConvCopy):
+	  - Remove unused function.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Use UCS as internal storage for third language character support.
 
 	* src/convutil.h, src/convutil.cpp:
