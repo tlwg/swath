@@ -249,14 +249,8 @@ main (int argc, char* argv[])
 
   AbsWordSeg* wseg;
 
-  char line[MAXLEN + 1], output[MAXLEN * 2 + 1];
-  char leadch[3], folch[3];
-
   if (InitWordSegmentation (dictpath, method, &wseg) != 0)
     return 1;
-
-  leadch[0] = '\0';
-  folch[0] = '\0';
 
   bool  isUniIn = false;
   bool  isUniOut = false;
@@ -271,6 +265,9 @@ main (int argc, char* argv[])
           isUniOut = true;
         }
     }
+
+  char line[MAXLEN + 1], output[MAXLEN * 2 + 1];
+
   if (fileformat != NULL)
     {
       FilterX* FltX = FileFilter::CreateFilter (stdin, stdout,
