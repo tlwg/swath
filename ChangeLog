@@ -1,5 +1,13 @@
 2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Source clean up.
+
+	* src/wordseg.cpp (main):
+	  - Drop unused vars 'leadch', 'folch'.
+	  - Move 'line', 'output' declarations to where they're used.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Rename AbsWordSeg members 'sen', len' to sensible names.
 
 	* src/abswordseg.h (class AbsWordSeg):
