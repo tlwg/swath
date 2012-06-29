@@ -3,7 +3,6 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "convutil.h"
-#include "conv/conv.h"
 #include "conv/utf8.h"
 #include "conv/tis620.h"
 #include "worddef.h"
@@ -89,30 +88,6 @@ ConvPrint (FILE* fpout, const wchar_t* wcs, bool isUniOut)
   fprintf (fpout, "%s", output);
 
   return true;
-}
-
-int
-ConvCopy (char *dst, int dstSz, const char* tisSrc, bool isUniOut)
-{
-  int copyLen = 0;
-  if (isUniOut)
-    {
-      char uniBuff[MAXLEN*3 + 1];
-      conv ('t', 'u', tisSrc, uniBuff, sizeof uniBuff);
-      copyLen = strlen (uniBuff);
-      if (copyLen > dstSz)
-        return -1;
-      strcpy (dst, uniBuff);
-    }
-  else
-    {
-      copyLen = strlen (tisSrc);
-      if (copyLen > dstSz)
-        return -1;
-      strcpy (dst, tisSrc);
-    }
-
-  return copyLen;
 }
 
 wchar_t*
