@@ -75,22 +75,22 @@ AbsWordSeg::CreateWordList (void)
   int amb_sep_cnt = 0;
   TrieState* curState = trie_root (MyDict);
 
-  for (int i = 0; i < len; i++)
+  for (int i = 0; i < textLen; i++)
     {                                //word boundry start at i and end at j.
-      if (!IsLeadChar ((unsigned char) sen[i])
-          || (i > 0 && !IsLastChar ((unsigned char) sen[i - 1])))
+      if (!IsLeadChar ((unsigned char) text[i])
+          || (i > 0 && !IsLastChar ((unsigned char) text[i - 1])))
         {
           IdxSep[i] = -2;        //cannot leading for unknown word.
           continue;
         }
-      unsigned char lead_ch = (unsigned char) sen[i];
+      unsigned char lead_ch = (unsigned char) text[i];
       // FIND STRING OF PUNCTUATION.
       if (ispunct (lead_ch))
         {
           IdxSep[i] = cntLink;
           do
             {
-              lead_ch = (unsigned char) sen[++i];
+              lead_ch = (unsigned char) text[++i];
             }
           while (lead_ch != '\0' && ispunct (lead_ch));
           LinkSep[cntLink++] = i;
@@ -104,7 +104,7 @@ AbsWordSeg::CreateWordList (void)
           IdxSep[i] = cntLink;
           do
             {
-              lead_ch = (unsigned char) sen[++i];
+              lead_ch = (unsigned char) text[++i];
             }
           while (lead_ch != '\0' && isdigit (lead_ch) || isThaiDigit (lead_ch)
                  || lead_ch == '.' || lead_ch == ',');
@@ -119,7 +119,7 @@ AbsWordSeg::CreateWordList (void)
           IdxSep[i] = cntLink;
           do
             {
-              lead_ch = (unsigned char) sen[++i];
+              lead_ch = (unsigned char) text[++i];
             }
           while (lead_ch != '\0' && isalpha (lead_ch));
           LinkSep[cntLink++] = i;
@@ -129,22 +129,22 @@ AbsWordSeg::CreateWordList (void)
         }
       int cntFound = 0;
       trie_state_rewind (curState);
-      for (int j = 0; i + j < len; j++)
+      for (int j = 0; i + j < textLen; j++)
         {
-          if (sen[i + j] == 0xe6 && cntFound != 0)
+          if (text[i + j] == 0xe6 && cntFound != 0)
             {                        //Mai-Ya-Mok -- break position
               LinkSep[cntLink - 1] = i + j + 1;
               break;
             }
-          if (!trie_state_walk (curState, tis2uni ((unsigned char) sen[i + j])))
+          if (!trie_state_walk (curState, tis2uni ((unsigned char) text[i + j])))
             break;
           if (trie_state_is_terminal (curState))
             {
               short int en_word;
               //found word in dictionary
               //check whether it should be segmented here
-              if (IsLeadChar ((unsigned char) sen[i + j + 1])
-                  && !Has_Karun (&sen[i + j], &en_word))
+              if (IsLeadChar ((unsigned char) text[i + j + 1])
+                  && !Has_Karun (&text[i + j], &en_word))
                 {
                   LinkSep[cntLink] = i + j + 1;
                   LinkSep[cntLink + 1] = -1;
@@ -203,8 +203,8 @@ AbsWordSeg::WordSeg (const char* senstr, short int* outSeps, int outSepsSz)
 {
   int bestidx;
 
-  strcpy (sen, senstr);
-  len = strlen (senstr);
+  strcpy (text, senstr);
+  textLen = strlen (senstr);
   InitData ();
   CreateWordList ();
   SwapLinkSep ();
@@ -244,7 +244,7 @@ AbsWordSeg::SwapLinkSep ()
 void
 AbsWordSeg::InitData ()
 {
-  for (int i = 0; i < len; i++)
+  for (int i = 0; i < textLen; i++)
     {
       IdxSep[i] = -1;
     }
@@ -288,7 +288,7 @@ AbsWordSeg::GetBestSen (int bestidx, short int* outSeps, int outSepsSz)
 {
   int t;
 
-  for (t = 0; SepData[bestidx].Sep[t] != len && t < outSepsSz; t++)
+  for (t = 0; SepData[bestidx].Sep[t] != textLen && t < outSepsSz; t++)
     {
       outSeps[t] = SepData[bestidx].Sep[t];
     }
