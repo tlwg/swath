@@ -20,6 +20,8 @@
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
+#include <wchar.h>
+#include <wctype.h>
 
 #include "filefilter.h"
 #include "filterx.h"
@@ -27,9 +29,8 @@
 #include "longwordseg.h"
 #include "maxwordseg.h"
 #include "convutil.h"
-#include "conv/conv.h"
 
-static int SplitToken (char** str, char* token);
+static int SplitToken (wchar_t** str, wchar_t* token);
 
 // Return
 // 0: successful
@@ -88,36 +89,35 @@ ExitWordSegmentation (AbsWordSeg* wseg)
 }
 
 static void
-WordSegmentation (AbsWordSeg* wseg, const char* wbr, const char* line,
-                  bool isUniOut, char* output, int outputSz)
+WordSegmentation (AbsWordSeg* wseg, const char* wbr, const wchar_t* line,
+                  wchar_t* output, int outputSz)
 {
   short int *seps = new short int [outputSz];
   int nSeps = wseg->WordSeg (line, seps, outputSz);
 
-  const char* pLine = line;
+  const wchar_t* pLine = line;
+  int wbrLen = strlen (wbr);
   for (int i = 0; i < nSeps; i++)
     {
-      const char* wordEnd = line + seps[i];
-      char* theWord = new char[wordEnd - pLine + 1];
-      strncpy (theWord, pLine, wordEnd - pLine);
-      theWord[wordEnd - pLine] = '\0';
-      int outLen = ConvCopy (output, outputSz, theWord, isUniOut);
-      delete[] theWord;
-      if (outLen < 0)
+      const wchar_t* wordEnd = line + seps[i];
+      int outLen = wordEnd - pLine;
+      if (outLen >= outputSz)
         break;
+      wcsncpy (output, pLine, outLen);
+      output[outLen] = 0;
       output += outLen;
       outputSz -= outLen;
 
-      outLen = ConvCopy (output, outputSz, wbr, false);
-      if (outLen < 0)
+      if (wbrLen >= outputSz)
         break;
-      output += outLen;
-      outputSz -= outLen;
+      Ascii2WcsCopy (output, wbr);
+      output += wbrLen;
+      outputSz -= wbrLen;
 
       pLine = wordEnd;
     }
 
-  ConvCopy (output, outputSz, pLine, isUniOut);
+  wcsncpy (output, pLine, outputSz);
 
   delete[] seps;
 }
@@ -266,7 +266,8 @@ main (int argc, char* argv[])
         }
     }
 
-  char line[MAXLEN + 1], output[MAXLEN * 2 + 1];
+  wchar_t wLine[MAXLEN];
+  wchar_t wsegOut[MAXLEN * 2];
 
   if (fileformat != NULL)
     {
@@ -280,15 +281,15 @@ main (int argc, char* argv[])
           return 1;
         }
       wbr = FltX->GetWordBreak ();
-      while (FltX->GetNextToken (line, &thaiFlag))
+      while (FltX->GetNextToken (wLine, &thaiFlag))
         {
           if (!thaiFlag)
             {
-              FltX->Print (line, thaiFlag);
+              FltX->Print (wLine, thaiFlag);
               continue;
             }
-          WordSegmentation (wseg, wbr, line, isUniOut, output, sizeof output);
-          FltX->Print (output, thaiFlag);
+          WordSegmentation (wseg, wbr, wLine, wsegOut, N_ELM (wsegOut));
+          FltX->Print (wsegOut, thaiFlag);
         }
       delete FltX;
     }
@@ -304,53 +305,46 @@ main (int argc, char* argv[])
           if (mode == 0)
             printf ("Input : ");
 
-          if (!fgets (line, sizeof line, stdin))
+          if (!ConvGetS (wLine, N_ELM (wLine), stdin, isUniIn))
             break;
-          int len = strlen (line);
-          if ('\n' == line [len - 1])
-            line [--len] = '\0';
+          int len = wcslen (wLine);
+          if (L'\n' == wLine [len - 1])
+            wLine [--len] = 0;
 
           if (mode == 0)
             printf ("Output: ");
 
-          if ('\0' == line[0])
+          if (0 == wLine[0])
             {
               printf ("\n");
               continue;
             }
 
-          if (isUniIn)
-            {
-              char tisBuff[MAXLEN + 1];
-              conv ('u', 't', line, tisBuff, sizeof tisBuff);
-              strncpy (line, tisBuff, sizeof tisBuff);
-            }
-
-          int tokenFlag;
-          char* startStr = line;
-          char buff[2000];
           if (!wholeLine)
             {
-              while ((tokenFlag = SplitToken (&startStr, buff)) >= 0)
+              int tokenFlag;
+              wchar_t* startStr = wLine;
+              wchar_t wToken[MAXLEN];
+
+              while ((tokenFlag = SplitToken (&startStr, wToken)) >= 0)
                 {
                   if (tokenFlag == 0)
                     {
-                      printf ("%s", buff);
+                      ConvPrint (stdout, wToken, isUniOut);
                     }
                   else
                     {
-                      WordSegmentation (wseg, wbr, buff, isUniOut, output,
-                                        sizeof output);
-                      printf ("%s", output);
+                      WordSegmentation (wseg, wbr, wToken, wsegOut,
+                                        N_ELM (wsegOut));
+                      ConvPrint (stdout, wsegOut, isUniOut);
                     }
                   printf ("%s", wbr);
                 }
             }
           else
             {
-              WordSegmentation (wseg, wbr, line, isUniOut, output,
-                                sizeof output);
-              printf ("%s", output);
+              WordSegmentation (wseg, wbr, wLine, wsegOut, N_ELM (wsegOut));
+              ConvPrint (stdout, wsegOut, isUniOut);
               printf ("%s", stopstr);
             }
           printf ("\n");
@@ -366,14 +360,14 @@ main (int argc, char* argv[])
 //return 0 for a token which is contain only white spaces.
 //return 1 for a token which is contain only alpha charecters.
 static int
-SplitToken (char** str, char* token)
+SplitToken (wchar_t** str, wchar_t* token)
 {
   if (**str == 0)
     return -1;
 
-  if (isspace (**str))
+  if (iswspace (**str))
     {
-      while (**str != 0 && isspace (**str))
+      while (**str != 0 && iswspace (**str))
         {
           *token++ = *(*str)++;
         }
@@ -382,7 +376,7 @@ SplitToken (char** str, char* token)
     }
   else
     {
-      while (**str != 0 && !isspace (**str))
+      while (**str != 0 && !iswspace (**str))
         {
           *token++ = *(*str)++;
         }

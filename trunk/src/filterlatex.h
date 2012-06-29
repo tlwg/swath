@@ -9,6 +9,7 @@
 #pragma once
 #endif
 
+#include "worddef.h"
 #include "filterx.h"
 
 
@@ -18,8 +19,8 @@ public:
   FilterLatex (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut,
                int latexflag = 0, const char *wordBreakStr = "{\\wbr}");
 
-  bool GetNextToken (char* token, bool* thaiFlag);
-  void Print (char* token, bool thaiFlag);
+  bool GetNextToken (wchar_t* token, bool* thaiFlag);
+  void Print (const wchar_t* token, bool thaiFlag);
 
 private:
   int AdjustText (const unsigned char* input, unsigned char* output,
@@ -28,7 +29,7 @@ private:
 private:
   bool winCharSet;  // true for Windows char set; false for Mac char set
   int latexFlag;    // 0 do nothing; 1 win char set; 2 mac char set
-  char buffer[2000];
+  wchar_t buffer[MAXLEN];
   bool verbatim;
 };
 

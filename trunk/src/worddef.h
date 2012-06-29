@@ -73,6 +73,12 @@ isThaiUni (unsigned int uc)
   return (0x0e01 <= uc) && (uc <= 0x0e5b);
 }
 
+inline bool
+isThaiUniDigit (wchar_t wc)
+{
+  return 0x0e50 <= wc && wc <= 0x0e59;
+}
+
 inline unsigned int
 tis2uni (unsigned char ch)
 {

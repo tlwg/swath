@@ -3,8 +3,10 @@
 //////////////////////////////////////////////////////////////////////
 #include <string.h>
 #include <ctype.h>
+#include <wctype.h>
 #include "filterrtf.h"
 #include "conv/utf8.h"
+#include "convutil.h"
 #include "worddef.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -84,16 +86,16 @@ RTFToken::terminate (ETokenType t)
 
 FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
   : FilterX (filein, fileout, isUniIn, isUniOut,
-    isUniOut ? "\xe2\x80\x8b" : "\\u8203\\'3f"), // U+200B
+             isUniOut ? "\xe2\x80\x8b" : "\\u8203\\'3f"), // U+200B
     psState (CS_START),
     curUTFReadBytes (1),
     curUTFWriteBytes (1)
 {
-  strbuff[0] = '\0';
+  strbuff[0] = 0;
 }
 
 bool
-FilterRTF::GetNextToken (char* token, bool* thaiFlag)
+FilterRTF::GetNextToken (wchar_t* token, bool* thaiFlag)
 {
   int   bytesToSkip = 0;
   bool  isCopySkipBytes = false;
@@ -102,18 +104,17 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
   RTFToken rtfToken;
 
   //sequence of characters is    \ ' x x (one character for Thai char)
-  *token = '\0';
+  *token = 0;
 
   if ((fpin == NULL) || (feof (fpin)))
     return false;
 
   // get first character to determine *thaiFlag
-  if (strbuff[0] != '\0')
+  if (0 != strbuff[0])
     {
-      strcpy (token, strbuff);
-      strbuff[0] = '\0';
-      *thaiFlag = isThai (*token);
-      token += strlen (token);
+      *thaiFlag = isThaiUni (strbuff[0]);
+      token = wcpcpy (token, strbuff);
+      strbuff[0] = 0;
     }
   else
     {
@@ -123,9 +124,8 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
           switch (rtfToken.getType())
             {
             case RTFToken::RTK_TEXT:
-              strcpy (token, rtfToken.getVal());
+              token = Ascii2WcsCopy (token, rtfToken.getVal());
               rtfToken.reset ();
-              token += strlen (token);
               *thaiFlag = false;
               goto thai_flag_determined;
               break;
@@ -141,15 +141,15 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
                 sscanf (rtfToken.getVal(), "%d", &uc);
                 if (isThaiUni (uc))
                   {
-                    *token++ = uni2tis (uc);
-                    *token = '\0';
+                    *token++ = uc;
+                    *token = 0;
                     *thaiFlag = true;
                     isCopySkipBytes = false;
                   }
                 else
                   {
-                    strcpy (token, "\\u");
-                    strcat (token, rtfToken.getVal());
+                    token = wcpcpy (token, L"\\u");
+                    token = Ascii2WcsCopy (token, rtfToken.getVal());
                     *thaiFlag = false;
                     isCopySkipBytes = true;
                   }
@@ -164,9 +164,8 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
                   // skip bytes after \uDDDD
                   if (isCopySkipBytes)
                     {
-                      strcpy (token, "\\'");
-                      strcat (token, rtfToken.getVal());
-                      token += strlen (token);
+                      token = wcpcpy (token, L"\\'");
+                      token = Ascii2WcsCopy (token, rtfToken.getVal());
                     }
                   rtfToken.reset ();
                   if (0 == --bytesToSkip)
@@ -175,9 +174,11 @@ FilterRTF::GetNextToken (char* token, bool* thaiFlag)
               else
                 {
                   // normal ANSI data bytes
-                  sscanf (rtfToken.getVal(), "%x", token);
+                  int c;
+                  sscanf (rtfToken.getVal(), "%x", &c);
                   rtfToken.reset ();
-                  ++token;
+                  *token++ = tis2uni (c);
+                  *token = 0;
                   *thaiFlag = true;
                   goto thai_flag_determined;
                 }
@@ -199,10 +200,9 @@ thai_flag_determined:
             {
             case RTFToken::RTK_TEXT:
               // non-Thai text is found -> stop
-              strcpy (strbuff, rtfToken.getVal());
+              Ascii2WcsCopy (strbuff, rtfToken.getVal());
               rtfToken.reset ();
               goto end_of_chunk;
-              break;
 
             case RTFToken::RTK_UNI_COUNT:
               sscanf (rtfToken.getVal(), "%d", &curUTFReadBytes);
@@ -215,15 +215,15 @@ thai_flag_determined:
                 sscanf (rtfToken.getVal(), "%d", &uc);
                 if (isThaiUni (uc))
                   {
-                    *token++ = uni2tis (uc);
-                    *token = '\0';
+                    *token++ = uc;
+                    *token = 0;
                     isCopySkipBytes = false;
                   }
                 else
                   {
                     // non-Thai text is found -> prepare to stop
-                    strcpy (strbuff, "\\u");
-                    strcat (strbuff, rtfToken.getVal());
+                    wchar_t* p = wcpcpy (strbuff, L"\\u");
+                    Ascii2WcsCopy (p, rtfToken.getVal());
                     isCopySkipBytes = true;
                   }
                 rtfToken.reset ();
@@ -237,8 +237,8 @@ thai_flag_determined:
                   // skip bytes after \uDDDD
                   if (isCopySkipBytes)
                     {
-                      strcat (strbuff, "\\'");
-                      strcat (strbuff, rtfToken.getVal());
+                      wcscat (strbuff, L"\\'");
+                      Ascii2WcsCat (strbuff, rtfToken.getVal());
                     }
                   rtfToken.reset ();
                   // decrement bytes to skip
@@ -249,9 +249,11 @@ thai_flag_determined:
               else
                 {
                   // normal ANSI data bytes
-                  sscanf (rtfToken.getVal(), "%x", token);
+                  int c;
+                  sscanf (rtfToken.getVal(), "%x", &c);
                   rtfToken.reset ();
-                  ++token;
+                  *token++ = tis2uni (c);
+                  *token = 0;
                 }
               break;
             }
@@ -267,10 +269,9 @@ thai_flag_determined:
           switch (rtfToken.getType())
             {
             case RTFToken::RTK_TEXT:
-              strcpy (token, rtfToken.getVal());
+              token = Ascii2WcsCopy (token, rtfToken.getVal());
               rtfToken.reset ();
-              token += strlen (token);
-              if (isspace (token[-1]))
+              if (iswspace (token[-1]))
                 goto end_of_chunk;
               break;
 
@@ -286,14 +287,14 @@ thai_flag_determined:
                 if (isThaiUni (uc))
                   {
                     // Thai chunk is found -> stop
-                    strbuff[0] = uni2tis (uc);
-                    strbuff[1] = '\0';
+                    strbuff[0] = uc;
+                    strbuff[1] = 0;
                     isCopySkipBytes = false;
                   }
                 else
                   {
-                    strcpy (token, "\\u");
-                    strcat (token, rtfToken.getVal());
+                    token = wcpcpy (token, L"\\u");
+                    token = Ascii2WcsCopy (token, rtfToken.getVal());
                     isCopySkipBytes = true;
                   }
                 rtfToken.reset ();
@@ -307,9 +308,8 @@ thai_flag_determined:
                   // skip bytes after \uDDDD
                   if (isCopySkipBytes)
                     {
-                      strcpy (token, "\\'");
-                      strcat (token, rtfToken.getVal());
-                      token += strlen (token);
+                      token = wcpcpy (token, L"\\'");
+                      token = Ascii2WcsCopy (token, rtfToken.getVal());
                     }
                   rtfToken.reset ();
                   // decrement bytes to skip
@@ -321,9 +321,11 @@ thai_flag_determined:
                 {
                   // normal ANSI data bytes
                   // Thai TIS-620 is assumed -> stop
-                  sscanf (rtfToken.getVal(), "%x", strbuff);
+                  int c;
+                  sscanf (rtfToken.getVal(), "%x", &c);
                   rtfToken.reset ();
-                  strbuff[1] = '\0';
+                  strbuff[0] = tis2uni (c);
+                  strbuff[1] = 0;
                   goto end_of_chunk;
                 }
               break;
@@ -334,9 +336,9 @@ thai_flag_determined:
 end_of_chunk:
   if (!charConsumed)
     {
-      int len = strlen (strbuff);
+      int len = wcslen (strbuff);
       strbuff[len++] = c;
-      strbuff[len] = '\0';
+      strbuff[len] = 0;
     }
 
   return true;
@@ -455,11 +457,11 @@ end_number:
 }
 
 void
-FilterRTF::Print (char* token, bool thaiFlag)
+FilterRTF::Print (const wchar_t* token, bool thaiFlag)
 {
   if (!thaiFlag)
     {
-      for (const char *p = token; *p; ++p)
+      for (const wchar_t *p = token; *p; ++p)
         {
           printNonThai (*p);
         }
@@ -468,24 +470,24 @@ FilterRTF::Print (char* token, bool thaiFlag)
     {
       if (isUniOut)
         {
-          UTF8Reader ur (token);
-          unichar uc;
-
-          for (const char* p = token; ur.Read (uc); p = ur.curPos())
+          for (const wchar_t* p = token; *p; ++p)
             {
-              if (*p & 0x80)
+              if (isThaiUni (*p))
                 {
-                  const char *q = ur.curPos();
-                  if (q - p != curUTFWriteBytes)
+                  int bytes = UTF8Bytes (*p);
+                  if (bytes != curUTFWriteBytes)
                     {
-                      curUTFWriteBytes = q - p;
+                      curUTFWriteBytes = bytes;
                       fprintf (fpout, "\\uc%d ", curUTFWriteBytes);
                     }
-                  fprintf (fpout, "\\u%d", uc);
-                  while (p != q)
+
+                  fprintf (fpout, "\\u%d", *p);
+                  char utfBuff[10];
+                  UTF8Writer uw (utfBuff, sizeof utfBuff);
+                  uw.Write (*p);
+                  for (const char* u = utfBuff; *u; ++u)
                     {
-                      fprintf (fpout, "\\'%02x", (unsigned char) *p);
-                      ++p;
+                      fprintf (fpout, "\\'%02x", (unsigned char) *u);
                     }
                 }
               else
@@ -498,8 +500,14 @@ FilterRTF::Print (char* token, bool thaiFlag)
         {
           while (*token != 0)
             {
-              fprintf (fpout, (*token & 0x80) ? "\\'%02x" : "%c",
-                       (unsigned char) *token);
+              if (isThaiUni (*token))
+                {
+                  fprintf (fpout, "\\'%02x", uni2tis (*token));
+                }
+              else
+                {
+                  fprintf (fpout, "%c", (unsigned char) *token);
+                }
               token++;
             }
         }
@@ -507,20 +515,20 @@ FilterRTF::Print (char* token, bool thaiFlag)
 }
 
 void
-FilterRTF::printNonThai (char c)
+FilterRTF::printNonThai (wchar_t wc)
 {
-  switch (c)
+  switch (wc)
     {
-    case '}':
+    case L'}':
       if (curUTFWriteBytes != 1)
         {
           fprintf (fpout, " \\uc1 ");
         }
         /* fall through */
-    case '{':
+    case L'{':
       curUTFWriteBytes = 1;
       break;
     }
-  fprintf (fpout, "%c", c);
+  fprintf (fpout, "%c", char (wc));
 }
 

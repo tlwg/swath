@@ -10,6 +10,7 @@
 #endif
 
 #include <stdio.h>
+#include <wchar.h>
 
 class FilterX
 {
@@ -20,8 +21,8 @@ public:
 
   const char* GetWordBreak ();
 
-  virtual bool GetNextToken (char* token, bool* thaiFlag) = 0;
-  virtual void Print (char* token, bool thaiFlag) = 0;
+  virtual bool GetNextToken (wchar_t* token, bool* thaiFlag) = 0;
+  virtual void Print (const wchar_t* token, bool thaiFlag) = 0;
 
 protected:
   FILE* fpin;

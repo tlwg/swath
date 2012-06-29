@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <wctype.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
@@ -77,51 +78,50 @@ AbsWordSeg::CreateWordList (void)
 
   for (int i = 0; i < textLen; i++)
     {                                //word boundry start at i and end at j.
-      if (!IsLeadChar ((unsigned char) text[i])
-          || (i > 0 && !IsLastChar ((unsigned char) text[i - 1])))
+      if (!IsLeadChar (text[i]) || (i > 0 && !IsLastChar (text[i - 1])))
         {
           IdxSep[i] = -2;        //cannot leading for unknown word.
           continue;
         }
-      unsigned char lead_ch = (unsigned char) text[i];
+      wchar_t lead_ch = text[i];
       // FIND STRING OF PUNCTUATION.
-      if (ispunct (lead_ch))
+      if (iswpunct (lead_ch))
         {
           IdxSep[i] = cntLink;
           do
             {
-              lead_ch = (unsigned char) text[++i];
+              lead_ch = text[++i];
             }
-          while (lead_ch != '\0' && ispunct (lead_ch));
+          while (lead_ch != 0 && iswpunct (lead_ch));
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
           i--;
           continue;
         }
       // FIND STRING OF NUMBER.
-      if (isdigit (lead_ch) || isThaiDigit (lead_ch))
+      if (iswdigit (lead_ch) || isThaiUniDigit (lead_ch))
         {
           IdxSep[i] = cntLink;
           do
             {
-              lead_ch = (unsigned char) text[++i];
+              lead_ch = text[++i];
             }
-          while (lead_ch != '\0' && isdigit (lead_ch) || isThaiDigit (lead_ch)
-                 || lead_ch == '.' || lead_ch == ',');
+          while (lead_ch != 0 && iswdigit (lead_ch) || isThaiUniDigit (lead_ch)
+                 || lead_ch == L'.' || lead_ch == L',');
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
           i--;
           continue;
         }
-      // FIND STRING OF ENGLISH.
-      if (isalpha (lead_ch))
+      // FIND STRING OF NON-THAI
+      if (!isThaiUni (lead_ch))
         {
           IdxSep[i] = cntLink;
           do
             {
-              lead_ch = (unsigned char) text[++i];
+              lead_ch = text[++i];
             }
-          while (lead_ch != '\0' && isalpha (lead_ch));
+          while (lead_ch != 0 && !isThaiUni (lead_ch));
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
           i--;
@@ -131,20 +131,19 @@ AbsWordSeg::CreateWordList (void)
       trie_state_rewind (curState);
       for (int j = 0; i + j < textLen; j++)
         {
-          if (text[i + j] == 0xe6 && cntFound != 0)
-            {                        //Mai-Ya-Mok -- break position
+          if (text[i + j] == 0x0e46 && cntFound != 0)
+            {
+              //Mai-Ya-Mok -- break position
               LinkSep[cntLink - 1] = i + j + 1;
               break;
             }
-          if (!trie_state_walk (curState, tis2uni ((unsigned char) text[i + j])))
+          if (!trie_state_walk (curState, text[i + j]))
             break;
           if (trie_state_is_terminal (curState))
             {
-              short int en_word;
               //found word in dictionary
               //check whether it should be segmented here
-              if (IsLeadChar ((unsigned char) text[i + j + 1])
-                  && !Has_Karun (&text[i + j], &en_word))
+              if (IsLeadChar (text[i + j + 1]) && !Has_Karun (&text[i + j]))
                 {
                   LinkSep[cntLink] = i + j + 1;
                   LinkSep[cntLink + 1] = -1;
@@ -170,41 +169,40 @@ AbsWordSeg::CreateWordList (void)
 }
 
 bool
-AbsWordSeg::IsLeadChar (unsigned char ch)
+AbsWordSeg::IsLeadChar (wchar_t wc)
 {
-  return (ch < 0xcf || 0xda < ch) && (ch < 0xe5 || 0xee < ch);
+  return (wc < 0x007f)                      // All ASCII
+         || (0x0e01 <= wc && wc <= 0x0e2e)  // KO KAI .. HO NOKHUK
+         || (0x0e3f <= wc && wc <= 0x0e44)  // BAHT .. MAIMALAI
+         || (0x0e4f <= wc && wc <= 0x0e5b); // FONGMAN .. KHOMUT
 }
 
 bool
-AbsWordSeg::IsLastChar (unsigned char ch)
+AbsWordSeg::IsLastChar (wchar_t wc)
 {
-  return (ch < 0xe0 || 0xe4 < ch) && ch != 0xd1;
+  return (wc < 0x007f)                      // All ASCII
+         || (0x0e01 <= wc && wc <= 0x0e3f)  // KO KAI .. BAHT
+         || (0x0e45 <= wc && wc <= 0x0e5b); // LAKKHANGYAO .. KHOMUT
 }
 
 bool
-AbsWordSeg::Has_Karun (const char* sen_ptr, short int* k_idx)
+AbsWordSeg::Has_Karun (const wchar_t* sen_ptr)
 {
-  short int i;
-
-  *k_idx = -1;
-  for (i = 1; i <= 3 && sen_ptr[i] != '\0'; i++)
+  for (int i = 1; i <= 3 && sen_ptr[i] != 0; i++)
     {
-      if ((unsigned char) sen_ptr[i] == 0xec)
-        {
-          *k_idx = i;
-          return true;
-        }
+      if (sen_ptr[i] == 0x0e4c) // THANTHAKHAT
+        return true;
     }
   return false;
 }
 
 int
-AbsWordSeg::WordSeg (const char* senstr, short int* outSeps, int outSepsSz)
+AbsWordSeg::WordSeg (const wchar_t* senstr, short int* outSeps, int outSepsSz)
 {
   int bestidx;
 
-  strcpy (text, senstr);
-  textLen = strlen (senstr);
+  wcscpy (text, senstr);
+  textLen = wcslen (senstr);
   InitData ();
   CreateWordList ();
   SwapLinkSep ();

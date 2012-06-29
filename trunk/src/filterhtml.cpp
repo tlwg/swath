@@ -3,7 +3,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <string.h>
-#include <ctype.h>
+#include <wchar.h>
+#include <wctype.h>
 #include "filterhtml.h"
 #include "worddef.h"
 #include "convutil.h"
@@ -20,32 +21,32 @@ FilterHtml::FilterHtml (FILE* filein, FILE* fileout,
 }
 
 bool
-FilterHtml::GetNextToken (char* token, bool* thaiFlag)
+FilterHtml::GetNextToken (wchar_t* token, bool* thaiFlag)
 {
   if ((fpin == NULL) || (feof (fpin) != 0))
     return false;
 
   if (chbuff == 0)
     {
-      char c = ConvGetC (fpin, isUniIn);
-      if (EOF == c)
+      wchar_t wc = ConvGetC (fpin, isUniIn);
+      if (EOF == wc)
         return false;
-      *token = c;
+      *token = wc;
     }
   else
     {
       *token = chbuff;
       chbuff = 0;
     }
-  *thaiFlag = isThai (*token);
+  *thaiFlag = isThaiUni (*token);
   // find a token containing only Thai characters or non-Thai+space characters
   for (;;)
     {
       int nextChar = ConvGetC (fpin, isUniIn);
       if (EOF == nextChar)
         break;
-      if (((*token ^ nextChar) & 0x80)
-          || isspace (nextChar) || '.' == nextChar)
+      if (iswspace (nextChar) || L'.' == nextChar
+          || isThaiUni (*token) != isThaiUni (nextChar))
         {
           if (*thaiFlag)
             {
@@ -54,7 +55,7 @@ FilterHtml::GetNextToken (char* token, bool* thaiFlag)
                   nextChar = ConvGetC (fpin, isUniIn);
                   if (EOF == nextChar)
                     break;
-                  if (isThai (nextChar))
+                  if (isThaiUni (nextChar))
                     {
                       *++token = nextChar;
                       continue;
@@ -78,7 +79,7 @@ FilterHtml::GetNextToken (char* token, bool* thaiFlag)
 }
 
 void
-FilterHtml::Print (char* token, bool)
+FilterHtml::Print (const wchar_t* token, bool)
 {
-  fprintf (fpout, "%s", token);
+  ConvPrint (fpout, token, isUniOut);
 }

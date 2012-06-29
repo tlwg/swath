@@ -82,3 +82,24 @@ UTF8Reader::Read (unichar& uniChar)
     return true;
 }
 
+int
+UTF8Bytes (unichar uc)
+{
+    if (uc <= 0x007F) {
+        return 1;
+    } else if (uc <= 0x07FF) {
+        return 2;
+    } else if (uc <= 0xFFFF) {
+        return 3;
+    } else if (uc <= 0x1FFFFF) {
+        return 4;
+    } else if (uc <= 0x3FFFFFF) {
+        return 5;
+    } else if (uc <= 0x7FFFFFFF) {
+        return 6;
+    } else {
+        // error
+        return -1;
+    }
+}
+

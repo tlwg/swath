@@ -3,6 +3,7 @@
 //////////////////////////////////////////////////////////////////////
 
 #include <string.h>
+#include <wctype.h>
 #include "filterlatex.h"
 #include "worddef.h"
 #include "convutil.h"
@@ -18,84 +19,83 @@ FilterLatex::FilterLatex (FILE* filein, FILE* fileout,
     latexFlag (latexflag),
     verbatim (false)
 {
-  buffer[0] = '\0';
+  buffer[0] = 0;
 }
 
 bool
-FilterLatex::GetNextToken (char* token, bool* thaiFlag)
+FilterLatex::GetNextToken (wchar_t* token, bool* thaiFlag)
 {
-  if (buffer[0] == '\0')
-    if (!ConvGetS (buffer, sizeof buffer, fpin, isUniIn))
-      return false;
+  if (0 == buffer[0] && !ConvGetS (buffer, N_ELM (buffer), fpin, isUniIn))
+    return false;
 
-  *token = '\0';
+  *token = 0;
   if (verbatim)
     {
       *thaiFlag = false;
-      char* stVer = strstr (buffer, "\\end{verbatim}");
+      wchar_t* stVer = wcsstr (buffer, L"\\end{verbatim}");
       if (!stVer)
         {
-          strcpy (token, buffer);
-          buffer[0] = '\0';
+          wcscpy (token, buffer);
+          buffer[0] = 0;
         }
       else
         {
-          stVer += strlen ("\\end{verbatim}");
-          strncpy (token, buffer, stVer - buffer);
-          token[stVer - buffer] = '\0';
-          memmove (buffer, stVer, strlen (stVer) + 1);
+          stVer += wcslen (L"\\end{verbatim}");
+          wcsncpy (token, buffer, stVer - buffer);
+          token[stVer - buffer] = 0;
+          wmemmove (buffer, stVer, wcslen (stVer) + 1);
           verbatim = false;
         }
       return true;
     }
 
-  char* curPtr = buffer;
+  wchar_t* curPtr = buffer;
 
-  while (isPunc (*curPtr))
+  while (iswpunct (*curPtr))
     {
       curPtr++;
     }
-  *thaiFlag = isThai (*curPtr);
+  *thaiFlag = isThaiUni (*curPtr);
   curPtr++;
   if (*thaiFlag)
     {
       //for finding thai line + thailine +...+ thailine
       for (;;)
         {
-          while (isThai (*curPtr))
+          while (isThaiUni (*curPtr))
             {
               curPtr++;
             }
-          if (*curPtr != 0 && *curPtr != '\n')
+          if (*curPtr != 0 && *curPtr != L'\n')
             {
-              int prevLen = strlen (token);
-              strncat (token, buffer, curPtr - buffer);
-              token[prevLen + (curPtr - buffer)] = '\0';
+              int prevLen = wcslen (token);
+              wcsncat (token, buffer, curPtr - buffer);
+              token[prevLen + (curPtr - buffer)] = 0;
               //store new buffer
-              memmove (buffer, curPtr, strlen (curPtr) + 1);
+              wmemmove (buffer, curPtr, wcslen (curPtr) + 1);
               return true;
             }
           else
             {
-              if (*curPtr == '\n')
+              if (*curPtr == L'\n')
                 {
-                  *curPtr = '\0';
+                  *curPtr = 0;
                 }
-              strcat (token, buffer);
-              buffer[0] = '\0';
+              wcscat (token, buffer);
+              buffer[0] = 0;
               //if next a line is thai string, concat next line
               // to current line
-              if (!ConvGetS (buffer, sizeof buffer, fpin, isUniIn))
+              if (!ConvGetS (buffer, N_ELM (buffer), fpin, isUniIn))
                 {
-                  strcat (token, "\n");
+                  wcscat (token, L"\n");
                   return true;  //next GetToken() must return false
                 }
               curPtr = buffer;
 #ifdef CAT_THAI_LINES
-              if (!isThai (*curPtr))    //not thai character
+              if (!isThaiUni (*curPtr))    //not thai character
 #endif
                 {
-                  strcat (token, "\n");
+                  wcscat (token, L"\n");
                   return true;
                 }
             }
@@ -103,23 +103,23 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
     }
   else
     {
-      while (*curPtr && !isThai (*curPtr))
+      while (*curPtr && !isThaiUni (*curPtr))
         {
           curPtr++;
         }
       if (*curPtr != 0)
         {
-          strncpy (token, buffer, curPtr - buffer);
-          token[curPtr - buffer] = '\0';
+          wcsncpy (token, buffer, curPtr - buffer);
+          token[curPtr - buffer] = 0;
           //store new buffer
-          memmove (buffer, curPtr, strlen (curPtr) + 1);
+          wmemmove (buffer, curPtr, wcslen (curPtr) + 1);
         }
       else
         {
-          strcpy (token, buffer);
-          buffer[0] = '\0';     //clear buffer
+          wcscpy (token, buffer);
+          buffer[0] = 0;     //clear buffer
         }
-      if (strstr (token, "\\begin{verbatim}") != NULL)
+      if (wcsstr (token, L"\\begin{verbatim}") != NULL)
         {
           verbatim = true;      //entrance to verbatim model
         }
@@ -129,18 +129,9 @@ FilterLatex::GetNextToken (char* token, bool* thaiFlag)
 }
 
 void
-FilterLatex::Print (char* token, bool thaiFlag)
+FilterLatex::Print (const wchar_t* token, bool thaiFlag)
 {
-  if (thaiFlag && latexFlag != 0)
-    {
-      unsigned char output[2000];
-      AdjustText ((unsigned char*) token, output, sizeof output);
-      fprintf (fpout, "%s", output);
-    }
-  else
-    {
-      fprintf (fpout, "%s", token);
-    }
+  ConvPrint (fpout, token, isUniOut);
   fflush (fpout);
 }
 

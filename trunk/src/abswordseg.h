@@ -9,6 +9,7 @@
 #pragma once
 #endif // _MSC_VER >= 1000
 
+#include <wchar.h>
 #include <datrie/trie.h>
 #include "worddef.h"
 
@@ -19,7 +20,7 @@ public:
   virtual ~AbsWordSeg ();
 
   bool InitDict (const char* dictPath);
-  int WordSeg (const char* senstr, short int* outSeps, int outSepsSz);
+  int WordSeg (const wchar_t* senstr, short int* outSeps, int outSepsSz);
 
 protected:
   //============Function for Wordseg=====================
@@ -34,7 +35,7 @@ protected:
 protected:
   SepType SepData[3];
   unsigned short int textLen;
-  char text[MAXLEN];
+  wchar_t text[MAXLEN];
   short int LinkSep[3 * MAXLEN];
   short int IdxSep[MAXLEN];
 
@@ -42,10 +43,10 @@ private:
   void InitData ();
 
   //============Check Character Type Function============
-  static bool IsLeadChar (unsigned char ch);
-  static bool IsLastChar (unsigned char ch);
+  static bool IsLeadChar (wchar_t wc);
+  static bool IsLastChar (wchar_t wc);
   //============Check Karan rule=========================
-  static bool Has_Karun (const char* sen_ptr, short int* k_idx);
+  static bool Has_Karun (const wchar_t* sen_ptr);
 
 private:
     Trie*  MyDict;
