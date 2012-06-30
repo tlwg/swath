@@ -103,10 +103,9 @@ FilterRTF::GetNextToken (wchar_t* token, bool* thaiFlag)
   int   c;
   RTFToken rtfToken;
 
-  //sequence of characters is    \ ' x x (one character for Thai char)
   *token = 0;
 
-  if ((fpin == NULL) || (feof (fpin)))
+  if (!fpin || feof (fpin))
     return false;
 
   // get first character to determine *thaiFlag
