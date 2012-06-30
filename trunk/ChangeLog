@@ -1,5 +1,13 @@
 2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Source clean up.
+
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Remove misleading comment.
+	  - Make if-condition more concise.
+
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Fix memleak.
 
 	* src/convutil.cpp (ConvPrint):
