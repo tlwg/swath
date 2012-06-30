@@ -1,3 +1,10 @@
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix memleak.
+
+	* src/convutil.cpp (ConvPrint):
+	  - Delete allocated TextWriter object before exit.
+
 2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Source clean up.

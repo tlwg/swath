@@ -82,11 +82,15 @@ ConvPrint (FILE* fpout, const wchar_t* wcs, bool isUniOut)
   while (*wcs)
     {
       if (!writer->Write (*wcs++))
-        return false;
+        {
+          delete writer;
+          return false;
+        }
     }
   writer->Write (0);
   fprintf (fpout, "%s", output);
 
+  delete writer;
   return true;
 }
 
