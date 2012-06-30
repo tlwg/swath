@@ -29,6 +29,7 @@ public:
 
   ETokenType  getType() const { return type; }
   const char* getVal() const  { return val; }
+  bool        isEmpty() const { return valLen > 0; }
 
   void reset ();
   void set (char c);
@@ -46,6 +47,7 @@ inline void
 RTFToken::reset ()
 {
   type = RTK_NONE;
+  val[0] = 0;
   valLen = 0;
 }
 
@@ -373,7 +375,7 @@ FilterRTF::chgCharState (ECharState state, char charIn, bool* charConsumed,
       if ('\\' == charIn)
         {
           // flush currently collected token
-          if (rtfToken->getVal()[0] != 0)
+          if (!rtfToken->isEmpty())
             {
               rtfToken->terminate (RTFToken::RTK_TEXT);
             }

@@ -1,5 +1,16 @@
 2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	More safety on checking RTFToken emptiness.
+
+	* src/filterrtf.cpp (class RTFToken):
+	  - Add isEmpty() method for checking emptiness.
+	  - Also initialize val[] string on reset(), as some code did check
+	    its emptiness by peeking this string.
+	* src/filterrtf.cpp (FilterRTF::chgCharState):
+	  - Check rtfToken emptiness with the new isEmpty() method.
+
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Fix buffer overflow bug caused by some RTF docs.
 
 	* src/filterrtf.h (class FilterRTF):
