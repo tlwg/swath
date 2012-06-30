@@ -1,5 +1,14 @@
 2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Fix buffer overflow bug caused by some RTF docs.
+
+	* src/filterrtf.h (class FilterRTF):
+	  - Allocate more space for strbuff[] member. 5 was too few when
+	    facing non-Thai characters like '\u65533' (plus its skip bytes).
+	    The safe value is 37, for U+7FFFFFFF.
+
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Source clean up.
 
 	* src/filterrtf.cpp (FilterRTF::GetNextToken):

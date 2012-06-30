@@ -43,7 +43,7 @@ private:
 
 private:
   ECharState psState;
-  wchar_t    strbuff[5];
+  wchar_t    strbuff[40];
   int  curUTFReadBytes;
   int  curUTFWriteBytes;
 };
