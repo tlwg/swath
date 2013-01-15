@@ -338,7 +338,7 @@ main (int argc, char* argv[])
                                         N_ELM (wsegOut));
                       ConvPrint (stdout, wsegOut, isUniOut);
                     }
-                  printf ("%s", wbr);
+                  printf ("%s", stopstr);
                 }
             }
           else

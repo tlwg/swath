@@ -1,3 +1,10 @@
+2013-01-15  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix non-Mule mode by not inserting wbr at the end of line.
+
+	* src/wordseg.cpp (main):
+	  - Print stopstr instead of wbr in !wholeLine case.
+
 2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	More safety on checking RTFToken emptiness.
