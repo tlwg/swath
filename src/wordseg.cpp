@@ -295,11 +295,7 @@ main (int argc, char* argv[])
     }
   else
     {
-      char stopstr[20];
-      if (muleMode)
-        strcpy (stopstr, wbr);
-      else
-        stopstr[0] = '\0';
+      const char *stopstr = muleMode ? wbr : "";
       while (!feof (stdin))
         {
           if (mode == 0)
