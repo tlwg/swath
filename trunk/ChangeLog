@@ -1,5 +1,16 @@
 2013-01-15  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Fix potential buffer overflow in Mule mode.
+
+	* src/wordseg.cpp (main):
+	  - Make stopstr a simple pointer to wbr or "".
+	    strcpy() to fixed array can cause buffer overflow vulnerability.
+
+	Thanks Dominik Maier for the report.
+	http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=698189
+
+2013-01-15  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Fix non-Mule mode by not inserting wbr at the end of line.
 
 	* src/wordseg.cpp (main):
