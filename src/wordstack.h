@@ -20,8 +20,8 @@ public:
 
   bool Push (wordState w);
   bool Pop ();
-  wordState Top ();
-  bool Empty ();
+  wordState Top () const;
+  bool Empty () const;
 };
 
 inline
@@ -53,13 +53,13 @@ WordStack::Pop ()
 }
 
 inline bool
-WordStack::Empty ()
+WordStack::Empty () const
 {
   return top_idx < 0;
 }
 
 inline wordState
-WordStack::Top ()
+WordStack::Top () const
 {
   return (top_idx >= 0) ? stack[top_idx] : wordState (-1, 0);
 }

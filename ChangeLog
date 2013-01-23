@@ -2,6 +2,17 @@
 
 	Source clean-ups.
 
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence):
+	  - Drop unused vars 'nextSepIdx' and 'curState'.
+	* src/wordstack.h (WordStack::Top, WordStack::Empty):
+	  - Make read-only methods const.
+
+	Thanks Neutron Soutmun for the cppheck.
+
+2013-01-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean-ups.
+
 	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
 	  - Get rid of unused vars 'amb_sep_cnt'.
 	* src/abswordseg.cpp (AbsWordSeg::GetBestSen):
