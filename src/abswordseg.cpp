@@ -73,7 +73,6 @@ void
 AbsWordSeg::CreateWordList (void)
 {
   int cntLink = 0;
-  int amb_sep_cnt = 0;
   TrieState* curState = trie_root (MyDict);
 
   for (int i = 0; i < textLen; i++)
@@ -163,7 +162,6 @@ AbsWordSeg::CreateWordList (void)
         }
     }
   trie_state_free (curState);
-//   amb_sep[amb_sep_cnt].st_idx=-1;
   LinkSep[cntLink] = -1;
   LinkSep[++cntLink] = -1;        //add stop value
 }
@@ -286,7 +284,7 @@ AbsWordSeg::GetBestSen (int bestidx, short int* outSeps, int outSepsSz)
 {
   int t;
 
-  for (t = 0; SepData[bestidx].Sep[t] != textLen && t < outSepsSz; t++)
+  for (t = 0; t < outSepsSz && SepData[bestidx].Sep[t] != textLen; t++)
     {
       outSeps[t] = SepData[bestidx].Sep[t];
     }
