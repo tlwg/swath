@@ -1,3 +1,14 @@
+2013-01-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean-ups.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Get rid of unused vars 'amb_sep_cnt'.
+	* src/abswordseg.cpp (AbsWordSeg::GetBestSen):
+	  - Reorder condition so the index 't' is range-checked before use.
+
+	Thanks Neutron Soutmun for the cppheck.
+
 2013-01-15  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Fix potential buffer overflow in Mule mode.
