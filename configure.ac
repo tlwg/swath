@@ -1,12 +1,12 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT(src/wordseg.cpp)
-dnl Every other copy of the package version number gets its value from here
-AM_INIT_AUTOMAKE(swath, 0.4.3svn)
+AC_PREREQ(2.50)
 
-AC_SUBST(VERSION)
-
+AC_INIT(swath, 0.4.3svn, thai-linux-foss-devel@googlegroups.com)
+AC_CONFIG_SRCDIR([src/wordseg.cpp])
 AC_CONFIG_MACRO_DIR([m4])
+
+AM_INIT_AUTOMAKE(dist-xz no-dist-gzip)
 
 dnl Checks for programs.
 AC_PROG_CXX

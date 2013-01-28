@@ -1,5 +1,19 @@
 2013-01-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Modernize autoconf & switch to XZ tarball compression.
+
+	* configure.in -> configure.ac:
+	  - Rename file for modern autoconf.
+	  - Require autoconf2.50.
+	  - Replace deprecated AC_INIT() form with PACKAGE, VERSION form.
+	  - Also add BUG-REPORT address.
+	  - Use AC_CONFIG_SRCDIR() instead for the old AC_INIT() form.
+	  - Replace deprecated AC_INIT_AUTOMAKE() form with OPTIONS form,
+	    passing "dist-xz no-dist-gzip" options to switch to XZ tarball.
+	  - Drop unneeded AC_SUBST(VERSION)
+
+2013-01-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Update dictionary from thailatex SVN.
 
 	* data/tdict-city.txt:
