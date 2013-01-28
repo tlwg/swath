@@ -1,3 +1,20 @@
+2013-01-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Update dictionary from thailatex SVN.
+
+	* data/tdict-city.txt:
+	* data/tdict-common.txt:
+	* data/tdict-district.txt:
+	* data/tdict-geo.txt:
+	* data/tdict-ict.txt:
+	* data/tdict-lang-ethnic.txt:
+	* data/tdict-proper.txt:
+	* data/tdict-science.txt:
+	* data/tdict-spell.txt:
+	* data/tdict-std-compound.txt:
+	  - Update dictionary from dehyphenated source for thailatex
+	    hyphenation patterns.
+
 2013-01-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Source clean-ups.
