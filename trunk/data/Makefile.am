@@ -37,4 +37,4 @@ swathdic.tri: swathdic.lst
 	  ln -s $(srcdir)/swathdic.abm . ; \
 	fi
 	rm -f swathdic.tri
-	$(TRIETOOL) swathdic add-list -e utf-8 $(srcdir)/swathdic.lst
+	$(TRIETOOL) swathdic add-list -e utf-8 swathdic.lst
