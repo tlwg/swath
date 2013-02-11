@@ -1,3 +1,15 @@
+0.5.0 (2013-02-11)
+=====
+- Character encoding conversion is now spontaneous, no more buffering via
+  temporary file.
+- Rewritten RTF filter. It's now tested to work with real RTF document.
+- Process characters as Unicode internally, so that characters not present
+  in TIS-620 are not lost in output.
+- Fix potential buffer overflow vulnerability in Mule mode.
+- Updated word break dictionary.
+- Significant source clean-ups.
+- Switch to XZ tarball compression.
+
 0.4.3 (2012-06-13)
 =====
 - Replace word break dictionary with the word lists used to prepare
