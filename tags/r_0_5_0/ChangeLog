@@ -1,0 +1,1647 @@
+2013-02-11  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.ac, NEWS:
+	=== Version 0.5.0 ===
+
+2013-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix non-srcdir build failure.
+
+	* data/Makefile.am:
+	  - Read swathdic.lst from build dir, not source dir, as it's now
+	    generated file.
+
+2013-01-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Modernize autoconf & switch to XZ tarball compression.
+
+	* configure.in -> configure.ac:
+	  - Rename file for modern autoconf.
+	  - Require autoconf2.50.
+	  - Replace deprecated AC_INIT() form with PACKAGE, VERSION form.
+	  - Also add BUG-REPORT address.
+	  - Use AC_CONFIG_SRCDIR() instead for the old AC_INIT() form.
+	  - Replace deprecated AC_INIT_AUTOMAKE() form with OPTIONS form,
+	    passing "dist-xz no-dist-gzip" options to switch to XZ tarball.
+	  - Drop unneeded AC_SUBST(VERSION)
+
+2013-01-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Update dictionary from thailatex SVN.
+
+	* data/tdict-city.txt:
+	* data/tdict-common.txt:
+	* data/tdict-district.txt:
+	* data/tdict-geo.txt:
+	* data/tdict-ict.txt:
+	* data/tdict-lang-ethnic.txt:
+	* data/tdict-proper.txt:
+	* data/tdict-science.txt:
+	* data/tdict-spell.txt:
+	* data/tdict-std-compound.txt:
+	  - Update dictionary from dehyphenated source for thailatex
+	    hyphenation patterns.
+
+2013-01-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean-ups.
+
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence):
+	  - Drop unused vars 'nextSepIdx' and 'curState'.
+	* src/wordstack.h (WordStack::Top, WordStack::Empty):
+	  - Make read-only methods const.
+
+	Thanks Neutron Soutmun for the cppheck.
+
+2013-01-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean-ups.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Get rid of unused vars 'amb_sep_cnt'.
+	* src/abswordseg.cpp (AbsWordSeg::GetBestSen):
+	  - Reorder condition so the index 't' is range-checked before use.
+
+	Thanks Neutron Soutmun for the cppheck.
+
+2013-01-15  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix potential buffer overflow in Mule mode.
+
+	* src/wordseg.cpp (main):
+	  - Make stopstr a simple pointer to wbr or "".
+	    strcpy() to fixed array can cause buffer overflow vulnerability.
+
+	Thanks Dominik Maier for the report.
+	http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=698189
+
+2013-01-15  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix non-Mule mode by not inserting wbr at the end of line.
+
+	* src/wordseg.cpp (main):
+	  - Print stopstr instead of wbr in !wholeLine case.
+
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	More safety on checking RTFToken emptiness.
+
+	* src/filterrtf.cpp (class RTFToken):
+	  - Add isEmpty() method for checking emptiness.
+	  - Also initialize val[] string on reset(), as some code did check
+	    its emptiness by peeking this string.
+	* src/filterrtf.cpp (FilterRTF::chgCharState):
+	  - Check rtfToken emptiness with the new isEmpty() method.
+
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix buffer overflow bug caused by some RTF docs.
+
+	* src/filterrtf.h (class FilterRTF):
+	  - Allocate more space for strbuff[] member. 5 was too few when
+	    facing non-Thai characters like '\u65533' (plus its skip bytes).
+	    The safe value is 37, for U+7FFFFFFF.
+
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Remove misleading comment.
+	  - Make if-condition more concise.
+
+2012-06-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix memleak.
+
+	* src/convutil.cpp (ConvPrint):
+	  - Delete allocated TextWriter object before exit.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/worddef.h (isPunc):
+	  - Drop unused and meaningless function.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Handle CR (80..A0) non-Thai chars in RTF
+
+	* src/worddef.h (isThai, tis2uni):
+	  - Check for Thai more accurately (c > 0xa0, not just c & 0x80).
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - wbr in unicode mode should be escaped, now that UTF-8 interception
+	    technique has gone.
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Distinguish non-Thai in ANSI data bytes.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Also escape 80..A0 non-Thai chars.
+	* src/filterrtf.cpp (PrintEscapedUTF8):
+	  - Refactor common code.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/convutil.h, src/convutil.cpp (-ConvCopy):
+	  - Remove unused function.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Use UCS as internal storage for third language character support.
+
+	* src/convutil.h, src/convutil.cpp:
+	  - Rewrite ConvGetS(), ConvGetC() to return wchar_t (string).
+	  - Add ConvPrint() for printing wchar_t string as given encoding
+	    scheme (UTF-8/TIS-620).
+	  - Add Ascii2WcsCopy() and Ascii2WcsCat() for transferring between
+	    ASCII char/wchar_t arrays.
+
+	* src/wordseg.cpp (main):
+	  - Drop UTF-8 -> TIS-620 conversion as preprocessing and replace it
+	    with ConvGetS(), which gives wchar_t string.
+	  - Replace char arrays with wchar_t ones, along with all manipulations.
+	* src/wordseg.cpp (WordSegmentation):
+	  - Change args from char* to wchar_t*.
+	  - No longer requires isUniOut arg, as it now only works on internal
+	    UCS storage. The conversion is moved back to higher layer again.
+	* src/wordseg.cpp (SplitToken):
+	  - Change args from char* to wchar_t*.
+
+	* src/abswordseg.h (class AbsWordSeg):
+	  - Redeclare char -> wchar_t:
+	    - WordSeg() arg
+	    - 'text' member
+	    - IsLeadChar(), IsLastChar(), Has_Karun() args
+	* src/abswordseg.cpp (CreateWordList, IsLeadChar, IsLastChar,
+	  Has_Karun, WordSeg):
+	  - Replace char -> wchar_t, along with manipulations.
+	* src/abswordseg.cpp (CreateWordList):
+	  - Instead of checking for English with isalpha(), check for
+	    !isThaiUni() instead, to cover third language characters.
+	* src/abswordseg.cpp (Has_Karun):
+	  - Don't bother calculate the THANTHAKHAT position, as it's never used.
+	* src/worddef.h (isThaiUniDigit):
+	  - Add helper function for checking Thai digits.
+
+	* src/filterx.h (class FilterX):
+	* src/filterlatex.h, src/filterhtml.h, src/filterrtf.h:
+	  - Redeclare abstract GetNextToken() and Print() args to wchar_t*.
+
+	* src/filterlatex.h (class FilterLatex):
+	  - Redeclare 'buffer' member as wchar_t array.
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace char -> wchar_t, along with manipulations.
+	* src/filterlatex.cpp (FilterLatex::Print):
+	  - Ignore latexFlag case which calls AdjustText(). The shaping is
+	    outdated and not worth working on.
+
+	* src/filterhtml.h (class FilterHtml):
+	  - Redeclare 'chbuff' member as wchar_t.
+	* src/filterhtml.cpp (FilterHtml::GetNextToken, FilterHtml::Print):
+	  - Replace char -> wchar_t, along with manipulations.
+
+	* src/filterrtf.h (class FilterRTF):
+	  - Redeclare char -> wchar_t:
+	    - printNonThai() method arg
+	    - strbuff[] member
+	* src/filterrtf.cpp (FilterRTF::GetNextToken, FilterRTF::Print):
+	  - Replace char -> wchar_t, along with manipulations.
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Add missing null-terminations on token.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Change logic from UTF-8 interception to direct UCS manipulation.
+	    This also requires pre-calculation of UTF-8 bytes.
+	    Helping function added in conv/utf8x.{h,cxx}.
+	  - Write UTF-8 skip bytes by the aids of UTF8Writer.
+	* conv/utf8.h, conv/utf8.cxx (UTF8Bytes):
+	  - Add utility function for pre-calculating UTF-8 bytes used by a UCS.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/filterhtml.cpp (FilterHtml::GetNextToken):
+	  - Check for EOF on every getc, instead of occasionally checking
+	    feof().
+	  - Rewrite token collecting loop to be more concise.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/filterx.h, src/filterhtml.h, src/filterhtml.cpp:
+	  - Move FilterX::chbuff member to FilterHtml, as it's implementation
+	    specific and was only used here. (FilterLatex uses different kind
+	    of buffer, for example.)
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/filterhtml.cpp (FilterHtml::GetNextToken):
+	  - Drop unnecessary var 'sttoken'.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/wordseg.cpp (main):
+	  - Drop unused vars 'leadch', 'folch'.
+	  - Move 'line', 'output' declarations to where they're used.
+
+2012-06-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Rename AbsWordSeg members 'sen', len' to sensible names.
+
+	* src/abswordseg.h (class AbsWordSeg):
+	* src/abswordseg.cpp:
+	* src/longwordseg.cpp:
+	* src/maxwordseg.cpp:
+	  - Rename AbsWordSeg::{sen,len} to 'text' and 'textLen' respectively.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/abswordseg.cpp (AbsWordSeg::InitData):
+	  - Make variable definition more concise.
+	  - Drop unnecessary loop condition.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/abswordseg.h, src/abswordseg.cpp (class AbsWordSeg):
+	  - Make LinkSep, IdxSep members array instead of pointer to allocated
+	    memory.
+	  - Drop unused methods IsNumber(), IsEnglish().
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Remove unused vars Buff, data_idx.
+	  - Move variable definitions to where they're used.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Print "Output:" title before blank line.
+
+	* src/wordseg.cpp (main):
+	  - [plain text] Previous commit introduced title-less output
+	    for blank line. Reorder the steps it to fix.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/wordseg.cpp (main):
+	  - Replace fgetc() loop with fgets().
+	  - [plain text] Also print a blank line in response to blank input.
+
+2012-06-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/wordseg.cpp (main):
+	  - Move some vars into code block where they're used.
+	  - Fix var name spelling 'thaifag' -> 'thaiFlag'.
+
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/wordseg.cpp (SplitToken):
+	  - Drop unused var 'i'.
+	  - Rearrange loop condition and make assignments concise.
+
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Source clean up.
+
+	* src/wordseg.cpp:
+	  - Drop myisspace() and just use libc isspace().
+	  - Drop unused functions RemoveJunkChars() and IsValidChar().
+
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Make RTFToken methods inline.
+
+	* src/filterrtf.cpp (RTFToken):
+	  - Make methods inline functions.
+
+2012-06-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Rearrange functions so get related functions closer.
+
+	* src/filterrtf.cpp:
+	  - Move chgCharState() to near GetNextToken().
+
+2012-06-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Rewrite RTF reader for Unicode support.
+
+	* src/worddef.h (isThaiUni, uni2tis):
+	  - Add utility functions for UCS checking & conversion.
+	* src/filterrtf.h, src/filterrtf.cpp:
+	  - Make chgCharState() member returns token as object, rather than
+	    letting the caller does all the jobs.
+	  - Add class RTFToken with its manipulation methods.
+	  - Rewrite FilterRTF::GetNextToken() based on the extended state
+	    machine.
+	  - Adjust FilterRTF::Print() behavior, as the new reader now
+	    tokenizes more accurately. Some common code has been split into
+	    the new printNonThai() method.
+	  - Drop the FilterRTF::isThaiChar() method. Now unneeded.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix RTF Unicode output with proper \ucN.
+
+	* src/filterrtf.h (class FilterRTF):
+	  - Add curUTFBytes member to keep track of current UTF-8 bytes.
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - Initialize curUTFBytes = 1.
+	  - Initialize Unicode word break with normal UTF-8, to be escaped
+	    like ordinary characters.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Fix UTF-8 escaping loop so it outputs correctly.
+	  - Re-initialize curUTFBytes to 1 when entering and leaving scope
+	    delimitors '{' and '}'.
+	  - Add \ucN before a UTF-8 character and before leaving '}' scope
+	     when UTF-8 byte count changes from previous value.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix lost input chars near EOF.
+
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - When EOF is found, check for token length before returning true
+	    or false, not just blindly returning false.
+	  - Drop an unnecessary feof() check.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Only escape Thai characters, not ASCII.
+
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - Only escape characters with MSB = 1, i.e. non-ASCII.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Use \u8203\'3f as word break for TIS-620 RTF
+
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - Pass "\u8203\'3f" as word break for TIS-620 output.
+
+2012-06-25  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Escape Unicode characters in UTF text.
+
+	* conv/convkit.h (TextReader):
+	  - Add curPos() public metod for accessing current reading pos.
+	* src/filterrtf.cpp (FilterRTF::Print):
+	  - If output is Unicode, escape each output character in the form
+	    "\uDDDD\'XX\'YY\'ZZ" (DDDD = decimal Unicode code point;
+	    \xXX\xYY\xZZ = UTF-8 bytes), according to Widhaya Trisarnwadhana.
+
+2012-06-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Escape RTF word break.
+
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - Escape word break text, according to Widhaya Trisarnwadhana.
+
+2012-06-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Revert input conversion on FilterRTF.
+
+	* src/filterhtml.cpp (FilterRTF::GetNextToken):
+	  - Revert ConvGetC() replacements to fgetc(). RTF stores characters
+	    in escaped form, not directly UTF-8.
+
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Add input conversion for FilterRTF.
+
+	* src/filterhtml.cpp (FilterRTF::GetNextToken):
+	  - Replace fgetc() calls with ConvGetC().
+
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Add input conversion for FilterHtml.
+
+	* src/convutil.h, src/convutil.cpp:
+	  - Add ConvGetC() function resembling fgetc().
+	* src/filterhtml.cpp (FilterHtml::GetNextToken):
+	  - Replace fgetc() calls with ConvGetC().
+
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Drop MAXCHAR macro and just use MAXLEN.
+
+	* src/wordseg.cpp:
+	  - Drop MAXCHAR macro def.
+	  - s/MAXCHAR/MAXLEN/g.
+
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Add input conversion for FilterLatex.
+
+	* src/Makefile.am, +src/convutil.h, +src/convutil.cpp:
+	  - Add conversion utility functions resembling libc functions.
+	  - Move UCopy() from src/wordseg.cpp to ConvCopy() here.
+	  - Add ConvGetS() function resembling fgets().
+	* src/wordseg.cpp (WordSegmentation):
+	  - Replace UCopy() calls with ConvCopy().
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace fgets() calls with ConvGetS().
+
+2012-05-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Only convert output text, not the wbr string.
+
+	Let's move the output sentence creation into WordSegmentation().
+	This means Unicode moving conversion from main() (upper layer),
+	and wbr insertion from AbsWordSeg::WordSeg() (lower layer).
+
+	* src/wordseg.cpp (WordSegmentation):
+	  - Add isUniOut parameter.
+	  - Also add outputSz to guard against buffer overflow.
+	  - Assuming AbsWordSeg::WordSeg() returns sep points array,
+	    alternately do text conversion and inserting wbr at the sep points.
+	* src/wordseg.cpp (UCopy):
+	  - Add the utility function for copying text with conditional
+	    conversion.
+	* src/wordseg.cpp (main):
+	  - Add "isUniOut" and "sizeof output" args to all WordSegmentation()
+	    calls.
+	  - Replace all UPrint() calls with plain printf(), as no more
+	    conversion is needed at this layer.
+	  - Adjust loop condition a little bit.
+	* src/wordseg.cpp (UPrint):
+	  - Drop the now-unused utility function.
+	* src/abswordseg.h, src/abswordseg.cpp (WordSeg):
+	  - Redefine WordSeg() method to accept outSeps[] array, with size,
+	    and return the total members filled.
+	* src/abswordseg.h, src/abswordseg.cpp (GetBestSen):
+	  - Simply copy the SepData[bestidx] to outSeps[] array, instead of
+	    copying the original text and inserting wbr.
+	* src/abswordseg.h, src/abswordseg.cpp (GetWord):
+	  - Drop the now-unused method.
+	* src/abswordseg.h (SwapLinkSep, GetBestSen, CreateWordList,
+	  copySepData):
+	  - Make methods non-virtual, no need.
+
+2012-05-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Null-terminate conversion output string.
+
+	* conv/conv.cxx (conv): Write '\0' to terminate output string.
+
+2012-05-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Prepare internal APIs for on-the-fly conversion.
+
+	* src/filefilter.h, src/filefilter.cpp (CreateFilter):
+	  - Add isUniIn, isUniOut parameters.
+	  - Pass the additional args to filter c-tors.
+	* src/filterx.h (FilterX):
+	  - Add isUniIn, isUniOut members and stores them via c-tor.
+	* src/filterhtml.h, src/filterhtml.cpp (FilterHtml):
+	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex):
+	* src/filterlambda.h (FilterLambda):
+	* src/filterrtf.h, src/filterrtf.cpp (FilterRTF):
+	  - Add isUniIn, isUniOut parameters to c-tors and pass them to
+	    FilterX base c-tor.
+	* src/wordseg.cpp (UPrint):
+	  - Add the UPrint utility function which condintally convert
+	    encoding before printing.
+	* src/wordseg.cpp (main):
+	  - Drop old via-tmpfile conversion codes.
+	  - Replace tmpin, tmpout with stdin and stdout.
+	  - Add bool isUniIn, isUniOut vars.
+	  - Pass isUniIn, isUniOut to CreateFilter() for formatted files.
+	  - For plain text:
+	    - Conditionally convert input text before processing.
+	    - Conditionally convert output text chunk by chunk using UPrint().
+	    - Never convert wbr text.
+
+2012-04-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	== Begin of spontaneous conversion branch ==
+	Adjust convkit API for in-memory conversion.
+
+	* conv/conv.h, conv/conv.cxx:
+	 - Change conv() API to accept in-memory storage.
+	* conv/Makefile.am, -conv/convkit.cxx:
+	 - Move TransferText() code into conv() and remove the function.
+	* conv/convkit.h:
+	 - Make TextReader & TextWriter include internal text buffer
+	   and pointer.
+	 - Add getChar(), writeChar(), spaceLeft() methods.
+	* conv/tis620.h, conv/tis620.cxx, conv/utf8.h, conv/utf8.cxx:
+	 - Adjust concrete classes according to the newer base classes.
+	* conv/convfact.h, conv/convfact.cxx:
+	 - Adjust the factories according to the newer classes.
+
+2012-06-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Post-release version suffix added.
+
+2012-06-13  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.4.3 ===
+
+2012-06-13  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* AUTHORS: Add info for word list source.
+
+2012-06-12  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am, +data/tdict-*.txt:
+	  - Add dictionary source from dehyphenated text of thailatex
+	    hyphenation dictionary source.
+
+	* data/Makefile.am, -data/swathdic.lst:
+	  - Drop old dictionary source.
+	  - Build the dictionary source by catenating dict files.
+
+2012-06-12  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am, +data/update-dict.sh:
+	  - Add script for updating dictionary from thailatex hyphenation
+	    source.
+
+2012-03-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am, data/swathdic.lst: Convert word list to UTF-8.
+
+2012-03-22  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Post-release version suffix added.
+
+2012-02-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.4.2 ===
+
+2012-02-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Fix GCC warnings on sscanf format strings.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - The last "wState" use is also temporary, replaced with
+	    intermediate object.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Split out the assignment in if-condition.
+	  - Delay the "curState" declaration and merge the steps.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Declare vars where they are used.
+	  - "Idx" var type from short int to int, to match function args it
+	    keeps up with.
+	  - First "wState" use is temporary, replaced with intermediate object.
+	  - "tmps" var eliminated, replaced with immediate assignment.
+	  - Merge "looptime" break into while-loop condition.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Change MaxWordSeg SepType::Score type from float to int.
+
+	All calculations are already in int, and the casts are just
+	unnecessary, and indicates that "float" is never intended.
+	Change short int to int to be more machine-native.
+
+	* src/worddef.h:
+	  - Change SepType::Score type to int.
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Change types of "bestScore", "tmps", "score[]" to int.
+	  - Drop all (short int) type casts.
+
+2012-01-04  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
+	  - Declare vars where they are used.
+	  - Drop unused var "cntArea".
+	  - Rearrange source.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Add the missing case of "below vowel + tone mark".
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (static data, idxVowelToneMark):
+	  - Move static data definitions to near FilterLatex::AdjustText().
+	  - Rearrange the data so that 3 sets of characters are handled
+	    separately (top marks, above marks, below marks).
+	  - Split idxVowelToneMark() into idxTopMark(), idxAboveMark() and
+	    idxBelowMark(); make them return -1 on failure, for easy data
+	    management.
+	  - Replace all 8-bit codes with hex.
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Call the classifiers and use the data under new convention.
+	  - Fix bug for the case of below vowels under Do Chada, To Patak.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Guard against buffer overflow on extra char (Sara-Aa).
+	  - Change boundary checking condition, to improve the chance of
+	    optimization.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Get rid of "chgchar" var by just writing output first and
+	    overwriting it later.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Add "output_sz" arg and check to prevent buffer overflow.
+	  - Also return total written bytes for caller to check.
+	* src/filterlatex.cpp (FilterLatex::Print):
+	  - Adjust call accordingly.
+
+2012-01-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Drop unnecessary vars "tmpInput" and "tmpOutput".
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Adjust source.
+
+	* src/filterlatex.cpp (FilterLatex::Print):
+	  - Use stack array instead of heap allocation for output buffer.
+	  - Merge if-cases.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Adjust source.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace hard-coded buffer size 1999 with "sizeof buffer".
+	  - Get rid of "stPtr" var, which was set only once to "buffer"
+	    and never changed.
+	  - Declare vars where they are used.
+	  - Adjust brackets & conditions.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.h:
+	  - Drop "findAmbArea()" method, which was never defined nor
+	    referenced from anywhere.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Get rid of temporary member MaxWordSeg::score.
+
+	Its only use was in WordSegArea(), so it can be local var.
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Declare score as local array (no heap allocation).
+	* src/maxwordseg.h, src/maxwordseg.cpp:
+	  - Drop "score" new/delete.
+	  - Drop now-empty d-tor.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Get rid of temporary member MaxWordSeg::sepIdx.
+
+	Its only use was to pass value between CreateSentence() and
+	saveSegment() methods. This should be done via function arg instead.
+
+	The other occurrence of "sepIdx" in WordSegArea() is already local
+	var, and thus irrelevant.
+
+	* src/maxwordseg.h, src/maxwordseg.cpp (MaxWordSeg::saveSegment):
+	  - Add "sepIdx" arg and return its updated value when finished.
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
+	  - Declare "sepIdx" as local var.
+	  - Update its value from saveSegment() return value.
+	* src/maxwordseg.h (class MaxWordSeg):
+	  - Drop "sepIdx" member.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.h, src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg):
+	  - Drop unused "noAmbArea" member.
+
+2012-01-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.h:
+	  - Rearrange member declarations.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h:
+	  - Rearrange member declarations.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/dictpath.h:
+	* src/wordstack.h:
+	* src/worddef.h:
+	* src/abswordseg.h:
+	* src/longwordseg.h:
+	* src/maxwordseg.h:
+	  - Adjust repeated-inclusion-preventing preprocessor style for
+	    consistency.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	  - Initialize members with initialization list where possible.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterrtf.h:
+	  - More member declaration rearrangement.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterhtml.h, src/filterhtml.cpp:
+	* src/filterrtf.h, src/filterrtf.cpp:
+	  - Rearrange member declarations.
+	  - Drop the empty d-tor.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.h, src/filterlatex.cpp:
+	  - Drop the empty d-tor.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::FilterLatex):
+	  - Initialize members with initialization list where possible.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.h:
+	  - Rearrange member declarations.
+	  - Make AdjustText() private.
+	  - Make winCharSet, latexFlag private.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.h, src/filterlatex.cpp:
+	  - Make idxVowelToneMark() non-member, as it depends on file-internal
+	    static vars.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.h, src/worddef.h, src/filterlatex.cpp:
+	  - Move isLongTailChar() to global worddef.h. Rename it to
+	    isThaiLongTailChar().
+	  - Adjust all calls in filterlatex.cpp accordingly.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Make FilterX::wordBreakStr private and initialized by c-tor.
+
+	* src/filterx.h:
+	  - Make FilterX::wordBreakStr private.
+	  - Add wordBreakStr arg to c-tor.
+	* src/filterlatex.h:
+	  - Add wordBreakStr arg to c-tor with default value for LaTeX,
+	    so it can be overridden by FilterLambda.
+	* src/filterlatex.cpp (FilterLatex::FilterLatex):
+	  - Pass the wordBreakStr to FilterX c-tor instead of direct
+	    assignment.
+	* src/filterlambda.h (FilterLambda::FilterLambda):
+	  - Pass Lambda word break string to FilterLatex c-tor instead of
+	    direct assignment.
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	  - Pass specific word break string to FilterX c-tor instead of
+	    direct assignment.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterrtf.h, src/filterrtf.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlambda.h, -src/filterlambda.cpp, src/Makefile.am:
+	  - Apply "indent -nut" + manual adjustments.
+	  - Move FilterLambda member functions to header and make them inline.
+	  - Drop empty d-tor.
+	  - Remove now-unused filterlambda.h.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h:
+	* src/abswordseg.cpp:
+	* src/wordseg.cpp:
+	* src/filterx.h:
+	* src/filterlatex.h:
+	* src/filterlatex.cpp:
+	* src/filefilter.h:
+	* src/filefilter.cpp:
+	* src/maxwordseg.h:
+	  - Change pointer declarations to C++ style.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterhtml.h, src/filterhtml.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::Print):
+	  - Remove unused var "lwbr".
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.h, src/filterlatex.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filefilter.h, src/filefilter.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterx.h, -src/filterx.cpp, src/Makefile.am:
+	  - Drop unused member "fileopen".
+	  - Adjust c-tor to use initialization list; also initialize
+	    wordBreakStr to a default value.
+	  - Move all FilterX member functions to header and make them inline.
+	  - Drop now-unneeded filterx.cpp.
+
+2011-12-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterx.cpp, src/filterx.h:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordstack.h:
+	  - Add preprocessor to prevent duplicated inclusion.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordstack.h:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Move tis2uni() and isthaidigit() to worddef.h
+
+	* src/worddef.h:
+	  - Define tis2uni() & isThaiDigit() inline functions here.
+	* src/abswordseg.cpp:
+	  - Drop old macros.
+	  - Include worddef.h.
+	  - Replace isthaidigit() calls with isThaiDigit().
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Replace some internal char classifiers with <ctype.h>
+
+	* src/worddef.h, src/filterrtf.cpp, src/filterhtml.cpp:
+	  - Drop isSpace(), use isspace() instead.
+	  - Drop isHex(), use isxdigit() instead.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/worddef.h:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp:
+	  - Declare internal functions static.
+	  - Simplify myyisspace() and make it bool.
+	  - Simplify RemoveJunkChars() and invert IsJunkChar() to
+	    IsValidChar().
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg):
+	  - Reformat c-tor.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/longwordseg.h, src/longwordseg.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h:
+	  - Remove obfuscated comment after last #endif.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.h, src/maxwordseg.cpp:
+	  - Apply "indent -nut" + manual adjustments.
+
+2011-12-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h, src/abswordseg.cpp:
+	  - Reformat source as GNU style using "indent -nut" plus manual
+	    adjustments.
+
+2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Adjust loops.
+
+2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Tokenize punctuation marks in chunks, not in characters,
+	    to prevent breaking word in between, fixing problem with `` or ''
+	    at line beginning in LaTeX. This should also be true in general.
+
+2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	  - Reformat source a little bit.
+
+2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::SwapLinkSep, AbsWordSeg::GetBestSen):
+	  - Reformat source a little bit.
+
+2011-12-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Reformat source a little bit.
+
+2011-12-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Guard against i being 0 before accessing sen[i-1].
+
+2011-12-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::IsNumber, AbsWordSeg::IsEnglish):
+	  - Replace ASCII range checks with ctype.h functions.
+
+2011-12-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Replace ASCII range checks with ctype.h functions.
+	  - Replace TIS-620 range check with macro function.
+
+2011-12-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Post-release version suffix added.
+	* data/swathdic.lst: Remove a typo entry.
+
+2011-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.4.1 ===
+
+2011-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Add AC_CONFIG_MACRO_DIR, as suggested by libtoolize.
+	* Makefile.am: Add ACLOCAL_AMFLAGS, as suggested by libtoolize.
+
+2011-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, -swath.spec.in: Remove the outdated, unmaintained file.
+
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h (AbsWordSeg::Construct):
+	  - Remove the remaining declaration of the removed method.
+
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::IsLeadChar, AbsWordSeg::IsLastChar):
+	  - Simplify the methods.
+	  - For IsLeadChar(), also exclude LAKKHANGYAO.
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::IsNumber, AbsWordSeg::IsEnglish, AbsWordSeg::Has_Karun):
+	  - Make the methods accept const pointer as input.
+
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Make class WordStack methods inline.
+
+	* src/worddef.h (wordStateType):
+	  - Simply name the struct type "wordState" and remove typedef'd type.
+	  - Add c-tors for instantiation convenience.
+	* src/wordstack.h (class WordStack):
+	  - Replace "wordStateType" type with "wordState".
+	  - Make all methods inline. They are all short functions.
+	* src/Makefile.am, -src/wordstack.cpp:
+	  - Remove the now-unused source file.
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea):
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence):
+	  - Replace "wordStateType" type with "wordState".
+
+2011-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Change the dictionary search order & mechanism.
+
+	* src/swath.1: Document the new behavior.
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Implement the search order here instead of in main, so the
+	    wordseg object is created and destroyed only once.
+	  - WORDSEGDATA env is now changed to SWATHDICT.
+	* src/wordseg.cpp (main):
+	  - Call InitWordSegmentation() only once and let the multiple
+	    trials happen there.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	* src/wordseg.cpp (main):
+	  - Print errors on stderr, not stdout.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Rename 'wsegpath' var to 'dictpath'.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Enhance -d option to also accept a trie file.
+
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::AbsWordSeg, +AbsWordSeg::InitDict):
+	  - Make dictionary opening be a normal method to be called after
+	    construction, so the return state can be checked.
+	  - Check if the path is a regular file or directory. If it's a
+	    directory, append usual dict file name to it before opening.
+	* src/maxwordseg.h, src/maxwordseg.cpp:
+	* src/longwordseg.h, src/longwordseg.cpp:
+	  - Remove c-tor with dict path arg.
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Don't try opening file. Just create the wordseg object and
+	    call InitDict() to determine successfulness.
+	* src/swath.1: Update man page to cover the new behavior, with example.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Use sprintf instead of series of strcat to format trie path name.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterx.h, src/filterx.cpp
+	  (GetSuffix, GetPrefix, suffixStr, prefixStr):
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	* src/filterlatex.cpp (FilterLatex::FilterLatex):
+	  - Remove unused members & methods.
+
+	* src/filterx.h (wordBreakStr)
+	* src/filterrtf.cpp (FilterRTF::FilterRTF):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	* src/filterlatex.cpp (FilterLatex::FilterLatex):
+	* src/filterlambda.cpp (FilterLatex::FilterLatex):
+	  - Make 'wordBreakStr' member (const char *) to string literal.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	Use macro D2TRIE for trie file name instead of hard literal.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg, AbsWordSeg::AbsWordSeg, AbsWordSeg::InitData):
+	  - Remove unused 'cntSep' member.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Move dict initialization to AbsWordSeg base class.
+
+	* src/abswordseg.h (MyDict, InitData):
+	  - Make the members private.
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::AbsWordSeg, +Construct, AbsWordSeg::~AbsWordSeg):
+	* src/longwordseg.cpp (LongWordSeg::LongWordSeg):
+	* src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg):
+	  - Move MyDict c-tor & d-tor code from derived class to base class.
+	  - Add base class c-tor which accepts dataPath arg, and split common
+	    c-tor code into AbsWordSeg::Construct().
+	* src/longwordseg.h, src/longwordseg.cpp (-LongWordSeg::~LongWordSeg):
+	  - Remove the now-empty d-tor.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (Usage): Print usage on stderr, not stdout.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Make 'wsegpath', 'method', 'fileformat',
+	'unicode' (const char *).
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Make 'wbr' word delimiter a (const char *).
+
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (AbsWordSeg::WordSeg, AbsWordSeg::GetBestSen):
+	  - Declare 'wbr' arg (const char *).
+	* src/filterx.h, src/filterx.cpp (FilterX::GetWordBreak):
+	  - Make it return (const char *) instead of copying string back.
+	* src/wordseg.cpp (WordSegmentation):
+	  - Declare 'wbr' arg (const char *).
+	* src/wordseg.cpp (main):
+	  - Make 'wbr' (const char *).
+	  - Replace all allocs & copies with pointer assignments.
+	  - Remove all deletes.
+
+2011-03-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Update doc for -d option. The dictionary file is now
+	a single `swathdic.tri' file.
+
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Make check functions in worddef.cpp inline.
+
+	* src/Makefile.am, src/worddef.h, -src/worddef.cpp
+	(isSpace, isHex, isPunc, isThai):
+	  - Move function definitions from worddef.cpp to worddef.h and make
+	    them inline.
+	  - Remove worddef.cpp from the project.
+
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Replace hard checks for Thainess with new function isThai().
+
+	* src/worddef.h, src/worddef.cpp (+isThai): Add the check function.
+	* src/filterlatex.cpp (FilterLatex::GetNextToken): Replace hard
+	checks (c & 0x80), or (c > 0), with isThai(c) calls.
+
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Replace partial copy using temporary null-termination with
+	    strncpy() and strncat().
+	  - Replace a risky strcpy() on overlapping buffers with memmove().
+	  - Split an assignment in if-condition into sepearate statement,
+	    for more readability.
+
+2011-03-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/worddef.cpp (isSpace, isHex, isPunc):
+	  - Replace decimal ASCII codes with char literals, for more
+	    readability
+	  - Simplify return expressions
+
+2010-09-24  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::IsLeadChar): Also include PHINTHU,
+	NIKHAHIT and YAMAKKAN in non-leading char list.
+
+2009-04-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Post-release version suffix added.
+	* src/wordseg.cpp (main, +Version): Add -V/--version to print version
+	info, as suggested by Beamer User.
+	* src/Makefile.am: Pass -DVERSION CFLAGS.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.4.0 ===
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterrtf.h (FilterRTF::chgCharState, FilterRTF::isThaiChar):
+	Declare utility functions as static members.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filterlatex.cpp (WinMacNormal, MacOffsetLeft, MacOffsetLeftHigh,
+	MacOffsetNormal, WinOffsetLeft, WinOffsetLeftHigh, WinOffsetNormal):
+	Declare internal data as file-scoped.
+
+	* src/filterlatex.h
+	(FilterLatex::isLongTailChar, FilterLatex::idxVowelToneMark):
+	Declare utility functions as static members.
+
+	* src/filterlatex.cpp (FilterLatex::isLongTailChar):
+	Eliminate unnecessary true/false conditional expression; simple boolean
+	expression is enough.
+
+	* src/filterlatex.cpp (FilterLatex::idxVowelToneMark):
+	Check array index range before accessing, rather than after.
+
+2009-04-08  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence):
+	Check array index range before accessing, rather than after.
+
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/longwordseg.cpp (LongWordSeg::LongWordSeg):
+	Use 'delete[]' instead of 'delete', to match with 'new []', fixing
+	valgrind warning.
+
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence):
+	Check array index range before accessing, rather than after, fixing
+	valgrind warnings of conditional jumps depending on uninitialized
+	values.
+
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/maxwordseg.cpp
+	(MaxWordSeg::CreateSentence, MaxWordSeg::WordSegArea):
+	Check range of array index for IdxSep[] *before* accessing the array
+	element, rather than *after*, fixing valgrind warnings of conditional
+	jumps depending on uninitialized values.
+
+2009-04-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	* src/filterhtml.cpp (FilterHtml::FilterHtml):
+	* src/filterrtf.cpp (FilterRTF::FilterRTF, FilterRTF::GetNextToken):
+	* src/filterlatex.cpp
+	  (FilterLatex::FilterLatex, FilterLatex::GetNextToken):
+	* src/wordseg.cpp (main):
+	Replace strcpy() and strcmp() calls with null string arguments with
+	first character accesses.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	Replace operlapping strcpy() with memmove(), fixing valgrind warnings.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Move global vars 'startStr', 'buff', 'gout'
+	to local scope, where they are actually used.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Move global var 'mulestr' to local scope.
+	Make it just bool 'muleMode', as all its function is just that.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (InitWordSegmentation, main):
+	Make the global var 'method' local and passed as argument.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h (AbsWordSeg::~AbsWordSeg): Declare d-tor as virtual,
+	fixing memory leak because its derived class d-tor was not called.
+	Thanks valgrind.
+
+	* src/wordseg.cpp (InitWordSegmentation, main): Move 'delete method' to
+	main(), where it's more obvious.
+
+	* src/wordseg.cpp (ExitWordSegmentation, WordSegmentation, main):
+	Make ExitWordSegmentation() and WordSegmentation() accept mere
+	AbsWordSeg pointer, rather than pointer to pointer, reducing
+	dereferencing steps.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix valgrind warnings about mismatched new/delete.
+
+	* src/abswordseg.cpp (AbsWordSeg::~AbsWordSeg):
+	* src/maxwordseg.cpp (MaxWordSeg::MaxWordSeg, MaxWordSeg::~MaxWordSeg):
+	* src/wordseg.cpp (InitWordSegmentation, main):
+	Replace 'delete' with 'delete[]' where data was created with new[].
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* AUTHORS: Update info, as the trie supporting code has been removed.
+	Now my role is general maintenance. And describe Phaisarn's role as
+	the original creator.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	Replace C malloc() calls with C++ 'new' operator, to better match with
+	the 'delete' operator in destructor.
+
+2009-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h (AbsWordSeg::Has_Karun):
+	Declare another utility function as static member.
+	* src/abswordseg.cpp (AbsWordSeg::Has_Karun):
+	Replace negative number literal with hexadecimal code, for readability.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	Remove unnecessary 'continue'.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.h
+	(AbsWordSeg::IsLeadChar, IsLastChar, IsNumber, IsEnglish):
+	Declare utility functions as static members.
+	* src/abswordseg.cpp (AbsWordSeg::IsNumber, IsEnglish):
+	Replace code with simpler equivalence.
+	* src/abswordseg.cpp (AbsWordSeg::GetBestSen):
+	Get rid of unnecessary assignment and strcat().
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Get rid of the unnecessary src/dictpath.cpp.
+
+	* src/Makefile.am, -src/dictpath.cpp: Remove dictpath.cpp.
+	* src/dictpath.h (d2triepath), src/wordseg.cpp (InitWordSegmentation):
+	Get rid of the unnecessary global variable 'd2triepath', which is in
+	fact only needed locally.
+
+2008-12-17  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Switch to libdatrie. (Requires libdatrie >= 0.1.99.2)
+
+	* configure.in: Post-release version bump.
+
+	* configure.in: Check for 'trietool-0.2' program (under --enable-dict)
+	and 'datrie-0.2' pkg-config.
+	* configure.in, Makefile.am: Exclude 'misc', 'vmem', and 'trie' subdirs.
+
+	* src/abswordseg.h:
+	  - Replace 'AbsWordSeg::MyDict' member with libdatrie's 'Trie'
+	* src/abswordseg.cpp (AbsWordSeg::AbsWordSeg):
+	  - Don't delete 'MyDict' in c-tor
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList):
+	  - Replace calls to old 'Trie' class with corresponding libdatrie
+	    functions
+	  - Adjust loop so that terminating '\0' is not walked
+
+	* src/longwordseg.h, src/longwordseg.cpp
+	  (LongWordSeg::LongWordSeg, ~LongWordSeg):
+	  - Replace 'MyDict' creation/deletion with libdatrie's functions
+	  - Remove 'branchPath' and 'tailPath' members; and just use local
+	    vars in c-tors instead
+
+	* src/maxwordseg.h, src/maxwordseg.cpp
+	  (MaxWordSeg::MaxWordSeg, ~MaxWordSeg):
+	  - Replace 'MyDict' creation/deletion with libdatrie's functions
+	  - Remove 'branchPath' and 'tailPath' members; and just use local
+	    vars in c-tors instead
+
+	* src/dictpath.h, src/dictpath.cpp:
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Replace 'd2branchpath' and 'd2tailpath' with a single
+	    'd2triepath' variable
+	  - Replace 'D2BRANCH' and 'D2TAIL' with a single 'D2TRIE' macro
+
+	* src/wordstack.h:
+	  - Remove unneeded #include "misc/typedefs.h"
+
+	* src/Makefile.am:
+	  - Remove linkages to internal 'libmisc', 'libvmem', and 'libtrie'
+	  - Add libdatrie CFLAGS and LIBS
+
+	* data/Makefile.am, -data/swathdic.br, -data/swathdic.tl:
+	  - Exclude 'swathdic.br' and 'swathdic.tl' from distribution
+	* data/Makefile.am, +data/swathdic.abm:
+	  - Add 'swathdic.abm' to distribution
+	  - Add rule for generating 'swathdic.tri' with trietool-0.2
+	  - Install 'swathdic.tri' instead of 'swathdic.br' and 'swathdic.tl'
+
+2008-04-06  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.4 ===
+
+2008-03-24  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am, +data/swathdic.lst: Add dictionary word list
+	dumped from the dict binary files, for dict adjustments in the future.
+
+2008-03-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Use tmpfile() instead of tmpnam() when creating temp files,
+	to avoid race condition as a security measurement.
+
+	* src/wordseg.cpp (main):
+	  - Use FILE* instead of file names for temp files
+	  - Call tmpfile() to create temp files
+	  - Pass FILE* to conv() and CreateFileFilter()
+
+	* conv/conv.{h,cxx}:
+	  - Add overloaded conv() accepting FILE* arguments
+	  - Refactor do_conv() out of conv() wrappers
+	  - Pass FILE* to CreateText{Reader,Writer}
+	* conv/convfact.{h,cxx} (CreateTextReader, CreateTextWriter):
+	  - Accept FILE* arguments instead of istream, ostream
+	  - Pass FILE* arguments to {TIS620,UTF8}{Reader,Writer} c-tors
+	* conv/{tis620,utf8}.{h,cxx}:
+	  - Change stream members' type to FILE*
+	  - Use fgetc() and fputc() for character I/O
+	  - Declare internal functions static
+
+	* src/filefilter.{h,cpp} (CreateFileFilter):
+	  - Use FILE* arguments instead of file names
+	  - Pass the FILE* arguments to Filter* c-tors
+	* src/filter{html,latex,lambda,rtf}.{h,cpp}:
+	  - Accept FILE* arguments instead of file names in c-tors
+	  - Pass the FILE* arguments to FilterX base class c-tor
+	* src/filterx.{h,cpp}:
+	  - In c-tor, assign FILE* arguments to members directly, rather
+	    than creating new files from file names
+	  - In d-tor, just flush output, rather than closing files
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Escape more minus signs. [lintian]
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.3 ===
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Move FltX variable into if-block. Beutify
+	some indents.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/filefilter.{h,cpp}: Make "FileFilter" an empty class with a
+	single static method CreateFilter(). The full-fledged
+	{con,de}structors are just unnecessary.
+
+	* src/wordseg.cpp (main): Create FilterX with the static method.
+	Remove now-unneeded FileFilter variable.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): Delete filter X object after finishing
+	wordseg, so output file gets flushed.
+
+2008-03-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main): duplicate tmpnam() results, instead of mere
+	pointer assignment, as the returned value is pointer to static buffer,
+	resulting in the same names for tmpin and tmpout. Fixing
+	non-functional '-u u,u' option. Bug report by Neutron Soutmun.
+
+2008-03-19  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList): Fix logical errors
+	introduced during portability fix, which made swath not break any
+	word. Bug report by Pisut Tempatarachoke.
+
+2008-02-07  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Escape minus signs. Thanks debian's lintian.
+
+2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.2 ===
+
+2008-02-02  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in: Remove unused ISODATE var. Remove checks for CC and
+	CPP. Just CXX is enough.
+
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Reveal the encoding conversion feature to users.
+
+	* src/wordseg.cpp (Usage): Add '-u' option in help message.
+	* src/swath.1: Add documentation for '-u' option, with example.
+	* README: Mention the '-u' option for UTF-8 LaTeX files. Indent the
+	sample codes for readability.
+
+	* src/swath.1: Document the default matching scheme, and adjust the
+	example accordingly.
+
+2008-02-01  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (main):
+	  - Also accept '--verbose' and '--help' options.
+	  - Adjust indents around the code, for readability.
+	  - Remove unnecessary continue's.
+	  - Check boundary of argc for '-u' parsing.
+	  - Free more allocated data (fileformat, method, unicode) on return
+	    after printing usage.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/wordseg.cpp (Usage): Revise wording for the help message.
+	Use string catenation instead of separate printf's.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* README: Write document.
+	* src/swath.1: Rewrite the whole page, with more detailed info.
+
+2008-01-31  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* data/Makefile.am: Install dict in ${pkgdatadir}, not ${datadir}.
+	* src/Makefile.am: Update dict location macro acoordingly.
+
+2006-07-03  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/abswordseg.{h,cpp} (IsLeadChar(), IsLastChar()),
+	src/filterhtml.cpp (GetNextToken()),
+	src/filterlatex.cpp (GetNextToken()),
+	src/filterrtf.cpp (GetNextToken()): Fixed char signedness portability
+	issues (found on s390, powerpc, arm builds by debian buildd).
+
+2006-03-28  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* configure.in, NEWS:
+	=== Version 0.3.1 ===
+
+2006-03-27  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* src/swath.1: Used section number instead of version number.
+
+2006-03-26  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* Makefile.am: Removed debian from SUBDIRS.
+
+	* configure.in: Removed debian/Makefile generation.
+
+2005-10-09  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Formatted configure options help strings with AC_HELP_STRING().
+	Used --disable/--enable help style rather than --enable with default
+	yes or no. Also disabled debug by default.
+
+2005-05-07  Chanop Silpa-Anan <chanop@debian.org>
+	* src/abswordseg.cpp:
+	A quick hack for Apple/Darwin: malloc is defined in stdlib.h instead
+	of a more common place malloc.h.
+
+2004-03-30  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* AUTHORS:
+	Fix my e-mail address.
+
+2003-04-04  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* conv/tis620.cxx, conv/utf8.cxx:
+	Use casting instead of declaring temp vars in dealing with
+	iostream::get() with unsigned char argument.
+
+2003-04-03  Chanop Silpa-Anan <chanop@debian.org>
+	* conv/{conv.cxx conv.h convfact.cxx convfact.h tis620.cxx tis620.h
+	  utf8.cxx utf8.}:
+	Clean up for g++-3.2: compilation errors, compiler warnings
+	and namespace issues.
+
+	* trie/{trie.h trie.cxx}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers.
+
+	* vmem/{dataheap.cxx dataheap.h vmem.cxx vmem.h}:
+	Clean up for g++-3.2: compilation errors. Use strict
+	ios_base::openmodes for OpenModes instead of int previously allowed by
+	prior compilers. Also use namespace std in .h files, a quick hack.
+
+2003-01-14  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* swath.spec.in:
+	Fix "%install" mess in comment (rpmbuild oddity)
+
+2002-09-24  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* src/wordseg.cpp:
+	Fix segfault in case of unknown file format.
+	Nicer "Usage:" handling.
+	Remove winlatex, maclatex from Usage:
+
+2002-09-23  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add --enable-debug to allow assertions disabling.
+
+	* configure.in, src/filterlatex.cpp:
+	Add --enable-catthai to allow Thai line catenation disabling.
+	(temporary solution, may be replaced with command-line option or
+	hard-coding later)
+
+2002-09-21  Theppitak Karoonboonyanan <thep@linux.thai.net>
+
+	* configure.in:
+	Add missing debian/Makefile in AC_OUTPUT.
+
+2001-12-21  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+
+	* GNU autotools files:
+	Rearrange source tree and apply GNU autotools.
+
+	* Version 0.3.0.
+
