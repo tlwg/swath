@@ -1,5 +1,14 @@
 2013-05-13  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Lambda's word break should be ZWSP (U+200B).
+
+	* src/filterlambda.h (FilterLambda::FilterLambda):
+	  - Change wbr default arg from '^^^^200c' to '^^^^200b'.
+	* src/wordseg.cpp (Usage):
+	  - Fix text explaining Lambda's word break.
+
+2013-05-13  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* configure.ac: Post-release version suffix added.
 
 2013-02-11  Theppitak Karoonboonyanan  <thep@linux.thai.net>

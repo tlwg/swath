@@ -20,7 +20,7 @@ public:
 inline
 FilterLambda::FilterLambda (FILE* filein, FILE* fileout, bool isUniIn,
                             int latexflag)
-  : FilterLatex (filein, fileout, isUniIn, true, latexflag, "^^^^200c")
+  : FilterLatex (filein, fileout, isUniIn, true, latexflag, "^^^^200b")
 {
 }
 

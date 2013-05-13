@@ -153,7 +153,7 @@ Usage (int verbose)
                "\t\trtf      : RTF file\n"
                "\t\tlatex    : LaTeX file\n"
                "\t\tlambda   : The input and output are same as latex, except that\n"
-               "\t\t           the word delimitor is ^^^^^^^^200c\n"
+               "\t\t           the word delimitor is ^^^^200b\n"
 //                "\t\twinlatex : LaTeX file shaping on Windows\n"
 //                "\t\tmaclatex : LaTeX file shaping on Macintosh\n"
                "\t-m   : choose word matching scheme when analyzing\n"
