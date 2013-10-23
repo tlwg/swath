@@ -1,5 +1,23 @@
 2013-10-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Update dictionary from thailatex SVN.
+
+	* data/tdict-common.txt:
+	* data/tdict-district.txt:
+	* data/tdict-geo.txt:
+	* data/tdict-history.txt:
+	* data/tdict-ict.txt:
+	* data/tdict-lang-ethnic.txt:
+	* data/tdict-proper.txt:
+	* data/tdict-science.txt:
+	* data/tdict-spell.txt:
+	* data/tdict-std-compound.txt:
+	* data/tdict-std.txt:
+	  - Update dictionary from dehyphenated source for thailatex
+	    hyphenation patterns.
+
+2013-10-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Fix automake warnings.
 
 	* src/Makefile.am:
