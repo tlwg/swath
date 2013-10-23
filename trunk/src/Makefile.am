@@ -1,6 +1,6 @@
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 
-INCLUDES = -I$(top_srcdir) $(DATRIE_CFLAGS)
+AM_CPPFLAGS = -I$(top_srcdir) $(DATRIE_CFLAGS)
 DEFS = -DWORDSEGDATA_DIR=\"${pkgdatadir}\" -DVERSION=\"$(VERSION)\"
 
 EXTRA_DIST = \

@@ -1,3 +1,10 @@
+2013-10-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix automake warnings.
+
+	* src/Makefile.am:
+	  - Replace deprecated INCLUDES with AM_CPPFLAGS.
+
 2013-05-13  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Lambda's word break should be ZWSP (U+200B).
