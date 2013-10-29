@@ -23,7 +23,7 @@ FilterHtml::FilterHtml (FILE* filein, FILE* fileout,
 bool
 FilterHtml::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
 {
-  if ((fpin == NULL) || (feof (fpin) != 0))
+  if ((fpin == NULL) || (feof (fpin) != 0) || tokenSz < 2)
     return false;
 
   if (chbuff == 0)
@@ -57,7 +57,10 @@ FilterHtml::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
                     break;
                   if (isThaiUni (nextChar))
                     {
+                      if (tokenSz < 2)
+                        break;
                       *++token = nextChar;
+                      --tokenSz;
                       continue;
                     }
                 }
@@ -65,7 +68,10 @@ FilterHtml::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
         }
       else
         {
+          if (tokenSz < 2)
+            break;
           *++token = nextChar;
+          --tokenSz;
           continue;
         }
 

@@ -1,5 +1,12 @@
 2013-10-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Adjust FilterHtml::GetNextToken() to prevent overflow.
+
+	* src/filterhtml.cpp (FilterHtml::GetNextToken):
+	  - Check for token size before writing to prevent buffer overflow.
+
+2013-10-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Adjust FilterX::GetNextToken() for more safety.
 
 	* src/filterx.h, src/filterhtml.h, src/filterlatex.h, src/filterrtf.h,
