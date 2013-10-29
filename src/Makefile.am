@@ -15,6 +15,7 @@ EXTRA_DIST = \
 	filterx.h \
 	longwordseg.h \
 	maxwordseg.h \
+	utils.h \
 	worddef.h \
 	wordstack.h \
 	swath.1

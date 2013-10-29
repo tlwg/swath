@@ -19,7 +19,7 @@ public:
   FilterLatex (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut,
                int latexflag = 0, const char *wordBreakStr = "{\\wbr}");
 
-  bool GetNextToken (wchar_t* token, bool* thaiFlag);
+  bool GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag);
   void Print (const wchar_t* token, bool thaiFlag);
 
 private:

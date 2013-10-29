@@ -19,7 +19,7 @@ class FilterRTF : public FilterX
 public:
   FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut);
 
-  bool GetNextToken (wchar_t* token, bool* thaiFlag);
+  bool GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag);
   void Print (const wchar_t* token, bool thaiFlag);
 
 private:

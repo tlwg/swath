@@ -21,7 +21,7 @@ public:
 
   const char* GetWordBreak ();
 
-  virtual bool GetNextToken (wchar_t* token, bool* thaiFlag) = 0;
+  virtual bool GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag) = 0;
   virtual void Print (const wchar_t* token, bool thaiFlag) = 0;
 
 protected:
