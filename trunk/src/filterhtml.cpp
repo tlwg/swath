@@ -21,7 +21,7 @@ FilterHtml::FilterHtml (FILE* filein, FILE* fileout,
 }
 
 bool
-FilterHtml::GetNextToken (wchar_t* token, bool* thaiFlag)
+FilterHtml::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
 {
   if ((fpin == NULL) || (feof (fpin) != 0))
     return false;

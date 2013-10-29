@@ -1,3 +1,23 @@
+2013-10-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Adjust FilterX::GetNextToken() for more safety.
+
+	* src/filterx.h, src/filterhtml.h, src/filterlatex.h, src/filterrtf.h,
+	  src/filterhtml.cpp, src/filterlatex.cpp, src/filterrtf.cpp,
+	  (FilterX::GetNextToken):
+	  - Add 'tokenSz' arg so that buffer overflow can be prevented.
+	* src/wordseg.cpp (main):
+	  - Adjust call to FilterX::GetNextToken() accordingly.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Implement the adjusted interface to make sure 'token' is never
+	    overflown when writing data.
+	* src/Makefile.am, +src/utils.h:
+	  - Add "utils.h" for utility functions (first used in
+	    FilterLatex::GetNextToken()).
+	* src/convutil.h, src/utils.h, src/wordseg.cpp (N_ELM):
+	  - Move N_ELM() macro from convutil.h to utils.h.
+
 2013-10-23  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Update dictionary from thailatex SVN.

@@ -8,8 +8,6 @@
 #include <stdio.h>
 #include <wchar.h>
 
-#define N_ELM(a)  (sizeof (a)/sizeof (a)[0])
-
 bool ConvGetS (wchar_t* buffer, int buffSz, FILE* fpin, bool isUniIn);
 int  ConvGetC (FILE* fpin, bool isUniIn);
 

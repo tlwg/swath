@@ -97,7 +97,7 @@ FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
 }
 
 bool
-FilterRTF::GetNextToken (wchar_t* token, bool* thaiFlag)
+FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
 {
   int   bytesToSkip = 0;
   bool  isCopySkipBytes = false;

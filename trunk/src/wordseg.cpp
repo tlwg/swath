@@ -29,6 +29,7 @@
 #include "longwordseg.h"
 #include "maxwordseg.h"
 #include "convutil.h"
+#include "utils.h"
 
 static int SplitToken (wchar_t** str, wchar_t* token);
 
@@ -281,7 +282,7 @@ main (int argc, char* argv[])
           return 1;
         }
       wbr = FltX->GetWordBreak ();
-      while (FltX->GetNextToken (wLine, &thaiFlag))
+      while (FltX->GetNextToken (wLine, N_ELM (wLine), &thaiFlag))
         {
           if (!thaiFlag)
             {
