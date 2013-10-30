@@ -7,6 +7,7 @@
 #include "filterrtf.h"
 #include "conv/utf8.h"
 #include "convutil.h"
+#include "utils.h"
 #include "worddef.h"
 
 //////////////////////////////////////////////////////////////////////
@@ -99,6 +100,7 @@ FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
 bool
 FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
 {
+  int   nCopy;
   int   bytesToSkip = 0;
   bool  isCopySkipBytes = false;
   bool  charConsumed = true;
@@ -114,8 +116,11 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
   if (0 != strbuff[0])
     {
       *thaiFlag = isThaiUni (strbuff[0]);
-      token = wcpcpy (token, strbuff);
-      strbuff[0] = 0;
+      nCopy = min<int> (tokenSz - 1, wcslen (strbuff));
+      token = wcpncpy (token, strbuff, nCopy);
+      *token = 0;
+      tokenSz -= nCopy;
+      wmemmove (strbuff, strbuff + nCopy, wcslen (strbuff + nCopy) + 1);
     }
   else
     {
@@ -125,7 +130,10 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
           switch (rtfToken.getType())
             {
             case RTFToken::RTK_TEXT:
-              token = Ascii2WcsCopy (token, rtfToken.getVal());
+              nCopy = min<int> (tokenSz - 1, strlen (rtfToken.getVal()));
+              token = Ascii2WcsNCopy (token, rtfToken.getVal(), nCopy);
+              *token = 0;
+              tokenSz -= nCopy;
               rtfToken.reset ();
               *thaiFlag = false;
               goto thai_flag_determined;
@@ -142,15 +150,25 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
                 sscanf (rtfToken.getVal(), "%d", &uc);
                 if (isThaiUni (uc))
                   {
-                    *token++ = uc;
-                    *token = 0;
+                    if (tokenSz >= 2)
+                      {
+                        *token++ = uc;
+                        *token = 0;
+                        --tokenSz;
+                      }
                     *thaiFlag = true;
                     isCopySkipBytes = false;
                   }
                 else
                   {
-                    token = wcpcpy (token, L"\\u");
-                    token = Ascii2WcsCopy (token, rtfToken.getVal());
+                    int len = strlen (rtfToken.getVal());
+                    if (len + 2 <= tokenSz - 1)
+                      {
+                        token = wcpcpy (token, L"\\u");
+                        token = Ascii2WcsCopy (token, rtfToken.getVal());
+                        tokenSz -= len + 2;
+                      }
+
                     *thaiFlag = false;
                     isCopySkipBytes = true;
                   }
@@ -165,8 +183,13 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
                   // skip bytes after \uDDDD
                   if (isCopySkipBytes)
                     {
-                      token = wcpcpy (token, L"\\'");
-                      token = Ascii2WcsCopy (token, rtfToken.getVal());
+                      int len = strlen (rtfToken.getVal());
+                      if (len + 2 <= tokenSz - 1)
+                        {
+                          token = wcpcpy (token, L"\\'");
+                          token = Ascii2WcsCopy (token, rtfToken.getVal());
+                          tokenSz -= len + 2;
+                        }
                     }
                   rtfToken.reset ();
                   if (0 == --bytesToSkip)
@@ -178,8 +201,12 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
                   int ch;
                   sscanf (rtfToken.getVal(), "%x", &ch);
                   rtfToken.reset ();
-                  *token++ = tis2uni (ch);
-                  *token = 0;
+                  if (tokenSz >= 2)
+                    {
+                      *token++ = tis2uni (ch);
+                      *token = 0;
+                      --tokenSz;
+                    }
                   *thaiFlag = isThai (ch);
                   goto thai_flag_determined;
                 }
@@ -201,7 +228,9 @@ thai_flag_determined:
             {
             case RTFToken::RTK_TEXT:
               // non-Thai text is found -> stop
-              Ascii2WcsCopy (strbuff, rtfToken.getVal());
+              nCopy = min<int> (N_ELM (strbuff) - 1,
+                                strlen (rtfToken.getVal()));
+              *Ascii2WcsNCopy (strbuff, rtfToken.getVal(), nCopy) = 0;
               rtfToken.reset ();
               goto end_of_chunk;
 
@@ -216,8 +245,12 @@ thai_flag_determined:
                 sscanf (rtfToken.getVal(), "%d", &uc);
                 if (isThaiUni (uc))
                   {
-                    *token++ = uc;
-                    *token = 0;
+                    if (tokenSz >= 2)
+                      {
+                        *token++ = uc;
+                        *token = 0;
+                        --tokenSz;
+                      }
                     isCopySkipBytes = false;
                   }
                 else
@@ -256,8 +289,12 @@ thai_flag_determined:
                   // if non-Thai -> stop
                   if (!isThai (ch))
                     goto end_of_chunk;
-                  *token++ = tis2uni (ch);
-                  *token = 0;
+                  if (tokenSz >= 2)
+                    {
+                      *token++ = tis2uni (ch);
+                      *token = 0;
+                      --tokenSz;
+                    }
                 }
               break;
             }
@@ -273,7 +310,10 @@ thai_flag_determined:
           switch (rtfToken.getType())
             {
             case RTFToken::RTK_TEXT:
-              token = Ascii2WcsCopy (token, rtfToken.getVal());
+              nCopy = min<int> (tokenSz - 1, strlen (rtfToken.getVal()));
+              token = Ascii2WcsNCopy (token, rtfToken.getVal(), nCopy);
+              *token = 0;
+              tokenSz -= nCopy;
               rtfToken.reset ();
               if (iswspace (token[-1]))
                 goto end_of_chunk;
@@ -297,8 +337,13 @@ thai_flag_determined:
                   }
                 else
                   {
-                    token = wcpcpy (token, L"\\u");
-                    token = Ascii2WcsCopy (token, rtfToken.getVal());
+                    int len = strlen (rtfToken.getVal());
+                    if (len + 2 <= tokenSz - 1)
+                      {
+                        token = wcpcpy (token, L"\\u");
+                        token = Ascii2WcsCopy (token, rtfToken.getVal());
+                        tokenSz -= len + 2;
+                      }
                     isCopySkipBytes = true;
                   }
                 rtfToken.reset ();
@@ -312,8 +357,13 @@ thai_flag_determined:
                   // skip bytes after \uDDDD
                   if (isCopySkipBytes)
                     {
-                      token = wcpcpy (token, L"\\'");
-                      token = Ascii2WcsCopy (token, rtfToken.getVal());
+                      int len = strlen (rtfToken.getVal());
+                      if (len + 2 <= tokenSz - 1)
+                        {
+                          token = wcpcpy (token, L"\\'");
+                          token = Ascii2WcsCopy (token, rtfToken.getVal());
+                          tokenSz -= len + 2;
+                        }
                     }
                   rtfToken.reset ();
                   // decrement bytes to skip
@@ -334,8 +384,12 @@ thai_flag_determined:
                       strbuff[1] = 0;
                       goto end_of_chunk;
                     }
-                  *token++ = ch;
-                  *token = 0;
+                  if (tokenSz >= 2)
+                    {
+                      *token++ = ch;
+                      *token = 0;
+                      --tokenSz;
+                    }
                 }
               break;
             }

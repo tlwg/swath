@@ -1,3 +1,15 @@
+2013-10-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Adjust FilterRTF::GetNextToken() to prevent overflow.
+
+	* src/convutil.h, src/convutil.cpp (+Ascii2WcsNCopy, +Ascii2WcsNCat):
+	  - Add utility functions for copying ASCII to wide char string
+	    within limited count.
+	* src/filterrtf.cpp (FilterRTF::GetNextToken):
+	  - Check for token size before writing to prevent buffer overflow.
+
+	TODO: Use C++ wstring and string instead?
+
 2013-10-29  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Adjust FilterHtml::GetNextToken() to prevent overflow.

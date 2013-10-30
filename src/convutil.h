@@ -15,5 +15,7 @@ bool ConvPrint (FILE* fpout, const wchar_t* wcs, bool isUniOut);
 
 wchar_t* Ascii2WcsCopy (wchar_t* dst, const char* src);
 wchar_t* Ascii2WcsCat (wchar_t* dst, const char* src);
+wchar_t* Ascii2WcsNCopy (wchar_t* dst, const char* src, int n);
+wchar_t* Ascii2WcsNCat (wchar_t* dst, const char* src, int n);
 
 #endif
