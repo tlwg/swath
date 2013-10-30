@@ -1,3 +1,9 @@
+0.5.1 (2013-10-30)
+=====
+- Correct word break code for Lambda.
+- Updated word break dictionary.
+- Adjust file filters to prevent potential buffer overflow.
+
 0.5.0 (2013-02-11)
 =====
 - Character encoding conversion is now spontaneous, no more buffering via
