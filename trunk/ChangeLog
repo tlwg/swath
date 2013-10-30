@@ -1,5 +1,10 @@
 2013-10-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	* configure.ac, NEWS:
+	=== Version 0.5.1 ===
+
+2013-10-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Adjust FilterRTF::GetNextToken() to prevent overflow.
 
 	* src/convutil.h, src/convutil.cpp (+Ascii2WcsNCopy, +Ascii2WcsNCat):
