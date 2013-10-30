@@ -115,3 +115,28 @@ Ascii2WcsCat (wchar_t* dst, const char* src)
   return Ascii2WcsCopy (dst, src);
 }
 
+wchar_t*
+Ascii2WcsNCopy (wchar_t* dst, const char* src, int n)
+{
+  while (*src && n > 0)
+    {
+      *dst++ = *src++;
+      n--;
+    }
+  if (n > 0)
+    {
+      *dst = 0;
+    }
+  return dst;
+}
+
+wchar_t*
+Ascii2WcsNCat (wchar_t* dst, const char* src, int n)
+{
+  while (*dst)
+    {
+      ++dst;
+    }
+  return Ascii2WcsNCopy (dst, src, n);
+}
+
