@@ -2,7 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.50)
 
-AC_INIT(swath, 0.5.1, thai-linux-foss-devel@googlegroups.com)
+AC_INIT(swath, 0.5.1svn, thai-linux-foss-devel@googlegroups.com)
 AC_CONFIG_SRCDIR([src/wordseg.cpp])
 AC_CONFIG_MACRO_DIR([m4])
 
