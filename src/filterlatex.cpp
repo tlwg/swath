@@ -150,7 +150,8 @@ FilterLatex::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
   return true;
 
 get_cur_token_return:
-  consumeToken (pToken, tokenSz, beginPtr, curPtr - beginPtr);
+  beginPtr += consumeToken (pToken, tokenSz, beginPtr, curPtr - beginPtr);
+  wmemmove (buffer, beginPtr, wcslen (beginPtr) + 1);
   return true;
 }
 

@@ -1,5 +1,13 @@
 2013-12-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Fix another infinite loop on EOF after punct or Thai chunk.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Update buffer after comsumeToken(), so next reads won't get the
+	    same contents again.
+
+2013-12-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Adjust source.
 
 	* src/filterlatex.cpp (FilterLatex::GetNextToken):
