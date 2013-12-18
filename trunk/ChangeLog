@@ -1,5 +1,15 @@
 2013-12-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Fix infinite loop on verbatim input.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Update buffer after comsumeToken(), so next reads won't get the
+	    same contents again.
+
+	Thanks Neutron Soutmun for the report and patch.
+
+2013-12-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	* configure.ac: Post-release version suffix added.
 
 2013-10-30  Theppitak Karoonboonyanan  <thep@linux.thai.net>
