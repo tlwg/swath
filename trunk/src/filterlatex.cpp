@@ -97,38 +97,37 @@ FilterLatex::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
               wmemmove (buffer, beginPtr, wcslen (beginPtr) + 1);
               return true;
             }
-          else
+
+          // EOL is found
+          if (*curPtr == L'\n')
             {
-              if (*curPtr == L'\n')
+              *curPtr = 0;
+            }
+          int tkLen = consumeToken (pToken, tokenSz,
+                                    beginPtr, curPtr - beginPtr);
+          pToken += tkLen;
+          tokenSz -= tkLen;
+          lastAllowed -= tkLen;
+          //if next a line is thai string, concat next line
+          // to current line
+          if (!ConvGetS (buffer, N_ELM (buffer), fpin, isUniIn))
+            {
+              if (tokenSz > 1)
                 {
-                  *curPtr = 0;
+                  wcscpy (pToken, L"\n");
                 }
-              int tkLen = consumeToken (pToken, tokenSz,
-                                        beginPtr, curPtr - beginPtr);
-              pToken += tkLen;
-              tokenSz -= tkLen;
-              lastAllowed -= tkLen;
-              //if next a line is thai string, concat next line
-              // to current line
-              if (!ConvGetS (buffer, N_ELM (buffer), fpin, isUniIn))
-                {
-                  if (tokenSz > 1)
-                    {
-                      wcscpy (pToken, L"\n");
-                    }
-                  return true;  //next GetToken() must return false
-                }
-              beginPtr = curPtr = buffer;
+              return true;  //next GetToken() must return false
+            }
+          beginPtr = curPtr = buffer;
 #ifdef CAT_THAI_LINES
-              if (!isThaiUni (*curPtr))    //not thai character
+          if (!isThaiUni (*curPtr))    //not thai character
 #endif
+            {
+              if (tokenSz > 1)
                 {
-                  if (tokenSz > 1)
-                    {
-                      wcscpy (pToken, L"\n");
-                    }
-                  return true;
+                  wcscpy (pToken, L"\n");
                 }
+              return true;
             }
         }
     }

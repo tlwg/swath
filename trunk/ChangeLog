@@ -1,5 +1,12 @@
 2013-12-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
+	Adjust source.
+
+	* src/filterlatex.cpp (FilterLatex::GetNextToken):
+	  - Unindent else-block after the dead if-block.
+
+2013-12-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
 	Fix infinite loop on verbatim input.
 
 	* src/filterlatex.cpp (FilterLatex::GetNextToken):
