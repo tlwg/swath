@@ -43,10 +43,12 @@ FilterLatex::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
   if (verbatim)
     {
       *thaiFlag = false;
+      wchar_t* curPtr = buffer;
       wchar_t* stVer = wcsstr (buffer, L"\\end{verbatim}");
       if (!stVer)
         {
-          consumeToken (token, tokenSz, buffer, wcslen (buffer));
+          curPtr += consumeToken (token, tokenSz, buffer, wcslen (buffer));
+          wmemmove (buffer, curPtr, wcslen (curPtr) + 1);
         }
       else
         {
@@ -55,7 +57,8 @@ FilterLatex::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
             {
               stVer += verbLen;
             }
-          consumeToken (token, tokenSz, buffer, stVer - buffer);
+          curPtr += consumeToken (token, tokenSz, buffer, stVer - buffer);
+          wmemmove (buffer, curPtr, wcslen (curPtr) + 1);
           verbatim = false;
         }
       return true;
