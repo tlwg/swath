@@ -1,3 +1,16 @@
+2013-12-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	Fix off-by-one character loss in long HTML token.
+
+	* src/filterhtml.cpp (FilterHtml::GetNextToken):
+	  - On verge of full buffer, jump to 'chbuff' storing stage,
+	    rather than just quitting the loop, so the first character
+	    of the next part of the long token is not lost.
+	  - Also decrement 'tokenSz' on first character. Missing this
+	    could cause buffer overflow.
+
+	Thanks Nicolas Brouard for the report.
+
 2013-12-18  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Fix another infinite loop on EOF after punct or Thai chunk.

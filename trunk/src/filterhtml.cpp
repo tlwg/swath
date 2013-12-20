@@ -32,10 +32,12 @@ FilterHtml::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
       if (EOF == wc)
         return false;
       *token = wc;
+      --tokenSz;
     }
   else
     {
       *token = chbuff;
+      --tokenSz;
       chbuff = 0;
     }
   *thaiFlag = isThaiUni (*token);
@@ -58,7 +60,7 @@ FilterHtml::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
                   if (isThaiUni (nextChar))
                     {
                       if (tokenSz < 2)
-                        break;
+                        goto stop_reading;
                       *++token = nextChar;
                       --tokenSz;
                       continue;
@@ -69,12 +71,13 @@ FilterHtml::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
       else
         {
           if (tokenSz < 2)
-            break;
+            goto stop_reading;
           *++token = nextChar;
           --tokenSz;
           continue;
         }
 
+stop_reading:
       // not continued -> put back next char & stop
       chbuff = nextChar;
       break;
