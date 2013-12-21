@@ -1,3 +1,7 @@
+2013-12-21  Theppitak Karoonboonyanan  <thep@linux.thai.net>
+
+	* AUTHORS: Set me as Current maintainer.
+
 2013-12-20  Theppitak Karoonboonyanan  <thep@linux.thai.net>
 
 	Fix off-by-one character loss in long HTML token.
