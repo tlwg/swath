@@ -1,0 +1,80 @@
+0.5.2 (2013-12-23)
+=====
+- Fix infinite loops in LaTeX filter.
+  (Bug report and patch by Neutron Soutmun)
+- Fix off-by-one character loss in long HTML tokens.
+  (Bug report and analysis by Nicolas Brouard)
+
+0.5.1 (2013-10-30)
+=====
+- Correct word break code for Lambda.
+- Updated word break dictionary.
+- Adjust file filters to prevent potential buffer overflow.
+
+0.5.0 (2013-02-11)
+=====
+- Character encoding conversion is now spontaneous, no more buffering via
+  temporary file.
+- Rewritten RTF filter. It's now tested to work with real RTF document.
+- Process characters as Unicode internally, so that characters not present
+  in TIS-620 are not lost in output.
+- Fix potential buffer overflow vulnerability in Mule mode.
+- Updated word break dictionary.
+- Significant source clean-ups.
+- Switch to XZ tarball compression.
+
+0.4.3 (2012-06-13)
+=====
+- Replace word break dictionary with the word lists used to prepare
+  hyphenation patterns for the upcoming ThaiLaTeX, for best results.
+
+0.4.2 (2012-02-08)
+=====
+- Fix wrong word break within punctuation sequences like LaTeX `` and ''.
+- Reformat source for readability.
+- Significant source clean-ups.
+
+0.4.1 (2011-03-20)
+=====
+- Fixed bugs which caused wrong word break before PHINTHU, NIKHAHIT, YAMAKKAN
+  and LAKKHANGYAO.
+- Enhanced custom dictionary options ('-d' on command line and SWATHDICT
+  environment [formerly WORDSEGDATA]) to cover any datrie file, not just
+  directory, for more convenient use of custom dictionary.
+- Various more code clean-ups.
+- Long-outdated and unmaintained RPM spec is now removed.
+
+0.4.0 (2009-04-08)
+=====
+- New dictionary engine with libdatrie 0.2.
+- Fix memory leaks.
+- Various clean-ups, including Valgrind warnings.
+
+0.3.4 (2008-04-06)
+=====
+- More secure temporary file usage.
+
+0.3.3 (2008-03-20)
+=====
+- Fix regression introduced during portability fix in 0.3.2.
+  (Bug report by Pisut Tempatarachoke)
+- Fix bug that prevent '-u u,u' from working.
+  (Bug report by Neutron Soutmun)
+- Minor code and doc improvements.
+
+0.3.2 (2008-02-02)
+=====
+- Fix char signedness portability issues.
+- Improved messages and documentation.
+
+0.3.1 (2006-03-28)
+=====
+Includes all changes in CVS during the last 4 years
+- More configure options (debug, thai line catenation control)
+- C++ transition
+- Misceleneous bug fixes
+
+0.3.0 (2001-12-21)
+=====
+- First autotoolized version.
+
