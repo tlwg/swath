@@ -11,8 +11,10 @@
 bool
 ConvGetS (wchar_t* buffer, int buffSz, FILE* fpin, bool isUniIn)
 {
-  char* line = new char[buffSz];
-  if (!fgets (line, buffSz, fpin))
+  // UTF-8 requires up to 5 bytes per char
+  int   lineSz = isUniIn ? buffSz * 5 : buffSz;
+  char* line = new char[lineSz];
+  if (!fgets (line, lineSz, fpin))
     goto fail;
 
   TextReader* reader;
@@ -72,7 +74,7 @@ ConvGetC (FILE* fpin, bool isUniIn)
 bool
 ConvPrint (FILE* fpout, const wchar_t* wcs, bool isUniOut)
 {
-  char output[MAXLEN * 2];
+  char output[MAXLEN * 2 * 5];
   TextWriter* writer;
   if (isUniOut)
     writer = new UTF8Writer (output, sizeof output);
