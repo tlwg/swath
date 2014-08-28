@@ -1,3 +1,17 @@
+2014-08-28  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix excessive break positions in plain text mode.
+
+	* src/wordseg.cpp (SplitToken):
+	  - Distingish Thai tokens from non-Thai.
+	  - Make return values of SplitToken() more readable with enum.
+	* src/wordseg.cpp (main):
+	  - In plain text mode, only feed WordSegmentation() calls with
+	    Thai-only tokens, to prevent extra break positions in non-Thai
+	    zones. This imitates the behavior of formatted text modes.
+
+	Thanks Sorawee Porncharoenwase for the report via Google+.
+
 2014-08-24  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Fix convutil buffer preparation for UTF-8.
