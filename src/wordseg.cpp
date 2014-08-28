@@ -23,6 +23,7 @@
 #include <wchar.h>
 #include <wctype.h>
 
+#include "worddef.h"
 #include "filefilter.h"
 #include "filterx.h"
 #include "dictpath.h"
@@ -31,7 +32,15 @@
 #include "convutil.h"
 #include "utils.h"
 
-static int SplitToken (wchar_t** str, wchar_t* token);
+enum _TextToken {
+  TTOK_EOT    = -1,
+  TTOK_WSPACE = 0,
+  TTOK_THAI   = 1,
+  TTOK_ETC    = 2,
+};
+typedef enum _TextToken TextToken;
+
+static TextToken SplitToken (wchar_t** str, wchar_t* token);
 
 // Return
 // 0: successful
@@ -323,17 +332,21 @@ main (int argc, char* argv[])
               wchar_t* startStr = wLine;
               wchar_t wToken[MAXLEN];
 
-              while ((tokenFlag = SplitToken (&startStr, wToken)) >= 0)
+              while ((tokenFlag = SplitToken (&startStr, wToken)) != TTOK_EOT)
                 {
-                  if (tokenFlag == 0)
+                  switch (tokenFlag)
                     {
-                      ConvPrint (stdout, wToken, isUniOut);
-                    }
-                  else
-                    {
-                      WordSegmentation (wseg, wbr, wToken, wsegOut,
-                                        N_ELM (wsegOut));
-                      ConvPrint (stdout, wsegOut, isUniOut);
+                      case TTOK_THAI:
+                        WordSegmentation (wseg, wbr, wToken, wsegOut,
+                                          N_ELM (wsegOut));
+                        ConvPrint (stdout, wsegOut, isUniOut);
+                        break;
+
+                      case TTOK_WSPACE:
+                      case TTOK_ETC:
+                      default:
+                        ConvPrint (stdout, wToken, isUniOut);
+                        break;
                     }
                   printf ("%s", stopstr);
                 }
@@ -353,14 +366,11 @@ main (int argc, char* argv[])
   return 0;
 }
 
-//return -1 in case there is no data in str
-//return 0 for a token which is contain only white spaces.
-//return 1 for a token which is contain only alpha charecters.
-static int
+static TextToken
 SplitToken (wchar_t** str, wchar_t* token)
 {
   if (**str == 0)
-    return -1;
+    return TTOK_EOT;
 
   if (iswspace (**str))
     {
@@ -369,16 +379,25 @@ SplitToken (wchar_t** str, wchar_t* token)
           *token++ = *(*str)++;
         }
       *token = 0;
-      return 0;
+      return TTOK_WSPACE;
     }
-  else
+  else if (isThaiUni (**str))
     {
-      while (**str != 0 && !iswspace (**str))
+      while (**str != 0 && isThaiUni (**str))
         {
           *token++ = *(*str)++;
         }
       *token = 0;
-      return 1;
+      return TTOK_THAI;
+    }
+  else
+    {
+      while (**str != 0 && !iswspace (**str) && !isThaiUni (**str))
+        {
+          *token++ = *(*str)++;
+        }
+      *token = 0;
+      return TTOK_ETC;
     }
 }
 
