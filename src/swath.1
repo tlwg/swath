@@ -22,18 +22,18 @@ swath \- General-purpose Thai word segmentation utility
 [options] \<\ \fIinfile\fP\ \>\ \fIoutfile\fP
 .br
 .SH DESCRIPTION
-Thai script has no word delimitor. Applications need some knowledge about
-Thai word list to recognize word boundaries before they can do useful things
-about Thai text, such as line wrapping.
+Thai script has no word delimitor.  Applications need to recognize word
+boundaries before they can do useful things with Thai text, such as line
+wrapping.
 .sp
-Swath provides word analysis filter to insert word delimitors in a text
-stream. It reads text from standard input, analyze it for word boundaries
-by consulting a Thai word list, and output to standard output the same text
-with the predefined word delimitors inserted.
+Swath provides word analysis filter to insert word delimitors into a given
+text stream.  It reads text from standard input, analyzes it for word
+boundaries by consulting a Thai word list, and output to standard output the
+same text with the predefined word delimitors inserted.
 .sp
 Currently, it can read plain text, HTML, RTF, LaTeX and Lambda (Unicode version
-of LaTeX with Omega typesetter kernel) documents and insert commonly used word
-delimitors for each format (pipe `|' for plain text). But the user can always
+of LaTeX with Omega typesetter kernel) documents and insert common word
+delimitors for each format (pipe `|' for plain text). But user can always
 override this with a preferred delimitor.
 .SH OPTIONS
 .TP
@@ -41,28 +41,29 @@ override this with a preferred delimitor.
 Define a string to be used as word delimitor code in the output text.
 .TP
 .B \-d [\fIdict-path\fP]
-Specify alternative dictionary location. \fIdict-path\fP must either be a
-directory containing the swath dictionary file `swathdic.tri', or be a path
-to the dictionary file itself. The dictionary file must be a trie file
+Specify alternative dictionary location.  \fIdict-path\fP must be either a
+directory containing the swath dictionary file `swathdic.tri', or a path
+to the dictionary file itself.  The dictionary file must be a trie file
 prepared using \fBtrietool-0.2\fP(1) utility from libdatrie package.
 .sp
 If this option is given, \fBswath\fP will override normal dictionary search
-and will exit on failure. Otherwise, it will try to open dictionary from
-the location specified in SWATHDICT environment if set, then in current
-working directory, and finally in the usual installed location.
+and will exit on failure to find the given dictionary.  Otherwise, if
+\fBSWATHDICT\fP environment is set, it will try to open dictionary from the
+location specified by its value.  Otherwise, it will try the current working
+directory, and finally the usual installed location.
 .TP
 .B \-f [\fIformat\fP]
-Specify format of the input. Possible formats are: html, rtf, latex, lambda.
+Specify format of the input.  Possible formats are: html, rtf, latex, lambda.
 .TP
 .B \-m [\fIscheme\fP]
-Choose word matching scheme when analyzing word boundaries. Possible schemes
+Choose word matching scheme when analyzing word boundaries.  Possible schemes
 are `long' (for longest or greedy matching) and `max' (for maximal matching,
-with least words preferred). Maximal matching is the default value.
+with least words preferred).  Maximal matching is the default value.
 .TP
 .B \-u \fIinput-enc\fP,\fIoutput-enc\fP
-Specify encodings of input and output. \fIinput-enc\fP and \fIoutput-enc\fP
+Specify encodings of input and output.  \fIinput-enc\fP and \fIoutput-enc\fP
 can be one of 'u' (for UTF-8 encoding) and 't' (for TIS-620 encoding).
-Swath will convert the character encoding as necessary. If omitted, TIS-620
+Swath will convert the character encoding as necessary.  If omitted, TIS-620
 encodings on both input and output are assumed.
 .TP
 .B \-v, \-\-verbose
@@ -74,9 +75,9 @@ Show help.
 .IP SWATHDICT
 If specified, \fBswath\fP will search for dictionary in this location before
 the usual places (current working directory and usual installed directory,
-respectively). This value is overridden by \fB\-d\fP option.
+respectively).  This value is overridden by \fB\-d\fP option.
 .SH EXAMPLES
-For LaTeX (to be used with thailatex package):
+For LaTeX (to be used with babel-thai package):
 .sp
 $ \fBswath\fP \-f latex < thaifile.tex > thaifile.ttex
 .br
@@ -87,8 +88,8 @@ properly, but support the <wbr> tag):
 .sp
 $ \fBswath\fP \-f html < myweb.html > myweb-wbr.html
 .sp
-To preprocess a Thai UTF-8 encoded LaTeX file for thailatex, which always works 
-with TIS-620:
+To preprocess a Thai UTF-8 encoded LaTeX file for babel-thai with tis620
+inputenc:
 .sp
 $ \fBswath\fP \-f latex \-u u,t < thaifile.tex > thaifile.ttex
 .br
@@ -112,4 +113,4 @@ To use an alternative dictionary from libthai:
 $ \fBswath\fP \-f latex \-d /usr/share/libthai/thbrk.tri < thaifile.tex >
 thaifile.ttex
 .SH AUTHOR
-This manual page was written by Theppitak Karoonboonyanan <thep@linux.thai.net>.
+This manual page was written by Theppitak Karoonboonyanan <theppitak@gmail.com>.

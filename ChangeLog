@@ -1,5 +1,15 @@
 2014-08-29  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Update man page.
+
+	* src/swath.1:
+	  - Revise wording.
+	  - Use two spaces to delimit sentences.
+	  - Update thailatex info to babel-thai.
+	  - Update my e-mail address.
+
+2014-08-29  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	* README: Update my e-mail address.
 
 2014-08-28  Theppitak Karoonboonyanan  <theppitak@gmail.com>
