@@ -26,7 +26,7 @@ Currently, it supports two schemes: longest (greedy) matching and maximal
 EXAMPLES
 ========
 
-- For LaTeX (to be used with thailatex package):
+- For LaTeX (to be used with babel-thai package):
 
     $ swath -f latex < mydoc.tex > mydoc.ttex
     $ latex mydoc.ttex
