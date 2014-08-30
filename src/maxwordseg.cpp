@@ -4,8 +4,6 @@
 
 #include "maxwordseg.h"
 #include "wordstack.h"
-#include <stdio.h>
-#include <string.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
