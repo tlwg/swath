@@ -17,7 +17,6 @@ FilterLatex::FilterLatex (FILE* filein, FILE* fileout,
                           int latexflag, const char* wordBreakStr)
   : FilterX (filein, fileout, isUniIn, isUniOut, wordBreakStr),
     winCharSet (latexflag == 1),
-    latexFlag (latexflag),
     verbatim (false)
 {
   buffer[0] = 0;

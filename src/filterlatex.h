@@ -28,7 +28,6 @@ private:
 
 private:
   bool winCharSet;  // true for Windows char set; false for Mac char set
-  int latexFlag;    // 0 do nothing; 1 win char set; 2 mac char set
   wchar_t buffer[MAXLEN];
   bool verbatim;
 };
