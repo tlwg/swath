@@ -1,5 +1,9 @@
 2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	* README: Update thailatex info to babel-thai.
+
+2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Update copyright info.
 
 	* src/wordseg.cpp (Version):
