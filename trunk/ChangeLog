@@ -1,3 +1,11 @@
+2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Update copyright info.
+
+	* src/wordseg.cpp (Version):
+	  - Update copyright year.
+	  - Update my e-mail address.
+
 2014-08-29  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Update man page.

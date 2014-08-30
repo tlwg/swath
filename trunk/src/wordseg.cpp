@@ -138,7 +138,7 @@ Version ()
   printf ("swath " VERSION "\n");
   printf
     ("Copyright (C) 2001-2006 Phaisarn Charoenpornsawat <phaisarn@nectec.or.th>\n"
-     "Copyright (C) 2001-2009 Theppitak Karoonboonyanan <thep@linux.thai.net>\n"
+     "Copyright (C) 2001-2014 Theppitak Karoonboonyanan <theppitak@gmail.com>\n"
      "License: GNU GPL version 2 or later <http://gnu.org/licenses/gpl-2.0.html>\n"
      "This is free software; you are free to change and redistribute it.\n"
      "There is NO WARRANTY, to the extent permitted by law.\n");
