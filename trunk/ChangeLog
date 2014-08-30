@@ -2,6 +2,13 @@
 
 	Drop unneeded include.
 
+	* src/maxwordseg.cpp:
+	  - Drop unneeded standard C includes.
+
+2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Drop unneeded include.
+
 	* src/longwordseg.cpp:
 	  - Drop unneeded "dictpath.h" & standard C includes.
 
