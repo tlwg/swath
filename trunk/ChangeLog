@@ -2,6 +2,13 @@
 
 	Drop unneeded include.
 
+	* src/wordseg.cpp:
+	  - Drop unneeded "dictpath.h" include.
+
+2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Drop unneeded include.
+
 	* src/maxwordseg.cpp:
 	  - Drop unneeded standard C includes.
 
