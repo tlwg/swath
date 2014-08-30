@@ -26,7 +26,6 @@
 #include "worddef.h"
 #include "filefilter.h"
 #include "filterx.h"
-#include "dictpath.h"
 #include "longwordseg.h"
 #include "maxwordseg.h"
 #include "convutil.h"
