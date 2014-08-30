@@ -1,5 +1,18 @@
 2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Drop unused function & member.
+
+	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex::AdjustText):
+	  - Drop unused member function.
+	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex::FilterLatex):
+	  - Drop now-unused member 'winCharSet'.
+	  - Drop c-tor parameter 'latexflag' used for winCharSet
+	    initialization.
+	* src/filterlambda.h (FilterLambda::FilterLambda):
+	  - Drop c-tor parameter 'latexflag'.
+
+2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Drop unused member.
 
 	* src/filterlatex.h, src/filterlatex.cpp (class FilterLatex):

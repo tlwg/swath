@@ -14,13 +14,12 @@
 class FilterLambda : public FilterLatex
 {
 public:
-  FilterLambda (FILE* filein, FILE* fileout, bool isUniIn, int latexflag = 0);
+  FilterLambda (FILE* filein, FILE* fileout, bool isUniIn);
 };
 
 inline
-FilterLambda::FilterLambda (FILE* filein, FILE* fileout, bool isUniIn,
-                            int latexflag)
-  : FilterLatex (filein, fileout, isUniIn, true, latexflag, "^^^^200b")
+FilterLambda::FilterLambda (FILE* filein, FILE* fileout, bool isUniIn)
+  : FilterLatex (filein, fileout, isUniIn, true, "^^^^200b")
 {
 }
 
