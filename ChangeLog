@@ -1,5 +1,12 @@
 2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Drop unneeded include.
+
+	* src/longwordseg.cpp:
+	  - Drop unneeded "dictpath.h" & standard C includes.
+
+2014-08-30  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Drop unused function & member.
 
 	* src/filterlatex.h, src/filterlatex.cpp (FilterLatex::AdjustText):
