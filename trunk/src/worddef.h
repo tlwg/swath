@@ -17,29 +17,29 @@ struct wordState
     : backState (backState), branchState (branchState) {}
 };
 
-typedef struct wt_detail_def
+struct wt_detail_type
 {
   char tag_no;
   float prob;
-} wt_detail_type;
+};
 
-typedef struct wt_data_def
+struct wt_data_type
 {
   char no_pos;
   wt_detail_type detail[15];
-} wt_data_type;
+};
 
-typedef struct CDAreaDef
+struct CDAreaType
 {
   int st;
   int en;
-} CDAreaType;
+};
 
-typedef struct SepTypeDef
+struct SepType
 {
   int Score;
   short int Sep[MAXSEP];
-} SepType;
+};
 
 inline bool
 isThai (unsigned char ch)

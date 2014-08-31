@@ -1,5 +1,12 @@
 2014-08-31  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Get rid of C-style typedef for structs.
+
+	* src/worddef.h:
+	  - Just use C++ typing for structs.
+
+2014-08-31  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Get rid of C-style typedef for enum.
 
 	* src/wordseg.cpp (enum TextToken):
