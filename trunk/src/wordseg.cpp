@@ -31,13 +31,12 @@
 #include "convutil.h"
 #include "utils.h"
 
-enum _TextToken {
+enum TextToken {
   TTOK_EOT    = -1,
   TTOK_WSPACE = 0,
   TTOK_THAI   = 1,
   TTOK_ETC    = 2,
 };
-typedef enum _TextToken TextToken;
 
 static TextToken SplitToken (wchar_t** str, wchar_t* token);
 
