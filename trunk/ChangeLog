@@ -1,5 +1,13 @@
 2014-08-31  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Drop more unused code.
+
+	* src/filterlatex.cpp:
+	  - Drop unused vars & functions previously used by the removed
+	    function FilterLatex::AdjustText().
+
+2014-08-31  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Get rid of C-style typedef for structs.
 
 	* src/worddef.h:
