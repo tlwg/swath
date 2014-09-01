@@ -1,3 +1,8 @@
+2014-09-01  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	* configure.ac, NEWS:
+	=== Version 0.5.3 ===
+
 2014-08-31  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Drop more unused code.
