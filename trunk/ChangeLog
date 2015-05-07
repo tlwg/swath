@@ -1,3 +1,18 @@
+2015-05-07  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Update dictionary from texhyphen SVN.
+
+	* data/tdict-city.txt:
+	* data/tdict-collection.txt:
+	* data/tdict-common.txt:
+	* data/tdict-country.txt:
+	* data/tdict-ict.txt:
+	* data/tdict-proper.txt:
+	* data/tdict-science.txt:
+	* data/tdict-spell.txt:
+	  - Update dictionary from dehyphenated source for texhyphen
+	    hyphenation patterns.
+
 2015-03-07  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Also check for 'trietool' (without -0.2 suffix)
