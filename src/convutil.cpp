@@ -24,7 +24,7 @@ ConvGetS (wchar_t* buffer, int buffSz, FILE* fpin, bool isUniIn)
     reader = new TIS620Reader (line);
   unichar uc;
   wchar_t* wp;
-  for (wp = buffer; reader->Read (uc); ++wp)
+  for (wp = buffer; buffSz > 1 && reader->Read (uc); ++wp, --buffSz)
     {
       *wp = uc;
     }
