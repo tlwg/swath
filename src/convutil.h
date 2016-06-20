@@ -12,6 +12,7 @@ bool ConvGetS (wchar_t* buffer, int buffSz, FILE* fpin, bool isUniIn);
 int  ConvGetC (FILE* fpin, bool isUniIn);
 
 bool ConvPrint (FILE* fpout, const wchar_t* wcs, bool isUniOut);
+wchar_t* ConvStrDup (const char* s, bool isUniIn);
 
 wchar_t* Ascii2WcsCopy (wchar_t* dst, const char* src);
 wchar_t* Ascii2WcsCat (wchar_t* dst, const char* src);

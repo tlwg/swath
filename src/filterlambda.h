@@ -19,7 +19,7 @@ public:
 
 inline
 FilterLambda::FilterLambda (FILE* filein, FILE* fileout, bool isUniIn)
-  : FilterLatex (filein, fileout, isUniIn, true, "^^^^200b")
+  : FilterLatex (filein, fileout, isUniIn, true, L"^^^^200b")
 {
 }
 

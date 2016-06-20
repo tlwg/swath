@@ -15,7 +15,7 @@
 
 FilterHtml::FilterHtml (FILE* filein, FILE* fileout,
                         bool isUniIn, bool isUniOut)
-  : FilterX (filein, fileout, isUniIn, isUniOut, "<wbr>"),
+  : FilterX (filein, fileout, isUniIn, isUniOut, L"<wbr>"),
     chbuff (0)
 {
 }

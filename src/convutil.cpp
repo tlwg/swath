@@ -6,6 +6,7 @@
 #include "conv/utf8.h"
 #include "conv/tis620.h"
 #include "worddef.h"
+#include <stdlib.h>
 #include <string.h>
 
 bool
@@ -94,6 +95,30 @@ ConvPrint (FILE* fpout, const wchar_t* wcs, bool isUniOut)
 
   delete writer;
   return true;
+}
+
+wchar_t*
+ConvStrDup (const char* s, bool isUniIn)
+{
+  wchar_t* output = (wchar_t*) malloc (sizeof (wchar_t) *(strlen (s) + 1));
+  if (!output)
+    return NULL;
+
+  TextReader* reader;
+  if (isUniIn)
+    reader = new UTF8Reader (s);
+  else
+    reader = new TIS620Reader (s);
+  unichar uc;
+  wchar_t* wp;
+  for (wp = output; reader->Read (uc); ++wp)
+    {
+      *wp = uc;
+    }
+  *wp = 0;
+  delete reader;
+
+  return output;
 }
 
 wchar_t*

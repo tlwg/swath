@@ -14,7 +14,7 @@
 
 FilterLatex::FilterLatex (FILE* filein, FILE* fileout,
                           bool isUniIn, bool isUniOut,
-                          const char* wordBreakStr)
+                          const wchar_t* wordBreakStr)
   : FilterX (filein, fileout, isUniIn, isUniOut, wordBreakStr),
     verbatim (false)
 {

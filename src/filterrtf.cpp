@@ -89,7 +89,7 @@ RTFToken::terminate (ETokenType t)
 
 FilterRTF::FilterRTF (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut)
   : FilterX (filein, fileout, isUniIn, isUniOut,
-             isUniOut ? "\\u8203\\'e2\\'80\\'8b" : "\\u8203\\'3f"), // U+200B
+             isUniOut ? L"\\u8203\\'e2\\'80\\'8b" : L"\\u8203\\'3f"), // U+200B
     psState (CS_START),
     curUTFReadBytes (1),
     curUTFWriteBytes (1)

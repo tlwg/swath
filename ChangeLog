@@ -1,3 +1,35 @@
+2016-06-20  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix issue #1 - Support non-ASCII word break string.
+
+	Word break string should be read & converted the same way
+	input text is.
+
+	* src/convutil.h, src/convutil.cpp (+ConvStrDup):
+	  - Add ConvStrDup() utility for converting string in buffers.
+
+	* src/filterx.h (wordBreakStr, GetWordBreak(), FilterX()):
+	  - Change type of word break string from const char*
+	    to const wchar_t*.
+	* src/filterhtml.cpp:
+	* src/filterlatex.h:
+	* src/filterlatex.cpp:
+	* src/filterlambda.h:
+	* src/filterrtf.cpp:
+	  - Change argument types accordingly.
+
+	* src/wordseg.cpp (WordSegmentation):
+	  - Change type of wbr from const char* to const wchar_t*.
+	  - Use wchar functions accordingly.
+
+	* src/wordseg.cpp (main):
+	  - Prepare wchar_t version of word break string as needed.
+	  - Call WordSegmentation() with wchar_t version
+	    of word break strings.
+	  - Print trailing word break string explicitly in mule mode.
+
+	Thanks GitHub @pepa65 for the report.
+
 2016-05-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Fix segfault on extremely long input.

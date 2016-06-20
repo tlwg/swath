@@ -97,14 +97,14 @@ ExitWordSegmentation (AbsWordSeg* wseg)
 }
 
 static void
-WordSegmentation (AbsWordSeg* wseg, const char* wbr, const wchar_t* line,
+WordSegmentation (AbsWordSeg* wseg, const wchar_t* wbr, const wchar_t* line,
                   wchar_t* output, int outputSz)
 {
   short int *seps = new short int [outputSz];
   int nSeps = wseg->WordSeg (line, seps, outputSz);
 
   const wchar_t* pLine = line;
-  int wbrLen = strlen (wbr);
+  int wbrLen = wcslen (wbr);
   for (int i = 0; i < nSeps; i++)
     {
       const wchar_t* wordEnd = line + seps[i];
@@ -118,7 +118,7 @@ WordSegmentation (AbsWordSeg* wseg, const char* wbr, const wchar_t* line,
 
       if (wbrLen >= outputSz)
         break;
-      Ascii2WcsCopy (output, wbr);
+      wcsncpy (output, wbr, wbrLen);
       output += wbrLen;
       outputSz -= wbrLen;
 
@@ -185,7 +185,7 @@ int
 main (int argc, char* argv[])
 {
   char mode = 1;                // 0 = display, 1 = don't display message
-  const char* wbr;
+  const char* wbr = NULL;
   const char* dictpath = NULL;
   const char* method = NULL;
   const char* fileformat = NULL;
@@ -194,7 +194,6 @@ main (int argc, char* argv[])
   bool thaiFlag;
   bool wholeLine = false;
 
-  wbr = "|";
   muleMode = false;
   for (int iargc = 1; iargc < argc; iargc++)
     {
@@ -288,7 +287,6 @@ main (int argc, char* argv[])
           // FIXME: still mem leak hmm..
           return 1;
         }
-      wbr = FltX->GetWordBreak ();
       while (FltX->GetNextToken (wLine, N_ELM (wLine), &thaiFlag))
         {
           if (!thaiFlag)
@@ -296,14 +294,20 @@ main (int argc, char* argv[])
               FltX->Print (wLine, thaiFlag);
               continue;
             }
-          WordSegmentation (wseg, wbr, wLine, wsegOut, N_ELM (wsegOut));
+          WordSegmentation (wseg, FltX->GetWordBreak(), wLine,
+                            wsegOut, N_ELM (wsegOut));
           FltX->Print (wsegOut, thaiFlag);
         }
       delete FltX;
     }
   else
     {
-      const char *stopstr = muleMode ? wbr : "";
+      wchar_t* wcwbr_buff = NULL;
+      const wchar_t* wcwbr = L"|";
+      if (wbr)
+        {
+          wcwbr = wcwbr_buff = ConvStrDup (wbr, isUniIn);
+        }
       while (!feof (stdin))
         {
           if (mode == 0)
@@ -335,7 +339,7 @@ main (int argc, char* argv[])
                   switch (tokenFlag)
                     {
                       case TTOK_THAI:
-                        WordSegmentation (wseg, wbr, wToken, wsegOut,
+                        WordSegmentation (wseg, wcwbr, wToken, wsegOut,
                                           N_ELM (wsegOut));
                         ConvPrint (stdout, wsegOut, isUniOut);
                         break;
@@ -346,17 +350,25 @@ main (int argc, char* argv[])
                         ConvPrint (stdout, wToken, isUniOut);
                         break;
                     }
-                  printf ("%s", stopstr);
+                  if (muleMode)
+                    {
+                      ConvPrint (stdout, wcwbr, isUniOut);
+                    }
                 }
             }
           else
             {
-              WordSegmentation (wseg, wbr, wLine, wsegOut, N_ELM (wsegOut));
+              WordSegmentation (wseg, wcwbr, wLine, wsegOut, N_ELM (wsegOut));
               ConvPrint (stdout, wsegOut, isUniOut);
-              printf ("%s", stopstr);
+              if (muleMode)
+                {
+                  ConvPrint (stdout, wcwbr, isUniOut);
+                }
             }
           printf ("\n");
         }
+      if (wcwbr_buff)
+        free (wcwbr_buff);
     }
 
   ExitWordSegmentation (wseg);

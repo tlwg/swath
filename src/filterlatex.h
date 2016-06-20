@@ -17,7 +17,7 @@ class FilterLatex : public FilterX
 {
 public:
   FilterLatex (FILE* filein, FILE* fileout, bool isUniIn, bool isUniOut,
-               const char *wordBreakStr = "{\\wbr}");
+               const wchar_t* wordBreakStr = L"{\\wbr}");
 
   bool GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag);
   void Print (const wchar_t* token, bool thaiFlag);
