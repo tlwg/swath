@@ -1,3 +1,14 @@
+2016-06-21  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Interpret word break string using output encoding.
+
+	As an adjustment to issue #1 fix, taking the word break string
+	in output encoding should be more sensible to users than in
+	input encoding, so s/he can directly specify the string to insert.
+
+	* src/wordseg.cpp (main):
+	  - Convert wbr depending on isUniOut instead of isUniIn.
+
 2016-06-20  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Fix issue #1 - Support non-ASCII word break string.

@@ -306,7 +306,7 @@ main (int argc, char* argv[])
       const wchar_t* wcwbr = L"|";
       if (wbr)
         {
-          wcwbr = wcwbr_buff = ConvStrDup (wbr, isUniIn);
+          wcwbr = wcwbr_buff = ConvStrDup (wbr, isUniOut);
         }
       while (!feof (stdin))
         {
