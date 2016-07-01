@@ -1,11 +1,9 @@
 #ifndef __WORDDEF_H
 #define __WORDDEF_H
 
-#define MAXCHOICE 150           // NUMBER OF ALL POSSIBLE SENTENCES.
-#define MAXLEN 2000             // maximum characters in a sentence.
-#define MAXSEP 500              // maximum seperation points
+#define MAXLEN 6000             // maximum characters in a sentence.
+#define MAXSEP 1500             // maximum seperation points
                                 //   (maximum words in a sentences)
-#define MAXTAG 47               // number of all posible POSs.
 
 struct wordState
 {

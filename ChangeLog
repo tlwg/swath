@@ -1,5 +1,20 @@
 2016-07-01  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Support longer line length.
+
+	* src/worddef.h (MAXLEN, MAXSEP):
+	  - Increase max line length and max words by 3 times,
+	    to support longer paragraphs. We had better address this
+	    with resizable buffers, but the change would be too deep
+	    for now.
+
+	* src/worddef.h (-MAXCHOICE, -MAXTAG):
+	  - Drop unused macros.
+
+	Thanks Santi Romeyen for the report via a personal e-mail.
+
+2016-07-01  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Update dictionary from thailatex GitHub.
 
 	* data/tdict-city.txt:
