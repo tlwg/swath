@@ -57,6 +57,9 @@ InitWordSegmentation (const char* dictpath, const char* method)
   if (!wseg)
     wseg = new MaxWordSeg;
 
+  if (!wseg)
+    return NULL;
+
   // Dict search order:
   // 1. dictpath, if not NULL, exit on failure
   // 2. ${SWATHDICT} env, if not NULL, continue on failure

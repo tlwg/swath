@@ -1,5 +1,12 @@
 2016-07-02  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Check memory failure in InitWordSegmentation().
+
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Exit on memory allocation failure.
+
+2016-07-02  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Simplify InitWordSegmentation().
 
 	* src/wordseg.cpp (InitWordSegmentation):
