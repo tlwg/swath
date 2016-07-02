@@ -1,3 +1,15 @@
+2016-07-02  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Simplify InitWordSegmentation().
+
+	* src/wordseg.cpp (InitWordSegmentation):
+	  - Rewrite to return (AbsWordSeg*), with NULL indicating failure.
+	  - Simplify method determination logic, with fallback.
+	  - Simplify dictionary trial logic.
+
+	* src/wordseg.cpp (main):
+	  - Call InitWordSegmentation() with new convention.
+
 2016-07-01  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Support longer line length.

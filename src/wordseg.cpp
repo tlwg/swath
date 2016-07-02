@@ -40,25 +40,22 @@ enum TextToken {
 
 static TextToken SplitToken (wchar_t** str, wchar_t* token);
 
-// Return
-// 0: successful
-// 1: can not get dictionary
-static int
-InitWordSegmentation (const char* dictpath,
-                      const char* method, AbsWordSeg** pWseg)
+static AbsWordSeg*
+InitWordSegmentation (const char* dictpath, const char* method)
 {
-  if (method == NULL)
+  AbsWordSeg* wseg = NULL;
+
+  if (method)
     {
-      *pWseg = new MaxWordSeg;
+      if (strcmp (method, "long") == 0)
+        wseg = new LongWordSeg;
+      else if (strcmp (method, "max") == 0)
+        wseg = new MaxWordSeg;
     }
-  else if (strcmp (method, "long") == 0)
-    {
-      *pWseg = new LongWordSeg;
-    }
-  else
-    {
-      *pWseg = new MaxWordSeg;
-    }
+
+  // fallback
+  if (!wseg)
+    wseg = new MaxWordSeg;
 
   // Dict search order:
   // 1. dictpath, if not NULL, exit on failure
@@ -67,27 +64,25 @@ InitWordSegmentation (const char* dictpath,
   // 4. WORDSEGDATADIR macro
   if (dictpath)
     {
-      if (!(*pWseg)->InitDict (dictpath))
-        {
-          delete *pWseg;
-          return 1;
-        }
-      return 0;
+      if (wseg->InitDict (dictpath))
+        return wseg;
+    }
+  else
+    {
+      dictpath = getenv ("SWATHDICT");
+      if (dictpath && wseg->InitDict (dictpath))
+        return wseg;
+
+      if (wseg->InitDict ("."))
+        return wseg;
+
+      if (wseg->InitDict (WORDSEGDATA_DIR))
+        return wseg;
     }
 
-  dictpath = getenv ("SWATHDICT");
-  if (dictpath && (*pWseg)->InitDict (dictpath))
-    return 0;
-
-  if ((*pWseg)->InitDict ("."))
-    return 0;
-
-  if ((*pWseg)->InitDict (WORDSEGDATA_DIR))
-    return 0;
-
   // All fail
-  delete *pWseg;
-  return 1;
+  delete wseg;
+  return NULL;
 }
 
 static void
@@ -254,9 +249,8 @@ main (int argc, char* argv[])
   if (mode == 0)
     printf ("*** Word Segmentation ***\n");
 
-  AbsWordSeg* wseg;
-
-  if (InitWordSegmentation (dictpath, method, &wseg) != 0)
+  AbsWordSeg* wseg = InitWordSegmentation (dictpath, method);
+  if (!wseg)
     return 1;
 
   bool  isUniIn = false;
