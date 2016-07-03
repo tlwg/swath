@@ -1,3 +1,10 @@
+2016-07-03  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix mem leak on file format error.
+
+	* src/wordseg.cpp (main):
+	  - Exit word segmentation before exiting program.
+
 2016-07-02  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Check memory failure in InitWordSegmentation().

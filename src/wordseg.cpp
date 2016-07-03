@@ -281,7 +281,7 @@ main (int argc, char* argv[])
       if (FltX == NULL)
         {
           fprintf (stderr, "Invalid file format: %s\n", fileformat);
-          // FIXME: still mem leak hmm..
+          ExitWordSegmentation (wseg);
           return 1;
         }
       while (FltX->GetNextToken (wLine, N_ELM (wLine), &thaiFlag))
