@@ -85,4 +85,5 @@ AC_OUTPUT(
   Makefile
   conv/Makefile
   src/Makefile
-  data/Makefile)
+  data/Makefile
+  tests/Makefile)

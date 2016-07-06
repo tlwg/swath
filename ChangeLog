@@ -1,3 +1,13 @@
+2016-07-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Add test suite, with simple test case.
+
+	* configure.ac, Makefile.am:
+	  - Add tests/ subdir.
+
+	* +tests/Makefile.am, +tests/test-simple.sh:
+	  - Add a simple test case.
+
 2016-07-03  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Fix mem leak on file format error.
