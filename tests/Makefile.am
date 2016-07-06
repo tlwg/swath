@@ -1,6 +1,7 @@
 TESTS = \
 	test-simple.sh \
 	test-long.sh \
+	test-utf8-wbr.sh \
 	$(NULL)
 
 AM_TESTS_ENVIRONMENT = \
@@ -12,6 +13,7 @@ AM_TESTS_ENVIRONMENT = \
 check_SCRIPTS = \
 	test-simple.sh \
 	test-long.sh \
+	test-utf8-wbr.sh \
 	$(NULL)
 
 DISTCLEANFILES = \

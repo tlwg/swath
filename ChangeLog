@@ -1,5 +1,13 @@
 2016-07-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Add test case for UTF-8 word break code.
+
+	* tests/Makefile.am, +tests/test-utf8-wbr.sh:
+	  - Add test case for non-ASCII word break string,
+	    for Issue #1.
+
+2016-07-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Add test case for long line.
 
 	* tests/Makefile.am, +tests/test-long.sh,
