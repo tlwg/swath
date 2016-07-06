@@ -1,5 +1,6 @@
 TESTS = \
-	test-simple.sh
+	test-simple.sh \
+	test-long.sh \
 	$(NULL)
 
 AM_TESTS_ENVIRONMENT = \
@@ -9,9 +10,16 @@ AM_TESTS_ENVIRONMENT = \
 	$(NULL)
 
 check_SCRIPTS = \
-	test-simple.sh
+	test-simple.sh \
+	test-long.sh \
+	$(NULL)
+
+DISTCLEANFILES = \
+	long-out.txt \
 	$(NULL)
 
 EXTRA_DIST = \
 	$(check_SCRIPTS) \
+	long.txt \
+	long-wseg.txt \
 	$(NULL)

@@ -1,5 +1,13 @@
 2016-07-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Add test case for long line.
+
+	* tests/Makefile.am, +tests/test-long.sh,
+	  +tests/long.txt, +tests/long-wseg.txt:
+	  - Add test script and sample input with long line.
+
+2016-07-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Add test suite, with simple test case.
 
 	* configure.ac, Makefile.am:
