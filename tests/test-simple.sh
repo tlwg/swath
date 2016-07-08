@@ -10,7 +10,7 @@ test_wseg()
   RES=$(echo -n "${INPUT}" | ${SWATH} -d ${DICTDIR} -u u,u)
 
   if test "x${RES}" != "x${EXPECT}"; then
-    return -1
+    return 1
   fi
 
   return 0
