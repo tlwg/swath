@@ -1,3 +1,14 @@
+0.5.4 (2016-07-08)
+=====
+- Updated word break dictionary.
+- Fix segfault on extremely long input lines.
+- Support longer input lines.
+  (Bug report by Santi Romeyen)
+- Support non-ASCII word break string.
+  https://github.com/tlwg/swath/issues/1
+- Some source code clean-ups.
+- Add test suite.
+
 0.5.3 (2014-09-01)
 =====
 - Updated word break dictionary.

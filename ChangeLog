@@ -1,5 +1,10 @@
 2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	* configure.ac, NEWS:
+	=== Version 0.5.4 ===
+
+2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Clean intermediate file on LaTeX test.
 
 	* tests/Makefile.am:
