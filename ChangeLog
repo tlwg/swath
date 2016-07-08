@@ -1,5 +1,12 @@
 2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Clean intermediate file on LaTeX test.
+
+	* tests/Makefile.am:
+	  - Add thai-latex-out.tex to DISTCLEANFILES.
+
+2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Add test case for LaTeX.
 
 	* tests/Makefile.am, +tests/test-latex.sh,

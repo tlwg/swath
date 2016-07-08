@@ -20,6 +20,7 @@ check_SCRIPTS = \
 
 DISTCLEANFILES = \
 	long-out.txt \
+	thai-latex-out.tex \
 	$(NULL)
 
 EXTRA_DIST = \
