@@ -1,5 +1,12 @@
 2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Remove debug option from test.
+
+	* tests/test-utf8-wbr.sh:
+	  - Remove '-x' sh option.
+
+2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Fix exit status on error.
 
 	* tests/test-simple.sh:

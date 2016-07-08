@@ -5,7 +5,7 @@
 # Ref: https://github.com/tlwg/swath/issues/1
 #
 
-set -e -x
+set -e
 
 INPUT="ผมมีแฟนแล้วนะครับ"
 EXPECT="ผม​มี​แฟน​แล้ว​นะ​ครับ"
