@@ -1,5 +1,13 @@
 2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
+	Add test case for LaTeX.
+
+	* tests/Makefile.am, +tests/test-latex.sh,
+	  +tests/thai-latex.tex, +tests/thai-latex-wseg.tex:
+	  - Add Thai LaTeX sample for testing.
+
+2016-07-08  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
 	Remove debug option from test.
 
 	* tests/test-utf8-wbr.sh:
