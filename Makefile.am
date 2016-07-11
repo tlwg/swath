@@ -4,3 +4,6 @@ SUBDIRS = conv src data tests
 
 MAINTAINERCLEANFILES = Makefile.in
 
+dist-hook:
+	echo $(VERSION) > $(distdir)/VERSION
+
