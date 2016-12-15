@@ -1,5 +1,21 @@
 2016-12-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Update dictionary from thailatex GitHub.
+
+	* data/tdict-city.txt:
+	* data/tdict-common.txt:
+	* data/tdict-geo.txt:
+	* data/tdict-ict.txt:
+	* data/tdict-proper.txt:
+	* data/tdict-science.txt:
+	* data/tdict-spell.txt:
+	* data/tdict-std-compound.txt:
+	* data/tdict-std.txt:
+	  - Update dictionary from dehyphenated source for thailatex
+	    hyphenation patterns.
+
+2016-12-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Include git-version-gen in tarball
 
 	* Makefile.am:
