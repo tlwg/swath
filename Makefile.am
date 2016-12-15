@@ -2,6 +2,10 @@ ACLOCAL_AMFLAGS = -I m4
 
 SUBDIRS = conv src data tests
 
+EXTRA_DIST = \
+	build-aux/git-version-gen	\
+	$(NULL)
+
 MAINTAINERCLEANFILES = Makefile.in
 
 dist-hook:
