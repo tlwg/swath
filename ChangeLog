@@ -1,3 +1,20 @@
+2017-11-02  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Update dictionary from thailatex GitHub.
+
+	* data/tdict-city.txt:
+	* data/tdict-common.txt:
+	* data/tdict-district.txt:
+	* data/tdict-geo.txt:
+	* data/tdict-history.txt:
+	* data/tdict-ict.txt:
+	* data/tdict-lang-ethnic.txt:
+	* data/tdict-proper.txt:
+	* data/tdict-science.txt:
+	* data/tdict-spell.txt:
+	  - Update dictionary from dehyphenated source for thailatex
+	    hyphenation patterns (based on libthai 0.1.27).
+
 2016-12-25  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	* NEWS:
