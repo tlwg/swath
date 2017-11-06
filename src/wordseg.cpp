@@ -173,7 +173,6 @@ Usage (int verbose)
 #ifndef WORDSEGDATA_DIR
 #define WORDSEGDATA_DIR "/usr/local/lib/wordseg"
 #endif
-//#define WORDSEGDATA_DIR "./data"
 
 int
 main (int argc, char* argv[])

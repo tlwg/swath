@@ -1,5 +1,12 @@
 2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Drop commented code.
+
+	* src/wordseg.cpp:
+	  - Drop commented code for old WORDSEGDATA_DIR.
+
+2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop undocumented option '-l'.
 
 	* src/wordseg.cpp (Usage):
