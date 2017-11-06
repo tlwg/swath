@@ -1,5 +1,13 @@
 2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Replace mysterious 'mode' var with 'verbose'.
+
+	* src/wordseg.cpp (main):
+	  - Replace "char mode" variable with "bool verbose".
+	  - Replace all assignments & checks of the var based on bool.
+
+2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop commented code.
 
 	* src/wordseg.cpp:

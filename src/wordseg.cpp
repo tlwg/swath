@@ -177,12 +177,12 @@ Usage (int verbose)
 int
 main (int argc, char* argv[])
 {
-  char mode = 1;                // 0 = display, 1 = don't display message
   const char* wbr = NULL;
   const char* dictpath = NULL;
   const char* method = NULL;
   const char* fileformat = NULL;
   const char* unicode = NULL;
+  bool verbose = false;
   bool muleMode;
   bool thaiFlag;
 
@@ -192,7 +192,7 @@ main (int argc, char* argv[])
       if (strcmp ("mule", argv[iargc]) == 0)
         {
           muleMode = true;
-          mode = 1;
+          verbose = false;
         }
       else if (strcmp ("-b", argv[iargc]) == 0 && iargc + 1 < argc)
         {
@@ -209,7 +209,7 @@ main (int argc, char* argv[])
       else if (strcmp ("-v", argv[iargc]) == 0 ||
                strcmp ("--verbose", argv[iargc]) == 0)
         {
-          mode = 0;
+          verbose = true;
         }
       else if (strcmp ("-m", argv[iargc]) == 0 && iargc + 1 < argc)
         {
@@ -238,7 +238,7 @@ main (int argc, char* argv[])
         }
     }
 
-  if (mode == 0)
+  if (verbose)
     printf ("*** Word Segmentation ***\n");
 
   AbsWordSeg* wseg = InitWordSegmentation (dictpath, method);
@@ -296,7 +296,7 @@ main (int argc, char* argv[])
         }
       while (!feof (stdin))
         {
-          if (mode == 0)
+          if (verbose)
             printf ("Input : ");
 
           if (!ConvGetS (wLine, N_ELM (wLine), stdin, isUniIn))
@@ -305,7 +305,7 @@ main (int argc, char* argv[])
           if (L'\n' == wLine [len - 1])
             wLine [--len] = 0;
 
-          if (mode == 0)
+          if (verbose)
             printf ("Output: ");
 
           if (0 == wLine[0])
