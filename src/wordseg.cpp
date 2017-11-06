@@ -162,7 +162,6 @@ Usage (int verbose)
                "\t-m   : choose word matching scheme when analyzing\n"
                "\t\tlong     : longest matching scheme\n"
                "\t\tmax      : maximal matching scheme\n"
-//                "\t-l   : line processing(effect only in a bigram algo.)\n"
                "\t-u   : specify encodings of input and output in 'i,o' form,\n"
                "\t       for input and output respectively, where 'i', 'o' is one of:\n"
                "\t\tu        : The input/output is in UTF-8\n"
@@ -187,7 +186,6 @@ main (int argc, char* argv[])
   const char* unicode = NULL;
   bool muleMode;
   bool thaiFlag;
-  bool wholeLine = false;
 
   muleMode = false;
   for (int iargc = 1; iargc < argc; iargc++)
@@ -217,11 +215,6 @@ main (int argc, char* argv[])
       else if (strcmp ("-m", argv[iargc]) == 0 && iargc + 1 < argc)
         {
           method = argv[++iargc];
-        }
-      else if (strcmp ("-l", argv[iargc]) == 0)
-        {
-          //send only token which has no white space in to wordseg
-          wholeLine = true;
         }
       else if (strcmp ("-u", argv[iargc]) == 0 && iargc + 1 < argc)
         {
@@ -322,38 +315,26 @@ main (int argc, char* argv[])
               continue;
             }
 
-          if (!wholeLine)
-            {
-              int tokenFlag;
-              wchar_t* startStr = wLine;
-              wchar_t wToken[MAXLEN];
+          int tokenFlag;
+          wchar_t* startStr = wLine;
+          wchar_t wToken[MAXLEN];
 
-              while ((tokenFlag = SplitToken (&startStr, wToken)) != TTOK_EOT)
+          while ((tokenFlag = SplitToken (&startStr, wToken)) != TTOK_EOT)
+            {
+              switch (tokenFlag)
                 {
-                  switch (tokenFlag)
-                    {
-                      case TTOK_THAI:
-                        WordSegmentation (wseg, wcwbr, wToken, wsegOut,
-                                          N_ELM (wsegOut));
-                        ConvPrint (stdout, wsegOut, isUniOut);
-                        break;
+                  case TTOK_THAI:
+                    WordSegmentation (wseg, wcwbr, wToken, wsegOut,
+                                      N_ELM (wsegOut));
+                    ConvPrint (stdout, wsegOut, isUniOut);
+                    break;
 
-                      case TTOK_WSPACE:
-                      case TTOK_ETC:
-                      default:
-                        ConvPrint (stdout, wToken, isUniOut);
-                        break;
-                    }
-                  if (muleMode)
-                    {
-                      ConvPrint (stdout, wcwbr, isUniOut);
-                    }
+                  case TTOK_WSPACE:
+                  case TTOK_ETC:
+                  default:
+                    ConvPrint (stdout, wToken, isUniOut);
+                    break;
                 }
-            }
-          else
-            {
-              WordSegmentation (wseg, wcwbr, wLine, wsegOut, N_ELM (wsegOut));
-              ConvPrint (stdout, wsegOut, isUniOut);
               if (muleMode)
                 {
                   ConvPrint (stdout, wcwbr, isUniOut);

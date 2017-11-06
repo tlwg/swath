@@ -1,5 +1,16 @@
 2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Drop undocumented option '-l'.
+
+	* src/wordseg.cpp (Usage):
+	  - Drop commented code mentioning '-l' option.
+	* src/wordseg.cpp (main):
+	  - Drop check for '-l' command line arg.
+	  - Eliminate code for 'wholeLine == true' case.
+	  - Drop now-unused 'wholeLine' var.
+
+2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop remaining comments mentioning shaping support.
 
 	* src/wordseg.cpp (Usage):
