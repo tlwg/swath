@@ -1,5 +1,13 @@
 2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Drop remaining comments mentioning shaping support.
+
+	* src/wordseg.cpp (Usage):
+	  - Drop commented codes mentioning 'winlatex' and 'maclatex'
+	    options.
+
+2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop unnecessary includes in C sources.
 
 	* src/abswordseg.cpp:
