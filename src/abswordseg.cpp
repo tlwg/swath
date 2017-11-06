@@ -4,7 +4,6 @@
 
 #include "abswordseg.h"
 #include "dictpath.h"
-#include "worddef.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
