@@ -1,3 +1,10 @@
+2017-11-07  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Rename AbsWordSeg::Has_Karun() to HasKaran().
+
+	* src/abswordseg.h, src/abswordseg.cpp:
+	  - Rename AbsWordSeg::Has_Karun() to HasKaran().
+
 2017-11-06  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Replace mysterious 'mode' var with 'verbose'.

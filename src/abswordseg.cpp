@@ -141,7 +141,7 @@ AbsWordSeg::CreateWordList (void)
             {
               //found word in dictionary
               //check whether it should be segmented here
-              if (IsLeadChar (text[i + j + 1]) && !Has_Karun (&text[i + j]))
+              if (IsLeadChar (text[i + j + 1]) && !HasKaran (&text[i + j]))
                 {
                   LinkSep[cntLink] = i + j + 1;
                   LinkSep[cntLink + 1] = -1;
@@ -183,7 +183,7 @@ AbsWordSeg::IsLastChar (wchar_t wc)
 }
 
 bool
-AbsWordSeg::Has_Karun (const wchar_t* sen_ptr)
+AbsWordSeg::HasKaran (const wchar_t* sen_ptr)
 {
   for (int i = 1; i <= 3 && sen_ptr[i] != 0; i++)
     {

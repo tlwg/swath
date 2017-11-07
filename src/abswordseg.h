@@ -46,7 +46,7 @@ private:
   static bool IsLeadChar (wchar_t wc);
   static bool IsLastChar (wchar_t wc);
   //============Check Karan rule=========================
-  static bool Has_Karun (const wchar_t* sen_ptr);
+  static bool HasKaran (const wchar_t* sen_ptr);
 
 private:
     Trie*  MyDict;
