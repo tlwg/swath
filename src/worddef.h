@@ -58,7 +58,7 @@ isThaiLongTailChar (unsigned char ch)
 }
 
 inline bool
-isThaiUni (unsigned int uc)
+isThaiUni (wchar_t uc)
 {
   return (0x0e01 <= uc) && (uc <= 0x0e5b);
 }
@@ -69,14 +69,14 @@ isThaiUniDigit (wchar_t wc)
   return 0x0e50 <= wc && wc <= 0x0e59;
 }
 
-inline unsigned int
+inline wchar_t
 tis2uni (unsigned char ch)
 {
   return (0xa0 < ch) ? ch - 0xa0 + 0x0e00 : ch;
 }
 
 inline unsigned char
-uni2tis (unsigned int uc)
+uni2tis (wchar_t uc)
 {
   return isThaiUni (uc) ? uc - 0x0e00 + 0x0a0 : uc;
 }

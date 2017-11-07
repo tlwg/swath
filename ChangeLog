@@ -1,5 +1,12 @@
 2017-11-07  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Replace type for Unicode char with 'wchar_t' where it isn't.
+
+	* src/worddef.h (isThaiUni, tis2uni, uni2tis):
+	  - Replace 'unsigned int' type for Unicode char with 'wchar_t'.
+
+2017-11-07  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Update test check file according to new dict.
 
 	* tests/long-wseg.txt:
