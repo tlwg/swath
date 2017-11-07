@@ -1,5 +1,12 @@
 2017-11-07  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Update test check file according to new dict.
+
+	* tests/long-wseg.txt:
+	  - 'เท่าไหร่' is now a single word, not 'เท่า|ไหร่'.
+
+2017-11-07  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Rename AbsWordSeg::Has_Karun() to HasKaran().
 
 	* src/abswordseg.h, src/abswordseg.cpp:
