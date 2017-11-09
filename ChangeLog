@@ -1,3 +1,29 @@
+2017-11-09  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Refactor dictionary out of AbsWordSeg.
+
+	* src/abswordseg.h, src/abswordseg.cpp,
+	  src/Makefile.am, +src/dict.h, +src/dict.cpp, -src/dictpath.h:
+	  - New class Dict to wrap up Trie, with Dict::State to wrap up
+	    TrieState.
+	  - Move AbsWordSeg::InitDict() functionality into Dict::open().
+	  - Remove AbsWordSeg::MyDict member.
+	* src/abswordseg.h, src/abswordseg.cpp:
+	  - Add dict arg to AbsWordSeg::WordSeg() and
+	    AbsWordSeg::CreateWordList(), and use it instead of
+	    the old MyDict.
+	  - Replace TrieState type with Dict::State.
+
+	* src/wordseg.cpp:
+	  - [InitWordSegmentation(), +OpenDict()] Split dictionary opening
+	    into a separate function, and simplify the rest code.
+	  - [main()] Define Dict local instance and call OpenDict() upon it.
+	    Drop dictpath parameter from InitWordSegmentation() call.
+	  - [WordSegmentation()] Add dict arg and pass it on to
+	    AbsWordSeg::WordSeg().
+	  - [main()] Add dict parameter to WordSegmentation() calls,
+	    as now required.
+
 2017-11-07  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Replace type for Unicode char with 'wchar_t' where it isn't.

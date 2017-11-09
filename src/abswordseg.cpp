@@ -3,76 +3,21 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "abswordseg.h"
-#include "dictpath.h"
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
 #include <wctype.h>
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-AbsWordSeg::AbsWordSeg ()
-  : MyDict (NULL)
-{
-}
-
 AbsWordSeg::~AbsWordSeg ()
 {
-  if (MyDict)
-    {
-      trie_free (MyDict);
-    }
 }
-
-bool
-AbsWordSeg::InitDict (const char* dictPath)
-{
-  char* trieBuff = NULL;
-  const char* triePath;
-  struct stat sb;
-
-  if (stat (dictPath, &sb) == -1)
-    {
-      perror (dictPath);
-      return false;
-    }
-
-  if (S_ISDIR (sb.st_mode))
-    {
-      trieBuff = new char[strlen (dictPath) + 2 + sizeof (D2TRIE)];
-      sprintf (trieBuff, "%s" PATHSEPERATOR D2TRIE, dictPath);
-      triePath = trieBuff;
-    }
-  else if (S_ISREG (sb.st_mode))
-    {
-      triePath = dictPath;
-    }
-  else
-    {
-      fprintf (stderr, "%s is not a directory or regular file\n", dictPath);
-      return false;
-    }
-
-  MyDict = trie_new_from_file (triePath);
-
-  if (trieBuff)
-    {
-      delete[] trieBuff;
-    }
-
-  return MyDict != NULL;
-}
-
 
 void
-AbsWordSeg::CreateWordList (void)
+AbsWordSeg::CreateWordList (const Dict* dict)
 {
   int cntLink = 0;
-  TrieState* curState = trie_root (MyDict);
+  Dict::State* curState = dict->root();
 
   for (int i = 0; i < textLen; i++)
     {                                //word boundry start at i and end at j.
@@ -126,7 +71,7 @@ AbsWordSeg::CreateWordList (void)
           continue;
         }
       int cntFound = 0;
-      trie_state_rewind (curState);
+      curState->rewind ();
       for (int j = 0; i + j < textLen; j++)
         {
           if (text[i + j] == 0x0e46 && cntFound != 0)
@@ -135,9 +80,9 @@ AbsWordSeg::CreateWordList (void)
               LinkSep[cntLink - 1] = i + j + 1;
               break;
             }
-          if (!trie_state_walk (curState, text[i + j]))
+          if (!curState->walk (text[i + j]))
             break;
-          if (trie_state_is_terminal (curState))
+          if (curState->isTerminal ())
             {
               //found word in dictionary
               //check whether it should be segmented here
@@ -160,7 +105,7 @@ AbsWordSeg::CreateWordList (void)
           LinkSep[cntLink++] = -1;
         }
     }
-  trie_state_free (curState);
+  delete curState;
   LinkSep[cntLink] = -1;
   LinkSep[++cntLink] = -1;        //add stop value
 }
@@ -194,14 +139,15 @@ AbsWordSeg::HasKaran (const wchar_t* sen_ptr)
 }
 
 int
-AbsWordSeg::WordSeg (const wchar_t* senstr, short int* outSeps, int outSepsSz)
+AbsWordSeg::WordSeg (const Dict* dict, const wchar_t* senstr,
+                     short int* outSeps, int outSepsSz)
 {
   int bestidx;
 
   wcscpy (text, senstr);
   textLen = wcslen (senstr);
   InitData ();
-  CreateWordList ();
+  CreateWordList (dict);
   SwapLinkSep ();
   bestidx = CreateSentence ();
   return GetBestSen (bestidx, outSeps, outSepsSz);

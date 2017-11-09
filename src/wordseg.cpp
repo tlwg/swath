@@ -18,7 +18,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 #include <wchar.h>
 #include <wctype.h>
 
@@ -39,26 +38,9 @@ enum TextToken {
 
 static TextToken SplitToken (wchar_t** str, wchar_t* token);
 
-static AbsWordSeg*
-InitWordSegmentation (const char* dictpath, const char* method)
+static bool
+OpenDict (Dict* dict, const char* dictpath)
 {
-  AbsWordSeg* wseg = NULL;
-
-  if (method)
-    {
-      if (strcmp (method, "long") == 0)
-        wseg = new LongWordSeg;
-      else if (strcmp (method, "max") == 0)
-        wseg = new MaxWordSeg;
-    }
-
-  // fallback
-  if (!wseg)
-    wseg = new MaxWordSeg;
-
-  if (!wseg)
-    return NULL;
-
   // Dict search order:
   // 1. dictpath, if not NULL, exit on failure
   // 2. ${SWATHDICT} env, if not NULL, continue on failure
@@ -66,25 +48,38 @@ InitWordSegmentation (const char* dictpath, const char* method)
   // 4. WORDSEGDATADIR macro
   if (dictpath)
     {
-      if (wseg->InitDict (dictpath))
-        return wseg;
+      if (dict->open (dictpath))
+        return true;
     }
   else
     {
       dictpath = getenv ("SWATHDICT");
-      if (dictpath && wseg->InitDict (dictpath))
-        return wseg;
+      if (dictpath && dict->open (dictpath))
+        return true;
 
-      if (wseg->InitDict ("."))
-        return wseg;
+      if (dict->open ("."))
+        return true;
 
-      if (wseg->InitDict (WORDSEGDATA_DIR))
-        return wseg;
+      if (dict->open (WORDSEGDATA_DIR))
+        return true;
     }
 
-  // All fail
-  delete wseg;
-  return NULL;
+  return false;
+}
+
+static AbsWordSeg*
+InitWordSegmentation (const char* method)
+{
+  if (method)
+    {
+      if (strcmp (method, "long") == 0)
+        return new LongWordSeg;
+      else if (strcmp (method, "max") == 0)
+        return new MaxWordSeg;
+    }
+
+  // fallback
+  return new MaxWordSeg;
 }
 
 static void
@@ -94,11 +89,11 @@ ExitWordSegmentation (AbsWordSeg* wseg)
 }
 
 static void
-WordSegmentation (AbsWordSeg* wseg, const wchar_t* wbr, const wchar_t* line,
-                  wchar_t* output, int outputSz)
+WordSegmentation (AbsWordSeg* wseg, const Dict* dict, const wchar_t* wbr,
+                  const wchar_t* line, wchar_t* output, int outputSz)
 {
   short int *seps = new short int [outputSz];
-  int nSeps = wseg->WordSeg (line, seps, outputSz);
+  int nSeps = wseg->WordSeg (dict, line, seps, outputSz);
 
   const wchar_t* pLine = line;
   int wbrLen = wcslen (wbr);
@@ -241,7 +236,11 @@ main (int argc, char* argv[])
   if (verbose)
     printf ("*** Word Segmentation ***\n");
 
-  AbsWordSeg* wseg = InitWordSegmentation (dictpath, method);
+  Dict dict;
+  if (!OpenDict (&dict, dictpath))
+    return 1;
+
+  AbsWordSeg* wseg = InitWordSegmentation (method);
   if (!wseg)
     return 1;
 
@@ -280,7 +279,7 @@ main (int argc, char* argv[])
               FltX->Print (wLine, thaiFlag);
               continue;
             }
-          WordSegmentation (wseg, FltX->GetWordBreak(), wLine,
+          WordSegmentation (wseg, &dict, FltX->GetWordBreak(), wLine,
                             wsegOut, N_ELM (wsegOut));
           FltX->Print (wsegOut, thaiFlag);
         }
@@ -323,7 +322,7 @@ main (int argc, char* argv[])
               switch (tokenFlag)
                 {
                   case TTOK_THAI:
-                    WordSegmentation (wseg, wcwbr, wToken, wsegOut,
+                    WordSegmentation (wseg, &dict, wcwbr, wToken, wsegOut,
                                       N_ELM (wsegOut));
                     ConvPrint (stdout, wsegOut, isUniOut);
                     break;
