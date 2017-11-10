@@ -1,3 +1,15 @@
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Simplify word list preparation loop within Thai chunk.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
+	  - Iterate j from i to textLen instead of from 0 to (textLen - i)
+	    and then simply access text[j] instead of text[i + j].
+	  - Rearrange IdxSep[i] assignment and cntFound increment,
+	    for more readability.
+	  - Adjust LinkSep[cntLink] assignments logic to resemble those in
+	    other codes.
+
 2017-11-09  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Refactor dictionary out of AbsWordSeg.

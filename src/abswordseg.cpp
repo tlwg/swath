@@ -20,7 +20,7 @@ AbsWordSeg::CreateWordList (const Dict* dict)
   Dict::State* curState = dict->root();
 
   for (int i = 0; i < textLen; i++)
-    {                                //word boundry start at i and end at j.
+    {
       if (!IsLeadChar (text[i]) || (i > 0 && !IsLastChar (text[i - 1])))
         {
           IdxSep[i] = -2;        //cannot leading for unknown word.
@@ -72,28 +72,27 @@ AbsWordSeg::CreateWordList (const Dict* dict)
         }
       int cntFound = 0;
       curState->rewind ();
-      for (int j = 0; i + j < textLen; j++)
+      for (int j = i; j < textLen; j++)
         {
-          if (text[i + j] == 0x0e46 && cntFound != 0)
+          if (text[j] == 0x0e46 && cntFound != 0)
             {
               //Mai-Ya-Mok -- break position
-              LinkSep[cntLink - 1] = i + j + 1;
+              LinkSep[cntLink - 1] = j + 1;
               break;
             }
-          if (!curState->walk (text[i + j]))
+          if (!curState->walk (text[j]))
             break;
           if (curState->isTerminal ())
             {
               //found word in dictionary
               //check whether it should be segmented here
-              if (IsLeadChar (text[i + j + 1]) && !HasKaran (&text[i + j]))
+              if (IsLeadChar (text[j + 1]) && !HasKaran (&text[j]))
                 {
-                  LinkSep[cntLink] = i + j + 1;
-                  LinkSep[cntLink + 1] = -1;
-                  cntFound++;
-                  if (cntFound == 1)
+                  if (cntFound == 0)
                     IdxSep[i] = cntLink;
-                  cntLink++;
+                  LinkSep[cntLink++] = j + 1;
+                  LinkSep[cntLink] = -1;
+                  cntFound++;
                 }
             }
         }
