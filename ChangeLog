@@ -1,5 +1,18 @@
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Set IdxSep[] on every char instead of relying on defaults.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
+	  - Instead of skipping IdxSep[i] assignments and relying on
+	    initial values on some chars, let's assign them explicitly.
+
+	* src/abswordseg.cpp (AbsWordSeg::WordSeg()):
+	  - Remove now-unneeded InitData() call.
+	* src/abswordseg.h, src/abswordseg.cpp (-AbsWordSeg::InitData()):
+	  - Remove now-unneeded InitData() method.
+
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Add test for mixed text.
 
 	* tests/Makefile.am,

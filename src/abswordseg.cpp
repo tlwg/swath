@@ -35,11 +35,10 @@ AbsWordSeg::CreateWordList (const Dict* dict)
       if (iswpunct (lead_ch))
         {
           IdxSep[i] = cntLink;
-          do
+          while (++i < textLen && iswpunct (text[i]))
             {
-              lead_ch = text[++i];
+              IdxSep[i] = -1;
             }
-          while (lead_ch != 0 && iswpunct (lead_ch));
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
           continue;
@@ -49,12 +48,15 @@ AbsWordSeg::CreateWordList (const Dict* dict)
       if (iswdigit (lead_ch) || isThaiUniDigit (lead_ch))
         {
           IdxSep[i] = cntLink;
-          do
+          while (++i < textLen)
             {
-              lead_ch = text[++i];
+              wchar_t wc = text[i];
+              if (!iswdigit (wc) && !isThaiUniDigit (wc)
+                  && wc != L'.' && wc != L',')
+                break;
+
+              IdxSep[i] = -1;
             }
-          while (lead_ch != 0 && iswdigit (lead_ch) || isThaiUniDigit (lead_ch)
-                 || lead_ch == L'.' || lead_ch == L',');
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
           continue;
@@ -64,11 +66,10 @@ AbsWordSeg::CreateWordList (const Dict* dict)
       if (!isThaiUni (lead_ch))
         {
           IdxSep[i] = cntLink;
-          do
+          while (++i < textLen && !isThaiUni (text[i]))
             {
-              lead_ch = text[++i];
+              IdxSep[i] = -1;
             }
-          while (lead_ch != 0 && !isThaiUni (lead_ch));
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
           continue;
@@ -148,7 +149,6 @@ AbsWordSeg::WordSeg (const Dict* dict, const wchar_t* senstr,
 
   wcscpy (text, senstr);
   textLen = wcslen (senstr);
-  InitData ();
   CreateWordList (dict);
   SwapLinkSep ();
   bestidx = CreateSentence ();
@@ -181,15 +181,6 @@ AbsWordSeg::SwapLinkSep ()
         }
       st_idx = end_point + 1;
       en_idx = st_idx;
-    }
-}
-
-void
-AbsWordSeg::InitData ()
-{
-  for (int i = 0; i < textLen; i++)
-    {
-      IdxSep[i] = -1;
     }
 }
 

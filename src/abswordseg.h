@@ -39,8 +39,6 @@ protected:
   short int IdxSep[MAXLEN];
 
 private:
-  void InitData ();
-
   //============Check Character Type Function============
   static bool IsLeadChar (wchar_t wc);
   static bool IsLastChar (wchar_t wc);
