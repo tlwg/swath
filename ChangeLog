@@ -1,5 +1,13 @@
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Remove excessive LinkSep terminator.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
+	  - Remove extra LinkSep[] terminator assignment.
+	    Only one is enough.
+
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Adjust SwapLinkSep() loop more.
 
 	* src/abswordseg.cpp (AbsWordSeg::SwapLinkSep()):
