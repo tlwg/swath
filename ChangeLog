@@ -1,5 +1,21 @@
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Simplify SwapLinkSep() loop.
+
+	* src/abswordseg.cpp (AbsWordSeg::SwapLinkSep()):
+	  - Move en_idx, end_point, tmp vars inside loop
+	    where they are used. Only st_idx is left on top level.
+	  - No more en_idx assignment at loop end.
+	  - Stop en_idx exactly at LinkSep[] element with value -1,
+	    not the one after.
+	  - Simply assign end_point as saved storage of en_idx value.
+	    No computation is needed.
+	  - Simply decrement en_idx to get the last non-terminate element.
+	    No confusing skip by 2.
+	  - Simplify the swap code inside inner while-loop.
+
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Set IdxSep[] on every char instead of relying on defaults.
 
 	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
