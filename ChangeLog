@@ -1,5 +1,16 @@
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Add test for mixed text.
+
+	* tests/Makefile.am,
+	  +tests/test-mixed.sh, +tests/mixed.txt, +tests/mixed-wseg.txt:
+	  - Add test case for text mixed with English text, digits,
+	    Thai digits.
+	* tests/Makefile.am:
+	  - Clear test outputs on 'clean' instead of 'distclean'.
+
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Replace for-loop with while-loop.
 
 	text[i] iteration has irregular increments, as decrements
