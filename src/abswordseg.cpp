@@ -19,15 +19,19 @@ AbsWordSeg::CreateWordList (const Dict* dict)
   int cntLink = 0;
   Dict::State* curState = dict->root();
 
-  for (int i = 0; i < textLen; i++)
+  int i = 0;
+  while (i < textLen)
     {
+      // Unleadable chars
       if (!IsLeadChar (text[i]) || (i > 0 && !IsLastChar (text[i - 1])))
         {
-          IdxSep[i] = -2;        //cannot leading for unknown word.
+          IdxSep[i++] = -2;      //cannot leading for unknown word.
           continue;
         }
+
       wchar_t lead_ch = text[i];
-      // FIND STRING OF PUNCTUATION.
+
+      // Chunk of punctuation marks
       if (iswpunct (lead_ch))
         {
           IdxSep[i] = cntLink;
@@ -38,10 +42,10 @@ AbsWordSeg::CreateWordList (const Dict* dict)
           while (lead_ch != 0 && iswpunct (lead_ch));
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
-          i--;
           continue;
         }
-      // FIND STRING OF NUMBER.
+
+      // Chunk of numbers
       if (iswdigit (lead_ch) || isThaiUniDigit (lead_ch))
         {
           IdxSep[i] = cntLink;
@@ -53,10 +57,10 @@ AbsWordSeg::CreateWordList (const Dict* dict)
                  || lead_ch == L'.' || lead_ch == L',');
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
-          i--;
           continue;
         }
-      // FIND STRING OF NON-THAI
+
+      // Chunk of non-Thai characters
       if (!isThaiUni (lead_ch))
         {
           IdxSep[i] = cntLink;
@@ -67,9 +71,10 @@ AbsWordSeg::CreateWordList (const Dict* dict)
           while (lead_ch != 0 && !isThaiUni (lead_ch));
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
-          i--;
           continue;
         }
+
+      // Thai character: find breakabilities starting at text[i]
       IdxSep[i] = -1;
       bool isWordFound = false;
       curState->rewind ();
@@ -100,6 +105,7 @@ AbsWordSeg::CreateWordList (const Dict* dict)
         }
       if (isWordFound)
         LinkSep[cntLink++] = -1;
+      ++i;
     }
   delete curState;
   LinkSep[cntLink] = -1;

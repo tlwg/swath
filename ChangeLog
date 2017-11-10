@@ -1,5 +1,19 @@
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Replace for-loop with while-loop.
+
+	text[i] iteration has irregular increments, as decrements
+	before continue appear in many places. This indicates
+	improper use of for-loop.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
+	  - Replace for-loop with while-loop, and increment the iterator
+	    as actually required.
+	  - Remove unnecessary decrements.
+	  - Rewrite comments and regroup source lines.
+
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Adjust IdxSep[] and LinkSep[] settings in Thai chunk.
 
 	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
