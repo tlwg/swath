@@ -70,11 +70,12 @@ AbsWordSeg::CreateWordList (const Dict* dict)
           i--;
           continue;
         }
-      int cntFound = 0;
+      IdxSep[i] = -1;
+      bool isWordFound = false;
       curState->rewind ();
       for (int j = i; j < textLen; j++)
         {
-          if (text[j] == 0x0e46 && cntFound != 0)
+          if (text[j] == 0x0e46 && isWordFound)
             {
               //Mai-Ya-Mok -- break position
               LinkSep[cntLink - 1] = j + 1;
@@ -88,21 +89,17 @@ AbsWordSeg::CreateWordList (const Dict* dict)
               //check whether it should be segmented here
               if (IsLeadChar (text[j + 1]) && !HasKaran (&text[j]))
                 {
-                  if (cntFound == 0)
-                    IdxSep[i] = cntLink;
+                  if (!isWordFound)
+                    {
+                      IdxSep[i] = cntLink;
+                      isWordFound = true;
+                    }
                   LinkSep[cntLink++] = j + 1;
-                  LinkSep[cntLink] = -1;
-                  cntFound++;
                 }
             }
         }
-      if (cntFound == 0)
-        IdxSep[i] = -1;
-      else if (cntFound < 2000)
-        {
-          //LinkSepDataIdx[cntLink]=-1;
-          LinkSep[cntLink++] = -1;
-        }
+      if (isWordFound)
+        LinkSep[cntLink++] = -1;
     }
   delete curState;
   LinkSep[cntLink] = -1;

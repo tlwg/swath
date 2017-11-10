@@ -1,5 +1,19 @@
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Adjust IdxSep[] and LinkSep[] settings in Thai chunk.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
+	  - Replace cntFound counter with bool isWordFound.
+	  - Initialize IdxSep[i] = -1 and overwrite it later,
+	    instead of setting it afterward when no word is found.
+	  - Always add terminating element to LinkSep[] in case
+	    word is found, regardless of whether the word count is
+	    below 2000. (Weird limit value.)
+	  - Remove now-unnecessary LinkSep[cntLink] = -1 assignment
+	    on pseudo-ending element.
+
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Simplify word list preparation loop within Thai chunk.
 
 	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
