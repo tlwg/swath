@@ -1,5 +1,15 @@
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Adjust SwapLinkSep() loop more.
+
+	* src/abswordseg.cpp (AbsWordSeg::SwapLinkSep()):
+	  - Rename variables: st_idx -> start; en_idx -> end.
+	  - Instead of saving 'end' and directly iterating on it,
+	    define another 'upper' iterator for that purpose.
+	    Then, 'end' value can be used at the end.
+
+2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Simplify SwapLinkSep() loop.
 
 	* src/abswordseg.cpp (AbsWordSeg::SwapLinkSep()):

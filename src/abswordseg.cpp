@@ -158,21 +158,22 @@ AbsWordSeg::WordSeg (const Dict* dict, const wchar_t* senstr,
 void
 AbsWordSeg::SwapLinkSep ()
 {
-  short int st_idx = 0;
-  while (LinkSep[st_idx] != -1)
+  int start = 0;
+  while (LinkSep[start] != -1)
     {
-      short int en_idx = st_idx;
-      while (LinkSep[++en_idx] != -1)
+      int end = start;
+      while (LinkSep[++end] != -1)
         ;
-      short int end_point = en_idx;
-      --en_idx;
-      while (st_idx < en_idx)
+
+      int upper = end - 1;
+      while (start < upper)
         {
-          short int tmp = LinkSep[st_idx];
-          LinkSep[st_idx++] = LinkSep[en_idx];
-          LinkSep[en_idx--] = tmp;
+          short int tmp = LinkSep[start];
+          LinkSep[start++] = LinkSep[upper];
+          LinkSep[upper--] = tmp;
         }
-      st_idx = end_point + 1;
+
+      start = end + 1;
     }
 }
 
