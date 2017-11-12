@@ -1,3 +1,15 @@
+2017-11-11  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Add test for longest matching scheme to all tests.
+
+	* tests/test-simple.sh:
+	* tests/test-long.sh:
+	* tests/test-mixed.sh:
+	* tests/test-utf8-wbr.sh:
+	* tests/test-latex.sh:
+	  - Repeat all tests one more time, with different -m option.
+	    (This seems to catch an error on longest matching.)
+
 2017-11-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Remove excessive LinkSep terminator.

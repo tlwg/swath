@@ -4,14 +4,19 @@ set -e
 
 test_wseg()
 {
-  INPUT=$1
-  EXPECT=$2
+  SCHEME=$1
+  INPUT=$2
+  EXPECT=$3
 
-  RES=$(echo -n "${INPUT}" | ${SWATH} -d ${DICTDIR} -u u,u)
+  echo -n "Testing ${SCHEME} scheme... "
+
+  RES=$(echo -n "${INPUT}" | ${SWATH} -m ${SCHEME} -d ${DICTDIR} -u u,u)
 
   if test "x${RES}" != "x${EXPECT}"; then
+    echo "FAIL!"
     return 1
   fi
+  echo "OK"
 
   return 0
 }
@@ -19,4 +24,5 @@ test_wseg()
 INPUT="ทดสอบการตัดคำอย่างง่าย"
 EXPECT="ทดสอบ|การ|ตัด|คำ|อย่าง|ง่าย"
 
-test_wseg ${INPUT} ${EXPECT}
+test_wseg long ${INPUT} ${EXPECT}
+test_wseg max ${INPUT} ${EXPECT}
