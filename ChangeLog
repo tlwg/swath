@@ -1,3 +1,12 @@
+2017-11-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Add test in which long and max results differ.
+
+	* tests/test-simple.sh:
+	  - Add test case in which longest matching and maximal matching
+	    schemes yield different results.
+	  - Also print input string on each test step for debugging.
+
 2017-11-11  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Add test for longest matching scheme to all tests.

@@ -8,7 +8,7 @@ test_wseg()
   INPUT=$2
   EXPECT=$3
 
-  echo -n "Testing ${SCHEME} scheme... "
+  echo -n "Testing ${SCHEME} scheme (${INPUT})... "
 
   RES=$(echo -n "${INPUT}" | ${SWATH} -m ${SCHEME} -d ${DICTDIR} -u u,u)
 
@@ -26,3 +26,6 @@ EXPECT="ทดสอบ|การ|ตัด|คำ|อย่าง|ง่าย"
 
 test_wseg long ${INPUT} ${EXPECT}
 test_wseg max ${INPUT} ${EXPECT}
+
+test_wseg long "ไปหามเหสี" "ไป|หาม|เห|สี"
+test_wseg max "ไปหามเหสี" "ไป|หา|มเหสี"
