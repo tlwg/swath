@@ -21,7 +21,7 @@ LongWordSeg::CreateSentence ()
   short int senIdx = 0;
   short int sepIdx = 0, Idx = 0;
 
-  wordState wState;
+  WordState wState;
   // ========================================
   // this loop gets the first sentence
   //      and Create Backtrack point.....

@@ -125,7 +125,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
         {
           if (LinkSep[IdxSep[Idx] + 1] != -1)
             {
-              BackTrackStack.Push (wordState (Idx, 0));
+              BackTrackStack.Push (WordState (Idx, 0));
             }
           SepData[senIdx].Sep[sepIdx++] = LinkSep[IdxSep[Idx]];
           score[++scoreidx] = ++SepData[senIdx].Score;
@@ -152,7 +152,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
   while (!BackTrackStack.Empty () && looptime++ <= 200)
     {
       bool stopCreate = false;
-      wordState wState = BackTrackStack.Top ();
+      WordState wState = BackTrackStack.Top ();
       BackTrackStack.Pop ();
 
       wState.branchState++;
@@ -187,7 +187,7 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
             {
               //having another branch
               //then it should push backtrack state into Stack.
-              BackTrackStack.Push (wordState (curState, 0));
+              BackTrackStack.Push (WordState (curState, 0));
             }
           SepData[senIdx].Sep[nextSepIdx++] = curState;
           if (foundUnk)

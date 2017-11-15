@@ -1,5 +1,15 @@
 2017-11-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Capitalize wordState type.
+
+	* src/worddef.h:
+	* src/wordstack.h:
+	* src/longwordseg.cpp:
+	* src/maxwordseg.cpp:
+	  - Rename wordState type to WordState.
+
+2017-11-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Add test in which long and max results differ.
 
 	* tests/test-simple.sh:

@@ -5,13 +5,13 @@
 #define MAXSEP 1500             // maximum seperation points
                                 //   (maximum words in a sentences)
 
-struct wordState
+struct WordState
 {
   int backState;
   unsigned char branchState;
 
-  wordState () {}
-  wordState (int backState, unsigned char branchState)
+  WordState () {}
+  WordState (int backState, unsigned char branchState)
     : backState (backState), branchState (branchState) {}
 };
 

@@ -12,15 +12,15 @@
 class WordStack
 {
 private:
-  wordState stack[STACKSIZE];
+  WordState stack[STACKSIZE];
   short int top_idx;
 
 public:
   WordStack ();
 
-  bool Push (wordState w);
+  bool Push (WordState w);
   bool Pop ();
-  wordState Top () const;
+  WordState Top () const;
   bool Empty () const;
 };
 
@@ -31,7 +31,7 @@ WordStack::WordStack ()
 }
 
 inline bool
-WordStack::Push (wordState w)
+WordStack::Push (WordState w)
 {
   if (top_idx < STACKSIZE - 1)
     {
@@ -58,10 +58,10 @@ WordStack::Empty () const
   return top_idx < 0;
 }
 
-inline wordState
+inline WordState
 WordStack::Top () const
 {
-  return (top_idx >= 0) ? stack[top_idx] : wordState (-1, 0);
+  return (top_idx >= 0) ? stack[top_idx] : WordState (-1, 0);
 }
 
 #endif
