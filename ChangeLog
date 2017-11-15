@@ -1,5 +1,20 @@
 2017-11-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Simplify LongWordSeg::CreateSentence().
+
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence()):
+	  - Use intermediate WordState instantiation and get rid of
+	    wState var.
+	  - Move common SepData[senIdx].Sep[sepIdx] assignments out of
+	    the cases of 'if (IdxSep[Idx] >= 0)' block.
+	  - Do not check Idx against textLen inside the while-loop,
+	    which already checks the same condition.
+	  - Move common SepData[senIdx].Sep[sepIdx] terminator assignments
+	    out of the cases of 'if (SepData[senIdx].Sep[sepIdx - 1]
+	    == textLen)' block.
+
+2017-11-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Capitalize wordState type.
 
 	* src/worddef.h:

@@ -21,7 +21,6 @@ LongWordSeg::CreateSentence ()
   short int senIdx = 0;
   short int sepIdx = 0, Idx = 0;
 
-  WordState wState;
   // ========================================
   // this loop gets the first sentence
   //      and Create Backtrack point.....
@@ -34,13 +33,8 @@ LongWordSeg::CreateSentence ()
         {
           if (LinkSep[IdxSep[Idx] + 1] != -1)
             {
-              wState.backState = Idx;
-              wState.branchState = 0;
-              BackTrackStack.Push (wState);
+              BackTrackStack.Push (WordState (Idx, 0));
             }
-          SepData[senIdx].Sep[sepIdx++] = LinkSep[IdxSep[Idx]];
-          if (LinkSep[IdxSep[Idx]] == textLen)
-            break;
           Idx = LinkSep[IdxSep[Idx]];
         }
       else
@@ -48,20 +42,14 @@ LongWordSeg::CreateSentence ()
           //at Idx there is no word in dictionary
           while (Idx < textLen && IdxSep[Idx] < 0)
             Idx++;
-          SepData[senIdx].Sep[sepIdx++] = Idx;
-          if (Idx == textLen)
-            break;
         }
+      SepData[senIdx].Sep[sepIdx++] = Idx;
     }
-  if (SepData[senIdx].Sep[sepIdx - 1] == textLen)
-    {
-      SepData[senIdx].Sep[sepIdx] = -1;
-    }
-  else
+  if (SepData[senIdx].Sep[sepIdx - 1] != textLen)
     {
       SepData[senIdx].Sep[sepIdx++] = textLen;
-      SepData[senIdx].Sep[sepIdx] = -1;
     }
+  SepData[senIdx].Sep[sepIdx] = -1;
 
   return 0;
 }
