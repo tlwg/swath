@@ -4,6 +4,8 @@
 
 #include "wordstack.h"
 #include "longwordseg.h"
+#include <limits.h>
+
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -17,39 +19,66 @@ int
 LongWordSeg::CreateSentence ()
 {
   WordStack BackTrackStack;
+  int penalty[MAXSEP];     // aggregated penalty at Sep[] positions
 
-  short int senIdx = 0;
-  short int sepIdx = 0, Idx = 0;
+  const int senIdx = 0;
+  const int bestSenIdx = 1;
 
-  // ========================================
-  // this loop gets the first sentence
-  //      and Create Backtrack point.....
-  // ========================================
+  BackTrackStack.Push (WordState (0, 0));
+  int bestPenalty = INT_MAX;
 
-  while (Idx < textLen) // (LinkSep[IdxSep[Idx]]!=len)
+  while (!BackTrackStack.Empty())
     {
-      // found some words that start with Idx character
-      if (IdxSep[Idx] >= 0)
+      WordState wState = BackTrackStack.Top ();
+      BackTrackStack.Pop ();
+
+      int Idx = wState.backState;
+      int branchIdx = wState.branchState;
+      int nextSepIdx = (Idx == 0) ? 0 : copySepData (senIdx, senIdx, Idx);
+      penalty[nextSepIdx] = (nextSepIdx == 0) ? 0 : penalty[nextSepIdx - 1];
+
+      while (Idx < textLen)
         {
-          if (LinkSep[IdxSep[Idx] + 1] != -1)
+          if (IdxSep[Idx] >= 0)
             {
-              BackTrackStack.Push (WordState (Idx, 0));
+              // some words start at Idx
+              if (LinkSep[IdxSep[Idx] + branchIdx + 1] != -1)
+                {
+                  BackTrackStack.Push (WordState (Idx, branchIdx + 1));
+                }
+              Idx = LinkSep[IdxSep[Idx] + branchIdx];
+              branchIdx = 0;
             }
-          Idx = LinkSep[IdxSep[Idx]];
+          else
+            {
+              // skip unknown words and add penalty
+              while (Idx < textLen && IdxSep[Idx] < 0)
+                Idx++;
+              ++penalty[nextSepIdx];
+            }
+          SepData[senIdx].Sep[nextSepIdx++] = Idx;
+          penalty[nextSepIdx] = penalty[nextSepIdx - 1];
         }
-      else
-        {
-          //at Idx there is no word in dictionary
-          while (Idx < textLen && IdxSep[Idx] < 0)
-            Idx++;
-        }
-      SepData[senIdx].Sep[sepIdx++] = Idx;
-    }
-  if (SepData[senIdx].Sep[sepIdx - 1] != textLen)
-    {
-      SepData[senIdx].Sep[sepIdx++] = textLen;
-    }
-  SepData[senIdx].Sep[sepIdx] = -1;
 
-  return 0;
+      if (SepData[senIdx].Sep[nextSepIdx - 1] != textLen)
+        {
+          // unknown words at the end
+          SepData[senIdx].Sep[nextSepIdx++] = textLen;
+          penalty[nextSepIdx] = penalty[nextSepIdx - 1] + 1;
+        }
+      SepData[senIdx].Sep[nextSepIdx] = -1;
+
+      // clean solution found, return it immediately
+      if (penalty[nextSepIdx] == 0)
+        return senIdx;
+
+      // otherwise, try to minimize unknown words in best sentence
+      if (penalty[nextSepIdx] < bestPenalty)
+        {
+          copySepData (senIdx, bestSenIdx, SepData[senIdx].Sep[nextSepIdx - 1]);
+          bestPenalty = penalty[nextSepIdx];
+        }
+    }
+
+  return bestSenIdx;
 }

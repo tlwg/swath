@@ -1,3 +1,14 @@
+2017-11-16  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Make LongWordSeg try other paths than just the first.
+
+	* src/longwordseg.cpp (LongWordSeg::CreateSentence()):
+	  - Wrap the text iteration loop with backtrack loop,
+	    employing the BackTrackStack.
+	  - Keep track of unknown word count.
+	  - Return immediately if text end is reached with zero unknown.
+	  - Otherwise, try to find the best sentence with least unknowns.
+
 2017-11-15  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Simplify LongWordSeg::CreateSentence().
