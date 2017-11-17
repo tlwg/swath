@@ -1,3 +1,19 @@
+2017-11-17  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Adjust MaxWordSeg::CreateSentence().
+
+	* src/maxwordseg.cpp (MaxWordSeg::CreateSentence()):
+	  - Assign stWord = i + 1 after unknown zone, to resemble
+	    the case of in-dict word (where stWord is assigned 1, not 0).
+	    Then, the later for-loop on stWord won't need to check and
+	    increment stWord the first time, as we already know
+	    LinkSep[IdxSep[stWord]] == enAmb, and the if-condition
+	    within the for-loop will always fail in the first round.
+	  - Drop unnecessary (stWord < textLen) check, as enAmb is assumed
+	    to never exceed textLen, and thus (stWord < enAmb) should
+	    alreader imply (stWord < textLen).
+	  - Merge the (IdxSep[stWord] < 0) check into next if-condition.
+
 2017-11-16  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Make LongWordSeg try other paths than just the first.

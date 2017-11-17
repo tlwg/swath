@@ -36,8 +36,8 @@ MaxWordSeg::CreateSentence ()
         }
       else
         {
-          stWord = i;
-          enAmb = LinkSep[IdxSep[stWord]];
+          stWord = i + 1;
+          enAmb = LinkSep[IdxSep[i]];
         }
     }
 
@@ -46,11 +46,9 @@ MaxWordSeg::CreateSentence ()
   while (enAmb <= textLen)
     {
       bool singleWord = true;
-      for (; stWord < enAmb && stWord < textLen; stWord++)
+      for (; stWord < enAmb; stWord++)
         {
-          if (IdxSep[stWord] < 0)
-            continue;
-          if (LinkSep[IdxSep[stWord]] > enAmb)
+          if (IdxSep[stWord] >= 0 && LinkSep[IdxSep[stWord]] > enAmb)
             {
               singleWord = false;
               enAmb = LinkSep[IdxSep[stWord]];
