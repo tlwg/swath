@@ -166,35 +166,26 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
       SepData[senIdx].Score = (scoreidx < 0) ? 10000 : score[scoreidx];
 
       //loop for filling the rest sep point of new sentence
-      bool foundUnk;
       while (curState != enSeg)
         {
-          foundUnk = false;
+          SepData[senIdx].Sep[nextSepIdx++] = curState;
+          SepData[senIdx].Score++;
           if (IdxSep[curState] < 0)
-            {                   //found unknown string.
-              SepData[senIdx].Sep[nextSepIdx++] = curState;
-              SepData[senIdx].Score++;
-              score[++scoreidx] = SepData[senIdx].Score;
+            {
+              //unknown string, find its boundary and add penalty
               while (curState < enSeg && IdxSep[curState] < 0)
                 curState++;
-              foundUnk = true;
-              if (curState == enSeg)
-                break;
-            }
-          else if (LinkSep[IdxSep[curState] + 1] != -1)
-            {
-              //having another branch
-              //then it should push backtrack state into Stack.
-              BackTrackStack.Push (WordState (curState, 0));
-            }
-          SepData[senIdx].Sep[nextSepIdx++] = curState;
-          if (foundUnk)
-            {
               SepData[senIdx].Score += 5;
-              foundUnk = false;
             }
           else
-            SepData[senIdx].Score++;
+            {
+              if (LinkSep[IdxSep[curState] + 1] != -1)
+                {
+                  //another branch exists, push backtrack state
+                  BackTrackStack.Push (WordState (curState, 0));
+                }
+              curState = LinkSep[IdxSep[curState]];
+            }
           score[++scoreidx] = SepData[senIdx].Score;
           if (SepData[senIdx].Score >= bestScore - 1)
             {
@@ -202,13 +193,12 @@ MaxWordSeg::WordSegArea (int stSeg, int enSeg)
               stopCreate = true;
               break;
             }
-          curState = LinkSep[IdxSep[curState]];
-        }                       //finish create a new sentence.
+        }
       if (stopCreate)
         continue;
-      SepData[senIdx].Sep[nextSepIdx] = enSeg;
-      SepData[senIdx].Score += (foundUnk) ? 5 : 1;
-      SepData[senIdx].Sep[nextSepIdx + 1] = -1;
+      SepData[senIdx].Sep[nextSepIdx++] = enSeg;
+      SepData[senIdx].Score++;
+      SepData[senIdx].Sep[nextSepIdx] = -1;
       prevSenIdx = senIdx;
       if (SepData[senIdx].Score < bestScore)
         {

@@ -1,3 +1,11 @@
+2017-11-20  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Simplify loop in MaxWordSeg::WordSegArea().
+
+	* src/maxwordseg.cpp (MaxWordSeg::WordSegArea()):
+	  - Rearrange loop for more readability.
+	  - With this, foundUnk flag is eliminated.
+
 2017-11-17  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Adjust MaxWordSeg::CreateSentence().
