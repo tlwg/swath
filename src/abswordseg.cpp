@@ -149,13 +149,13 @@ AbsWordSeg::WordSeg (const Dict* dict, const wchar_t* senstr,
   wcscpy (text, senstr);
   textLen = wcslen (senstr);
   CreateWordList (dict);
-  SwapLinkSep ();
+  ReverseLinkSep ();
   bestidx = CreateSentence ();
   return GetBestSen (bestidx, outSeps, outSepsSz);
 }
 
 void
-AbsWordSeg::SwapLinkSep ()
+AbsWordSeg::ReverseLinkSep ()
 {
   int start = 0;
   while (LinkSep[start] != -1)
