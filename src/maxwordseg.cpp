@@ -5,15 +5,6 @@
 #include "maxwordseg.h"
 #include "wordstack.h"
 
-//////////////////////////////////////////////////////////////////////
-// Construction/Destruction
-//////////////////////////////////////////////////////////////////////
-
-MaxWordSeg::MaxWordSeg ()
-  : AbsWordSeg ()
-{
-}
-
 // Return number of ambiguous areas.
 int
 MaxWordSeg::CreateSentence ()

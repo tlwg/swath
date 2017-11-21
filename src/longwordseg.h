@@ -13,9 +13,6 @@
 
 class LongWordSeg : public AbsWordSeg
 {
-public:
-  LongWordSeg ();
-
 protected:
   virtual int CreateSentence ();
 };

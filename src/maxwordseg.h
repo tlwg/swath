@@ -13,9 +13,6 @@
 
 class MaxWordSeg : public AbsWordSeg
 {
-public:
-  MaxWordSeg ();
-
 protected:
   virtual int CreateSentence ();
 
