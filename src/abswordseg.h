@@ -22,11 +22,6 @@ public:
                short int* outSeps, int outSepsSz);
 
 protected:
-  //============Function for Wordseg=====================
-  void CreateWordList (const Dict* dict);
-  void ReverseLinkSep ();
-  virtual int CreateSentence () = 0;    //return idx of best sen
-  int GetBestSen (int bestidx, short int* outSeps, int outSepsSz);
   unsigned short int copySepData (short int sourceIdxSen,
                                   short int targetIdxSen,
                                   short int sepPoint);
@@ -39,9 +34,16 @@ protected:
   short int IdxSep[MAXLEN];
 
 private:
+  //============Functions for Wordseg====================
+  void CreateWordList (const Dict* dict);
+  void ReverseLinkSep ();
+  virtual int CreateSentence () = 0;    //return idx of best sen
+  int GetBestSen (int bestidx, short int* outSeps, int outSepsSz);
+
   //============Check Character Type Function============
   static bool IsLeadChar (wchar_t wc);
   static bool IsLastChar (wchar_t wc);
+
   //============Check Karan rule=========================
   static bool HasKaran (const wchar_t* sen_ptr);
 };

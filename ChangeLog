@@ -1,5 +1,13 @@
 2017-11-21  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Make WordSeg() internal functions private.
+
+	* src/abswordseg.h:
+	  - Move CreateWordList(), ReverseLinkSep(), CreateSentence(),
+	    GetBestSen() methods from protected to private.
+
+2017-11-21  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Rename AbsWordSeg::SwapLinkSep() to ReverseLinkSep().
 
 	* src/abswordseg.h, src/abswordseg.cpp:
