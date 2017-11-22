@@ -1,3 +1,12 @@
+2017-11-22  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Chain cases in AbsWordSeg::CreateWordList() together.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
+	  - Chain chunk type cases into a single if-else-statement,
+	    instead of several if-statements with 'continue' at the end,
+	    to clarify the classification checks.
+
 2017-11-21  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Make WordSeg() internal functions private.

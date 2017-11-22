@@ -22,18 +22,16 @@ AbsWordSeg::CreateWordList (const Dict* dict)
   int i = 0;
   while (i < textLen)
     {
-      // Unleadable chars
-      if (!IsLeadChar (text[i]) || (i > 0 && !IsLastChar (text[i - 1])))
-        {
-          IdxSep[i++] = -2;      //cannot leading for unknown word.
-          continue;
-        }
-
       wchar_t lead_ch = text[i];
 
-      // Chunk of punctuation marks
-      if (iswpunct (lead_ch))
+      if (!IsLeadChar (lead_ch) || (i > 0 && !IsLastChar (text[i - 1])))
         {
+          // Unleadable chars
+          IdxSep[i++] = -2;      //cannot leading for unknown word.
+        }
+      else if (iswpunct (lead_ch))
+        {
+          // Chunk of punctuation marks
           IdxSep[i] = cntLink;
           while (++i < textLen && iswpunct (text[i]))
             {
@@ -41,12 +39,10 @@ AbsWordSeg::CreateWordList (const Dict* dict)
             }
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
-          continue;
         }
-
-      // Chunk of numbers
-      if (iswdigit (lead_ch) || isThaiUniDigit (lead_ch))
+      else if (iswdigit (lead_ch) || isThaiUniDigit (lead_ch))
         {
+          // Chunk of numbers
           IdxSep[i] = cntLink;
           while (++i < textLen)
             {
@@ -59,12 +55,10 @@ AbsWordSeg::CreateWordList (const Dict* dict)
             }
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
-          continue;
         }
-
-      // Chunk of non-Thai characters
-      if (!isThaiUni (lead_ch))
+      else if (!isThaiUni (lead_ch))
         {
+          // Chunk of non-Thai characters
           IdxSep[i] = cntLink;
           while (++i < textLen && !isThaiUni (text[i]))
             {
@@ -72,41 +66,42 @@ AbsWordSeg::CreateWordList (const Dict* dict)
             }
           LinkSep[cntLink++] = i;
           LinkSep[cntLink++] = -1;
-          continue;
         }
-
-      // Thai character: find breakabilities starting at text[i]
-      IdxSep[i] = -1;
-      bool isWordFound = false;
-      curState->rewind ();
-      for (int j = i; j < textLen; j++)
+      else
         {
-          if (text[j] == 0x0e46 && isWordFound)
+          // Thai character: find breakabilities starting at text[i]
+          IdxSep[i] = -1;
+          bool isWordFound = false;
+          curState->rewind ();
+          for (int j = i; j < textLen; j++)
             {
-              //Mai-Ya-Mok -- break position
-              LinkSep[cntLink - 1] = j + 1;
-              break;
-            }
-          if (!curState->walk (text[j]))
-            break;
-          if (curState->isTerminal ())
-            {
-              //found word in dictionary
-              //check whether it should be segmented here
-              if (IsLeadChar (text[j + 1]) && !HasKaran (&text[j]))
+              if (text[j] == 0x0e46 && isWordFound)
                 {
-                  if (!isWordFound)
+                  //Mai-Ya-Mok -- break position
+                  LinkSep[cntLink - 1] = j + 1;
+                  break;
+                }
+              if (!curState->walk (text[j]))
+                break;
+              if (curState->isTerminal ())
+                {
+                  //found word in dictionary
+                  //check whether it should be segmented here
+                  if (IsLeadChar (text[j + 1]) && !HasKaran (&text[j]))
                     {
-                      IdxSep[i] = cntLink;
-                      isWordFound = true;
+                      if (!isWordFound)
+                        {
+                          IdxSep[i] = cntLink;
+                          isWordFound = true;
+                        }
+                      LinkSep[cntLink++] = j + 1;
                     }
-                  LinkSep[cntLink++] = j + 1;
                 }
             }
+          if (isWordFound)
+            LinkSep[cntLink++] = -1;
+          ++i;
         }
-      if (isWordFound)
-        LinkSep[cntLink++] = -1;
-      ++i;
     }
   delete curState;
   LinkSep[cntLink] = -1;          // add terminator
