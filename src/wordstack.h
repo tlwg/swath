@@ -11,10 +11,6 @@
 
 class WordStack
 {
-private:
-  WordState stack[STACKSIZE];
-  short int top_idx;
-
 public:
   WordStack ();
 
@@ -22,6 +18,10 @@ public:
   bool Pop ();
   WordState Top () const;
   bool Empty () const;
+
+private:
+  WordState stack[STACKSIZE];
+  short int top_idx;
 };
 
 inline

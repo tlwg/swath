@@ -1,3 +1,10 @@
+2017-11-23  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Reorder WordStack member declarations.
+
+	* src/wordstack.h (class WordStack):
+	  - Move private section to the end.
+
 2017-11-22  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Chain cases in AbsWordSeg::CreateWordList() together.
