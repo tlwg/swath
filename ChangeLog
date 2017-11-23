@@ -1,5 +1,18 @@
 2017-11-23  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Only reverse word list on Thai chunks.
+
+	* src/abswordseg.cpp (AbsWordSeg::CreateWordList()):
+	  - Add word list reversion when a Thai chunk is done.
+	    Other chunks don't need it.
+	* src/abswordseg.cpp (AbsWordSeg::WordSeg()):
+	  - Remove ReverseLinkSep() call.
+	* src/abswordseg.h, src/abswordseg.cpp
+	  (-AbsWordSeg::ReverseLinkSep()):
+	  - Drop the method, now unneeded.
+
+2017-11-23  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Reorder WordStack member declarations.
 
 	* src/wordstack.h (class WordStack):

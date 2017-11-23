@@ -36,7 +36,6 @@ protected:
 private:
   //============Functions for Wordseg====================
   void CreateWordList (const Dict* dict);
-  void ReverseLinkSep ();
   virtual int CreateSentence () = 0;    //return idx of best sen
   int GetBestSen (int bestidx, short int* outSeps, int outSepsSz);
 

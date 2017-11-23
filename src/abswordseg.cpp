@@ -99,7 +99,18 @@ AbsWordSeg::CreateWordList (const Dict* dict)
                 }
             }
           if (isWordFound)
-            LinkSep[cntLink++] = -1;
+            {
+              // reverse the word list
+              for (int lower = IdxSep[i], upper = cntLink - 1;
+                   lower < upper;
+                   ++lower, --upper)
+                {
+                  short int tmp = LinkSep[lower];
+                  LinkSep[lower] = LinkSep[upper];
+                  LinkSep[upper] = tmp;
+                }
+              LinkSep[cntLink++] = -1;
+            }
           ++i;
         }
     }
@@ -144,31 +155,8 @@ AbsWordSeg::WordSeg (const Dict* dict, const wchar_t* senstr,
   wcscpy (text, senstr);
   textLen = wcslen (senstr);
   CreateWordList (dict);
-  ReverseLinkSep ();
   bestidx = CreateSentence ();
   return GetBestSen (bestidx, outSeps, outSepsSz);
-}
-
-void
-AbsWordSeg::ReverseLinkSep ()
-{
-  int start = 0;
-  while (LinkSep[start] != -1)
-    {
-      int end = start;
-      while (LinkSep[++end] != -1)
-        ;
-
-      int upper = end - 1;
-      while (start < upper)
-        {
-          short int tmp = LinkSep[start];
-          LinkSep[start++] = LinkSep[upper];
-          LinkSep[upper--] = tmp;
-        }
-
-      start = end + 1;
-    }
 }
 
 // =======================================================
