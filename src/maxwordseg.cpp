@@ -73,15 +73,12 @@ MaxWordSeg::CreateSentence ()
 int
 MaxWordSeg::saveSegment (int sepIdx, int idxSen, int lastPoint)
 {
-  int i;
+  const short int *srcSep = SepData[idxSen].Sep;
+  short int       *dstSep = SepData[2].Sep;
 
-  for (i = 0; SepData[idxSen].Sep[i] < lastPoint; i++)
+  while (*srcSep != -1 && *srcSep <= lastPoint)
     {
-      SepData[2].Sep[sepIdx++] = SepData[idxSen].Sep[i];
-    }
-  if (SepData[idxSen].Sep[i] == lastPoint)
-    {
-      SepData[2].Sep[sepIdx++] = SepData[idxSen].Sep[i];
+      dstSep[sepIdx++] = *srcSep++;
     }
 
   return sepIdx;

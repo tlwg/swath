@@ -1,3 +1,14 @@
+2017-11-24  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Merge loop in MaxWordSeg::saveSegment().
+
+	* src/maxwordseg.cpp (MaxWordSeg::saveSegment()):
+	  - Optimize array access using pointers.
+	  - Merge extra iteration on the last element into the main loop,
+	    checking for the terminator so iteration over the last
+	    element is possible, and the split of the last element copying
+	    from the rests before it is not necessary.
+
 2017-11-23  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Only reverse word list on Thai chunks.
