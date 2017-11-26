@@ -115,7 +115,6 @@ AbsWordSeg::CreateWordList (const Dict* dict)
         }
     }
   delete curState;
-  LinkSep[cntLink] = -1;          // add terminator
 }
 
 bool
