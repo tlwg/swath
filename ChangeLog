@@ -1,3 +1,11 @@
+2017-11-27  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Revise manpage.
+
+	* src/swath.1:
+	  - Improve wordings.
+	  - Mention trietool(1) instead of trietool-0.2(1).
+
 2017-11-26  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Remove LinkSep terminator.
