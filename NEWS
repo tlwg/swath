@@ -1,3 +1,10 @@
+0.6.0 (2017-11-28)
+=====
+- Updated word break dictionary.
+- Drop undocumented option '-l'.
+- Revamped internal word break engine.
+- Updated manpage.
+
 0.5.5 (2016-12-25)
 =====
 - Updated word break dictionary.
