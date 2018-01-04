@@ -28,9 +28,6 @@ dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
 AC_TYPE_SIZE_T
 
-dnl Checks for library functions.
-AC_CHECK_FUNCS(strstr)
-
 dnl Check commandline options
 AC_ARG_ENABLE(debug,
               [AC_HELP_STRING([--enable-debug],

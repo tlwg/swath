@@ -1,5 +1,12 @@
 2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Remove unnecessary check for unused strstr().
+
+	* configure.ac:
+	  - Remove check for strstr(), which is never used.
+
+2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Remove the dead midatrie stuffs.
 
 	* configure.ac:
