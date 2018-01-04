@@ -1,5 +1,15 @@
 2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Replace the last malloc() with new[] operator.
+
+	* src/convutil.cpp (ConvPrint()):
+	  - Replace malloc() call with C++ new[] operator.
+	  - Remove now-unneeded stdlib.h include.
+	* configure.ac:
+	  - Remove unnecessary check for malloc.h.
+
+2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Remove unnecessary check for unused strstr().
 
 	* configure.ac:

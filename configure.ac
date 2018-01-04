@@ -22,7 +22,7 @@ PKG_CHECK_MODULES(DATRIE,datrie-0.2)
 
 dnl Checks for header files.
 AC_HEADER_STDC
-AC_CHECK_HEADERS(limits.h malloc.h)
+AC_CHECK_HEADERS(limits.h)
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST

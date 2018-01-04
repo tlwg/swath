@@ -6,7 +6,6 @@
 #include "conv/utf8.h"
 #include "conv/tis620.h"
 #include "worddef.h"
-#include <stdlib.h>
 #include <string.h>
 
 bool
@@ -100,7 +99,7 @@ ConvPrint (FILE* fpout, const wchar_t* wcs, bool isUniOut)
 wchar_t*
 ConvStrDup (const char* s, bool isUniIn)
 {
-  wchar_t* output = (wchar_t*) malloc (sizeof (wchar_t) *(strlen (s) + 1));
+  wchar_t* output = new wchar_t[strlen (s) + 1];
   if (!output)
     return NULL;
 
