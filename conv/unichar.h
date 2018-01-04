@@ -1,7 +1,7 @@
 //
 // unicode.h - Unicode char set definitions
 // Created: 19 Jan 1999
-// Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+// Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
 #ifndef UNICODE_INC

@@ -1,7 +1,7 @@
 //
 // convkit.h - Text Converter Kit
 // Created: 19 Jan 1999
-// Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+// Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
 #ifndef CONVKIT_INC

@@ -1,7 +1,7 @@
 //
 // convfact.h - Text Agent Factory
 // Created: 19 Jan 1999
-// Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+// Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
 #ifndef CONVFACT_INC

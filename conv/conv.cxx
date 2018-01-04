@@ -1,7 +1,7 @@
 //
 // conv.cc - Main Program for text converter program
 // Created: 19 Jan 1999
-// Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+// Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
 #include "convfact.h"

@@ -1,7 +1,7 @@
 //
 // tis620.cc - TIS-620 Agents
 // Created: 19 Jan 1999
-// Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
+// Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
 #include "tis620.h"

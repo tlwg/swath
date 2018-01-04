@@ -1,5 +1,12 @@
 2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Update my e-mail address in conv.
+
+	* conv/*.h, conv/*.cxx:
+	  - Replace my nectec e-mail address with the gmail one.
+
+2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Remove unnecessary includes in conv.
 
 	* conv/conv.cxx, conv/convfact.h, conv/tis620.h, conv/utf8.h:
