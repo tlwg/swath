@@ -16,26 +16,9 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 AM_PROG_LIBTOOL
-dnl ** to use midatrie **
-dnl AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
 
 dnl Checks for libraries.
-
-dnl ** to use midatrie **
-dnl dnl midatrie
-dnl if test x$PKG_CONFIG != xno; then
-dnl   AC_MSG_CHECKING(for midatrie >= 0.3.3)
-dnl   if $PKG_CONFIG --exists 'midatrie >= 0.3.3'; then
-dnl     AC_MSG_RESULT(yes (`$PKG_CONFIG --modversion midatrie`))
-dnl     MIDATRIE_CFLAGS=`$PKG_CONFIG --cflags midatrie`
-dnl     MIDATRIE_LIBS=`$PKG_CONFIG --libs midatrie`
-dnl   else
-dnl     AC_MSG_RESULT(no)
-dnl     AC_MSG_ERROR([midatrie >= 0.3.3 missing (maybe, PKG_CONFIG_PATH setting?)])
-dnl   fi
-dnl fi
-dnl AC_SUBST(MIDATRIE_CFLAGS)
-dnl AC_SUBST(MIDATRIE_LIBS)
+PKG_CHECK_MODULES(DATRIE,datrie-0.2)
 
 dnl Checks for header files.
 AC_HEADER_STDC
@@ -79,9 +62,6 @@ if test "x$enable_dict" = "xyes"; then
 fi
 
 AM_CONDITIONAL(ENABLE_DICT,test "x$enable_dict" = "xyes")
-
-dnl Checks for libraries.
-PKG_CHECK_MODULES(DATRIE,datrie-0.2)
 
 AC_OUTPUT(
   Makefile
