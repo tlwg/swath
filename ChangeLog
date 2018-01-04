@@ -1,5 +1,16 @@
 2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Remove unnecessary includes in conv.
+
+	* conv/conv.cxx, conv/convfact.h, conv/tis620.h, conv/utf8.h:
+	  - Remove stdio.h include artifacts.
+	* conv/conv.cxx:
+	  - Remove unnecessary "utf8.h" and "tis620.h" includes, as
+	    they are all realizations of "convkit.h" abstractions.
+	    "convfact.h" already provides all necessary abstractions.
+
+2018-01-04  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Replace the last malloc() with new[] operator.
 
 	* src/convutil.cpp (ConvPrint()):

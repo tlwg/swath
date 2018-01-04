@@ -7,7 +7,6 @@
 #ifndef TIS620_INC
 #define TIS620_INC
 
-#include <stdio.h>
 #include "convkit.h"
 
 class TIS620Reader : public TextReader {

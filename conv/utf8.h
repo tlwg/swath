@@ -7,7 +7,6 @@
 #ifndef UTF8_INC
 #define UTF8_INC
 
-#include <stdio.h>
 #include "convkit.h"
 
 class UTF8Reader : public TextReader {

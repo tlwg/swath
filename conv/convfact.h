@@ -7,7 +7,6 @@
 #ifndef CONVFACT_INC
 #define CONVFACT_INC
 
-#include <stdio.h>
 #include "convkit.h"
 
 enum ETextFormat {

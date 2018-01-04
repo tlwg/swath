@@ -4,10 +4,7 @@
 // Author:  Theppitak Karoonboonyanan <thep@links.nectec.or.th>
 //
 
-#include <stdio.h>
 #include "convfact.h"
-#include "utf8.h"
-#include "tis620.h"
 
 //
 // SYNOPSIS
