@@ -13,6 +13,7 @@ DICT_SRC =  \
 	tdict-lang-ethnic.txt \
 	tdict-proper.txt \
 	tdict-science.txt \
+	tdict-slang.txt \
 	tdict-spell.txt \
 	tdict-std-compound.txt \
 	tdict-std.txt
