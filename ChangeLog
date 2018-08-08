@@ -1,3 +1,10 @@
+2018-08-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Use HTTPS in linux.thai.net URLs
+
+	* AUTHORS:
+	  - Use HTTPS in thailatex and libthai project URLs.
+
 2018-08-05  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Update dictionary from thailatex GitHub.
