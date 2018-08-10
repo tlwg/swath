@@ -5,10 +5,6 @@
 #ifndef __FILTERLATEX_H
 #define __FILTERLATEX_H
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif
-
 #include "worddef.h"
 #include "filterx.h"
 

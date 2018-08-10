@@ -5,10 +5,6 @@
 #ifndef __FILTER_X_H
 #define __FILTER_X_H
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif
-
 #include <stdio.h>
 #include <wchar.h>
 

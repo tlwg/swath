@@ -5,10 +5,6 @@
 #ifndef __MAXWORDSEG_H
 #define __MAXWORDSEG_H
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif
-
 #include "abswordseg.h"
 
 class MaxWordSeg : public AbsWordSeg

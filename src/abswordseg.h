@@ -5,10 +5,6 @@
 #ifndef __ABSWORDSEG_H
 #define __ABSWORDSEG_H
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif // _MSC_VER >= 1000
-
 #include <wchar.h>
 #include "worddef.h"
 #include "dict.h"

@@ -5,10 +5,6 @@
 #ifndef __FILTERLAMBDA_H
 #define __FILTERLAMBDA_H
 
-#if _MSC_VER > 1000
-#pragma once
-#endif
-
 #include "filterlatex.h"
 
 class FilterLambda : public FilterLatex

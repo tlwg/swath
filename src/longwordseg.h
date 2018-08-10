@@ -5,10 +5,6 @@
 #ifndef __LONGWORDSEG_H
 #define __LONGWORDSEG_H
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif
-
 #include "abswordseg.h"
 
 class LongWordSeg : public AbsWordSeg

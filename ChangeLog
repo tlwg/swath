@@ -1,3 +1,22 @@
+2018-08-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Drop "#pragma once" in headers.
+
+	It's not portable, and multiple include optimization
+	in compilers just make "#ifndef" idiom have the same effect.
+
+	* src/abswordseg.h:
+	* src/filefilter.h:
+	* src/filterhtml.h:
+	* src/filterlambda.h:
+	* src/filterlatex.h:
+	* src/filterrtf.h:
+	* src/filterx.h:
+	* src/longwordseg.h:
+	* src/maxwordseg.h:
+	* src/wordstack.h:
+	  - Drop "#pragma once".
+
 2018-08-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Use HTTPS in linux.thai.net URLs

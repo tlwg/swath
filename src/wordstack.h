@@ -1,10 +1,6 @@
 #ifndef __WORDSTACK_H
 #define __WORDSTACK_H
 
-#if _MSC_VER >= 1000
-#pragma once
-#endif
-
 #include "worddef.h"
 
 #define STACKSIZE 500
