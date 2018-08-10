@@ -4,8 +4,8 @@
 // Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
-#ifndef UTF8_INC
-#define UTF8_INC
+#ifndef __UTF8_H
+#define __UTF8_H
 
 #include "convkit.h"
 
@@ -27,5 +27,5 @@ public:
 
 int UTF8Bytes (unichar c);
 
-#endif  // UTF8_INC
+#endif  // __UTF8_H
 

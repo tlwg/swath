@@ -4,8 +4,8 @@
 // Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
-#ifndef TIS620_INC
-#define TIS620_INC
+#ifndef __TIS620_H
+#define __TIS620_H
 
 #include "convkit.h"
 
@@ -25,5 +25,5 @@ public:
     bool Write(unichar c);
 };
 
-#endif // TIS620_INC
+#endif // __TIS620_H
 

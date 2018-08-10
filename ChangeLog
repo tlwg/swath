@@ -1,5 +1,18 @@
 2018-08-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Normalize include guard macros in headers.
+
+	* conv/conv.h:
+	* conv/convfact.h:
+	* conv/convkit.h:
+	* conv/tis620.h:
+	* conv/tischar.h:
+	* conv/unichar.h:
+	* conv/utf8.h:
+	  - Normalize include guard macros based on file name.
+
+2018-08-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop "#pragma once" in headers.
 
 	It's not portable, and multiple include optimization

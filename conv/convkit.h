@@ -4,8 +4,8 @@
 // Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
-#ifndef CONVKIT_INC
-#define CONVKIT_INC
+#ifndef __CONVKIT_H
+#define __CONVKIT_H
 
 #include "unichar.h"
 
@@ -75,5 +75,5 @@ TextWriter::spaceLeft () const
     return outLen;
 }
 
-#endif  // CONVKIT
+#endif  // __CONVKIT_H
 

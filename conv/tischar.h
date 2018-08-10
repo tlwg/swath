@@ -4,12 +4,12 @@
 // Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
-#ifndef TISCHAR_INC
-#define TISCHAR_INC
+#ifndef __TISCHAR_H
+#define __TISCHAR_H
 
 typedef unsigned char tischar;
 
 const tischar BAD_TISCHAR = 0x80;
 
-#endif  // TISCHAR_INC
+#endif  // __TISCHAR_H
 

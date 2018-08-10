@@ -4,8 +4,8 @@
 // Author:  Theppitak Karoonboonyanan <theppitak@gmail.com>
 //
 
-#ifndef CONVFACT_INC
-#define CONVFACT_INC
+#ifndef __CONVFACT_H
+#define __CONVFACT_H
 
 #include "convkit.h"
 
@@ -17,5 +17,5 @@ enum ETextFormat {
 TextReader* CreateTextReader (ETextFormat format, const char* inText);
 TextWriter* CreateTextWriter (ETextFormat format, char* outText, int outLen);
 
-#endif // CONVFACT_INC
+#endif // __CONVFACT_H
 
