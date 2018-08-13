@@ -1,5 +1,12 @@
 2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Drop unused method.
+
+	* src/filterrtf.cpp (-RTFToken::set(char, ETokenType)):
+	  - Drop unused method.
+
+2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Declare array size member as size_t.
 
 	* src/filterrtf.cpp (RTFToken):

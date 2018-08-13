@@ -34,7 +34,6 @@ public:
 
   void reset ();
   void set (char c);
-  void set (char c, ETokenType t);
   void appendChar (char c);
   void terminate (ETokenType t);
 
@@ -58,13 +57,6 @@ RTFToken::set (char c)
   val[0] = c;
   val[1] = '\0';
   valLen = 1;
-}
-
-inline void
-RTFToken::set (char c, ETokenType t)
-{
-  set (c);
-  type = t;
 }
 
 inline void
