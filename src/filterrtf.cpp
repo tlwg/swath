@@ -30,7 +30,7 @@ public:
 
   ETokenType  getType() const { return type; }
   const char* getVal() const  { return val; }
-  bool        isEmpty() const { return valLen > 0; }
+  bool        isEmpty() const { return valLen == 0; }
 
   void reset ();
   void set (char c);

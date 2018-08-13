@@ -1,5 +1,14 @@
 2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Fix inverted logic in RTFToken::isEmpty().
+
+	* src/filterrtf.cpp (RTFToken::isEmpty()):
+	  - Fix inverted logic, which caused some token to be not flushed.
+	* tests/petavatthu1-wseg.rtf:
+	  - Update checking wordseg output.
+
+2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Add RTF test case.
 
 	* tests/Makefile.am, +tests/test-rtf.sh,
