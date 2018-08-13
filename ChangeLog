@@ -1,5 +1,13 @@
 2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Add RTF test case.
+
+	* tests/Makefile.am, +tests/test-rtf.sh,
+	  +tests/petavatthu1.rtf, +tests/petavatthu1-wseg.rtf:
+	  - Add RTF test case
+
+2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop unused method.
 
 	* src/filterrtf.cpp (-RTFToken::set(char, ETokenType)):
