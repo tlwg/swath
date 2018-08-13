@@ -41,7 +41,7 @@ public:
 private:
   ETokenType type;
   char       val[1024];
-  int        valLen;
+  size_t     valLen;
 };
 
 inline void

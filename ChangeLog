@@ -1,5 +1,13 @@
 2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Declare array size member as size_t.
+
+	* src/filterrtf.cpp (RTFToken):
+	  - Declare RTFToken::valLen as size_t instead of int,
+	    fixing "signedness" compiler warning when comparing size.
+
+2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Add missing virtual d-tors.
 
 	* conv/convkit.h (TextReader, TextWriter):
