@@ -36,8 +36,6 @@ swath_SOURCES = \
 
 man_MANS = swath.1
 
-# ** to use midatrie **
-# swath_LDADD = @MIDATRIE_LIBS@
 swath_LDADD = \
 	$(top_builddir)/conv/libconv.la \
 	$(DATRIE_LIBS)

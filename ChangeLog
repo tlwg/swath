@@ -1,3 +1,10 @@
+2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Drop commented midatrie stuff.
+
+	* src/Makefile.am:
+	  - Drop commented stuff on using ancient midatrie.
+
 2018-08-10  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Normalize include guard macros in headers.
