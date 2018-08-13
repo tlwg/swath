@@ -1,5 +1,13 @@
 2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Add missing virtual d-tors.
+
+	* conv/convkit.h (TextReader, TextWriter):
+	  - Add missing virtual d-tors to the abstract base classes,
+	    fixing compiler warnings.
+
+2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop commented midatrie stuff.
 
 	* src/Makefile.am:

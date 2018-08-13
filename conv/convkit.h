@@ -11,6 +11,8 @@
 
 class TextReader {
 public:
+    virtual ~TextReader () {}
+
     virtual bool Read(unichar& c) = 0;
 
 public:
@@ -43,6 +45,8 @@ TextReader::curPos () const
 
 class TextWriter {
 public:
+    virtual ~TextWriter () {}
+
     virtual bool Write(unichar c) = 0;
 
 public:
