@@ -26,8 +26,7 @@ private:
     CS_CH_BYTE,
     CS_UNI,
     CS_UNI_COUNT,
-    CS_UNI_CODE,
-    CS_NONE
+    CS_UNI_CODE
   };
 
 private:

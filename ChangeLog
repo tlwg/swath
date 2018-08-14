@@ -1,3 +1,23 @@
+2018-08-14  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Drop unused CS_NONE ECharState in FilterRTF.
+
+	The only place it's used is the return value of chgCharState()
+	method, which has no chance to be reached, as the 'state' arg,
+	which is from FilterRTF::psState, is never set to CS_NONE
+	through out the code. So, all possible values have been covered
+	in 'switch (state)' and compiler warning on uncovered CS_NONE
+	is in fact meaningless.
+
+	Besides, having a "none" value for a state in finite automaton
+	is questionable. Is it a special dead state? No, it's never
+	handled explicitly anyways.
+
+	* src/filterrtf.h (FilterRTF::ECharState):
+	  - Drop CS_NONE value.
+	* src/filterrtf.cpp (FilterRTF::chgCharState()):
+	  - Drop unreachable "return CS_NONE" statement.
+
 2018-08-13  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	Fix inverted logic in RTFToken::isEmpty().
