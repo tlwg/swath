@@ -129,7 +129,6 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
               rtfToken.reset ();
               *thaiFlag = false;
               goto thai_flag_determined;
-              break;
 
             case RTFToken::RTK_UNI_COUNT:
               sscanf (rtfToken.getVal(), "%d", &curUTFReadBytes);
@@ -202,6 +201,10 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
                   *thaiFlag = isThai (ch);
                   goto thai_flag_determined;
                 }
+              break;
+
+            default:
+              // RTFToken::RTK_NONE
               break;
             }
         }
@@ -288,6 +291,10 @@ thai_flag_determined:
                       --tokenSz;
                     }
                 }
+              break;
+
+            default:
+              // RTFToken::RTK_NONE
               break;
             }
         }
@@ -383,6 +390,10 @@ thai_flag_determined:
                       --tokenSz;
                     }
                 }
+              break;
+
+            default:
+              // RTFToken::RTK_NONE
               break;
             }
         }

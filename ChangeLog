@@ -1,5 +1,13 @@
 2018-08-14  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Fix compiler warning on uncovered enum case.
+
+	* src/filterrtf.cpp (FilterRTF::GetNextToken()):
+	  - Add default: to switch(), to fix warning on uncovered enum.
+	  - Remove an unnecessary break after goto.
+
+2018-08-14  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Add comment for previous commit.
 
 	* src/filterrtf.cpp (FilterRTF::chgCharState()):
