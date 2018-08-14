@@ -1,5 +1,12 @@
 2018-08-14  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Add comment for previous commit.
+
+	* src/filterrtf.cpp (FilterRTF::chgCharState()):
+	  - Add comment explaining unreachable line.
+
+2018-08-14  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Drop unused CS_NONE ECharState in FilterRTF.
 
 	The only place it's used is the return value of chgCharState()

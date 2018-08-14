@@ -501,6 +501,8 @@ FilterRTF::chgCharState (ECharState state, char charIn, bool* charConsumed,
       goto end_number;
     }
 
+  // All cases are covered, this line should not be reached.
+
 end_number:
   if ('\\' == charIn)
     return CS_ESCAPE;
