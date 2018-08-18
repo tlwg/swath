@@ -1,3 +1,4 @@
+autom4te.cache/
 aclocal.m4
 compile
 config.guess
@@ -7,6 +8,8 @@ depcomp
 install-sh
 ltmain.sh
 m4/
+Makefile
+Makefile.in
 missing
 test-driver
 tests/Makefile.in
