@@ -1,5 +1,12 @@
 2018-08-18  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
+	Add info to skip a step on released tarballs
+
+	* INSTALL:
+	  - Add info to skip ./autogen.sh step on released tarballs.
+
+2018-08-18  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
 	Provide our own version of INSTALL instruction.
 
 	* INSTALL:
