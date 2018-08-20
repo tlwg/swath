@@ -1,3 +1,12 @@
+0.6.1 (2018-08-20)
+=====
+- Updated word break dictionary.
+- Fix a defect in RTF parsing, so RTF gets more complete word break positions.
+- Compiler warning fixes.
+- Minor code cleanups.
+- Useful installation instructions in INSTALL file.
+  (Thanks @pepa65 for the pull request.)
+
 0.6.0 (2017-11-28)
 =====
 - Updated word break dictionary.
