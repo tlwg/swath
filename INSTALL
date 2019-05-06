@@ -1,8 +1,11 @@
 Basic Installation
 ==================
 
-# When downloaded from the Github repo
-# (Skip this step for released tarballs)
+# Required are for building are:
+# - libtoolize (from package libtool)
+# - libdatrie (https://github.com/tlwg/libdatrie or package libdatrie1)
+
+# When downloaded from the Github repo (Skip for released tarballs)
 ./autogen.sh
 
 ./configure
