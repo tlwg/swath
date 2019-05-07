@@ -138,8 +138,8 @@ static void
 Usage (int verbose)
 {
   fprintf (stderr,
-           "Usage: swath [mule|-v] [-b \"delimiter\"] [-d dict-dir]\n"
-           "[-f html|rtf|latex|lambda] [-m long|max] [-u {u|t},{u|t}] [-help]\n");
+           "Usage: swath [mule] [-v|--verbose] [-b \"delimiter\"] [-d dict-dir]\n"
+           "       [-f html|rtf|latex|lambda] [-m long|max] [-u {u|t},{u|t}] [-h|[-]-help]\n");
   if (verbose)
     {
       fprintf (stderr,
@@ -221,6 +221,7 @@ main (int argc, char* argv[])
           return 0;
         }
       else if (strcmp ("-help", argv[iargc]) == 0 ||
+               strcmp ("-h", argv[iargc]) == 0 ||
                strcmp ("--help", argv[iargc]) == 0)
         {
           Usage (1);
