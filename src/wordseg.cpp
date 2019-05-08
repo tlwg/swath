@@ -138,22 +138,22 @@ static void
 Usage (int verbose)
 {
   fprintf (stderr,
-           "Usage: swath [mule|-v] [-b \"delimitor\"] [-d dict-dir]\n"
-           "[-f html|rtf|latex|lambda] [-m long|max] [-u {u|t},{u|t}] [-help]\n");
+           "Usage: swath [mule] [-v|--verbose] [-b \"delimiter\"] [-d dict-dir]\n"
+           "       [-f html|rtf|latex|lambda] [-m long|max] [-u {u|t},{u|t}] [-h|[-]-help]\n");
   if (verbose)
     {
       fprintf (stderr,
                "Options:\n"
                "\tmule : for use with mule\n"
                "\t-v   : verbose mode\n"
-               "\t-b   : define a word delimitor string for the output\n"
+               "\t-b   : define a word delimiter string for the output\n"
                "\t-d   : specify dictionary path\n"
                "\t-f   : specify format of the input\n"
                "\t\thtml     : HTML file\n"
                "\t\trtf      : RTF file\n"
                "\t\tlatex    : LaTeX file\n"
                "\t\tlambda   : The input and output are same as latex, except that\n"
-               "\t\t           the word delimitor is ^^^^200b\n"
+               "\t\t           the word delimiter is ^^^^200b\n"
                "\t-m   : choose word matching scheme when analyzing\n"
                "\t\tlong     : longest matching scheme\n"
                "\t\tmax      : maximal matching scheme\n"
@@ -221,6 +221,7 @@ main (int argc, char* argv[])
           return 0;
         }
       else if (strcmp ("-help", argv[iargc]) == 0 ||
+               strcmp ("-h", argv[iargc]) == 0 ||
                strcmp ("--help", argv[iargc]) == 0)
         {
           Usage (1);

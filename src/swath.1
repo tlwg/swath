@@ -22,23 +22,23 @@ swath \- General-purpose Thai word segmentation utility
 [options] \<\ \fIinfile\fP\ \>\ \fIoutfile\fP
 .br
 .SH DESCRIPTION
-Thai script has no word delimitor.  Applications need to recognize word
+Thai script has no word delimiter.  Applications need to recognize word
 boundaries before they can do useful things with Thai text, such as line
 wrapping.
 .sp
-Swath provides word analysis filter to insert word delimitors into a given
+Swath provides word analysis filter to insert word delimiters into a given
 text stream.  It reads text from standard input, analyzes it for word
 boundaries by consulting a Thai word list, and outputs to standard output the
-same text with the predefined word delimitors inserted.
+same text with the predefined word delimiters inserted.
 .sp
 Currently, it can read plain text, HTML, RTF, LaTeX and Lambda (Unicode version
 of LaTeX with Omega typesetter kernel) documents and insert common word
-delimitors for each format (pipe `|' for plain text). But user can always
-override this with a preferred delimitor.
+delimiters for each format (pipe `|' for plain text). But user can always
+override this with a preferred delimiter.
 .SH OPTIONS
 .TP
-.B \-b [\fIdelimitor\fP]
-Define the string to be inserted as word delimitor in the output text.
+.B \-b [\fIdelimiter\fP]
+Define the string to be inserted as word delimiter in the output text.
 .TP
 .B \-d [\fIdict-path\fP]
 Specify alternative dictionary location.  \fIdict-path\fP must be either a
