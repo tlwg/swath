@@ -1,3 +1,40 @@
+2019-05-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Make help message clearer.
+
+	* src/wordseg.cpp (Usage()):
+	  - Split "-v" out of "mule".
+	  - Also mention "--verbose".
+	* src/wordseg.cpp (Usage(), main()):
+	  - Add "-h" option.
+	  - Also mention "--help".
+
+	As part of pull request #5
+	https://github.com/tlwg/swath/pull/5
+	Thanks @pepa65
+
+2019-05-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Add documentation on build requirements.
+
+	* INSTALL:
+	  - Add build requirements.
+
+	As part of pull request #5
+	https://github.com/tlwg/swath/pull/5
+	Thanks @pepa65
+
+2019-05-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Replace "delimitor" by "delimiter".
+
+	* ChangeLog, README, src/swath.1, src/wordseg.cpp:
+	  - Fix all typos "delimitor" with "delimiter".
+
+	As part of pull request #5
+	https://github.com/tlwg/swath/pull/5
+	Thanks @pepa65
+
 2018-08-20  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	* NEWS:
