@@ -4,7 +4,7 @@ AC_PREREQ(2.50)
 
 AC_INIT(swath,
         m4_esyscmd([build-aux/git-version-gen]),
-        thai-linux-foss-devel@googlegroups.com)
+        [https://github.com/tlwg/swath/issues])
 AC_CONFIG_SRCDIR([src/wordseg.cpp])
 AC_CONFIG_MACRO_DIR([m4])
 
