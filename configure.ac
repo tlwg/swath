@@ -7,6 +7,7 @@ AC_INIT(swath,
         [https://github.com/tlwg/swath/issues])
 AC_CONFIG_SRCDIR([src/wordseg.cpp])
 AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_LIBOBJ_DIR([lib])
 
 AM_INIT_AUTOMAKE(dist-xz no-dist-gzip)
 
@@ -23,6 +24,11 @@ PKG_CHECK_MODULES(DATRIE,datrie-0.2)
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(limits.h)
+
+dnl Checks for functions
+
+dnl NetBSD is reported to lack wcpcpy()
+AC_REPLACE_FUNCS([wcpcpy])
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -62,6 +68,7 @@ AM_CONDITIONAL(ENABLE_DICT,test "x$enable_dict" = "xyes")
 
 AC_OUTPUT(
   Makefile
+  lib/Makefile
   conv/Makefile
   src/Makefile
   data/Makefile

@@ -1,3 +1,20 @@
+2020-08-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix missing wcpcpy() & wcpncpy() in NetBSD
+
+	* configure.ac, +lib/, +lib/Makefile.am, +lib/wcpcpy.c:
+	  - Check for wcpcpy() and provide a replacement if missing.
+	* src/Makefile.am:
+	  - Add $(LTLIBOBJS) to swath_LIBADD.
+	  - Use 'subdir-objects' automake option.
+	* src/filterrtf.cpp:
+	  - Add optional declaration of wcpcpy() if missing.
+	  - [FilterRTF::GetNextToken()] Replace wcpncpy() call with
+	    wcsncpy() and manual pointer advancement, as the pre-calculated
+	    nCopy already determines the exact characters copied.
+
+	Thanks scole_mail for the report via a personal mail.
+
 2019-12-20  Theppitak Karoonboonyanan  <theppitak@gmail.com>
 
 	Use GitHub issue tracker as bug report address.
