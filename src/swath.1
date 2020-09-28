@@ -33,12 +33,15 @@ same text with the predefined word delimiters inserted.
 .sp
 Currently, it can read plain text, HTML, RTF, LaTeX and Lambda (Unicode version
 of LaTeX with Omega typesetter kernel) documents and insert common word
-delimiters for each format (pipe `|' for plain text). But user can always
+delimiters for each format (pipe `|' for plain text). But users can always
 override this with a preferred delimiter.
 .SH OPTIONS
 .TP
-.B \-b [\fIdelimiter\fP]
-Define the string to be inserted as word delimiter in the output text.
+.B mule
+For mule: end the output with the delimiter.
+.TP
+.B \-v, \-\-verbose
+Turn on verbose mode.
 .TP
 .B \-d [\fIdict-path\fP]
 Specify alternative dictionary location.  \fIdict-path\fP must be either a
@@ -67,10 +70,7 @@ encoding).  Swath will convert the character encoding as necessary.
 If this option is omitted, TIS-620 encodings on both input and output are
 assumed.
 .TP
-.B \-v, \-\-verbose
-Turn on verbose mode.
-.TP
-.B \-help, \-\-help
+.B \-h, \-help, \-\-help
 Show help.
 .SH ENVIRONMENT VARIABLES
 .IP SWATHDICT
