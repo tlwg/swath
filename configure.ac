@@ -1,9 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.50)
+AC_PREREQ([2.71])
 
-AC_INIT(swath,
-        m4_esyscmd([build-aux/git-version-gen]),
+AC_INIT([swath],
+        [m4_esyscmd(build-aux/git-version-gen)],
         [https://github.com/tlwg/swath/issues])
 AC_CONFIG_SRCDIR([src/wordseg.cpp])
 AC_CONFIG_MACRO_DIR([m4])
@@ -16,13 +16,12 @@ AC_PROG_CXX
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AM_PROG_LIBTOOL
+LT_INIT
 
 dnl Checks for libraries.
 PKG_CHECK_MODULES(DATRIE,datrie-0.2)
 
 dnl Checks for header files.
-AC_HEADER_STDC
 AC_CHECK_HEADERS(limits.h)
 
 dnl Checks for functions
@@ -36,7 +35,7 @@ AC_TYPE_SIZE_T
 
 dnl Check commandline options
 AC_ARG_ENABLE(debug,
-              [AC_HELP_STRING([--enable-debug],
+              [AS_HELP_STRING([--enable-debug],
                               [enable assertion checks])],
               , enable_debug="no")
 if test "x$enable_debug" = "xno"; then
@@ -44,7 +43,7 @@ if test "x$enable_debug" = "xno"; then
 fi
 
 AC_ARG_ENABLE(catthai,
-              [AC_HELP_STRING([--enable-catthai],
+              [AS_HELP_STRING([--enable-catthai],
                               [enable catenation of Thai lines])],
               , enable_catthai="no")
 if test "x$enable_catthai" = "xyes"; then
@@ -53,7 +52,7 @@ fi
 
 dnl dictionary data generation
 AC_ARG_ENABLE(dict,
-              [AC_HELP_STRING([--disable-dict],
+              [AS_HELP_STRING([--disable-dict],
                               [disable dictionary data generation])],
               , enable_dict="yes")
 
@@ -66,10 +65,10 @@ fi
 
 AM_CONDITIONAL(ENABLE_DICT,test "x$enable_dict" = "xyes")
 
-AC_OUTPUT(
-  Makefile
+AC_CONFIG_FILES([Makefile
   lib/Makefile
   conv/Makefile
   src/Makefile
   data/Makefile
-  tests/Makefile)
+  tests/Makefile])
+AC_OUTPUT
