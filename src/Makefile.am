@@ -1,5 +1,7 @@
 MAINTAINERCLEANFILES = $(srcdir)/Makefile.in
 
+AUTOMAKE_OPTIONS = subdir-objects
+
 AM_CPPFLAGS = -I$(top_srcdir) $(DATRIE_CFLAGS)
 DEFS = -DWORDSEGDATA_DIR=\"${pkgdatadir}\" -DVERSION=\"$(VERSION)\"
 
@@ -38,5 +40,6 @@ man_MANS = swath.1
 
 swath_LDADD = \
 	$(top_builddir)/conv/libconv.la \
-	$(DATRIE_LIBS)
+	$(DATRIE_LIBS) \
+	$(LTLIBOBJS)
 

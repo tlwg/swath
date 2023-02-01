@@ -10,6 +10,11 @@
 #include "utils.h"
 #include "worddef.h"
 
+#ifndef HAVE_WCPCPY
+extern "C"
+wchar_t* wcpcpy (wchar_t* dest, const wchar_t* src);
+#endif
+
 //////////////////////////////////////////////////////////////////////
 // class RTFToken
 //////////////////////////////////////////////////////////////////////
@@ -109,7 +114,8 @@ FilterRTF::GetNextToken (wchar_t* token, int tokenSz, bool* thaiFlag)
     {
       *thaiFlag = isThaiUni (strbuff[0]);
       nCopy = min<int> (tokenSz - 1, wcslen (strbuff));
-      token = wcpncpy (token, strbuff, nCopy);
+      wcsncpy (token, strbuff, nCopy);
+      token += nCopy;
       *token = 0;
       tokenSz -= nCopy;
       wmemmove (strbuff, strbuff + nCopy, wcslen (strbuff + nCopy) + 1);

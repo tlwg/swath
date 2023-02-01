@@ -1,3 +1,84 @@
+2020-09-02  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Apply 'autoupdate' for autoconf 2.71
+
+	* configure.ac:
+	  - Quote m4 strings in AC_INIT() parameters.
+	  - Replace AM_PROG_LIBTOOL with LT_INIT.
+	  - Drop AC_HEADER_STDC as 'autoupdate' suggests.
+	  - Replace obsolete AC_HELP_STRING() with AS_HELP_STRING().
+	  - Replace parameterized AC_OUTPUT() with AC_CONFIG_FILES()
+	    and parameter-less AC_OUTPUT.
+	  - Update AC_PREREQ() from 2.59 to 2.71.
+
+2020-08-13  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix 'make distcheck' failure.
+
+	* Makefile.am:
+	  - Add 'lib' to SUBDIRS.
+
+2020-08-06  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Fix missing wcpcpy() & wcpncpy() in NetBSD
+
+	* configure.ac, +lib/, +lib/Makefile.am, +lib/wcpcpy.c:
+	  - Check for wcpcpy() and provide a replacement if missing.
+	* src/Makefile.am:
+	  - Add $(LTLIBOBJS) to swath_LIBADD.
+	  - Use 'subdir-objects' automake option.
+	* src/filterrtf.cpp:
+	  - Add optional declaration of wcpcpy() if missing.
+	  - [FilterRTF::GetNextToken()] Replace wcpncpy() call with
+	    wcsncpy() and manual pointer advancement, as the pre-calculated
+	    nCopy already determines the exact characters copied.
+
+	Thanks scole_mail for the report via a personal mail.
+
+2019-12-20  Theppitak Karoonboonyanan  <theppitak@gmail.com>
+
+	Use GitHub issue tracker as bug report address.
+
+	* configure.ac:
+	  - Replace bug report e-mail address with GitHub issue tracker URL.
+
+2019-05-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Make help message clearer.
+
+	* src/wordseg.cpp (Usage()):
+	  - Split "-v" out of "mule".
+	  - Also mention "--verbose".
+	* src/wordseg.cpp (Usage(), main()):
+	  - Add "-h" option.
+	  - Also mention "--help".
+
+	As part of pull request #5
+	https://github.com/tlwg/swath/pull/5
+	Thanks @pepa65
+
+2019-05-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Add documentation on build requirements.
+
+	* INSTALL:
+	  - Add build requirements.
+
+	As part of pull request #5
+	https://github.com/tlwg/swath/pull/5
+	Thanks @pepa65
+
+2019-05-08  Theppitak Karoonboonyanan <theppitak@gmail.com>
+
+	Replace "delimitor" by "delimiter".
+
+	* ChangeLog, README, src/swath.1, src/wordseg.cpp:
+	  - Fix all typos "delimitor" with "delimiter".
+
+	As part of pull request #5
+	https://github.com/tlwg/swath/pull/5
+	Thanks @pepa65
+
 2018-08-20  Theppitak Karoonboonyanan <theppitak@gmail.com>
 
 	* NEWS:
